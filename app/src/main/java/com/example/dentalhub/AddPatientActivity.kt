@@ -40,6 +40,7 @@ class AddPatientActivity : AppCompatActivity(){
         fields.add(FormField("checkbox", "Accept", "accept", "I accept", null))
         fields.add(FormField("seekbar", "Range", "range", "I accept", listOf("20")))
         fields.add(FormField("calendar", "Select Date", "date", "Select date",null))
+        fields.add(FormField("ratingbar", "Rating", "rating", "Rating",listOf("5","1","0")))
 
     }
 
@@ -96,12 +97,20 @@ class AddPatientActivity : AppCompatActivity(){
                 }
                 "seekbar" -> {
                     var fieldControl = SeekBar(this)
-                    fieldControl.max = Integer.parseInt(field!!.values!!.get(0))
+                    fieldControl.max = Integer.parseInt(field.values!![0])
                     widgetList.add(fieldControl)
                     mainLayout.addView(fieldControl)
                 }
                 "calendar" -> {
                     var fieldControl = CalendarView(this)
+                    widgetList.add(fieldControl)
+                    mainLayout.addView(fieldControl)
+                }
+                "ratingbar" -> {
+                    var fieldControl = RatingBar(this)
+                    fieldControl.numStars = Integer.parseInt(field.values!![0])
+                    fieldControl.stepSize = field.values!![1].toFloat()
+                    fieldControl.rating = field.values!![2].toFloat()
                     widgetList.add(fieldControl)
                     mainLayout.addView(fieldControl)
                 }
@@ -123,6 +132,8 @@ class AddPatientActivity : AppCompatActivity(){
                     Log.d("seekbar: ", widget.progress.toString())
                 } else if(widget is CalendarView){
                     Log.d("calendar: ", widget.date.toString())
+                } else if(widget is RatingBar){
+                    Log.d("ratingbar: ", widget.rating.toString())
                 }
             }
         }
