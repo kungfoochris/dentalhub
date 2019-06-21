@@ -39,6 +39,7 @@ class AddPatientActivity : AppCompatActivity(){
         fields.add(FormField("select", "Gender", "gender", "Select gender", listOf("Male", "Female")))
         fields.add(FormField("checkbox", "Accept", "accept", "I accept", null))
         fields.add(FormField("seekbar", "Range", "range", "I accept", listOf("20")))
+        fields.add(FormField("calendar", "Select Date", "date", "Select date",null))
 
     }
 
@@ -99,6 +100,11 @@ class AddPatientActivity : AppCompatActivity(){
                     widgetList.add(fieldControl)
                     mainLayout.addView(fieldControl)
                 }
+                "calendar" -> {
+                    var fieldControl = CalendarView(this)
+                    widgetList.add(fieldControl)
+                    mainLayout.addView(fieldControl)
+                }
             }
         }
         var submitButton = Button(this)
@@ -115,6 +121,8 @@ class AddPatientActivity : AppCompatActivity(){
                     Log.d("checkbox", widget.isChecked.toString())
                 } else if(widget is SeekBar){
                     Log.d("seekbar: ", widget.progress.toString())
+                } else if(widget is CalendarView){
+                    Log.d("calendar: ", widget.date.toString())
                 }
             }
         }
