@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         fields.add(FormField("number","Age","age","Enter age", null))
         fields.add(FormField("label","Label","label","Some dummy text for label.", null))
         fields.add(FormField("select","Gender","gender","Select gender", listOf("Male", "Female")))
-        fields.add(FormField("boolean","Accept","accept","I accept", null))
+        fields.add(FormField("checkbox","Accept","accept","I accept", null))
 
     }
 
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     widgetList.add(fieldControl)
                     mainLayout.addView(fieldControl)
                 }
-                "boolean" -> {
+                "checkbox" -> {
                     var fieldControl = CheckBox(this)
                     fieldControl.text = field.fieldHint
                     widgetList.add(fieldControl)
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 }else if(widget is Spinner){
                     Log.d("spiner : ", widget.selectedItem.toString())
                 }else if(widget is CheckBox){
-                    Log.d("boolean", widget.isChecked.toString())
+                    Log.d("checkbox", widget.isChecked.toString())
                 }
             }
         }
