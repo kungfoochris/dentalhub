@@ -9,9 +9,21 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+        </activity>
+        <activity
+                android:name=".LoginActivity"
+                android:label="@string/title_activity_login">
+        </activity>
+        <activity android:name=".AddEncounterActivity">
+        </activity>
+        <activity android:name=".SearchPatientActivity">
+        </activity>
         <activity android:name=".AddPatientActivity">
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
