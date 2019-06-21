@@ -38,6 +38,7 @@ class AddPatientActivity : AppCompatActivity(){
         fields.add(FormField("label", "Label", "label", "Some dummy text for label.", null))
         fields.add(FormField("select", "Gender", "gender", "Select gender", listOf("Male", "Female")))
         fields.add(FormField("checkbox", "Accept", "accept", "I accept", null))
+        fields.add(FormField("seekbar", "Range", "range", "I accept", listOf("20")))
 
     }
 
@@ -92,6 +93,12 @@ class AddPatientActivity : AppCompatActivity(){
                     widgetList.add(fieldControl)
                     mainLayout.addView(fieldControl)
                 }
+                "seekbar" -> {
+                    var fieldControl = SeekBar(this)
+                    fieldControl.max = Integer.parseInt(field!!.values!!.get(0))
+                    widgetList.add(fieldControl)
+                    mainLayout.addView(fieldControl)
+                }
             }
         }
         var submitButton = Button(this)
@@ -106,6 +113,8 @@ class AddPatientActivity : AppCompatActivity(){
                     Log.d("spiner : ", widget.selectedItem.toString())
                 } else if (widget is CheckBox) {
                     Log.d("checkbox", widget.isChecked.toString())
+                } else if(widget is SeekBar){
+                    Log.d("seekbar: ", widget.progress.toString())
                 }
             }
         }
