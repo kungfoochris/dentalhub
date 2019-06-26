@@ -2,4 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="form_col_1_weight">0.6</dimen>
+    <dimen name="form_col_2_weight">0.4</dimen>
 </resources>
