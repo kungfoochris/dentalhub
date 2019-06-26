@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.dentalhub.adapters.PatientAdapter
+import com.example.dentalhub.dbhelpers.DentalHubDBHelper
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.models.Patient
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
@@ -27,6 +29,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
+    private lateinit var   dbHelper: DentalHubDBHelper
 
     private lateinit var context: Context
     private lateinit var patientAdapter: PatientAdapter
@@ -39,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         context = this
+
+        setupApp()
         setupUI()
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -56,7 +61,39 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun setupApp() {
+        dbHelper = DentalHubDBHelper(context)
+    }
+
     private fun listPatients() {
+        if(DentalApp.isConnectedToWifi(this)){
+            listPatientsFromServer()
+        }else{
+            listPatientsFromLocalDB()
+        }
+    }
+
+    private fun listPatientsFromLocalDB() {
+        allPatients = dbHelper.readAllPatients()
+        patientAdapter = PatientAdapter(
+            context,
+            allPatients,
+            object : PatientAdapter.PatientClickListener {
+                override fun onAddEncounterButtonClick(patient: Patient) {
+                    startActivity(Intent(context, AddEncounterActivity::class.java))
+                }
+
+                override fun onViewPatientDetailClick(patient: Patient) {
+                    startActivity(Intent(context, ViewPatientActivity::class.java))
+                }
+
+            })
+        recyclerView.adapter = patientAdapter
+        patientAdapter.notifyDataSetChanged()
+    }
+
+
+    private fun listPatientsFromServer() {
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN,"")
         val panelService = DjangoInterface.create(this)
         val call = panelService.listPatients("JWT $token")
@@ -91,6 +128,7 @@ class MainActivity : AppCompatActivity() {
         })
 
     }
+
 
     private fun setupUI() {
 
