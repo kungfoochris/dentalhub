@@ -15,6 +15,8 @@ class AddEncounterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_encounter)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         initUI()
     }
 
@@ -26,5 +28,15 @@ class AddEncounterActivity : AppCompatActivity() {
         pager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(pager)
 
+    }
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }

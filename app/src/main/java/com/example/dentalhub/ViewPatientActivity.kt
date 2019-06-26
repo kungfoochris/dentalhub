@@ -13,6 +13,9 @@ class ViewPatientActivity: AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_patient)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         context = this
         initUI()
     }
@@ -22,5 +25,14 @@ class ViewPatientActivity: AppCompatActivity(){
         btnAddNewEncounter.setOnClickListener {
             startActivity(Intent(context, AddEncounterActivity::class.java))
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }

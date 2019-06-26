@@ -17,6 +17,9 @@ class AddPatientActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_patient)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         context = this
         initUI()
     }
@@ -35,5 +38,13 @@ class AddPatientActivity : AppCompatActivity(){
         var dataAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, values!!.toMutableList())
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         return dataAdapter
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }
