@@ -3,6 +3,8 @@ package com.example.dentalhub
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
@@ -25,6 +27,20 @@ class ViewPatientActivity: AppCompatActivity(){
         btnAddNewEncounter.setOnClickListener {
             startActivity(Intent(context, AddEncounterActivity::class.java))
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.view_patient,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.editPatient -> {
+                val addPatientIntent = Intent(this, AddPatientActivity::class.java)
+                startActivity(addPatientIntent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
