@@ -84,7 +84,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onViewPatientDetailClick(patient: Patient) {
-                    startActivity(Intent(context, ViewPatientActivity::class.java))
+                    val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
+                    viewPatientIntent.putExtra("patient", patient)
+                    startActivity(viewPatientIntent)
                 }
 
             })
@@ -109,7 +111,9 @@ class MainActivity : AppCompatActivity() {
                             allPatients = response.body() as List<Patient>
                             patientAdapter = PatientAdapter(context, allPatients, object: PatientAdapter.PatientClickListener{
                                 override fun onViewPatientDetailClick(patient: Patient) {
-                                    startActivity(Intent(context, ViewPatientActivity::class.java))
+                                    val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
+                                    viewPatientIntent.putExtra("patient", patient)
+                                    startActivity(viewPatientIntent)
                                 }
 
                                 override fun onAddEncounterButtonClick(patient: Patient) {

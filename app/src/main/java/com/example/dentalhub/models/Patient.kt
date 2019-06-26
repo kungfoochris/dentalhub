@@ -1,6 +1,10 @@
 package com.example.dentalhub.models
 
-class Patient(
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Patient(
     var id:String,
     var first_name: String,
     var middle_name: String,
@@ -17,4 +21,4 @@ class Patient(
     var latitude: String,
     var longitude: String,
     var date: String
-)
+): Parcelable

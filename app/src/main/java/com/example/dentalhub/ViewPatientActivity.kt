@@ -6,27 +6,44 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dentalhub.models.Patient
 
 class ViewPatientActivity: AppCompatActivity(){
-    private lateinit var btnAddNewEncounter: Button
+
     private lateinit var context: Context
+    private lateinit var patient: Patient
+
+    private lateinit var btnAddNewEncounter: Button
+    private lateinit var tvName: TextView
+    private lateinit var tvAddress: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_patient)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        patient = intent.getParcelableExtra("patient")
         context = this
         initUI()
     }
 
     private fun initUI() {
+        tvName = findViewById(R.id.tvName)
+        tvAddress = findViewById(R.id.tvAddress)
         btnAddNewEncounter = findViewById(R.id.btnAddNewEncounter)
+
+        updateInfo()
+
         btnAddNewEncounter.setOnClickListener {
             startActivity(Intent(context, AddEncounterActivity::class.java))
         }
+    }
+
+    private fun updateInfo() {
+        tvName.text = patient.full_name
+        tvAddress.text = patient.address
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
