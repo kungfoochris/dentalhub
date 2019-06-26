@@ -1,29 +1,127 @@
 package com.example.dentalhub
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dentalhub.interfaces.DjangoInterface
+import com.example.dentalhub.models.LoginResponse
+import com.example.dentalhub.utils.EmailValidator
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var etEmail : EditText
+    private lateinit var etPassword: EditText
+    private lateinit var tvErrorMessage: TextView
+    private lateinit var loading: ProgressBar
     private lateinit var btnLogin: Button
+    private lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        context = this
+
         setupUI()
     }
 
     private fun setupUI() {
+        etEmail = findViewById(R.id.etEmail)
+        etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
+        loading = findViewById(R.id.loading)
+        tvErrorMessage = findViewById(R.id.tvErrorMessage)
+
         btnLogin.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            if(formIsValid()){
+                processLogin()
+            }
+
         }
+    }
+
+    private fun processLogin() {
+        loading.visibility = View.VISIBLE
+        tvErrorMessage.visibility = View.GONE
+        val email = etEmail.text.toString()
+        val password = etPassword.text.toString()
+        val panelService = DjangoInterface.create(this)
+        val call = panelService.login(email,password)
+        call.enqueue(object: Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                Log.d("Resp", response.toString())
+                if(null != response.body()){
+                    when(response.code()){
+                        200-> {
+                            val loginResponse = response.body() as LoginResponse
+                            DentalApp.saveToPreference(context, Constants.PREF_AUTH_TOKEN, loginResponse.token)
+                            DentalApp.saveToPreference(context,Constants.PREF_AUTH_EMAIL, email)
+                            DentalApp.saveToPreference(context,Constants.PREF_AUTH_PASSWORD, password)
+                            startActivity(Intent(context, MainActivity::class.java))
+                        }
+                        400 -> {
+                            tvErrorMessage.text = getString(R.string.error_http_400)
+                            tvErrorMessage.visibility = View.VISIBLE
+                        }
+                        404 -> {
+                            tvErrorMessage.text = getString(R.string.error_http_404)
+                            tvErrorMessage.visibility = View.VISIBLE
+                        }
+                        else -> {
+                            tvErrorMessage.text = getString(R.string.error_http_500)
+                            tvErrorMessage.visibility = View.VISIBLE
+                        }
+                    }
+                    loading.visibility = View.GONE
+                }else{
+                    tvErrorMessage.text = response.message()
+                    tvErrorMessage.visibility = View.VISIBLE
+                    loading.visibility = View.GONE
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                tvErrorMessage.text = t.message.toString()
+                tvErrorMessage.visibility = View.VISIBLE
+                loading.visibility = View.GONE
+            }
+
+        })
+
+    }
+
+    private fun formIsValid(): Boolean {
+        tvErrorMessage.visibility = View.GONE
+        var status = false
+        if(etEmail.text.isBlank()) {
+            status = false
+            tvErrorMessage.text = getString(R.string.email_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+        }else if(!EmailValidator.isEmailValid(etEmail.text.toString())){
+            status = false
+            tvErrorMessage.text = getString(R.string.invalid_email)
+            tvErrorMessage.visibility = View.VISIBLE
+        }else if(etPassword.text.isBlank()){
+            status = false
+            tvErrorMessage.text = getString(R.string.password_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+        }else{
+            status = true
+        }
+        return status
     }
 
     override fun onPause() {
         super.onPause()
-        finish();
+        finish()
     }
 }
