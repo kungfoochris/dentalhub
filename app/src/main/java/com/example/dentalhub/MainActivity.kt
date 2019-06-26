@@ -26,8 +26,6 @@ import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mainLayout: LinearLayout
-    private lateinit var btnAddPatient: Button
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var context: Context
@@ -95,10 +93,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        btnAddPatient = findViewById(R.id.btnAddPatient)
-        btnAddPatient.setOnClickListener {
-            startActivity(Intent(this, AddPatientActivity::class.java))
-        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
