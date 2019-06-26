@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-    <LinearLayout
-
+>
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/mainActivityLayout"
@@ -14,7 +13,149 @@
             tools:context=".AddPatientActivity"
             android:padding="8dp"
     >
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:text="@string/first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:layout_weight="@dimen/form_col_2_weight"
+                        android:id="@+id/etFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_first_name"
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:text="@string/middle_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:layout_weight="@dimen/form_col_2_weight"
+                        android:id="@+id/etMiddleName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_middle_name"
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:text="@string/last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:layout_weight="@dimen/form_col_2_weight"
+                        android:id="@+id/etLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_last_name"
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <TextView
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:text="@string/gender"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                <Spinner
+                        android:layout_weight="@dimen/form_col_2_weight"
+                        android:id="@+id/spinnerGender" android:layout_width="match_parent"
+                         android:layout_height="wrap_content"/>
+            </LinearLayout>
 
 
-    </LinearLayout>
-</ScrollView>
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:text="@string/date_of_birth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:text="@string/age"
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:layout_weight="@dimen/form_col_2_weight"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <TextView
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:text="@string/martial_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <Spinner
+                        android:layout_weight="@dimen/form_col_2_weight"
+                        android:id="@+id/spinnerMartialStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <TextView
+                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:text="@string/educationLevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <Spinner
+                        android:layout_weight="@dimen/form_col_2_weight"
+                        android:id="@+id/spinnerEducationLevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <Button
+                    android:text="@string/add_patient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>
