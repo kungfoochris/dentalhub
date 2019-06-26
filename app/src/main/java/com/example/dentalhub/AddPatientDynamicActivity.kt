@@ -19,7 +19,7 @@ class AddPatientDynamicActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_patient)
+        setContentView(R.layout.activity_add_patient_dynamic)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitle(R.string.add_patient)
