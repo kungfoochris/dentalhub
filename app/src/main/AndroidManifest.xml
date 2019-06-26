@@ -3,24 +3,21 @@
           package="com.example.dentalhub">
 
     <application
+            android:name=".DentalApp"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity
                 android:name=".LoginActivity"
-                android:label="@string/title_activity_login">
-        </activity>
-        <activity android:name=".AddEncounterActivity">
-        </activity>
-        <activity android:name=".SearchPatientActivity">
-        </activity>
-        <activity android:name=".AddPatientActivity">
-        </activity>
+                android:label="@string/title_activity_login" />
+        <activity android:name=".AddEncounterActivity" />
+        <activity android:name=".ViewPatientActivity" />
+        <activity android:name=".SearchPatientActivity" />
+        <activity android:name=".AddPatientActivity" />
         <activity android:name=".SplashActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
