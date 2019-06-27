@@ -43,7 +43,7 @@ class ViewPatientActivity: AppCompatActivity(){
 
     private fun updateInfo() {
         tvName.text = patient.full_name
-        tvAddress.text = patient.address
+        //tvAddress.text = patient.address
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
