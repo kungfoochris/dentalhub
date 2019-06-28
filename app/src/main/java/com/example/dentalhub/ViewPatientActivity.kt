@@ -26,6 +26,8 @@ class ViewPatientActivity: AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         patient = intent.getParcelableExtra("patient")
         context = this
+
+        title = patient.full_name
         initUI()
     }
 
@@ -37,7 +39,9 @@ class ViewPatientActivity: AppCompatActivity(){
         updateInfo()
 
         btnAddNewEncounter.setOnClickListener {
-            startActivity(Intent(context, AddEncounterActivity::class.java))
+            val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
+            addEncounterIntent.putExtra("patient", patient)
+            startActivity(addEncounterIntent)
         }
     }
 

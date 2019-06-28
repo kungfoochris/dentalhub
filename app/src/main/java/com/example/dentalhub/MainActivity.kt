@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,7 +30,8 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var   dbHelper: DentalHubDBHelper
+    private lateinit var loading: ProgressBar
+    private lateinit var dbHelper: DentalHubDBHelper
 
     private lateinit var context: Context
     private lateinit var patientAdapter: PatientAdapter
@@ -43,28 +45,24 @@ class MainActivity : AppCompatActivity() {
 
         context = this
 
-        setupApp()
+        dbHelper = DentalHubDBHelper(context)
         setupUI()
 
+        listPatients()
+    }
+
+
+    private fun setupUI() {
+        loading = findViewById(R.id.loading)
         recyclerView = findViewById(R.id.recyclerView)
-
-
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         val divider = RecyclerViewItemSeparator(20)
         recyclerView.addItemDecoration(divider)
 
-        listPatients()
-
-
 
     }
-
-    private fun setupApp() {
-        dbHelper = DentalHubDBHelper(context)
-    }
-
     private fun listPatients() {
         if(DentalApp.isConnectedToWifi(this)){
             listPatientsFromServer()
@@ -80,7 +78,9 @@ class MainActivity : AppCompatActivity() {
             allPatients,
             object : PatientAdapter.PatientClickListener {
                 override fun onAddEncounterButtonClick(patient: Patient) {
-                    startActivity(Intent(context, AddEncounterActivity::class.java))
+                    val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
+                    addEncounterIntent.putExtra("patient", patient)
+                    startActivity(addEncounterIntent)
                 }
 
                 override fun onViewPatientDetailClick(patient: Patient) {
@@ -118,7 +118,9 @@ class MainActivity : AppCompatActivity() {
 
                                 override fun onAddEncounterButtonClick(patient: Patient) {
                                     Log.d("BTN", patient.toString())
-                                    startActivity(Intent(context, AddEncounterActivity::class.java))
+                                    val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
+                                    addEncounterIntent.putExtra("patient", patient)
+                                    startActivity(addEncounterIntent)
                                 }
 
                             })
@@ -134,9 +136,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setupUI() {
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main,menu)
@@ -147,6 +146,9 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.addPatient -> {
                 startActivity(Intent(this, AddPatientActivity::class.java))
+            }
+            R.id.refresh -> {
+                listPatients()
             }
             R.id.search -> {
                 Log.d("PARAS","do the search stuff")

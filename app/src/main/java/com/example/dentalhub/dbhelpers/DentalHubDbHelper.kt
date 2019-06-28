@@ -1,5 +1,6 @@
 package com.example.dentalhub.dbhelpers
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -23,6 +24,16 @@ class DentalHubDBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NA
 
     override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         onUpgrade(db, oldVersion, newVersion)
+    }
+
+    fun addPatient(patient: Patient): Boolean{
+        val db = writableDatabase
+        // Create a new map of values, where column names are the keys
+        val values = ContentValues()
+        values.put(DBContract.PatientEntry.COLUMN_ID, patient.id)
+
+        db.insert(DBContract.PatientEntry.TABLE_NAME, null, values)
+        return true
     }
 
     fun readAllPatients(): List<Patient>{

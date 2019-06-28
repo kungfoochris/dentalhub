@@ -5,8 +5,16 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AddEncounterActivity">
-<com.google.android.material.tabs.TabLayout
+        >
+
+    <Spinner
+            android:id="@+id/spinnerReason"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="4dp"
+    />
+
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

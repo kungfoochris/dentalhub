@@ -7,9 +7,16 @@
             app:showAsAction="always"
         />
     <item
+            android:id="@+id/refresh"
+            android:title="@string/add_patient"
+            android:icon="@android:drawable/ic_popup_sync"
+            app:showAsAction="always"
+    />
+    <item
             android:id="@+id/search"
             android:title="@string/search"
             android:icon="@android:drawable/ic_menu_search"
+            app:showAsAction="ifRoom"
     />
 
     <item

@@ -20,11 +20,21 @@ interface DjangoInterface {
     @FormUrlEncoded
     @POST("patients")
     fun addPatient(
+        @Header("Authorization") token: String,
         @Field("id") id:String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
-        @Field("address") address:String
-    )
+        @Field("gender") gender:String,
+        @Field("phone") phone:String,
+        @Field("middle_name") middleName: String?,
+        @Field("dob") dob:String?,
+        @Field("education") education:String?,
+        @Field("city") city:String?,
+        @Field("state") state:String?,
+        @Field("country") country:String?,
+        @Field("latitude") latitude:String?,
+        @Field("longitude") longitude:String?
+    ):Call<Patient>
 
     @GET("patients")
     fun searchPatient(@Query("s") s: String): Call<List<Patient>>

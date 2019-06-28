@@ -52,7 +52,49 @@
         <item>Graduate</item>
     </string-array>
 
+    <string-array name="encounter_reason">
+        <item>Checkup / Screening</item>
+        <item>Relief of Pain</item>
+        <item>Continuation of Treatment Plan</item>
+        <item>Other problem</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="modify_patient">Modify Patient Info</string>
+    <string name="save_patient">Save Patient</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="phone">Phone</string>
+    <string name="blood_disorder_or_bleeding_problem">Blood disorder or bleeding problem</string>
+    <string name="allergies">Allergies</string>
+    <string name="medications">Medications</string>
+    <string name="other">Other</string>
+    <string name="diabetes">Diabetes</string>
+    <string name="liver_problem">Liver problem</string>
+    <string name="rheumatic_fever">Rheumatic fever</string>
+    <string name="seizures_or_epilepsy">Seizuers or epilepsy</string>
+    <string name="hepatitis_b_or_c">Hepatitis B or C</string>
+    <string name="hiv">HIV</string>
+    <string name="no_underlying_medical_record">No underlying medical record</string>
+    <string name="not_taking_any_medications">Not taking any medications</string>
+    <string name="no_referral">No referral</string>
+    <string name="health_post">Health Post</string>
+    <string name="hygienist">Hygienist</string>
+    <string name="dentist">Dentist</string>
+    <string name="general_physician">General Physician</string>
+    <string name="fv_applied">FV Applied</string>
+    <string name="treatment_plan_complete">Treatment plan complete</string>
+    <string name="notes">Notes</string>
+    <string name="cavity_permanent_tooth">Cavity Permanent Tooth</string>
+    <string name="cavity_permanent_anterior">Cavity Permanent Anterior</string>
+    <string name="active_infection">Active Infection</string>
+    <string name="need_art_filling">Need ART Filling</string>
+    <string name="need_selant">Need Sealant</string>
+    <string name="need_sdf">Need SDF</string>
+    <string name="need_extraction">Need Extraction</string>
+    <string name="caries_risk">Caries Risk</string>
+    <string name="decayed_primary_teeth">Decayed Primary Teeth</string>
+    <string name="decayed_permanent_teeth">Decayed Permanent Teeth</string>
 </resources>
