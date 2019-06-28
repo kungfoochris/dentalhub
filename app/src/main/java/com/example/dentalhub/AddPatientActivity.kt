@@ -11,6 +11,8 @@ import com.example.dentalhub.dbhelpers.DentalHubDBHelper
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.models.Patient
 import com.example.dentalhub.utils.AdapterHelper
+import com.example.dentalhub.utils.DateHelper
+import com.google.firebase.perf.metrics.AddTrace
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,6 +40,10 @@ class AddPatientActivity : AppCompatActivity(){
     private lateinit var dbHelper: DentalHubDBHelper
     private val TAG = "AddPatientActivity"
 
+//    private lateinit var googleApiClient:GoogleApiClient
+//    private lateinit var locationRequest:LocationRequest
+
+    @AddTrace(name = "onCreateAddPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_patient)
@@ -50,6 +56,7 @@ class AddPatientActivity : AppCompatActivity(){
         initUI()
     }
 
+    @AddTrace(name = "initUIAddPatientActivity", enabled = true /* optional */)
     private fun initUI() {
         loading = findViewById(R.id.loading)
         tvErrorMessage = findViewById(R.id.tvErrorMessage)
@@ -80,6 +87,7 @@ class AddPatientActivity : AppCompatActivity(){
         }
     }
 
+    @AddTrace(name = "savePatientAddPatientActivity", enabled = true /* optional */)
     private fun savePatient() {
         Log.d(TAG, "savePatient()")
         loading.visibility = View.VISIBLE
@@ -93,6 +101,7 @@ class AddPatientActivity : AppCompatActivity(){
         loading.visibility = View.GONE
     }
 
+    @AddTrace(name = "createPatientAddPatientActivity", enabled = true /* optional */)
     private fun createPatient() : Patient{
         Log.d(TAG, "createPatient()")
         val id=""
@@ -109,10 +118,11 @@ class AddPatientActivity : AppCompatActivity(){
         val country = etCountry.text.toString()
         val latitude = ""
         val longitude = ""
-        val date=""
+        val date = DateHelper.getCurrentDate()
         return Patient(id, firstName, middleName, lastName, fullName, gender, dob, phone, education, city, state, country, latitude, longitude, date)
     }
 
+    @AddTrace(name = "saveToLocalDBAddPatientActivity", enabled = true /* optional */)
     private fun saveToLocalDB(patient: Patient) {
         Log.d(TAG, "saveToLocalDB")
         dbHelper.addPatient(patient)
@@ -123,6 +133,7 @@ class AddPatientActivity : AppCompatActivity(){
 
     }
 
+    @AddTrace(name = "saveToServerAddPatientActivity", enabled = true /* optional */)
     private fun saveToServer(patient: Patient) {
         Log.d(TAG,"saveToServer()")
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN,"")
@@ -172,6 +183,7 @@ class AddPatientActivity : AppCompatActivity(){
 
     }
 
+    @AddTrace(name = "isFormValidAddPatientActivity", enabled = true /* optional */)
     private fun isFormValid(): Boolean {
         return true
     }

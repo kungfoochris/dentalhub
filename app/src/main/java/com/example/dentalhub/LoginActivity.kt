@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.models.LoginResponse
 import com.example.dentalhub.utils.EmailValidator
+import com.google.firebase.perf.metrics.AddTrace
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +26,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var context: Context
 
+    private val TAG = "LoginActivity"
+
+    @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -34,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         setupUI()
     }
 
+    @AddTrace(name = "setupUI", enabled = true /* optional */)
     private fun setupUI() {
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
@@ -49,7 +54,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    @AddTrace(name = "processLogin", enabled = true /* optional */)
     private fun processLogin() {
+        Log.d(TAG, "processLogin()")
         loading.visibility = View.VISIBLE
         tvErrorMessage.visibility = View.GONE
         val email = etEmail.text.toString()
@@ -58,6 +65,7 @@ class LoginActivity : AppCompatActivity() {
         val call = panelService.login(email,password)
         call.enqueue(object: Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                Log.d(TAG, "onResponse()")
                 Log.d("Resp", response.toString())
                 if(null != response.body()){
                     when(response.code()){
@@ -90,6 +98,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Log.d(TAG, "onFailure()")
                 tvErrorMessage.text = t.message.toString()
                 tvErrorMessage.visibility = View.VISIBLE
                 loading.visibility = View.GONE
@@ -98,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
         })
 
     }
-
+    @AddTrace(name = "formIsValid", enabled = true /* optional */)
     private fun formIsValid(): Boolean {
         tvErrorMessage.visibility = View.GONE
         var status = false

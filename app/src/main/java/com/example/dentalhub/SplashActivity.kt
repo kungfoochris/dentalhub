@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import com.google.firebase.perf.metrics.AddTrace
 
 class SplashActivity : Activity() {
     private lateinit var context: Context
 
+    @AddTrace(name = "onCreateTraceSplashActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

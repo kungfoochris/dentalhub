@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.models.Patient
+import com.google.firebase.perf.metrics.AddTrace
 
 class ViewPatientActivity: AppCompatActivity(){
 
@@ -19,6 +20,7 @@ class ViewPatientActivity: AppCompatActivity(){
     private lateinit var tvName: TextView
     private lateinit var tvAddress: TextView
 
+    @AddTrace(name = "onCreateViewPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_patient)
@@ -30,7 +32,7 @@ class ViewPatientActivity: AppCompatActivity(){
         title = patient.full_name
         initUI()
     }
-
+    @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
     private fun initUI() {
         tvName = findViewById(R.id.tvName)
         tvAddress = findViewById(R.id.tvAddress)

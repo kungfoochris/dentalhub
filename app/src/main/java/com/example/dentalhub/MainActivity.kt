@@ -1,16 +1,16 @@
 package com.example.dentalhub
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +23,7 @@ import com.example.dentalhub.dbhelpers.DentalHubDBHelper
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.models.Patient
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
+import com.google.firebase.perf.metrics.AddTrace
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,20 +39,40 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var dividerItemDecoration: DividerItemDecoration
     private lateinit var allPatients: List<Patient>
+    private val TAG = "MainActivity"
 
+    // lists for permissions
+    private var permissionsToRequest: java.util.ArrayList<String>? = null
+    private val permissionsRejected = java.util.ArrayList<String>()
+    private val permissions = java.util.ArrayList<String>()
+
+
+    @AddTrace(name = "onCreateMainActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG,"onCreate()")
         setContentView(R.layout.activity_main)
 
         context = this
 
         dbHelper = DentalHubDBHelper(context)
+
+        // we add permissions we need to request location of the users
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        permissionsToRequest = permissionsToRequest(permissions)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissionsToRequest!!.size > 0){
+            requestPermissions(permissionsToRequest!!.toTypedArray(), ALL_PERMISSIONS_RESULT)
+        }
+
+
         setupUI()
 
         listPatients()
     }
 
-
+    @AddTrace(name = "setupUIMainActivity", enabled = true /* optional */)
     private fun setupUI() {
         loading = findViewById(R.id.loading)
         recyclerView = findViewById(R.id.recyclerView)
@@ -63,6 +84,28 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    private fun permissionsToRequest(wantedPermissions: java.util.ArrayList<String>): java.util.ArrayList<String> {
+        val result = java.util.ArrayList<String>()
+
+        for (perm in wantedPermissions)
+        {
+            if (!hasPermission(perm))
+            {
+                result.add(perm)
+            }
+        }
+
+        return result
+    }
+
+    private fun hasPermission(permission:String):Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+        } else true
+
+    }
+
+    @AddTrace(name = "listPatientsMainActivity", enabled = true /* optional */)
     private fun listPatients() {
         if(DentalApp.isConnectedToWifi(this)){
             listPatientsFromServer()
@@ -71,7 +114,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
+        Log.d(TAG,"listPatientsFromLocalDB()")
         allPatients = dbHelper.readAllPatients()
         patientAdapter = PatientAdapter(
             context,
@@ -94,17 +139,20 @@ class MainActivity : AppCompatActivity() {
         patientAdapter.notifyDataSetChanged()
     }
 
-
+    @AddTrace(name = "listPatientsFromServerMainActivity", enabled = true /* optional */)
     private fun listPatientsFromServer() {
+        Log.d(TAG, "listPatientsFromServer")
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN,"")
         val panelService = DjangoInterface.create(this)
         val call = panelService.listPatients("JWT $token")
         call.enqueue(object: Callback<List<Patient>> {
             override fun onFailure(call: Call<List<Patient>>, t: Throwable) {
+                Log.d(TAG, "onFailure()")
                 Log.d("onFailure", t.toString())
             }
 
             override fun onResponse(call: Call<List<Patient>>, response: Response<List<Patient>>) {
+                Log.d(TAG, "onResponse()")
                 if(null != response.body()){
                     when(response.code()){
                         200 -> {
@@ -162,10 +210,21 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    @AddTrace(name = "displaySearchDialogMainActivity", enabled = true /* optional */)
     private fun displaySearchDialog() {
+        Log.d("TAG", "displaySearchDialog()")
         val searchDialogView = LayoutInflater.from(this).inflate(R.layout.search_dialog, null)
         val mBuilder = AlertDialog.Builder(this).setView(searchDialogView).setTitle(getString(R.string.search))
         val mAlertDialog = mBuilder.show()
     }
+
+    companion object {
+        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
+        private const val UPDATE_INTERVAL:Long = 5000
+        private const val FASTEST_INTERVAL:Long = 5000 // = 5 seconds
+        // integer for permissions results request
+        private const val ALL_PERMISSIONS_RESULT = 1011
+    }
+
 
 }

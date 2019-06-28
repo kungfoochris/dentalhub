@@ -9,6 +9,7 @@ import com.example.dentalhub.adapters.FormPageAdapter
 import com.example.dentalhub.models.Patient
 import com.example.dentalhub.utils.AdapterHelper
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.perf.metrics.AddTrace
 
 class AddEncounterActivity : AppCompatActivity() {
 
@@ -19,6 +20,7 @@ class AddEncounterActivity : AppCompatActivity() {
 
     private lateinit var context: Context
 
+    @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_encounter)
@@ -31,6 +33,7 @@ class AddEncounterActivity : AppCompatActivity() {
         initUI()
     }
 
+    @AddTrace(name = "initUITrace", enabled = true /* optional */)
     private fun initUI() {
         spinnerReason = findViewById(R.id.spinnerReason)
         pager = findViewById(R.id.pager)
