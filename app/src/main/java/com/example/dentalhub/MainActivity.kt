@@ -22,6 +22,7 @@ import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.dbhelpers.DentalHubDBHelper
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.models.Patient
+import com.example.dentalhub.services.LocationTrackerService
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import retrofit2.Call
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissionsToRequest!!.size > 0){
             requestPermissions(permissionsToRequest!!.toTypedArray(), ALL_PERMISSIONS_RESULT)
         }
-
+        startService(Intent(this, LocationTrackerService::class.java))
 
         setupUI()
 

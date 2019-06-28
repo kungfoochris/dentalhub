@@ -116,8 +116,8 @@ class AddPatientActivity : AppCompatActivity(){
         val city = etCity.text.toString()
         val state = etState.text.toString()
         val country = etCountry.text.toString()
-        val latitude = ""
-        val longitude = ""
+        val latitude = DentalApp.location.latitude
+        val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentDate()
         return Patient(id, firstName, middleName, lastName, fullName, gender, dob, phone, education, city, state, country, latitude, longitude, date)
     }
@@ -136,9 +136,10 @@ class AddPatientActivity : AppCompatActivity(){
     @AddTrace(name = "saveToServerAddPatientActivity", enabled = true /* optional */)
     private fun saveToServer(patient: Patient) {
         Log.d(TAG,"saveToServer()")
+        Log.d(TAG, patient.toString())
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN,"")
         val panelService = DjangoInterface.create(this)
-        val call = panelService.addPatient("JWT $token", patient.id, patient.first_name, patient.last_name, patient.gender, patient.phone, patient.middle_name!!, patient.dob!!,  patient.education!!, patient.city!!, patient.state!!, patient.country!!, patient.latitude!!, patient.longitude!!)
+        val call = panelService.addPatient("JWT $token", patient.id, patient.first_name, patient.last_name, patient.gender, patient.phone, patient.middle_name, patient.dob,  patient.education, patient.city, patient.state, patient.country, patient.latitude, patient.longitude)
         call.enqueue(object: Callback<Patient>{
             override fun onFailure(call: Call<Patient>, t: Throwable) {
                 Log.d("onFailure", t.toString())
@@ -172,7 +173,6 @@ class AddPatientActivity : AppCompatActivity(){
                     loading.visibility = View.GONE
                 }else{
                     Log.d(TAG, response.code().toString())
-                    Log.d(TAG,response.body().toString())
                     tvErrorMessage.text = response.message()
                     tvErrorMessage.visibility = View.VISIBLE
                     loading.visibility = View.GONE

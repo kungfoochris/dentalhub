@@ -11,6 +11,9 @@ class Constants{
         @JvmStatic val PREF_AUTH_EMAIL = "AUTH-EMAIL"
         @JvmStatic val PREF_AUTH_PASSWORD = "AUTH-PASSWORD"
         @JvmStatic val PREF_AUTH_SOCIAL = "AUTH-SOCIAL"
+
+        @JvmStatic val LOCATION_REQUEST = 1011
+        @JvmStatic val GPS_REQUEST = 1012
     }
 
 

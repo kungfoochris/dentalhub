@@ -45,6 +45,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service android:name=".services.LocationTrackerService" android:exported="false"
+                 android:stopWithTask="true"
+        />
     </application>
 
 </manifest>

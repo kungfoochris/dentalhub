@@ -3,10 +3,12 @@ package com.example.dentalhub
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.multidex.MultiDexApplication
+import com.example.dentalhub.models.Location
 
 class DentalApp : MultiDexApplication(){
     companion object Factory {
         private const val PREF_FILE_NAME = "dentalhub"
+        var location: Location = Location("0", "0")
         fun saveToPreference(context: Context, preferenceName: String, preferenceValue: String) {
             val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
