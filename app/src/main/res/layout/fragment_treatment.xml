@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:padding="8dp"
 >
-<TextView
-        android:text="Treatment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-/>
+    <TextView
+            android:text="Treatment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    />
     <LinearLayout
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -29,61 +28,202 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SDF"
-                    style="@style/RadioButton" />
+                    style="@style/RadioButton"/>
 
             <RadioButton
                     android:id="@+id/button23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SEAL"
-                    style="@style/RadioButton" />
+                    style="@style/RadioButton"/>
             <RadioButton
                     android:id="@+id/button24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ART"
-                    style="@style/RadioButton" />
+                    style="@style/RadioButton"/>
             <RadioButton
                     android:id="@+id/button25"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="EXO"
-                    style="@style/RadioButton" />
+                    style="@style/RadioButton"/>
             <RadioButton
                     android:id="@+id/button26"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="UNTR"
-                    style="@style/RadioButton" />
+                    style="@style/RadioButton"/>
         </info.hoang8f.android.segmented.SegmentedGroup>
     </LinearLayout>
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        <TextView
-                android:text="@string/fv_applied"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        <TextView
-                android:text="@string/treatment_plan_complete"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
-        <TextView
-                android:text="@string/notes"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:lines="3"
-        />
-    </LinearLayout>
-</LinearLayout>
+
+
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="18"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="17"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="16"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="15"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="14"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="13"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="12"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="11"/>
+        </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="21"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="22"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="23"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="24"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="25"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="26"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="27"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="28"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal"
+                      android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="48"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="47"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="46"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="45"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="44"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="43"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="42"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="41"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="31"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="32"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="33"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="34"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="35"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="36"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="37"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="38"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:text="@string/fv_applied"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:text="@string/treatment_plan_complete"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:text="@string/notes"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:lines="3"
+                />
+            </LinearLayout>
+        </LinearLayout>
