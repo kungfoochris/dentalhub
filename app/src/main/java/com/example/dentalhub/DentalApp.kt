@@ -4,8 +4,16 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.multidex.MultiDexApplication
 import com.example.dentalhub.models.Location
+import com.facebook.stetho.Stetho
 
 class DentalApp : MultiDexApplication(){
+
+    override fun onCreate() {
+        super.onCreate()
+        Stetho.initializeWithDefaults(this)
+    }
+
+
     companion object Factory {
         private const val PREF_FILE_NAME = "dentalhub"
         var location: Location = Location("0", "0")

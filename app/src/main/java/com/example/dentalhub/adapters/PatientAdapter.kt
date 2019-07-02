@@ -33,6 +33,7 @@ class PatientAdapter(var context: Context, private var data:List<Patient>, var l
     inner class PatientViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         private var tvName: TextView = itemView.findViewById(R.id.tvName)
         private var tvAddress: TextView = itemView.findViewById(R.id.tvAddress)
+        private var tvPhone: TextView = itemView.findViewById(R.id.tvPhone)
         private var btnViewPatientDetail: Button = itemView.findViewById(R.id.btnViewPatientDetail)
         private var btnAddNewEncounter: Button = itemView.findViewById(R.id.btnAddNewEncounter)
         init {
@@ -40,7 +41,8 @@ class PatientAdapter(var context: Context, private var data:List<Patient>, var l
         }
         fun bindPatient(patient: Patient){
             tvName.text = patient.full_name
-            tvAddress.text = patient.street_address
+            tvAddress.text = patient.address()
+            tvPhone.text = patient.phone
             btnAddNewEncounter.setOnClickListener {
                 patientClickListener.onAddEncounterButtonClick(patient)
             }

@@ -30,7 +30,7 @@ interface DjangoInterface {
         @Field("dob") dob:String,
         @Field("education") education:String,
         @Field("street_address") street_address: String,
-        @Field("ward") ward: String,
+        @Field("ward") ward: Int,
         @Field("city") city:String,
         @Field("state") state:String,
         @Field("country") country:String,

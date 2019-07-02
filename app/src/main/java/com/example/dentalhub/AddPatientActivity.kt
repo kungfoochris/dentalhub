@@ -113,14 +113,14 @@ class AddPatientActivity : AppCompatActivity(){
         val firstName = etFirstName.text.toString()
         val middleName = etMiddleName.text.toString()
         val lastName = etLastName.text.toString()
-        val fullName = firstName+" "+middleName+" "+lastName
+        val fullName = "$firstName $middleName $lastName"
         val gender = spinnerGender.selectedItem.toString()
         val dob = etDOB.text.toString()
         val phone = etPhone.text.toString()
         val education = spinnerEducationLevel.selectedItem.toString()
         val maritalStatus = spinnerMaritalStatus.selectedItem.toString()
         val streetAddress = etStreetAddress.text.toString()
-        val ward = etWard.text.toString()
+        val ward = etWard.text.toString().toInt()
         val city = etCity.text.toString()
         val state = etState.text.toString()
         val country = etCountry.text.toString()

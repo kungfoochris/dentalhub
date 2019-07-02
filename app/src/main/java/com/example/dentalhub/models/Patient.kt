@@ -16,11 +16,15 @@ data class Patient(
     var education: String,
     var marital_status: String,
     var street_address: String,
-    var ward: String,
+    var ward: Int,
     var city: String,
     var state: String,
     var country: String,
     var latitude: String,
     var longitude: String,
     var date: String
-): Parcelable
+): Parcelable{
+    fun address(): String{
+        return "$street_address $ward, $city, $country"
+    }
+}
