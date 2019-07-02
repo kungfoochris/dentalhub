@@ -1,0 +1,302 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8527456932727748385",
+      "lastPropertyId": "1:2763043801799435121",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:2763043801799435121",
+          "name": "id"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:2571916509638577249",
+      "lastPropertyId": "12:3889606543263495392",
+      "name": "Screening",
+      "properties": [
+        {
+          "id": "1:8640618690927931720",
+          "name": "id"
+        },
+        {
+          "id": "2:2232879746442699775",
+          "name": "encounter_id"
+        },
+        {
+          "id": "3:8154452984933085580",
+          "name": "carries_risk"
+        },
+        {
+          "id": "4:8683445787449682636",
+          "name": "decayed_pimary_teeth"
+        },
+        {
+          "id": "5:9110417220335319203",
+          "name": "decayed_permanent_teeth"
+        },
+        {
+          "id": "6:1631406468328144798",
+          "name": "cavity_permanent_anterior"
+        },
+        {
+          "id": "7:4713079183036128300",
+          "name": "cavity_permanent_tooth"
+        },
+        {
+          "id": "8:2921922612921503271",
+          "name": "active_infection"
+        },
+        {
+          "id": "9:193202820281864798",
+          "name": "need_art_filling"
+        },
+        {
+          "id": "10:2606173090635139979",
+          "name": "need_sealant"
+        },
+        {
+          "id": "11:1461374678828379085",
+          "name": "need_sdf"
+        },
+        {
+          "id": "12:3889606543263495392",
+          "name": "need_extraction"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:3764408514365609867",
+      "lastPropertyId": "8:8680001336479656773",
+      "name": "Referral",
+      "properties": [
+        {
+          "id": "1:4770143931339891847",
+          "name": "id"
+        },
+        {
+          "id": "2:5570312399445273237",
+          "name": "encounter_id"
+        },
+        {
+          "id": "3:8374898205045782907",
+          "name": "no_referral"
+        },
+        {
+          "id": "4:7396548402890840489",
+          "name": "health_post"
+        },
+        {
+          "id": "5:662065894149518089",
+          "name": "hygienist"
+        },
+        {
+          "id": "6:1130852079543116925",
+          "name": "dentist"
+        },
+        {
+          "id": "7:2333180887446922775",
+          "name": "general_physician"
+        },
+        {
+          "id": "8:8680001336479656773",
+          "name": "other"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:1157577452900899492",
+      "lastPropertyId": "5:2490017257661067192",
+      "name": "Encounter",
+      "properties": [
+        {
+          "id": "1:6962668636980312613",
+          "name": "id"
+        },
+        {
+          "id": "2:1312778231908484556",
+          "name": "encounter_type"
+        },
+        {
+          "id": "3:1524371331100765744",
+          "name": "patient_id"
+        },
+        {
+          "id": "4:2822378520246171252",
+          "name": "author_id"
+        },
+        {
+          "id": "5:2490017257661067192",
+          "name": "date"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:4893344603032408592",
+      "lastPropertyId": "16:1716866831319748818",
+      "name": "Patient",
+      "properties": [
+        {
+          "id": "1:8138137326794910193",
+          "name": "id"
+        },
+        {
+          "id": "2:7550088183313541158",
+          "name": "first_name"
+        },
+        {
+          "id": "3:21122919132672665",
+          "name": "middle_name"
+        },
+        {
+          "id": "4:6905305998927593302",
+          "name": "last_name"
+        },
+        {
+          "id": "5:2523522114796915477",
+          "name": "phone"
+        },
+        {
+          "id": "6:3415646369898292708",
+          "name": "education"
+        },
+        {
+          "id": "7:156565876252236929",
+          "name": "gender"
+        },
+        {
+          "id": "8:707726789406827031",
+          "name": "dob"
+        },
+        {
+          "id": "9:2135446726907695227",
+          "name": "street_address"
+        },
+        {
+          "id": "10:8582796904246650140",
+          "name": "ward"
+        },
+        {
+          "id": "11:9189670480421427466",
+          "name": "city"
+        },
+        {
+          "id": "12:7355411159739043448",
+          "name": "state"
+        },
+        {
+          "id": "13:353173234307315405",
+          "name": "country"
+        },
+        {
+          "id": "14:6274866183408705776",
+          "name": "latitude"
+        },
+        {
+          "id": "15:3893189455198262587",
+          "name": "longitude"
+        },
+        {
+          "id": "16:1716866831319748818",
+          "name": "date"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:2543398448923752262",
+      "lastPropertyId": "2:6547624088366207252",
+      "name": "Treatment",
+      "properties": [
+        {
+          "id": "1:7700950038222117401",
+          "name": "id"
+        },
+        {
+          "id": "2:6547624088366207252",
+          "name": "encounter_id"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:4108219408809555697",
+      "lastPropertyId": "13:6297053603229072385",
+      "name": "History",
+      "properties": [
+        {
+          "id": "1:1293343221480528622",
+          "name": "id"
+        },
+        {
+          "id": "2:1884805592215469750",
+          "name": "encounter_id"
+        },
+        {
+          "id": "3:6355639530598361297",
+          "name": "blood_disorder"
+        },
+        {
+          "id": "4:6139305604793325785",
+          "name": "diabetes"
+        },
+        {
+          "id": "5:380110133502306574",
+          "name": "liver_problem"
+        },
+        {
+          "id": "6:7156723739418113211",
+          "name": "rheumatic_fever"
+        },
+        {
+          "id": "7:1492271138019706414",
+          "name": "seizuers_or_epilepsy"
+        },
+        {
+          "id": "8:6363251866403476336",
+          "name": "hepatitis_b_or_c"
+        },
+        {
+          "id": "9:6845676670095402009",
+          "name": "hiv"
+        },
+        {
+          "id": "10:461421232292989628",
+          "name": "other"
+        },
+        {
+          "id": "11:8886514206648942304",
+          "name": "no_underlying_medical_record"
+        },
+        {
+          "id": "12:50617346435971019",
+          "name": "medications"
+        },
+        {
+          "id": "13:6297053603229072385",
+          "name": "allergies"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "7:4108219408809555697",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

@@ -22,6 +22,7 @@ class DentalHubDBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NA
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         db?.execSQL(SQL_DELETE_PATIENT_TABLE)
+        db?.execSQL(SQL_DELETE_ENCOUNTER_TABLE)
         onCreate(db)
     }
 
@@ -153,6 +154,9 @@ class DentalHubDBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NA
 
         private val SQL_CREATE_ENCOUNTER_TABLE = "CREATE TABLE "+DBContract.PatientEntry.TABLE_NAME + " ("+
                 DBContract.EncounterEntry.COLUMN_ID + " $COLUMN_TYPE PRIMARY KEY,"+
+                DBContract.EncounterEntry.COLUMN_ENCOUNTER_TYPE + " $COLUMN_TYPE, "+
+                DBContract.EncounterEntry.COLUMN_PATIENT + " INTEGER,"+
+                DBContract.EncounterEntry.COLUMN_AUTHOR + " INTEGER,"+
                 DBContract.EncounterEntry.COLUMN_DATE + " $COLUMN_TYPE"+
                 ")"
         private val SQL_DELETE_ENCOUNTER_TABLE = "DROP TABLE IF EXISTS "+DBContract.EncounterEntry.TABLE_NAME

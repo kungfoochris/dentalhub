@@ -11,6 +11,7 @@ class DentalApp : MultiDexApplication(){
     override fun onCreate() {
         super.onCreate()
         Stetho.initializeWithDefaults(this)
+        ObjectBox.init(this)
     }
 
 
