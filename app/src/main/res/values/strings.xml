@@ -37,19 +37,19 @@
     <string name="view_patient_detail">View Patient Detail</string>
 
     <string-array name="gender_list">
-        <item>Male</item>
-        <item>Female</item>
-        <item>Others</item>
+        <item>male</item>
+        <item>female</item>
+        <item>others</item>
     </string-array>
     <string-array name="martial_status_list">
-        <item>Single</item>
-        <item>Married</item>
-        <item>Divorced</item>
+        <item>single</item>
+        <item>married</item>
+        <item>divorced</item>
     </string-array>
     <string-array name="education_level_list">
-        <item>Uneducated</item>
-        <item>Literate</item>
-        <item>Graduate</item>
+        <item>uneducated</item>
+        <item>literate</item>
+        <item>graduate</item>
     </string-array>
 
     <string-array name="encounter_reason">
@@ -100,4 +100,6 @@
     <string name="save">Save</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
+    <string name="street_address">Street Address</string>
+    <string name="ward">Ward</string>
 </resources>

@@ -52,19 +52,39 @@ class DentalHubDBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NA
                 val firstName = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_FIRST_NAME))
                 val middleName = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_MIDDLE_NAME))
                 val lastName = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_LAST_NAME))
-                val address = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_ADDRESS))
                 val fullName = firstName + " " + middleName + " " + lastName
                 val gender = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_GENDER))
                 val dob = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_DOB))
                 val phone = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_PHONE))
                 val education = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_EDUCATION))
+                val maritalStatus = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_MARITAL_STATUS))
+                val streetAddress = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_STREET_ADDRESS))
+                val ward = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_WARD))
                 val city = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_CITY))
                 val state = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_STATE))
                 val country = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_COUNTRY))
-                val latitutde = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_LATITUDE))
+                val latitude = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_LATITUDE))
                 val longitude = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_LONGITUDE))
                 val date = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_DATE))
-                val tmpTransit = Patient(id, firstName, middleName, lastName,fullName, gender, dob, phone, education, city, state,country, latitutde, longitude, date)
+                val tmpTransit = Patient(
+                    id,
+                    firstName,
+                    middleName,
+                    lastName,
+                    fullName,
+                    gender,
+                    dob,
+                    phone,
+                    education,
+                    maritalStatus,
+                    streetAddress,
+                    ward,
+                    city,
+                    state,
+                    country,
+                    latitude,
+                    longitude,
+                    date)
                 patients.add(tmpTransit)
                 cursor.moveToNext()
             }
@@ -87,8 +107,11 @@ class DentalHubDBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NA
                     DBContract.PatientEntry.COLUMN_LAST_NAME + " $COLUMN_TYPE," +
                     DBContract.PatientEntry.COLUMN_GENDER + " $COLUMN_TYPE," +
                     DBContract.PatientEntry.COLUMN_PHONE + " $COLUMN_TYPE," +
+                    DBContract.PatientEntry.COLUMN_EDUCATION + " $COLUMN_TYPE," +
+                    DBContract.PatientEntry.COLUMN_MARITAL_STATUS + " $COLUMN_TYPE," +
                     DBContract.PatientEntry.COLUMN_DOB + " $COLUMN_TYPE," +
-                    DBContract.PatientEntry.COLUMN_ADDRESS + " $COLUMN_TYPE "+"" +
+                    DBContract.PatientEntry.COLUMN_STREET_ADDRESS + " $COLUMN_TYPE "+"" +
+                    DBContract.PatientEntry.COLUMN_WARD + " $COLUMN_TYPE "+""+
                     DBContract.PatientEntry.COLUMN_CITY + " $COLUMN_TYPE," +
                     DBContract.PatientEntry.COLUMN_STATE + " $COLUMN_TYPE," +
                     DBContract.PatientEntry.COLUMN_COUNTRY + " $COLUMN_TYPE," +

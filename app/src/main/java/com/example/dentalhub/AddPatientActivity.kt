@@ -13,6 +13,7 @@ import com.example.dentalhub.models.Patient
 import com.example.dentalhub.utils.AdapterHelper
 import com.example.dentalhub.utils.DateHelper
 import com.google.firebase.perf.metrics.AddTrace
+import com.google.gson.Gson
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +30,8 @@ class AddPatientActivity : AppCompatActivity(){
     private lateinit var etLastName: EditText
     private lateinit var etDOB: EditText
     private lateinit var etPhone: EditText
+    private lateinit var etStreetAddress: EditText
+    private lateinit var etWard: EditText
     private lateinit var etCity: EditText
     private lateinit var etState: EditText
     private lateinit var etCountry: EditText
@@ -65,6 +68,8 @@ class AddPatientActivity : AppCompatActivity(){
         etMiddleName = findViewById(R.id.etMiddleName)
         etLastName = findViewById(R.id.etLastName)
 
+        etStreetAddress = findViewById(R.id.etStreetAddress)
+        etWard = findViewById(R.id.etWard)
         etCity = findViewById(R.id.etCity)
         etState = findViewById(R.id.etState)
         etCountry = findViewById(R.id.etCountry)
@@ -113,13 +118,16 @@ class AddPatientActivity : AppCompatActivity(){
         val dob = etDOB.text.toString()
         val phone = etPhone.text.toString()
         val education = spinnerEducationLevel.selectedItem.toString()
+        val maritalStatus = spinnerMaritalStatus.selectedItem.toString()
+        val streetAddress = etStreetAddress.text.toString()
+        val ward = etWard.text.toString()
         val city = etCity.text.toString()
         val state = etState.text.toString()
         val country = etCountry.text.toString()
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentDate()
-        return Patient(id, firstName, middleName, lastName, fullName, gender, dob, phone, education, city, state, country, latitude, longitude, date)
+        return Patient(id, firstName, middleName, lastName, fullName, gender, dob, phone, education, maritalStatus, streetAddress, ward, city, state, country, latitude, longitude, date)
     }
 
     @AddTrace(name = "saveToLocalDBAddPatientActivity", enabled = true /* optional */)
@@ -139,7 +147,7 @@ class AddPatientActivity : AppCompatActivity(){
         Log.d(TAG, patient.toString())
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN,"")
         val panelService = DjangoInterface.create(this)
-        val call = panelService.addPatient("JWT $token", patient.id, patient.first_name, patient.last_name, patient.gender, patient.phone, patient.middle_name, patient.dob,  patient.education, patient.city, patient.state, patient.country, patient.latitude, patient.longitude)
+        val call = panelService.addPatient("JWT $token", patient.id, patient.first_name, patient.last_name, patient.gender, patient.phone, patient.middle_name, patient.dob,  patient.education, patient.street_address, patient.ward, patient.city, patient.state, patient.country, patient.latitude, patient.longitude)
         call.enqueue(object: Callback<Patient>{
             override fun onFailure(call: Call<Patient>, t: Throwable) {
                 Log.d("onFailure", t.toString())
@@ -173,6 +181,7 @@ class AddPatientActivity : AppCompatActivity(){
                     loading.visibility = View.GONE
                 }else{
                     Log.d(TAG, response.code().toString())
+                    Log.d(TAG, Gson().toJson(response.body()).toString())
                     tvErrorMessage.text = response.message()
                     tvErrorMessage.visibility = View.VISIBLE
                     loading.visibility = View.GONE
@@ -196,5 +205,10 @@ class AddPatientActivity : AppCompatActivity(){
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        finish()
     }
 }

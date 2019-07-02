@@ -40,7 +40,7 @@ class PatientAdapter(var context: Context, private var data:List<Patient>, var l
         }
         fun bindPatient(patient: Patient){
             tvName.text = patient.full_name
-            //tvAddress.text = patient.address
+            tvAddress.text = patient.street_address
             btnAddNewEncounter.setOnClickListener {
                 patientClickListener.onAddEncounterButtonClick(patient)
             }

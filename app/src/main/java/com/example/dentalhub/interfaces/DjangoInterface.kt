@@ -27,13 +27,15 @@ interface DjangoInterface {
         @Field("gender") gender:String,
         @Field("phone") phone:String,
         @Field("middle_name") middleName: String?,
-        @Field("dob") dob:String?,
-        @Field("education") education:String?,
-        @Field("city") city:String?,
-        @Field("state") state:String?,
-        @Field("country") country:String?,
-        @Field("latitude") latitude:String?,
-        @Field("longitude") longitude:String?
+        @Field("dob") dob:String,
+        @Field("education") education:String,
+        @Field("street_address") street_address: String,
+        @Field("ward") ward: String,
+        @Field("city") city:String,
+        @Field("state") state:String,
+        @Field("country") country:String,
+        @Field("latitude") latitude:String,
+        @Field("longitude") longitude:String
     ):Call<Patient>
 
     @GET("patients")
