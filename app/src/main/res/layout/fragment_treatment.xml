@@ -1,98 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="8dp"
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 >
-    <TextView
-            android:text="Treatment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-    />
     <LinearLayout
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <info.hoang8f.android.segmented.SegmentedGroup
-                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/segmented2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
-                segmentedgroup:sc_border_width="2dp"
-                segmentedgroup:sc_corner_radius="10dp">
-
-            <RadioButton
-                    android:id="@+id/button21"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+    >
+        <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <info.hoang8f.android.segmented.SegmentedGroup
+                    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/segmented2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SDF"
-                    style="@style/RadioButton"/>
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    segmentedgroup:sc_border_width="2dp"
+                    segmentedgroup:sc_corner_radius="10dp">
 
-            <RadioButton
-                    android:id="@+id/button23"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SEAL"
-                    style="@style/RadioButton"/>
-            <RadioButton
-                    android:id="@+id/button24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ART"
-                    style="@style/RadioButton"/>
-            <RadioButton
-                    android:id="@+id/button25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="EXO"
-                    style="@style/RadioButton"/>
-            <RadioButton
-                    android:id="@+id/button26"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="UNTR"
-                    style="@style/RadioButton"/>
-        </info.hoang8f.android.segmented.SegmentedGroup>
-    </LinearLayout>
+                <RadioButton
+                        android:id="@+id/button21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SDF"
+                        style="@style/RadioButton"/>
+
+                <RadioButton
+                        android:id="@+id/button23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SEAL"
+                        style="@style/RadioButton"/>
+                <RadioButton
+                        android:id="@+id/button24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ART"
+                        style="@style/RadioButton"/>
+                <RadioButton
+                        android:id="@+id/button25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EXO"
+                        style="@style/RadioButton"/>
+                <RadioButton
+                        android:id="@+id/button26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UNTR"
+                        style="@style/RadioButton"/>
+            </info.hoang8f.android.segmented.SegmentedGroup>
+        </LinearLayout>
 
 
-
-    <LinearLayout android:orientation="horizontal"
-                  android:layout_width="match_parent" android:layout_height="wrap_content">
-        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="18"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="17"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="16"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="15"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="14"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="13"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="12"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="11"/>
-        </LinearLayout>
+        <LinearLayout android:orientation="horizontal"
+                      android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="18"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="17"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="16"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="15"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="14"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="13"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="12"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="11"/>
+            </LinearLayout>
             <LinearLayout android:layout_width="48dp" android:layout_height="48dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:text="21"/>
@@ -198,32 +197,52 @@
 
             </LinearLayout>
         </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                <TextView
-                        android:text="@string/fv_applied"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                <TextView
-                        android:text="@string/treatment_plan_complete"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
-                <TextView
-                        android:text="@string/notes"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                          android:lines="3"
-                />
-            </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/fv_applied"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/treatment_plan_complete"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/notes"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:lines="3"
+            />
+        </LinearLayout>
+        <LinearLayout
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <Button
+                    android:layout_weight="0.5"
+                    android:text="@string/back"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+            />
+            <Button
+                    android:layout_weight="0.5"
+                    android:text="@string/next"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+            />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

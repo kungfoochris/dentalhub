@@ -13,7 +13,7 @@
     <string name="add_patient">Add Patient</string>
     <string name="search">Search</string>
     <string name="logout">Logout</string>
-    <string name="api_url">http://192.168.0.4/api/v1/</string>
+    <string name="api_url">http://192.168.0.7/api/v1/</string>
     <string name="login">Login</string>
     <string name="error_http_500">Server could not handle your request.</string>
     <string name="error_http_404">Remote resource not found.</string>
@@ -97,4 +97,7 @@
     <string name="caries_risk">Caries Risk</string>
     <string name="decayed_primary_teeth">Decayed Primary Teeth</string>
     <string name="decayed_permanent_teeth">Decayed Permanent Teeth</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
 </resources>

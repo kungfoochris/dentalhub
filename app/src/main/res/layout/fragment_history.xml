@@ -8,37 +8,57 @@
 >
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox
+                    android:id="@+id/checkBoxBloodDisorderOrBleedingProblem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             <TextView
+                    android:labelFor="@+id/checkBoxBloodDisorderOrBleedingProblem"
                     android:text="@string/blood_disorder_or_bleeding_problem"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox
+                    android:id="@+id/checkBoxDiabetes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             <TextView
                     android:text="@string/diabetes"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    android:labelFor="@+id/checkBoxDiabetes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox
+                    android:id="@+id/checkBoxLiverProblem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             <TextView
+                    android:labelFor="@+id/checkBoxLiverProblem"
                     android:text="@string/liver_problem"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox
+                    android:id="@+id/checkBoxRheumaticFever"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             <TextView
+                    android:labelFor="@+id/checkBoxRheumaticFever"
                     android:text="@string/rheumatic_fever"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -48,9 +68,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <CheckBox
+                android:id="@+id/checkBoxSeizuersOrEpilepsy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView
+                android:labelFor="@+id/checkBoxSeizuersOrEpilepsy"
                 android:text="@string/seizures_or_epilepsy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -60,9 +82,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <CheckBox
+                    android:id="@+id/checkBoxHepatitisBOrC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <TextView
+                    android:labelFor="@+id/checkBoxHepatitisBOrC"
                     android:text="@string/hepatitis_b_or_c"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -71,10 +95,13 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <CheckBox android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
+            <CheckBox
+                    android:id="@+id/checkBoxHIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             <TextView
                     android:text="@string/hiv"
+                    android:labelFor="@+id/checkBoxHIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -95,9 +122,13 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox
+                    android:id="@+id/checkBoxNoUnderlyingMedicalRecord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             <TextView
                     android:text="@string/no_underlying_medical_record"
+                    android:labelFor="@+id/checkBoxNoUnderlyingMedicalRecord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -116,22 +147,47 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox
+                    android:id="@+id/checkBoxNotTakingAnyMedications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             <TextView
                     android:text="@string/not_taking_any_medications"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    android:labelFor="@+id/checkBoxNotTakingAnyMedications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
         </LinearLayout>
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
             <TextView
                     android:id="@+id/tvAllergies"
                     android:text="@string/allergies"
+                    android:labelFor="@+id/tvAllergies"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"/>
             <EditText
                     android:labelFor="@+id/tvAllergies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
-    </LinearLayout>
+            <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <Button
+                        android:layout_weight="0.5"
+                        android:text="@string/back"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                />
+                <Button
+                        android:layout_weight="0.5"
+                        android:text="@string/next"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                />
 
+            </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 </FrameLayout>
