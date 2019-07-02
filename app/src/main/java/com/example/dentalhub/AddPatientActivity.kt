@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class AddPatientActivity : AppCompatActivity(){
 
@@ -109,7 +110,7 @@ class AddPatientActivity : AppCompatActivity(){
     @AddTrace(name = "createPatientAddPatientActivity", enabled = true /* optional */)
     private fun createPatient() : Patient{
         Log.d(TAG, "createPatient()")
-        val id=""
+        val id= UUID.randomUUID().toString()
         val firstName = etFirstName.text.toString()
         val middleName = etMiddleName.text.toString()
         val lastName = etLastName.text.toString()
