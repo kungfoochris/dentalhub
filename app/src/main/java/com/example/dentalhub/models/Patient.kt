@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class Patient(
     var id:String,
     var first_name: String,
-    var middle_name: String?,
+    var middle_name: String,
     var last_name: String,
     var full_name: String,
     var gender: String,
