@@ -85,26 +85,26 @@ class DentalHubDBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NA
                 val latitude = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_LATITUDE))
                 val longitude = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_LONGITUDE))
                 val date = cursor.getString(cursor.getColumnIndex(DBContract.PatientEntry.COLUMN_DATE))
-                val tmpTransit = Patient(
-                    id,
-                    firstName,
-                    middleName,
-                    lastName,
-                    fullName,
-                    gender,
-                    dob,
-                    phone,
-                    education,
-                    maritalStatus,
-                    streetAddress,
-                    ward,
-                    city,
-                    state,
-                    country,
-                    latitude,
-                    longitude,
-                    date)
-                patients.add(tmpTransit)
+//                val tmpTransit = Patient(
+//                    id,
+//                    firstName,
+//                    middleName,
+//                    lastName,
+//                    fullName,
+//                    gender,
+//                    dob,
+//                    phone,
+//                    education,
+//                    maritalStatus,
+//                    streetAddress,
+//                    ward,
+//                    city,
+//                    state,
+//                    country,
+//                    latitude,
+//                    longitude,
+//                    date)
+                //patients.add(tmpTransit)
                 cursor.moveToNext()
             }
         }

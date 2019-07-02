@@ -8,12 +8,14 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.dbhelpers.DentalHubDBHelper
+import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
-import com.example.dentalhub.models.Patient
+//import com.example.dentalhub.models.Patient
 import com.example.dentalhub.utils.AdapterHelper
 import com.example.dentalhub.utils.DateHelper
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
+import io.objectbox.Box
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,6 +45,8 @@ class AddPatientActivity : AppCompatActivity(){
     private lateinit var context: Context
     private lateinit var dbHelper: DentalHubDBHelper
     private val TAG = "AddPatientActivity"
+
+    private lateinit var patientsBox: Box<Patient>
 
 //    private lateinit var googleApiClient:GoogleApiClient
 //    private lateinit var locationRequest:LocationRequest
@@ -86,6 +90,8 @@ class AddPatientActivity : AppCompatActivity(){
         spinnerMaritalStatus.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.martial_status_list).toList())
         spinnerEducationLevel.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.education_level_list).toList())
 
+        patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
+
         btnAddPatient.setOnClickListener {
             if(isFormValid()){
                 savePatient()
@@ -110,11 +116,10 @@ class AddPatientActivity : AppCompatActivity(){
     @AddTrace(name = "createPatientAddPatientActivity", enabled = true /* optional */)
     private fun createPatient() : Patient{
         Log.d(TAG, "createPatient()")
-        val id= UUID.randomUUID().toString()
+        val id: Long= 0
         val firstName = etFirstName.text.toString()
         val middleName = etMiddleName.text.toString()
         val lastName = etLastName.text.toString()
-        val fullName = "$firstName $middleName $lastName"
         val gender = spinnerGender.selectedItem.toString()
         val dob = etDOB.text.toString()
         val phone = etPhone.text.toString()
@@ -128,14 +133,14 @@ class AddPatientActivity : AppCompatActivity(){
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentDate()
-        return Patient(id, firstName, middleName, lastName, fullName, gender, dob, phone, education, maritalStatus, streetAddress, ward, city, state, country, latitude, longitude, date)
+        return Patient(id, firstName, middleName, lastName, gender, dob, phone, education, maritalStatus, streetAddress, ward, city, state, country, latitude, longitude, date)
     }
 
     @AddTrace(name = "saveToLocalDBAddPatientActivity", enabled = true /* optional */)
     private fun saveToLocalDB(patient: Patient) {
         Log.d(TAG, "saveToLocalDB")
-        dbHelper.addPatient(patient)
-
+//        dbHelper.addPatient(patient)
+        patientsBox.put(patient)
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
         viewPatientIntent.putExtra("patient", patient)
         startActivity(viewPatientIntent)

@@ -9,7 +9,6 @@ data class Patient(
     var first_name: String,
     var middle_name: String,
     var last_name: String,
-    var full_name: String,
     var gender: String,
     var dob: String,
     var phone: String,

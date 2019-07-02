@@ -2,8 +2,9 @@ package com.example.dentalhub.interfaces
 
 import android.content.Context
 import com.example.dentalhub.R
+import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.LoginResponse
-import com.example.dentalhub.models.Patient
+//import com.example.dentalhub.models.Patient
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -21,7 +22,7 @@ interface DjangoInterface {
     @POST("patients")
     fun addPatient(
         @Header("Authorization") token: String,
-        @Field("id") id:String,
+        @Field("id") id:Long,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
         @Field("gender") gender:String,

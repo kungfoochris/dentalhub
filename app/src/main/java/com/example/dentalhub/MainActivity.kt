@@ -20,11 +20,13 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.dbhelpers.DentalHubDBHelper
+import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
-import com.example.dentalhub.models.Patient
 import com.example.dentalhub.services.LocationTrackerService
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
+import io.objectbox.Box
+import io.objectbox.query.Query
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,6 +42,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var dividerItemDecoration: DividerItemDecoration
     private lateinit var allPatients: List<Patient>
+
+    private lateinit var patientsBox: Box<Patient>
+    private lateinit var patientsQuery: Query<Patient>
+
     private val TAG = "MainActivity"
 
     // lists for permissions
@@ -79,6 +85,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupUI() {
         loading = findViewById(R.id.loading)
         recyclerView = findViewById(R.id.recyclerView)
+
+        patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
+        patientsQuery = patientsBox.query().build()
+
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
@@ -120,7 +130,8 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
         Log.d(TAG,"listPatientsFromLocalDB()")
-        allPatients = dbHelper.readAllPatients()
+//        allPatients = dbHelper.readAllPatients()
+        allPatients = patientsQuery.find()
         patientAdapter = PatientAdapter(
             context,
             allPatients,

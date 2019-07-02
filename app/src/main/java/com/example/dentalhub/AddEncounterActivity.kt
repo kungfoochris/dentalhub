@@ -6,7 +6,7 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.dentalhub.adapters.FormPageAdapter
-import com.example.dentalhub.models.Patient
+import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.utils.AdapterHelper
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
@@ -29,7 +29,7 @@ class AddEncounterActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         patient = intent.getParcelableExtra("patient")
-        title = patient.full_name
+        title = patient.fullName()
         initUI()
     }
 

@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dentalhub.models.Patient
+import com.example.dentalhub.entities.Patient
 import com.google.firebase.perf.metrics.AddTrace
 
 class ViewPatientActivity: AppCompatActivity(){
@@ -29,7 +29,7 @@ class ViewPatientActivity: AppCompatActivity(){
         patient = intent.getParcelableExtra("patient")
         context = this
 
-        title = patient.full_name
+        title = patient.fullName()
         initUI()
     }
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
@@ -48,7 +48,7 @@ class ViewPatientActivity: AppCompatActivity(){
     }
 
     private fun updateInfo() {
-        tvName.text = patient.full_name
+        tvName.text = patient.fullName()
         //tvAddress.text = patient.address
     }
 
