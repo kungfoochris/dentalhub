@@ -103,4 +103,7 @@
     <string name="street_address">Street Address</string>
     <string name="ward">Ward</string>
     <string name="delay">Delay</string>
+    <string name="select_location">Select location</string>
+    <string name="select_activity">Select activity</string>
+    <string name="go">Go</string>
 </resources>

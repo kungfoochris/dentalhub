@@ -3,6 +3,7 @@ package com.example.dentalhub.entities
 import android.os.Parcelable
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
+import io.objectbox.relation.ToMany
 import kotlinx.android.parcel.Parcelize
 
 @Entity
@@ -24,8 +25,8 @@ class Patient(
     var country: String,
     var latitude: String,
     var longitude: String,
-    var date: String,
-    var encounter: List<Encounter>?
+    var date: String
+    //var encounters: ToMany<Encounter>?
 ): Parcelable{
     fun address(): String{
         return "$street_address $ward, $city, $country"

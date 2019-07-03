@@ -17,16 +17,12 @@
     },
     {
       "id": "2:2571916509638577249",
-      "lastPropertyId": "12:3889606543263495392",
+      "lastPropertyId": "13:2239500116403521783",
       "name": "Screening",
       "properties": [
         {
           "id": "1:8640618690927931720",
           "name": "id"
-        },
-        {
-          "id": "2:2232879746442699775",
-          "name": "encounter_id"
         },
         {
           "id": "3:8154452984933085580",
@@ -67,22 +63,23 @@
         {
           "id": "12:3889606543263495392",
           "name": "need_extraction"
+        },
+        {
+          "id": "13:2239500116403521783",
+          "indexId": "1:2658230096681459570",
+          "name": "encounterId"
         }
       ],
       "relations": []
     },
     {
       "id": "3:3764408514365609867",
-      "lastPropertyId": "8:8680001336479656773",
+      "lastPropertyId": "9:7147913282837370157",
       "name": "Referral",
       "properties": [
         {
           "id": "1:4770143931339891847",
           "name": "id"
-        },
-        {
-          "id": "2:5570312399445273237",
-          "name": "encounter_id"
         },
         {
           "id": "3:8374898205045782907",
@@ -107,13 +104,18 @@
         {
           "id": "8:8680001336479656773",
           "name": "other"
+        },
+        {
+          "id": "9:7147913282837370157",
+          "indexId": "2:7447882928625921356",
+          "name": "encounterId"
         }
       ],
       "relations": []
     },
     {
       "id": "4:1157577452900899492",
-      "lastPropertyId": "5:2490017257661067192",
+      "lastPropertyId": "6:746950489993482592",
       "name": "Encounter",
       "properties": [
         {
@@ -125,16 +127,13 @@
           "name": "encounter_type"
         },
         {
-          "id": "3:1524371331100765744",
-          "name": "patient_id"
-        },
-        {
-          "id": "4:2822378520246171252",
-          "name": "author_id"
-        },
-        {
           "id": "5:2490017257661067192",
           "name": "date"
+        },
+        {
+          "id": "6:746950489993482592",
+          "indexId": "3:5096132104544190073",
+          "name": "encounterId"
         }
       ],
       "relations": []
@@ -217,7 +216,7 @@
     },
     {
       "id": "6:2543398448923752262",
-      "lastPropertyId": "2:6547624088366207252",
+      "lastPropertyId": "3:762436129429761753",
       "name": "Treatment",
       "properties": [
         {
@@ -225,24 +224,21 @@
           "name": "id"
         },
         {
-          "id": "2:6547624088366207252",
-          "name": "encounter_id"
+          "id": "3:762436129429761753",
+          "indexId": "4:6942238253600329514",
+          "name": "encounterId"
         }
       ],
       "relations": []
     },
     {
       "id": "7:4108219408809555697",
-      "lastPropertyId": "13:6297053603229072385",
+      "lastPropertyId": "14:2290017671728598029",
       "name": "History",
       "properties": [
         {
           "id": "1:1293343221480528622",
           "name": "id"
-        },
-        {
-          "id": "2:1884805592215469750",
-          "name": "encounter_id"
         },
         {
           "id": "3:6355639530598361297",
@@ -287,20 +283,34 @@
         {
           "id": "13:6297053603229072385",
           "name": "allergies"
+        },
+        {
+          "id": "14:2290017671728598029",
+          "indexId": "5:2133858555126260375",
+          "name": "encounterId"
         }
       ],
       "relations": []
     }
   ],
   "lastEntityId": "7:4108219408809555697",
-  "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastIndexId": "5:2133858555126260375",
+  "lastRelationId": "1:4855156061007441450",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
-  "retiredRelationUids": [],
+  "retiredPropertyUids": [
+    1524371331100765744,
+    2822378520246171252,
+    6547624088366207252,
+    2232879746442699775,
+    5570312399445273237,
+    1884805592215469750
+  ],
+  "retiredRelationUids": [
+    4855156061007441450
+  ],
   "version": 1
 }

@@ -71,3 +71,4 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt' // if using Kotlin
 apply plugin: 'io.objectbox' // apply last
+

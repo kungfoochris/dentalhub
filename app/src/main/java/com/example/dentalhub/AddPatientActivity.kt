@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.utils.AdapterHelper

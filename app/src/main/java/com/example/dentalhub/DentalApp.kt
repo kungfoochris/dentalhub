@@ -18,6 +18,10 @@ class DentalApp : MultiDexApplication(){
     companion object Factory {
         private const val PREF_FILE_NAME = "dentalhub"
         var location: Location = Location("0", "0")
+
+        var geography: String = ""
+        var activity: String = ""
+
         fun saveToPreference(context: Context, preferenceName: String, preferenceValue: String) {
             val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
