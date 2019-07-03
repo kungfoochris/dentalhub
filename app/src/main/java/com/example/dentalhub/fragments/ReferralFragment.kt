@@ -5,19 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
 
 class ReferralFragment: Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
+
+    private lateinit var checkBoxNoReferral: CheckBox
+    private lateinit var checkBoxHealthPost: CheckBox
+    private lateinit var checkBoxHygienist: CheckBox
+    private lateinit var checkBoxDentist: CheckBox
+    private lateinit var checkBoxGeneralPhysician: CheckBox
+    private lateinit var checkBoxOther: CheckBox
+
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +29,14 @@ class ReferralFragment: Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_referral, container, false)
+
+        checkBoxNoReferral = view.findViewById(R.id.checkBoxNoReferral)
+        checkBoxHealthPost = view.findViewById(R.id.checkBoxHealthPost)
+        checkBoxHygienist = view.findViewById(R.id.checkBoxHygienist)
+        checkBoxDentist = view.findViewById(R.id.checkBoxDentist)
+        checkBoxGeneralPhysician = view.findViewById(R.id.checkBoxGeneralPhysician)
+        checkBoxOther = view.findViewById(R.id.checkBoxOther)
+
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
         return view

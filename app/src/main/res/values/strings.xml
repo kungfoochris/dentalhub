@@ -52,6 +52,12 @@
         <item>graduate</item>
     </string-array>
 
+    <string-array name="carries_risk">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+
     <string-array name="encounter_reason">
         <item>Checkup / Screening</item>
         <item>Relief of Pain</item>

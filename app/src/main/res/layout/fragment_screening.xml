@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <EditText
+                android:id="@+id/etDecayedPrimaryTeeth"
                 android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <EditText
+                android:id="@+id/etDecayedPermanentTeeth"
                 android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <CheckBox
+                android:id="@+id/checkBoxCavityPermanentTooth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -75,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <CheckBox
+                android:id="@+id/checkBoxCavityPermanentAnterior"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -87,6 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <CheckBox
+                android:id="@+id/checkBoxActiveInfection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -99,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <CheckBox
+                android:id="@+id/checkBoxNeedARTFilling"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -111,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <CheckBox
+                android:id="@+id/checkBoxNeedSealant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -123,6 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <CheckBox
+                android:id="@+id/checkBoxNeedSDF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -135,6 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <CheckBox
+                android:id="@+id/checkBoxNeedExtraction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
