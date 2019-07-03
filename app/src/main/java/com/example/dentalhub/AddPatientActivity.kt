@@ -7,10 +7,8 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dentalhub.dbhelpers.DentalHubDBHelper
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
-//import com.example.dentalhub.models.Patient
 import com.example.dentalhub.utils.AdapterHelper
 import com.example.dentalhub.utils.DateHelper
 import com.google.firebase.perf.metrics.AddTrace
@@ -43,7 +41,6 @@ class AddPatientActivity : AppCompatActivity(){
     private lateinit var tvErrorMessage: TextView
 
     private lateinit var context: Context
-    private lateinit var dbHelper: DentalHubDBHelper
     private val TAG = "AddPatientActivity"
 
     private lateinit var patientsBox: Box<Patient>
@@ -58,8 +55,6 @@ class AddPatientActivity : AppCompatActivity(){
 
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        dbHelper = DentalHubDBHelper(context)
 
         initUI()
     }

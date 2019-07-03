@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.dentalhub.adapters.PatientAdapter
-import com.example.dentalhub.dbhelpers.DentalHubDBHelper
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.services.LocationTrackerService
@@ -35,7 +34,6 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var loading: ProgressBar
-    private lateinit var dbHelper: DentalHubDBHelper
 
     private lateinit var context: Context
     private lateinit var patientAdapter: PatientAdapter
@@ -61,8 +59,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         context = this
-
-        dbHelper = DentalHubDBHelper(context)
 
         // we add permissions we need to request location of the users
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
