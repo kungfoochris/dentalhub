@@ -1,20 +1,16 @@
 package com.example.dentalhub.utils
 
-import android.widget.Toast
 import android.app.Activity
-import com.google.android.gms.location.LocationSettingsStatusCodes
-import android.content.IntentSender
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.common.api.ApiException
 import android.content.Context
-import android.location.LocationManager
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
 import android.content.Context.LOCATION_SERVICE
+import android.content.IntentSender
+import android.location.LocationManager
 import android.util.Log
+import android.widget.Toast
 import com.example.dentalhub.Constants
-import com.google.android.gms.location.SettingsClient
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 
 
 class GpsUtils(private val context: Context) {

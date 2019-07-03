@@ -5,16 +5,9 @@ import android.app.Service
 import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
 import android.util.Log
 import com.example.dentalhub.DentalApp
-import com.example.dentalhub.utils.GpsUtils
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import java.util.*
+import com.google.android.gms.location.*
 
 
 class LocationTrackerService: Service(){

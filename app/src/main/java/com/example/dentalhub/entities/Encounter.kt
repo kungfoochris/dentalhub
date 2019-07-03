@@ -12,5 +12,9 @@ class Encounter(
     var encounter_type: String,
     var patient_id: Int,
     var author_id: Int,
-    var date: String
+    var date: String,
+    var history: History?,
+    var screening: Screening?,
+    var treatment: Treatment?,
+    var referral: Referral?
 ): Parcelable

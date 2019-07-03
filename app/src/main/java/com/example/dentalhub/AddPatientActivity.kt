@@ -14,11 +14,9 @@ import com.example.dentalhub.utils.DateHelper
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
 import io.objectbox.Box
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class AddPatientActivity : AppCompatActivity(){
 

@@ -3,7 +3,10 @@ package com.example.dentalhub.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.dentalhub.fragments.*
+import com.example.dentalhub.fragments.HistoryFragment
+import com.example.dentalhub.fragments.ReferralFragment
+import com.example.dentalhub.fragments.ScreeningFragment
+import com.example.dentalhub.fragments.TreatmentFragment
 
 class FormPageAdapter(fm: FragmentManager): FragmentPagerAdapter(fm){
 

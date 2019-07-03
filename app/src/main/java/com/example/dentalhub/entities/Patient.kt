@@ -5,8 +5,8 @@ import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 @Entity
+@Parcelize
 class Patient(
     @Id var id: Long,
     var first_name: String,
@@ -24,7 +24,8 @@ class Patient(
     var country: String,
     var latitude: String,
     var longitude: String,
-    var date: String
+    var date: String,
+    var encounter: List<Encounter>?
 ): Parcelable{
     fun address(): String{
         return "$street_address $ward, $city, $country"
