@@ -11,7 +11,7 @@ import com.example.dentalhub.utils.AdapterHelper
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 
-class AddEncounterActivity : AppCompatActivity() {
+class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator{
 
     private lateinit var pager: ViewPager
     private lateinit var tabLayout: TabLayout
@@ -19,6 +19,7 @@ class AddEncounterActivity : AppCompatActivity() {
     private lateinit var patient: Patient
 
     private lateinit var context: Context
+    private var position = 0
 
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,5 +55,22 @@ class AddEncounterActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
+    }
+
+    override fun goBack() {
+        if(pager.currentItem == 0){
+            pager.currentItem = 3
+        }else{
+            pager.currentItem -= 1
+        }
+
+    }
+
+    override fun goForward() {
+        if(pager.currentItem == 3){
+            pager.currentItem = 0
+        }else {
+            pager.currentItem += 1
+        }
     }
 }
