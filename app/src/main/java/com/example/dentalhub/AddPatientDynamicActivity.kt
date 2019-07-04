@@ -41,7 +41,6 @@ class AddPatientDynamicActivity : AppCompatActivity(){
         fields.add(FormField("seekbar", "Range", "range", "I accept", listOf("20")))
         fields.add(FormField("calendar", "Select Date", "date", "Select date",null))
         fields.add(FormField("ratingbar", "Rating", "rating", "Rating",listOf("5","1","0")))
-
     }
 
     private fun setupUI() {

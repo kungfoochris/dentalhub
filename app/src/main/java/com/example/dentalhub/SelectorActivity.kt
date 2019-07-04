@@ -42,11 +42,8 @@ class SelectorActivity : AppCompatActivity() {
         spinnerActivity = findViewById(R.id.spinnerActivity)
         btnGo = findViewById(R.id.btnGo)
 
-
         setupActivities()
         setupGeograhies()
-
-
 
         btnGo.setOnClickListener {
             DentalApp.geography = spinnerLocation.selectedItem.toString()

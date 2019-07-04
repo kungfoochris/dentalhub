@@ -44,9 +44,6 @@ class AddPatientActivity : AppCompatActivity(){
 
     private lateinit var patientsBox: Box<Patient>
 
-//    private lateinit var googleApiClient:GoogleApiClient
-//    private lateinit var locationRequest:LocationRequest
-
     @AddTrace(name = "onCreateAddPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,7 +130,6 @@ class AddPatientActivity : AppCompatActivity(){
     @AddTrace(name = "saveToLocalDBAddPatientActivity", enabled = true /* optional */)
     private fun saveToLocalDB(patient: Patient) {
         Log.d(TAG, "saveToLocalDB")
-//        dbHelper.addPatient(patient)
         patientsBox.put(patient)
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
         viewPatientIntent.putExtra("patient", patient)
@@ -187,9 +183,7 @@ class AddPatientActivity : AppCompatActivity(){
                     loading.visibility = View.GONE
                 }
             }
-
         })
-
     }
 
     @AddTrace(name = "isFormValidAddPatientActivity", enabled = true /* optional */)
@@ -202,6 +196,7 @@ class AddPatientActivity : AppCompatActivity(){
         finish()
         return super.onSupportNavigateUp()
     }
+
     override fun onBackPressed() {
         finish()
         super.onBackPressed()

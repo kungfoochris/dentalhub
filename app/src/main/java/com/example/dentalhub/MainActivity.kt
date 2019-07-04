@@ -90,9 +90,8 @@ class MainActivity : AppCompatActivity() {
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         val divider = RecyclerViewItemSeparator(20)
         recyclerView.addItemDecoration(divider)
-
-
     }
+
     private fun permissionsToRequest(wantedPermissions: java.util.ArrayList<String>): java.util.ArrayList<String> {
         val result = java.util.ArrayList<String>()
 
@@ -126,7 +125,6 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
         Log.d(TAG,"listPatientsFromLocalDB()")
-//        allPatients = dbHelper.readAllPatients()
         allPatients = patientsQuery.find()
         patientAdapter = PatientAdapter(
             context,

@@ -50,7 +50,6 @@ class LoginActivity : AppCompatActivity() {
             if(formIsValid()){
                 processLogin()
             }
-
         }
     }
 

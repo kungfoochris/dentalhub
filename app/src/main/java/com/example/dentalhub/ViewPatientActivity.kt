@@ -17,7 +17,11 @@ class ViewPatientActivity: AppCompatActivity(){
     private lateinit var patient: Patient
 
     private lateinit var btnAddNewEncounter: Button
-    private lateinit var tvName: TextView
+
+    private lateinit var tvAge: TextView
+    private lateinit var tvGender: TextView
+    private lateinit var tvEducation: TextView
+    private lateinit var tvPhone: TextView
     private lateinit var tvAddress: TextView
 
     @AddTrace(name = "onCreateViewPatientActivity", enabled = true /* optional */)
@@ -32,10 +36,15 @@ class ViewPatientActivity: AppCompatActivity(){
         title = patient.fullName()
         initUI()
     }
+
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
     private fun initUI() {
-        tvName = findViewById(R.id.tvName)
         tvAddress = findViewById(R.id.tvAddress)
+        tvAge = findViewById(R.id.tvAge)
+        tvGender = findViewById(R.id.tvGender)
+        tvPhone = findViewById(R.id.tvPhone)
+        tvEducation = findViewById(R.id.tvEducation)
+
         btnAddNewEncounter = findViewById(R.id.btnAddNewEncounter)
 
         updateInfo()
@@ -48,14 +57,18 @@ class ViewPatientActivity: AppCompatActivity(){
     }
 
     private fun updateInfo() {
-        tvName.text = patient.fullName()
-        //tvAddress.text = patient.address
+        tvAge.text = "Age ${patient.dob}"
+        tvGender.text = "Gender: ${patient.gender}"
+        tvPhone.text = "Phone: ${patient.phone}"
+        tvEducation.text = "Education: ${patient.education}"
+        tvAddress.text = patient.address()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.view_patient,menu)
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.editPatient -> {
@@ -70,6 +83,7 @@ class ViewPatientActivity: AppCompatActivity(){
         finish()
         return super.onSupportNavigateUp()
     }
+
     override fun onBackPressed() {
         finish()
         super.onBackPressed()

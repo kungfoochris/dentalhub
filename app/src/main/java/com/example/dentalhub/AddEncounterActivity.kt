@@ -19,7 +19,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator{
     private lateinit var patient: Patient
 
     private lateinit var context: Context
-    private var position = 0
 
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +51,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator{
         finish()
         return super.onSupportNavigateUp()
     }
+
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
