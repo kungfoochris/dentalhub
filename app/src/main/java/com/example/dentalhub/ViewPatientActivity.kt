@@ -57,10 +57,10 @@ class ViewPatientActivity: AppCompatActivity(){
     }
 
     private fun updateInfo() {
-        tvAge.text = "Age ${patient.dob}"
-        tvGender.text = "Gender: ${patient.gender}"
-        tvPhone.text = "Phone: ${patient.phone}"
-        tvEducation.text = "Education: ${patient.education}"
+        tvAge.text = patient.dob
+        tvGender.text = patient.gender
+        tvPhone.text = patient.phone
+        tvEducation.text = patient.education
         tvAddress.text = patient.address()
     }
 
