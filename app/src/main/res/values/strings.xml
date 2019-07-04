@@ -36,6 +36,7 @@
     <string name="add_new_encounter">Add New Encounter</string>
     <string name="view_patient_detail">View Patient Detail</string>
 
+
     <string-array name="gender_list">
         <item>male</item>
         <item>female</item>
@@ -113,4 +114,16 @@
     <string name="select_activity">Select activity</string>
     <string name="go">Go</string>
     <string name="address">Address</string>
+    <string name="first_name_is_required">First Name is required.</string>
+    <string name="last_name_is_required">Last name is required.</string>
+    <string name="phone_is_required">Phone is required.</string>
+    <string name="valid_date_is_required">Valid date (format yyyy-MM-dd) is required.</string>
+    <string name="call">Call</string>
+    <string name="other_problem">Other Problem</string>
+    <string name="checkup_screening">Checkup / Screening</string>
+    <string name="relief_of_pain">Relief of pain</string>
+    <string name="continuation_of_treament_plan">Continuation of treament plan.</string>
+    <string name="continue_">Continue</string>
+    <string name="primary_reason_for_encounter">Primary reason for encounter</string>
+    <string name="ward_is_required">Ward number is required</string>
 </resources>

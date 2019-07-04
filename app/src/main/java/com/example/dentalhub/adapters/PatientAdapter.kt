@@ -17,8 +17,9 @@ class PatientAdapter(var context: Context, private var data:List<Patient>, var l
     private var patientClickListener: PatientClickListener = listener
 
     interface PatientClickListener{
-        fun onAddEncounterButtonClick(patient: Patient)
+        //fun onAddEncounterButtonClick(patient: Patient)
         fun onViewPatientDetailClick(patient: Patient)
+        fun onCallPatientClick(patient: Patient)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientViewHolder {
         val view = inflater.inflate(R.layout.single_patient, parent, false)
@@ -37,7 +38,7 @@ class PatientAdapter(var context: Context, private var data:List<Patient>, var l
         private var tvAddress: TextView = itemView.findViewById(R.id.tvAddress)
         private var tvPhone: TextView = itemView.findViewById(R.id.tvPhone)
         private var btnViewPatientDetail: Button = itemView.findViewById(R.id.btnViewPatientDetail)
-        private var btnAddNewEncounter: Button = itemView.findViewById(R.id.btnAddNewEncounter)
+        private var btnCall: Button = itemView.findViewById(R.id.btnCall)
         init {
 
         }
@@ -45,8 +46,9 @@ class PatientAdapter(var context: Context, private var data:List<Patient>, var l
             tvName.text = "${patient.first_name} ${patient.last_name}"
             tvAddress.text = ""
             tvPhone.text = patient.phone
-            btnAddNewEncounter.setOnClickListener {
-                patientClickListener.onAddEncounterButtonClick(patient)
+            btnCall.setOnClickListener {
+                //patientClickListener.onAddEncounterButtonClick(patient)
+                patientClickListener.onCallPatientClick(patient)
             }
             btnViewPatientDetail.setOnClickListener {
                 patientClickListener.onViewPatientDetailClick(patient)

@@ -33,8 +33,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <Button
-                android:id="@+id/btnAddNewEncounter"
-                android:text="@string/add_new_encounter"
+                android:id="@+id/btnCall"
+                android:text="@string/call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <Button

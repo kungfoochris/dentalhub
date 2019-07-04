@@ -9,6 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 class Geography(
     @Id var id: Long,
+    var remote_id: Long,
     var street_address: String,
     var city: String,
     var state: String,

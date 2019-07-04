@@ -3,13 +3,22 @@ package com.example.dentalhub
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.Patient
 import com.google.firebase.perf.metrics.AddTrace
+import android.widget.Toast
+import android.content.DialogInterface
+import com.example.dentalhub.entities.Encounter
+import com.example.dentalhub.entities.Encounter_
+import io.objectbox.Box
+
 
 class ViewPatientActivity: AppCompatActivity(){
 
@@ -23,6 +32,10 @@ class ViewPatientActivity: AppCompatActivity(){
     private lateinit var tvEducation: TextView
     private lateinit var tvPhone: TextView
     private lateinit var tvAddress: TextView
+
+    private lateinit var encounterBox: Box<Encounter>
+
+    val TAG = "ViewPatientActivity"
 
     @AddTrace(name = "onCreateViewPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +52,7 @@ class ViewPatientActivity: AppCompatActivity(){
 
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
     private fun initUI() {
+        encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         tvAddress = findViewById(R.id.tvAddress)
         tvAge = findViewById(R.id.tvAge)
         tvGender = findViewById(R.id.tvGender)
@@ -49,15 +63,23 @@ class ViewPatientActivity: AppCompatActivity(){
 
         updateInfo()
 
+        listEncounters()
+
         btnAddNewEncounter.setOnClickListener {
-            val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
-            addEncounterIntent.putExtra("patient", patient)
-            startActivity(addEncounterIntent)
+            displayEncounterTypeSelector()
+//            val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
+//            addEncounterIntent.putExtra("patient", patient)
+//            startActivity(addEncounterIntent)
         }
     }
 
+    private fun listEncounters() {
+        val en = patient.encounters
+        Log.d(TAG, en.toString())
+    }
+
     private fun updateInfo() {
-        tvAge.text = patient.dob
+        tvAge.text = patient.age()
         tvGender.text = patient.gender
         tvPhone.text = patient.phone
         tvEducation.text = patient.education
@@ -87,5 +109,31 @@ class ViewPatientActivity: AppCompatActivity(){
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
+    }
+
+    @AddTrace(name = "displaySearchDialogMainActivity", enabled = true /* optional */)
+    private fun displayEncounterTypeSelector() {
+
+        val grpName = arrayOf(getString(R.string.checkup_screening), getString(R.string.relief_of_pain), getString(R.string.continuation_of_treament_plan), getString(R.string.other_problem))
+        val encounterTypeChooser = AlertDialog.Builder(this)
+        encounterTypeChooser.setTitle(getString(R.string.primary_reason_for_encounter))
+        encounterTypeChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
+            openAddEncounter(grpName[item])
+            dialog.dismiss()// dismiss the alertbox after chose option
+        })
+        val alert = encounterTypeChooser.create()
+        alert.show()
+    }
+
+    private fun openAddEncounter(encounterType: String) {
+        val date = ""
+
+        val encounter = Encounter(0, encounterType, date)
+        encounter.patient?.target  = patient
+        encounterBox.put(encounter)
+
+        val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
+        addEncounterIntent.putExtra("patient", patient)
+        startActivity(addEncounterIntent)
     }
 }

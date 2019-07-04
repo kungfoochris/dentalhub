@@ -52,8 +52,9 @@ class BootstrapService: Service() {
                         200 -> {
                             val allGeographies: List<Geography> = response.body() as List<Geography>
                             for (geography in allGeographies){
-                                val a = geographiesBox.query().equal(Geography_.street_address,geography.street_address).build().findFirst()
+                                val a = geographiesBox.query().equal(Geography_.street_address,geography.street_address).equal(Geography_.city,geography.city).build().findFirst()
                                 if(a==null){
+                                    geography.remote_id = geography.id
                                     geography.id = 0
                                     geographiesBox.put(geography)
                                 }
@@ -86,6 +87,7 @@ class BootstrapService: Service() {
                             for (activity in allActivities){
                                 val a = activitiesBox.query().equal(Activity_.name,activity.name).build().findFirst()
                                 if(a == null){
+                                    activity.remote_id = activity.id
                                     activity.id = 0
                                     activitiesBox.put(activity)
                                 }

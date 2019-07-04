@@ -115,7 +115,7 @@
     },
     {
       "id": "4:1157577452900899492",
-      "lastPropertyId": "7:3951391305301815431",
+      "lastPropertyId": "6:746950489993482592",
       "name": "Encounter",
       "properties": [
         {
@@ -131,9 +131,9 @@
           "name": "date"
         },
         {
-          "id": "7:3951391305301815431",
-          "indexId": "6:1658603724963991253",
-          "name": "patientId"
+          "id": "6:746950489993482592",
+          "indexId": "3:5096132104544190073",
+          "name": "encounterId"
         }
       ],
       "relations": []
@@ -346,23 +346,20 @@
     }
   ],
   "lastEntityId": "9:9159543367338079152",
-  "lastIndexId": "6:1658603724963991253",
+  "lastIndexId": "5:2133858555126260375",
   "lastRelationId": "1:4855156061007441450",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
-  "retiredIndexUids": [
-    5096132104544190073
-  ],
+  "retiredIndexUids": [],
   "retiredPropertyUids": [
     1524371331100765744,
     2822378520246171252,
     6547624088366207252,
     2232879746442699775,
     5570312399445273237,
-    1884805592215469750,
-    746950489993482592
+    1884805592215469750
   ],
   "retiredRelationUids": [
     4855156061007441450

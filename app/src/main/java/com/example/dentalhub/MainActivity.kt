@@ -126,23 +126,23 @@ class MainActivity : AppCompatActivity() {
     private fun listPatientsFromLocalDB() {
         Log.d(TAG,"listPatientsFromLocalDB()")
         allPatients = patientsQuery.find()
-        patientAdapter = PatientAdapter(
-            context,
-            allPatients,
-            object : PatientAdapter.PatientClickListener {
-                override fun onAddEncounterButtonClick(patient: Patient) {
-                    val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
-                    addEncounterIntent.putExtra("patient", patient)
-                    startActivity(addEncounterIntent)
-                }
+        setupAdapter()
 
-                override fun onViewPatientDetailClick(patient: Patient) {
-                    val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-                    viewPatientIntent.putExtra("patient", patient)
-                    startActivity(viewPatientIntent)
-                }
+    }
 
-            })
+    private fun setupAdapter() {
+        patientAdapter = PatientAdapter(context, allPatients, object: PatientAdapter.PatientClickListener{
+            override fun onCallPatientClick(patient: Patient) {
+                // do the calling
+            }
+
+            override fun onViewPatientDetailClick(patient: Patient) {
+                val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
+                viewPatientIntent.putExtra("patient", patient)
+                startActivity(viewPatientIntent)
+            }
+
+        })
         recyclerView.adapter = patientAdapter
         patientAdapter.notifyDataSetChanged()
     }
@@ -165,23 +165,7 @@ class MainActivity : AppCompatActivity() {
                     when(response.code()){
                         200 -> {
                             allPatients = response.body() as List<Patient>
-                            patientAdapter = PatientAdapter(context, allPatients, object: PatientAdapter.PatientClickListener{
-                                override fun onViewPatientDetailClick(patient: Patient) {
-                                    val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-                                    viewPatientIntent.putExtra("patient", patient)
-                                    startActivity(viewPatientIntent)
-                                }
-
-                                override fun onAddEncounterButtonClick(patient: Patient) {
-                                    Log.d("BTN", patient.toString())
-                                    val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
-                                    addEncounterIntent.putExtra("patient", patient)
-                                    startActivity(addEncounterIntent)
-                                }
-
-                            })
-                            recyclerView.adapter = patientAdapter
-                            patientAdapter.notifyDataSetChanged()
+                           setupAdapter()
                         }
                     }
                 }

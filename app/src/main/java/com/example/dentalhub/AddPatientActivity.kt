@@ -12,6 +12,7 @@ import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.utils.AdapterHelper
 import com.example.dentalhub.utils.DateHelper
+import com.example.dentalhub.utils.DateValidator
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
 import io.objectbox.Box
@@ -188,6 +189,39 @@ class AddPatientActivity : AppCompatActivity(){
 
     @AddTrace(name = "isFormValidAddPatientActivity", enabled = true /* optional */)
     private fun isFormValid(): Boolean {
+        tvErrorMessage.visibility = View.GONE
+
+        val firstName = etFirstName.text.toString()
+        val lastName = etLastName.text.toString()
+        val phone = etPhone.text.toString()
+        val dob = etDOB.text.toString()
+        val ward = etWard.text.toString()
+
+        if(firstName.isBlank() || firstName.isEmpty() || firstName.length < 2){
+            tvErrorMessage.text = resources.getString(R.string.first_name_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
+        if(lastName.isBlank() || lastName.isEmpty() || lastName.length < 2){
+            tvErrorMessage.text = resources.getString(R.string.last_name_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
+        if(phone.isBlank() || phone.isEmpty() || phone.length < 6){
+            tvErrorMessage.text = resources.getString(R.string.phone_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
+        if(!DateValidator.isValid(dob)){
+            tvErrorMessage.text = resources.getString(R.string.valid_date_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
+        if(ward.isEmpty() || ward.isBlank()){
+            tvErrorMessage.text = resources.getString(R.string.ward_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
         return true
     }
 
