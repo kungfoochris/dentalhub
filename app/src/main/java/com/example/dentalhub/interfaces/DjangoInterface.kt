@@ -2,6 +2,8 @@ package com.example.dentalhub.interfaces
 
 import android.content.Context
 import com.example.dentalhub.R
+import com.example.dentalhub.entities.Activity
+import com.example.dentalhub.entities.Geography
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.LoginResponse
 //import com.example.dentalhub.models.Patient
@@ -44,6 +46,12 @@ interface DjangoInterface {
 
     @GET("patients")
     fun listPatients(@Header("Authorization") token: String) : Call<List<Patient>>
+
+    @GET("geography")
+    fun listGeographies():Call<List<Geography>>
+
+    @GET("activities")
+    fun listActivities():Call<List<Activity>>
 
     companion object Factory {
         fun create(context: Context): DjangoInterface {

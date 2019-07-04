@@ -68,6 +68,10 @@
                 android:name=".services.LocationTrackerService"
                 android:exported="false"
                 android:stopWithTask="true"/>
+        <service
+                android:name=".services.BootstrapService"
+                android:exported="false"
+                android:stopWithTask="false"/>
     </application>
 
 </manifest>
