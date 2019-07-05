@@ -8,18 +8,18 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-class History(
-    @Id var id: Long,
-    var encounter: ToOne<Encounter>,
-    var blood_disorder: Boolean,
-    var diabetes: Boolean,
-    var liver_problem: Boolean,
-    var rheumatic_fever: Boolean,
-    var seizuers_or_epilepsy: Boolean,
-    var hepatitis_b_or_c: Boolean,
-    var hiv: Boolean,
-    var other: String,
-    var no_underlying_medical_record: Boolean,
-    var medications: String,
-    var allergies: String
-): Parcelable
+class History: Parcelable{
+    @Id var id: Long = 0
+    var encounter: ToOne<Encounter>? = null
+    var blood_disorder: Boolean = false
+    var diabetes: Boolean = false
+    var liver_problem: Boolean = false
+    var rheumatic_fever: Boolean = false
+    var seizuers_or_epilepsy: Boolean = false
+    var hepatitis_b_or_c: Boolean = false
+    var hiv: Boolean = false
+    var other: String = ""
+    var no_underlying_medical_record: Boolean = false
+    var medications: String = ""
+    var allergies: String = ""
+}
