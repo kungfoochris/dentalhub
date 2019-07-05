@@ -13,7 +13,7 @@
     <string name="add_patient">Add Patient</string>
     <string name="search">Search</string>
     <string name="logout">Logout</string>
-    <string name="api_url">http://192.168.0.4/api/v1/</string>
+    <string name="api_url">http://192.168.0.101/api/v1/</string>
     <string name="login">Login</string>
     <string name="error_http_500">Server could not handle your request.</string>
     <string name="error_http_404">Remote resource not found.</string>

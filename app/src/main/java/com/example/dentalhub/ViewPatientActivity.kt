@@ -15,6 +15,8 @@ import com.example.dentalhub.entities.Patient
 import com.google.firebase.perf.metrics.AddTrace
 import android.widget.Toast
 import android.content.DialogInterface
+import android.view.View
+import android.widget.ProgressBar
 import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.entities.Encounter_
 import io.objectbox.Box
@@ -32,6 +34,7 @@ class ViewPatientActivity: AppCompatActivity(){
     private lateinit var tvEducation: TextView
     private lateinit var tvPhone: TextView
     private lateinit var tvAddress: TextView
+    private lateinit var loading: ProgressBar
 
     private lateinit var encounterBox: Box<Encounter>
 
@@ -58,6 +61,7 @@ class ViewPatientActivity: AppCompatActivity(){
         tvGender = findViewById(R.id.tvGender)
         tvPhone = findViewById(R.id.tvPhone)
         tvEducation = findViewById(R.id.tvEducation)
+        loading = findViewById(R.id.loading)
 
         btnAddNewEncounter = findViewById(R.id.btnAddNewEncounter)
 
@@ -95,6 +99,7 @@ class ViewPatientActivity: AppCompatActivity(){
         when(item.itemId){
             R.id.editPatient -> {
                 val addPatientIntent = Intent(this, AddPatientActivity::class.java)
+                addPatientIntent.putExtra("patient", patient)
                 startActivity(addPatientIntent)
             }
         }
@@ -118,11 +123,17 @@ class ViewPatientActivity: AppCompatActivity(){
         val encounterTypeChooser = AlertDialog.Builder(this)
         encounterTypeChooser.setTitle(getString(R.string.primary_reason_for_encounter))
         encounterTypeChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
+            loading.visibility = View.VISIBLE
             openAddEncounter(grpName[item])
             dialog.dismiss()// dismiss the alertbox after chose option
         })
         val alert = encounterTypeChooser.create()
         alert.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loading.visibility = View.GONE
     }
 
     private fun openAddEncounter(encounterType: String) {

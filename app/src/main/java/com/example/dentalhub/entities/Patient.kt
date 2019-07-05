@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 import io.objectbox.relation.ToMany
 import io.objectbox.annotation.Backlink
-
+import kotlinx.android.parcel.IgnoredOnParcel
 
 
 @Entity
@@ -32,8 +32,9 @@ class Patient(
     var date: String
 ): Parcelable{
 
+    @IgnoredOnParcel
     @Backlink(to = "patient")
-    public var encounters: ToMany<Encounter>? = null
+    var encounters: ToMany<Encounter>? = null
 
     fun address(): String{
         return "$street_address $ward, $city, $country"
@@ -43,9 +44,9 @@ class Patient(
     }
 
     fun age(): String {
-        val year: Int = dob.substring(0,3).toInt()
-        val month: Int = dob.substring(5,6).toInt()
-        val day: Int = dob.substring(8,9).toInt()
+        val year: Int = dob.substring(0,4).toInt()
+        val month: Int = dob.substring(5,7).toInt()
+        val day: Int = dob.substring(8,10).toInt()
         val dob = Calendar.getInstance()
         val today = Calendar.getInstance()
 

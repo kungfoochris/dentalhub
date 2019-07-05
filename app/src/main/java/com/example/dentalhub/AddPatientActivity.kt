@@ -41,6 +41,7 @@ class AddPatientActivity : AppCompatActivity(){
     private lateinit var tvErrorMessage: TextView
 
     private lateinit var context: Context
+    private var patient: Patient? = null
     private val TAG = "AddPatientActivity"
 
     private lateinit var patientsBox: Box<Patient>
@@ -49,7 +50,7 @@ class AddPatientActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_patient)
-
+        patient = intent.getParcelableExtra("patient")
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -82,12 +83,31 @@ class AddPatientActivity : AppCompatActivity(){
         spinnerMaritalStatus.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.martial_status_list).toList())
         spinnerEducationLevel.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.education_level_list).toList())
 
+        updateUI()
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
 
         btnAddPatient.setOnClickListener {
             if(isFormValid()){
                 savePatient()
             }
+        }
+    }
+
+    private fun updateUI() {
+        if(patient != null){
+            etFirstName.setText(patient!!.first_name)
+            etMiddleName.setText(patient!!.middle_name)
+            etLastName.setText(patient!!.last_name)
+            etDOB.setText(patient!!.dob)
+            etPhone.setText(patient!!.phone)
+            etWard.setText(patient!!.ward.toString())
+            etStreetAddress.setText(patient!!.street_address)
+            etCity.setText(patient!!.city)
+            etState.setText(patient!!.state)
+            etCountry.setText(patient!!.country)
+            spinnerGender.setSelection(resources.getStringArray(R.array.gender_list).indexOf(patient!!.gender))
+            spinnerMaritalStatus.setSelection(resources.getStringArray(R.array.martial_status_list).indexOf(patient!!.marital_status))
+            spinnerEducationLevel.setSelection(resources.getStringArray(R.array.education_level_list).indexOf(patient!!.education))
         }
     }
 
@@ -125,7 +145,28 @@ class AddPatientActivity : AppCompatActivity(){
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentDate()
-        return Patient(id, firstName, middleName, lastName, gender, dob, phone, education, maritalStatus, streetAddress, ward, city, state, country, latitude, longitude, date)
+        if(patient != null){
+            patient = patientsBox.get(patient!!.id)
+            patient!!.first_name = firstName
+            patient!!.middle_name = middleName
+            patient!!.last_name = lastName
+            patient!!.gender = gender
+            patient!!.dob = dob
+            patient!!.phone = phone
+            patient!!.education = education
+            patient!!.marital_status
+            patient!!.street_address = streetAddress
+            patient!!.state = state
+            patient!!.city = city
+            patient!!.country = country
+            patient!!.latitude = latitude
+            patient!!.longitude = longitude
+            patient!!.date = date
+            return patient!!
+        }else{
+            return Patient(id, firstName, middleName, lastName, gender, dob, phone, education, maritalStatus, streetAddress, ward, city, state, country, latitude, longitude, date)
+        }
+
     }
 
     @AddTrace(name = "saveToLocalDBAddPatientActivity", enabled = true /* optional */)
@@ -237,7 +278,7 @@ class AddPatientActivity : AppCompatActivity(){
     }
 
     override fun onPause() {
-        super.onPause()
         finish()
+        super.onPause()
     }
 }
