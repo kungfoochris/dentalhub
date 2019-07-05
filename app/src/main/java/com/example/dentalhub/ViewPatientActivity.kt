@@ -17,8 +17,14 @@ import android.widget.Toast
 import android.content.DialogInterface
 import android.view.View
 import android.widget.ProgressBar
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.dentalhub.adapters.EncounterAdapter
+import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.entities.Encounter_
+import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import io.objectbox.Box
 
 
@@ -28,6 +34,9 @@ class ViewPatientActivity: AppCompatActivity(){
     private lateinit var patient: Patient
 
     private lateinit var btnAddNewEncounter: Button
+    private lateinit var encounterAdapter: EncounterAdapter
+    private lateinit var mLayoutManager: LinearLayoutManager
+    private lateinit var dividerItemDecoration: DividerItemDecoration
 
     private lateinit var tvAge: TextView
     private lateinit var tvGender: TextView
@@ -35,6 +44,7 @@ class ViewPatientActivity: AppCompatActivity(){
     private lateinit var tvPhone: TextView
     private lateinit var tvAddress: TextView
     private lateinit var loading: ProgressBar
+    private lateinit var recyclerView: RecyclerView
 
     private lateinit var encounterBox: Box<Encounter>
 
@@ -56,6 +66,7 @@ class ViewPatientActivity: AppCompatActivity(){
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
     private fun initUI() {
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+        recyclerView = findViewById(R.id.recyclerView)
         tvAddress = findViewById(R.id.tvAddress)
         tvAge = findViewById(R.id.tvAge)
         tvGender = findViewById(R.id.tvGender)
@@ -64,6 +75,14 @@ class ViewPatientActivity: AppCompatActivity(){
         loading = findViewById(R.id.loading)
 
         btnAddNewEncounter = findViewById(R.id.btnAddNewEncounter)
+
+        mLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = mLayoutManager
+        dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
+        val divider = RecyclerViewItemSeparator(20)
+        recyclerView.addItemDecoration(divider)
+
+
 
         updateInfo()
 
@@ -78,8 +97,16 @@ class ViewPatientActivity: AppCompatActivity(){
     }
 
     private fun listEncounters() {
-        val en = patient.encounters
-        Log.d(TAG, en.toString())
+        val allEnCounters = encounterBox.query().equal(Encounter_.patientId, patient.id).build().find()
+        //val en = patient.encounters
+        encounterAdapter = EncounterAdapter(context, allEnCounters, object: EncounterAdapter.EncounterClickListener{
+            override fun onEncounterClick(encounter: Encounter) {
+                // start the encounter view
+            }
+
+        })
+        recyclerView.adapter = encounterAdapter
+        encounterAdapter.notifyDataSetChanged()
     }
 
     private fun updateInfo() {
@@ -139,7 +166,11 @@ class ViewPatientActivity: AppCompatActivity(){
     private fun openAddEncounter(encounterType: String) {
         val date = ""
 
-        val encounter = Encounter(0, encounterType, date)
+            //val encounter = Encounter(0, encounterType, date)
+        val encounter = Encounter()
+        encounter.id = 0
+        encounter.encounter_type = encounterType
+        encounter.date = date
         encounter.patient?.target  = patient
         encounterBox.put(encounter)
 

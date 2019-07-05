@@ -9,11 +9,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-class Encounter(
-    @Id var id: Long,
-    var encounter_type: String,
-    var date: String
-):Parcelable{
-    @IgnoredOnParcel
-    public var patient: ToOne<Patient>? = null
+class Encounter:Parcelable{
+    @Id var id: Long = 0
+    var encounter_type: String = ""
+    var date: String = ""
+    var patient: ToOne<Patient>? = null
 }
