@@ -117,11 +117,12 @@ class AddPatientActivity : AppCompatActivity(){
         loading.visibility = View.VISIBLE
         tvErrorMessage.visibility = View.GONE
         val patient = createPatient()
-        if(DentalApp.isConnectedToWifi(this)){
-            saveToServer(patient)
-        }else{
-            saveToLocalDB(patient)
-        }
+//        if(DentalApp.isConnectedToWifi(this)){
+//            saveToServer(patient)
+//        }else{
+//            saveToLocalDB(patient)
+//        }
+        saveToLocalDB(patient)
         loading.visibility = View.GONE
     }
 
