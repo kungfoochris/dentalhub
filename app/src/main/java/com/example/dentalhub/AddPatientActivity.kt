@@ -164,7 +164,7 @@ class AddPatientActivity : AppCompatActivity(){
             patient!!.date = date
             return patient!!
         }else{
-            return Patient(id, firstName, middleName, lastName, gender, dob, phone, education, maritalStatus, streetAddress, ward, city, state, country, latitude, longitude, date)
+            return Patient(id, firstName, middleName, lastName, gender, dob, phone, education, maritalStatus, streetAddress, ward, city, state, country, latitude, longitude, date, false)
         }
 
     }

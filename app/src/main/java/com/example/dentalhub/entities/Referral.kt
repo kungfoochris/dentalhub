@@ -8,13 +8,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-class Referral(
-    @Id var id: Long,
-    var encounter: ToOne<Encounter>,
-    var no_referral: Boolean,
-    var health_post: Boolean,
-    var hygienist: Boolean,
-    var dentist: Boolean,
-    var general_physician: Boolean,
-    var other: String
-): Parcelable
+class Referral: Parcelable{
+    @Id var id: Long = 0
+    var encounter: ToOne<Encounter>? = null
+    var no_referral: Boolean = false
+    var health_post: Boolean = false
+    var hygienist: Boolean = false
+    var dentist: Boolean = false
+    var general_physician: Boolean = false
+    var other: String = ""
+}

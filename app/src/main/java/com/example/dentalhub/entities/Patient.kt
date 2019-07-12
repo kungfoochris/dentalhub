@@ -29,7 +29,8 @@ class Patient(
     var country: String,
     var latitude: String,
     var longitude: String,
-    var date: String
+    var date: String,
+    var uploaded: Boolean
 ): Parcelable{
 
     @IgnoredOnParcel

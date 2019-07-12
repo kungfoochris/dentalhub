@@ -8,17 +8,17 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-class Screening(
-    @Id var id: Long,
-    var encounter: ToOne<Encounter>,
-    var carries_risk: String,
-    var decayed_pimary_teeth: Int,
-    var decayed_permanent_teeth: Int,
-    var cavity_permanent_anterior: Boolean,
-    var cavity_permanent_tooth: Boolean,
-    var active_infection: Boolean,
-    var need_art_filling: Boolean,
-    var need_sealant: Boolean,
-    var need_sdf: Boolean,
-    var need_extraction: Boolean
-): Parcelable
+class Screening: Parcelable{
+    @Id var id: Long = 0
+    var encounter: ToOne<Encounter>? = null
+    var carries_risk: String = ""
+    var decayed_pimary_teeth: Int = 0
+    var decayed_permanent_teeth: Int = 0
+    var cavity_permanent_anterior: Boolean = false
+    var cavity_permanent_tooth: Boolean = false
+    var active_infection: Boolean = false
+    var need_art_filling: Boolean = false
+    var need_sealant: Boolean = false
+    var need_sdf: Boolean = false
+    var need_extraction: Boolean = false
+}

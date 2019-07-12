@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-class Treatment(
-    @Id var id: Long,
-    var encounter: ToOne<Encounter>
-    ): Parcelable
+class Treatment: Parcelable{
+    @Id var id: Long = 0
+    var encounter: ToOne<Encounter>? = null
+}
