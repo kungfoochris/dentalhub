@@ -21,5 +21,6 @@ class History: Parcelable{
     var other: String = ""
     var no_underlying_medical_record: Boolean = false
     var medications: String = ""
+    var not_taking_any_medications: Boolean = false
     var allergies: String = ""
 }

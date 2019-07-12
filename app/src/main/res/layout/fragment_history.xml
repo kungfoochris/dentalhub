@@ -69,11 +69,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <CheckBox
-                android:id="@+id/checkBoxSeizuersOrEpilepsy"
+                android:id="@+id/checkBoxSeizuresOrEpilepsy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView
-                android:labelFor="@+id/checkBoxSeizuersOrEpilepsy"
+                android:labelFor="@+id/checkBoxSeizuresOrEpilepsy"
                 android:text="@string/seizures_or_epilepsy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

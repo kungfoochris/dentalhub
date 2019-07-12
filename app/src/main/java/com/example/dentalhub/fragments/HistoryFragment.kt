@@ -10,6 +10,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
+import com.example.dentalhub.fragments.interfaces.HistoryFormCommunicator
 
 
 /**
@@ -23,12 +24,13 @@ import com.example.dentalhub.TreatmentFragmentCommunicator
  */
 class HistoryFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
+    private lateinit var historyFormCommunicator: HistoryFormCommunicator
 
     private lateinit var checkBoxBloodDisorderOrBleedingProblem: CheckBox
     private lateinit var checkBoxDiabetes: CheckBox
     private lateinit var checkBoxLiverProblem: CheckBox
     private lateinit var checkBoxRheumaticFever: CheckBox
-    private lateinit var checkBoxSeizuersOrEpilepsy: CheckBox
+    private lateinit var checkBoxSeizuresOrEpilepsy: CheckBox
     private lateinit var checkBoxHepatitisBOrC: CheckBox
     private lateinit var checkBoxHIV: CheckBox
     private lateinit var checkBoxNoUnderlyingMedicalRecord: CheckBox
@@ -41,10 +43,6 @@ class HistoryFragment : Fragment() {
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +55,7 @@ class HistoryFragment : Fragment() {
         checkBoxDiabetes = view.findViewById(R.id.checkBoxDiabetes)
         checkBoxLiverProblem = view.findViewById(R.id.checkBoxLiverProblem)
         checkBoxRheumaticFever = view.findViewById(R.id.checkBoxRheumaticFever)
-        checkBoxSeizuersOrEpilepsy = view.findViewById(R.id.checkBoxSeizuersOrEpilepsy)
+        checkBoxSeizuresOrEpilepsy = view.findViewById(R.id.checkBoxSeizuresOrEpilepsy)
         checkBoxHepatitisBOrC = view.findViewById(R.id.checkBoxHepatitisBOrC)
         checkBoxHIV = view.findViewById(R.id.checkBoxHIV)
         checkBoxNoUnderlyingMedicalRecord = view.findViewById(R.id.checkBoxNoUnderlyingMedicalRecord)
@@ -75,8 +73,26 @@ class HistoryFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
+        historyFormCommunicator = activity as HistoryFormCommunicator
+
+
 
         btnNext.setOnClickListener {
+            val bloodDisorders = checkBoxBloodDisorderOrBleedingProblem.isChecked
+            val diabetes = checkBoxDiabetes.isChecked
+            val liverProblem = checkBoxLiverProblem.isChecked
+            val rheumaticFever = checkBoxRheumaticFever.isChecked
+            val seizuresOrEpilepsy = checkBoxSeizuresOrEpilepsy.isChecked
+            val hepatitisBOrC = checkBoxHepatitisBOrC.isChecked
+            val hiv = checkBoxHIV.isChecked
+            val other = etOther.text.toString()
+            val noUnderlyingMedicalRecord = checkBoxNoUnderlyingMedicalRecord.isChecked
+            val medications = etMedications.text.toString()
+            val notTakingAnyMedications = checkBoxNotTakingAnyMedications.isChecked
+            val allergies = etAllergies.text.toString()
+
+            historyFormCommunicator.updateHistory(bloodDisorders, diabetes, liverProblem, rheumaticFever, seizuresOrEpilepsy,
+                hepatitisBOrC, hiv, other, noUnderlyingMedicalRecord, medications,notTakingAnyMedications, allergies)
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {

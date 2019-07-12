@@ -9,9 +9,11 @@ import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
+import com.example.dentalhub.fragments.interfaces.ReferralFormCommunicator
 
 class ReferralFragment: Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
+    private lateinit var referralFormCommunicator: ReferralFormCommunicator
 
     private lateinit var checkBoxNoReferral: CheckBox
     private lateinit var checkBoxHealthPost: CheckBox
@@ -45,8 +47,18 @@ class ReferralFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
+        referralFormCommunicator = activity as ReferralFormCommunicator
 
         btnNext.setOnClickListener {
+
+            val noReferral = checkBoxNoReferral.isChecked
+            val healthPost = checkBoxHealthPost.isChecked
+            val hygienist = checkBoxHygienist.isChecked
+            val dentist = checkBoxDentist.isChecked
+            val generalPhysician = checkBoxGeneralPhysician.isChecked
+            val other = checkBoxOther.isChecked
+
+            referralFormCommunicator.updateReferral(noReferral, healthPost, hygienist, dentist, generalPhysician, other)
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {

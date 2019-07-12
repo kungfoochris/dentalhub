@@ -1,6 +1,5 @@
 package com.example.dentalhub.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,12 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
+import com.example.dentalhub.fragments.interfaces.ScreeningFormCommunicator
 import com.example.dentalhub.utils.AdapterHelper
 
 class ScreeningFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
+    private lateinit var screeningFormCommunicator: ScreeningFormCommunicator
 
     private lateinit var spinnerRisk: Spinner
     private lateinit var etDecayedPrimaryTeeth: EditText
@@ -41,6 +42,16 @@ class ScreeningFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_screening, container, false)
 
         spinnerRisk = view.findViewById(R.id.spinnerRisk)
+        etDecayedPrimaryTeeth = view.findViewById(R.id.etDecayedPrimaryTeeth)
+        etDecayedPermanentTeeth = view.findViewById(R.id.etDecayedPermanentTeeth)
+        checkBoxCavityPermanentTooth = view.findViewById(R.id.checkBoxCavityPermanentTooth)
+        checkBoxCavityPermanentAnterior = view.findViewById(R.id.checkBoxCavityPermanentAnterior)
+        checkBoxActiveInfection = view.findViewById(R.id.checkBoxActiveInfection)
+        checkBoxNeedARTFilling = view.findViewById(R.id.checkBoxNeedARTFilling)
+        checkBoxNeedSealant = view.findViewById(R.id.checkBoxNeedSealant)
+        checkBoxNeedSDF = view.findViewById(R.id.checkBoxNeedSDF)
+        checkBoxNeedExtraction = view.findViewById(R.id.checkBoxNeedExtraction)
+
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
 
@@ -53,12 +64,23 @@ class ScreeningFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
-
-
-
-
+        screeningFormCommunicator = activity as ScreeningFormCommunicator
 
         btnNext.setOnClickListener {
+            val carriesRisk = spinnerRisk.selectedItem.toString()
+            val decayedPrimaryTeeth = etDecayedPrimaryTeeth.text.toString()
+            val decayedPermanentTeeth = etDecayedPermanentTeeth.text.toString()
+            val cavityPermanentTooth = checkBoxCavityPermanentTooth.isChecked
+            val cavityPermanentAnterior = checkBoxCavityPermanentAnterior.isChecked
+            val activeInfection = checkBoxActiveInfection.isChecked
+            val needARTFilling = checkBoxNeedARTFilling.isChecked
+            val needSealant = checkBoxNeedSealant.isChecked
+            val needSDF = checkBoxNeedSDF.isChecked
+            val needExtraction = checkBoxNeedSDF.isChecked
+
+            screeningFormCommunicator.updateScreening(carriesRisk, decayedPrimaryTeeth, decayedPermanentTeeth,
+                cavityPermanentTooth, cavityPermanentAnterior, activeInfection, needARTFilling, needSealant, needSDF,
+                needExtraction)
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {
