@@ -115,11 +115,12 @@ class MainActivity : AppCompatActivity() {
 
     @AddTrace(name = "listPatientsMainActivity", enabled = true /* optional */)
     private fun listPatients() {
-        if(DentalApp.isConnectedToWifi(this)){
-            listPatientsFromServer()
-        }else{
-            listPatientsFromLocalDB()
-        }
+//        if(DentalApp.isConnectedToWifi(this)){
+//            listPatientsFromServer()
+//        }else{
+//            listPatientsFromLocalDB()
+//        }
+        listPatientsFromLocalDB()
     }
 
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
