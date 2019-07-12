@@ -2,16 +2,26 @@ package com.example.dentalhub
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Log
 import androidx.multidex.MultiDexApplication
+import com.example.dentalhub.ObjectBox.boxStore
 import com.example.dentalhub.models.Location
-import com.facebook.stetho.Stetho
+import io.objectbox.android.AndroidObjectBrowser
+import com.example.dentalhub.entities.MyObjectBox
+
+
+
 
 class DentalApp : MultiDexApplication(){
 
     override fun onCreate() {
         super.onCreate()
-        Stetho.initializeWithDefaults(this)
         ObjectBox.init(this)
+//        boxStore = MyObjectBox.builder().androidContext(this).build()
+//        if (BuildConfig.DEBUG) {
+//            val started = AndroidObjectBrowser(boxStore).start(this)
+//            Log.i("ObjectBrowser", "Started: $started")
+//        }
     }
 
 
