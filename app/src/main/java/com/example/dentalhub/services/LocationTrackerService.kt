@@ -10,7 +10,7 @@ import com.example.dentalhub.DentalApp
 import com.google.android.gms.location.*
 
 
-class LocationTrackerService: Service(){
+class LocationTrackerService : Service() {
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
@@ -49,7 +49,7 @@ class LocationTrackerService: Service(){
             }
         }
         val handler = Handler()
-        val delay = 15*1000 //milliseconds
+        val delay = 15 * 1000 //milliseconds
 
         handler.postDelayed(object : Runnable {
             override fun run() {

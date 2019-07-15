@@ -3,6 +3,7 @@ package com.example.dentalhub
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -11,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ProgressBar
 
 import androidx.appcompat.app.AppCompatActivity
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "onCreateMainActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG,"onCreate()")
+        Log.d(TAG, "onCreate()")
         setContentView(R.layout.activity_main)
 
         context = this
@@ -67,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         permissionsToRequest = permissionsToRequest(permissions)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissionsToRequest!!.size > 0){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissionsToRequest!!.size > 0) {
             requestPermissions(permissionsToRequest!!.toTypedArray(), ALL_PERMISSIONS_RESULT)
         }
         startService(Intent(this, LocationTrackerService::class.java))
@@ -95,10 +97,8 @@ class MainActivity : AppCompatActivity() {
     private fun permissionsToRequest(wantedPermissions: java.util.ArrayList<String>): java.util.ArrayList<String> {
         val result = java.util.ArrayList<String>()
 
-        for (perm in wantedPermissions)
-        {
-            if (!hasPermission(perm))
-            {
+        for (perm in wantedPermissions) {
+            if (!hasPermission(perm)) {
                 result.add(perm)
             }
         }
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         return result
     }
 
-    private fun hasPermission(permission:String):Boolean {
+    private fun hasPermission(permission: String): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
         } else true
@@ -125,14 +125,14 @@ class MainActivity : AppCompatActivity() {
 
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
-        Log.d(TAG,"listPatientsFromLocalDB()")
+        Log.d(TAG, "listPatientsFromLocalDB()")
         allPatients = patientsQuery.find()
         setupAdapter()
 
     }
 
     private fun setupAdapter() {
-        patientAdapter = PatientAdapter(context, allPatients, object: PatientAdapter.PatientClickListener{
+        patientAdapter = PatientAdapter(context, allPatients, object : PatientAdapter.PatientClickListener {
             override fun onCallPatientClick(patient: Patient) {
                 // do the calling
             }
@@ -151,10 +151,10 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromServerMainActivity", enabled = true /* optional */)
     private fun listPatientsFromServer() {
         Log.d(TAG, "listPatientsFromServer")
-        val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN,"")
+        val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.listPatients("JWT $token")
-        call.enqueue(object: Callback<List<Patient>> {
+        call.enqueue(object : Callback<List<Patient>> {
             override fun onFailure(call: Call<List<Patient>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 Log.d("onFailure", t.toString())
@@ -162,11 +162,11 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<List<Patient>>, response: Response<List<Patient>>) {
                 Log.d(TAG, "onResponse()")
-                if(null != response.body()){
-                    when(response.code()){
+                if (null != response.body()) {
+                    when (response.code()) {
                         200 -> {
                             allPatients = response.body() as List<Patient>
-                           setupAdapter()
+                            setupAdapter()
                         }
                     }
                 }
@@ -177,14 +177,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main,menu)
+        menuInflater.inflate(R.menu.main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.addPatient -> {
                 startActivity(Intent(this, AddPatientActivity::class.java))
             }
@@ -192,7 +191,7 @@ class MainActivity : AppCompatActivity() {
                 listPatients()
             }
             R.id.search -> {
-                Log.d("PARAS","do the search stuff")
+                Log.d("PARAS", "do the search stuff")
                 displaySearchDialog()
             }
             R.id.logout -> {
@@ -201,6 +200,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun delayDialog(){
+        val grpName = arrayOf(
+            "1 week",
+            "2 weeks",
+            "3 weeks",
+            "1 month",
+            "2 months",
+            "3 months"
+        )
+        val encounterTypeChooser = androidx.appcompat.app.AlertDialog.Builder(this)
+        encounterTypeChooser.setTitle(getString(R.string.primary_reason_for_encounter))
+        encounterTypeChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
+            loading.visibility = View.VISIBLE
+            //openAddEncounter(grpName[item])
+            dialog.dismiss()// dismiss the alertbox after chose option
+        })
+        val alert = encounterTypeChooser.create()
+        alert.show()
     }
 
     @AddTrace(name = "displaySearchDialogMainActivity", enabled = true /* optional */)
@@ -213,8 +232,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
-        private const val UPDATE_INTERVAL:Long = 5000
-        private const val FASTEST_INTERVAL:Long = 5000 // = 5 seconds
+        private const val UPDATE_INTERVAL: Long = 5000
+        private const val FASTEST_INTERVAL: Long = 5000 // = 5 seconds
         // integer for permissions results request
         private const val ALL_PERMISSIONS_RESULT = 1011
     }

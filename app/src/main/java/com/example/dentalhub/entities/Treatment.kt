@@ -8,8 +8,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-class Treatment: Parcelable{
-    @Id var id: Long = 0
+class Treatment : Parcelable {
+    @Id
+    var id: Long = 0
     var fv_applied: Boolean = false
     var treatment_plan_complete: Boolean = false
     var notes: String = ""

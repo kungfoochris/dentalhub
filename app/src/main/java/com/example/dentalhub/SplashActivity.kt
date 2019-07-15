@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import com.example.dentalhub.services.BootstrapService
-import com.example.dentalhub.services.LocationTrackerService
 import com.google.firebase.perf.metrics.AddTrace
 
 class SplashActivity : Activity() {
@@ -19,12 +18,12 @@ class SplashActivity : Activity() {
         context = this
         startService(Intent(this, BootstrapService::class.java))
         Handler().postDelayed({
-            val token: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN,"")
+            val token: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
             val email: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL, "")
             val password: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_PASSWORD, "")
-            if(token.isEmpty() || email.isEmpty() || password.isEmpty()){
-                startActivity(Intent(this,LoginActivity::class.java))
-            }else{
+            if (token.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                startActivity(Intent(this, LoginActivity::class.java))
+            } else {
                 startActivity(Intent(this, SelectorActivity::class.java))
             }
 

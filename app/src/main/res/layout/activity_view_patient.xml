@@ -87,7 +87,6 @@
     </LinearLayout>
 
 
-
     <Button
             android:id="@+id/btnAddNewEncounter"
             android:text="@string/add_new_encounter"

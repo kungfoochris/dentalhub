@@ -11,13 +11,15 @@ import com.example.dentalhub.R
 import com.example.dentalhub.entities.Encounter
 
 
-class EncounterAdapter(var context: Context, private var data:List<Encounter>, var listener: EncounterClickListener): RecyclerView.Adapter<EncounterAdapter.EncounterViewHolder>(){
+class EncounterAdapter(var context: Context, private var data: List<Encounter>, listener: EncounterClickListener) :
+    RecyclerView.Adapter<EncounterAdapter.EncounterViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var encounterClickListener: EncounterClickListener = listener
 
-    interface EncounterClickListener{
+    interface EncounterClickListener {
         fun onEncounterClick(encounter: Encounter)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EncounterViewHolder {
         val view = inflater.inflate(R.layout.single_encounter, parent, false)
         return EncounterViewHolder(view)
@@ -30,20 +32,19 @@ class EncounterAdapter(var context: Context, private var data:List<Encounter>, v
 
     override fun getItemCount() = data.size
 
-    inner class EncounterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class EncounterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
         private var llSingleEncounter: LinearLayout = itemView.findViewById(R.id.llSingleEncounter)
 
-        fun bindEncounter(encounter: Encounter){
-           tvEncounterName.text = encounter.encounter_type
+        fun bindEncounter(encounter: Encounter) {
+            tvEncounterName.text = encounter.encounter_type
             tvEncounterDate.text = encounter.date
 
             llSingleEncounter.setOnClickListener {
                 encounterClickListener.onEncounterClick(encounter)
             }
         }
-
 
 
     }

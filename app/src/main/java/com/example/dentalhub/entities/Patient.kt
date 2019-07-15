@@ -1,13 +1,13 @@
 package com.example.dentalhub.entities
 
 import android.os.Parcelable
+import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
+import io.objectbox.relation.ToMany
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import java.util.*
-import io.objectbox.relation.ToMany
-import io.objectbox.annotation.Backlink
-import kotlinx.android.parcel.IgnoredOnParcel
 
 
 @Entity
@@ -31,23 +31,24 @@ class Patient(
     var longitude: String,
     var date: String,
     var uploaded: Boolean
-): Parcelable{
+) : Parcelable {
 
     @IgnoredOnParcel
     @Backlink(to = "patient")
     var encounters: ToMany<Encounter>? = null
 
-    fun address(): String{
+    fun address(): String {
         return "$street_address $ward, $city, $country"
     }
-    fun fullName(): String{
+
+    fun fullName(): String {
         return "$first_name $middle_name $last_name"
     }
 
     fun age(): String {
-        val year: Int = dob.substring(0,4).toInt()
-        val month: Int = dob.substring(5,7).toInt()
-        val day: Int = dob.substring(8,10).toInt()
+        val year: Int = dob.substring(0, 4).toInt()
+        val month: Int = dob.substring(5, 7).toInt()
+        val day: Int = dob.substring(8, 10).toInt()
         val dob = Calendar.getInstance()
         val today = Calendar.getInstance()
 

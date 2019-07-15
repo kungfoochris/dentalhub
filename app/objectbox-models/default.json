@@ -74,7 +74,7 @@
     },
     {
       "id": "3:3764408514365609867",
-      "lastPropertyId": "9:7147913282837370157",
+      "lastPropertyId": "10:6992037285704136572",
       "name": "Referral",
       "properties": [
         {
@@ -109,6 +109,10 @@
           "id": "9:7147913282837370157",
           "indexId": "2:7447882928625921356",
           "name": "encounterId"
+        },
+        {
+          "id": "10:6992037285704136572",
+          "name": "other_details"
         }
       ],
       "relations": []

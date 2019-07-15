@@ -34,7 +34,6 @@ class ScreeningFragment : Fragment() {
     private lateinit var btnBack: Button
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,7 +55,8 @@ class ScreeningFragment : Fragment() {
         btnNext = view.findViewById(R.id.btnNext)
 
         if (container != null) {
-            spinnerRisk.adapter = AdapterHelper.createAdapter(container.context, resources.getStringArray(R.array.carries_risk).toList())
+            spinnerRisk.adapter =
+                AdapterHelper.createAdapter(container.context, resources.getStringArray(R.array.carries_risk).toList())
         }
         return view
     }
@@ -78,9 +78,11 @@ class ScreeningFragment : Fragment() {
             val needSDF = checkBoxNeedSDF.isChecked
             val needExtraction = checkBoxNeedSDF.isChecked
 
-            screeningFormCommunicator.updateScreening(carriesRisk, decayedPrimaryTeeth, decayedPermanentTeeth,
+            screeningFormCommunicator.updateScreening(
+                carriesRisk, decayedPrimaryTeeth, decayedPermanentTeeth,
                 cavityPermanentTooth, cavityPermanentAnterior, activeInfection, needARTFilling, needSealant, needSDF,
-                needExtraction)
+                needExtraction
+            )
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {
@@ -88,7 +90,6 @@ class ScreeningFragment : Fragment() {
         }
 
     }
-
 
 
 }

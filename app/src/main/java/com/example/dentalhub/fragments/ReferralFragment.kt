@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
 import com.example.dentalhub.fragments.interfaces.ReferralFormCommunicator
 
-class ReferralFragment: Fragment() {
+class ReferralFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var referralFormCommunicator: ReferralFormCommunicator
 
@@ -21,6 +22,7 @@ class ReferralFragment: Fragment() {
     private lateinit var checkBoxDentist: CheckBox
     private lateinit var checkBoxGeneralPhysician: CheckBox
     private lateinit var checkBoxOther: CheckBox
+    private lateinit var etOtherDetails: EditText
 
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
@@ -38,6 +40,7 @@ class ReferralFragment: Fragment() {
         checkBoxDentist = view.findViewById(R.id.checkBoxDentist)
         checkBoxGeneralPhysician = view.findViewById(R.id.checkBoxGeneralPhysician)
         checkBoxOther = view.findViewById(R.id.checkBoxOther)
+        etOtherDetails = view.findViewById(R.id.etOtherDetails)
 
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
@@ -57,8 +60,9 @@ class ReferralFragment: Fragment() {
             val dentist = checkBoxDentist.isChecked
             val generalPhysician = checkBoxGeneralPhysician.isChecked
             val other = checkBoxOther.isChecked
+            val otherDetails = etOtherDetails.text.toString()
 
-            referralFormCommunicator.updateReferral(noReferral, healthPost, hygienist, dentist, generalPhysician, other)
+            referralFormCommunicator.updateReferral(noReferral, healthPost, hygienist, dentist, generalPhysician, other, otherDetails)
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {
@@ -66,7 +70,6 @@ class ReferralFragment: Fragment() {
         }
 
     }
-
 
 
 }

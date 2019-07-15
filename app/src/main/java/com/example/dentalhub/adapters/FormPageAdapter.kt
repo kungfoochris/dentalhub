@@ -8,10 +8,10 @@ import com.example.dentalhub.fragments.ReferralFragment
 import com.example.dentalhub.fragments.ScreeningFragment
 import com.example.dentalhub.fragments.TreatmentFragment
 
-class FormPageAdapter(fm: FragmentManager): FragmentPagerAdapter(fm){
+class FormPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return when(position){
+        return when (position) {
             0 -> {
                 HistoryFragment()
             }
@@ -32,14 +32,14 @@ class FormPageAdapter(fm: FragmentManager): FragmentPagerAdapter(fm){
 
     override fun getCount() = 4
     override fun getPageTitle(position: Int): CharSequence? {
-        return when(position) {
+        return when (position) {
             0 -> {
                 "History"
             }
             1 -> {
                 "Screening"
             }
-            2-> {
+            2 -> {
                 "Treatment"
             }
             3 -> {

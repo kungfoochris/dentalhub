@@ -3,18 +3,18 @@ package com.example.dentalhub.utils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
-class DateValidator{
-    companion object{
+class DateValidator {
+    companion object {
         fun isValid(date: String): Boolean {
             var status = false;
             val format = SimpleDateFormat("yyyy-MM-dd")
             format.setLenient(false)
-            try{
+            try {
                 format.parse(date)
                 status = true
-            }catch (e: ParseException){
+            } catch (e: ParseException) {
                 status = false
-            }finally {
+            } finally {
                 return status
             }
 

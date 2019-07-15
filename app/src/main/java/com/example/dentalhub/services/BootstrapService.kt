@@ -11,13 +11,12 @@ import com.example.dentalhub.entities.Geography
 import com.example.dentalhub.entities.Geography_
 import com.example.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
-import io.objectbox.query.Query
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class BootstrapService: Service() {
+class BootstrapService : Service() {
     private lateinit var activitiesBox: Box<Activity>
     private lateinit var geographiesBox: Box<Geography>
     val TAG = "BootstrapService"
@@ -39,7 +38,7 @@ class BootstrapService: Service() {
         Log.d(TAG, "listGeographies()")
         val panelService = DjangoInterface.create(this)
         val call = panelService.listGeographies()
-        call.enqueue(object: Callback<List<Geography>>{
+        call.enqueue(object : Callback<List<Geography>> {
             override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 Log.d(TAG, t.toString())
@@ -47,13 +46,15 @@ class BootstrapService: Service() {
 
             override fun onResponse(call: Call<List<Geography>>, response: Response<List<Geography>>) {
                 Log.d(TAG, "onResponse()")
-                if(null != response.body()) {
+                if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
                             val allGeographies: List<Geography> = response.body() as List<Geography>
-                            for (geography in allGeographies){
-                                val a = geographiesBox.query().equal(Geography_.street_address,geography.street_address).equal(Geography_.city,geography.city).build().findFirst()
-                                if(a==null){
+                            for (geography in allGeographies) {
+                                val a =
+                                    geographiesBox.query().equal(Geography_.street_address, geography.street_address)
+                                        .equal(Geography_.city, geography.city).build().findFirst()
+                                if (a == null) {
                                     geography.remote_id = geography.id
                                     geography.id = 0
                                     geographiesBox.put(geography)
@@ -72,7 +73,7 @@ class BootstrapService: Service() {
         Log.d(TAG, "listActivities()")
         val panelService = DjangoInterface.create(this)
         val call = panelService.listActivities()
-        call.enqueue(object: Callback<List<Activity>>{
+        call.enqueue(object : Callback<List<Activity>> {
             override fun onFailure(call: Call<List<Activity>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 Log.d(TAG, t.toString())
@@ -80,13 +81,13 @@ class BootstrapService: Service() {
 
             override fun onResponse(call: Call<List<Activity>>, response: Response<List<Activity>>) {
                 Log.d(TAG, "onResponse()")
-                if(null != response.body()) {
+                if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
                             val allActivities: List<Activity> = response.body() as List<Activity>
-                            for (activity in allActivities){
-                                val a = activitiesBox.query().equal(Activity_.name,activity.name).build().findFirst()
-                                if(a == null){
+                            for (activity in allActivities) {
+                                val a = activitiesBox.query().equal(Activity_.name, activity.name).build().findFirst()
+                                if (a == null) {
                                     activity.remote_id = activity.id
                                     activity.id = 0
                                     activitiesBox.put(activity)

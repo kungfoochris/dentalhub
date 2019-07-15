@@ -11,166 +11,166 @@
     <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
         <LinearLayout
                 android:focusableInTouchMode="true"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox
-                    android:id="@+id/checkBoxBloodDisorderOrBleedingProblem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:labelFor="@+id/checkBoxBloodDisorderOrBleedingProblem"
-                    android:text="@string/blood_disorder_or_bleeding_problem"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox
-                    android:id="@+id/checkBoxDiabetes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:text="@string/diabetes"
-                    android:labelFor="@+id/checkBoxDiabetes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox
-                    android:id="@+id/checkBoxLiverProblem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:labelFor="@+id/checkBoxLiverProblem"
-                    android:text="@string/liver_problem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox
-                    android:id="@+id/checkBoxRheumaticFever"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:labelFor="@+id/checkBoxRheumaticFever"
-                    android:text="@string/rheumatic_fever"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <CheckBox
-                android:id="@+id/checkBoxSeizuresOrEpilepsy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:labelFor="@+id/checkBoxSeizuresOrEpilepsy"
-                android:text="@string/seizures_or_epilepsy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <CheckBox
-                    android:id="@+id/checkBoxHepatitisBOrC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:labelFor="@+id/checkBoxHepatitisBOrC"
-                    android:text="@string/hepatitis_b_or_c"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+            <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxBloodDisorderOrBleedingProblem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:labelFor="@+id/checkBoxBloodDisorderOrBleedingProblem"
+                        android:text="@string/blood_disorder_or_bleeding_problem"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <CheckBox
-                    android:id="@+id/checkBoxHIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:text="@string/hiv"
-                    android:labelFor="@+id/checkBoxHIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxDiabetes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="@string/diabetes"
+                        android:labelFor="@+id/checkBoxDiabetes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/tvOther"
-                    android:text="@string/other"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <EditText
-                    android:id="@+id/etOther"
-                    android:labelFor="@+id/tvOther"
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxLiverProblem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:labelFor="@+id/checkBoxLiverProblem"
+                        android:text="@string/liver_problem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxRheumaticFever"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:labelFor="@+id/checkBoxRheumaticFever"
+                        android:text="@string/rheumatic_fever"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox
-                    android:id="@+id/checkBoxNoUnderlyingMedicalRecord"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:text="@string/no_underlying_medical_record"
-                    android:labelFor="@+id/checkBoxNoUnderlyingMedicalRecord"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxSeizuresOrEpilepsy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:labelFor="@+id/checkBoxSeizuresOrEpilepsy"
+                        android:text="@string/seizures_or_epilepsy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-        </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/tvMedications"
-                    android:text="@string/medications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <EditText
-                    android:id="@+id/etMedications"
-                    android:labelFor="@+id/tvMedications"
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content">
-            <CheckBox
-                    android:id="@+id/checkBoxNotTakingAnyMedications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:text="@string/not_taking_any_medications"
-                    android:labelFor="@+id/checkBoxNotTakingAnyMedications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxHepatitisBOrC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:labelFor="@+id/checkBoxHepatitisBOrC"
+                        android:text="@string/hepatitis_b_or_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-        </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/tvAllergies"
-                    android:text="@string/allergies"
-                    android:labelFor="@+id/tvAllergies"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <EditText
-                    android:id="@+id/etAllergies"
-                    android:labelFor="@+id/tvAllergies"
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-        </LinearLayout>
+                    android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxHIV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="@string/hiv"
+                        android:labelFor="@+id/checkBoxHIV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tvOther"
+                        android:text="@string/other"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/etOther"
+                        android:labelFor="@+id/tvOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxNoUnderlyingMedicalRecord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="@string/no_underlying_medical_record"
+                        android:labelFor="@+id/checkBoxNoUnderlyingMedicalRecord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tvMedications"
+                        android:text="@string/medications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/etMedications"
+                        android:labelFor="@+id/tvMedications"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxNotTakingAnyMedications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="@string/not_taking_any_medications"
+                        android:labelFor="@+id/checkBoxNotTakingAnyMedications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tvAllergies"
+                        android:text="@string/allergies"
+                        android:labelFor="@+id/tvAllergies"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/etAllergies"
+                        android:labelFor="@+id/tvAllergies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
             <LinearLayout
                     android:weightSum="1"
                     android:orientation="horizontal"
@@ -192,6 +192,6 @@
                 />
 
             </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </FrameLayout>

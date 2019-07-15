@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:focusable="true"
 
-             />
+    />
     <ProgressBar
             android:id="@+id/loading"
             android:visibility="gone"

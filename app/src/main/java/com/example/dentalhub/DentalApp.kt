@@ -2,26 +2,15 @@ package com.example.dentalhub
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
 import androidx.multidex.MultiDexApplication
-import com.example.dentalhub.ObjectBox.boxStore
 import com.example.dentalhub.models.Location
-import io.objectbox.android.AndroidObjectBrowser
-import com.example.dentalhub.entities.MyObjectBox
 
 
-
-
-class DentalApp : MultiDexApplication(){
+class DentalApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
         ObjectBox.init(this)
-//        boxStore = MyObjectBox.builder().androidContext(this).build()
-//        if (BuildConfig.DEBUG) {
-//            val started = AndroidObjectBrowser(boxStore).start(this)
-//            Log.i("ObjectBrowser", "Started: $started")
-//        }
     }
 
 
@@ -46,32 +35,34 @@ class DentalApp : MultiDexApplication(){
             editor.apply()
 
         }
-        fun readFromPreference(context: Context, preferenceName: String, defaultValue: String): String{
+
+        fun readFromPreference(context: Context, preferenceName: String, defaultValue: String): String {
             val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             return prefs.getString(preferenceName, defaultValue).toString()
         }
-        fun hasAuthDetails(context: Context): Boolean{
-            val email = readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")
-            val password = readFromPreference(context, Constants.PREF_AUTH_PASSWORD,"")
+
+        fun hasAuthDetails(context: Context): Boolean {
+            val email = readFromPreference(context, Constants.PREF_AUTH_EMAIL, "")
+            val password = readFromPreference(context, Constants.PREF_AUTH_PASSWORD, "")
             val socialAuth = readFromPreference(context, Constants.PREF_AUTH_SOCIAL, "false")
             var status = false
-            if(socialAuth == "true"){
+            if (socialAuth == "true") {
                 status = true
             }
-            if(email.isNotEmpty() && password.isNotEmpty()){
+            if (email.isNotEmpty() && password.isNotEmpty()) {
                 status = true
             }
             return status
         }
 
-        fun clearAuthDetails(context: Context){
+        fun clearAuthDetails(context: Context) {
             saveToPreference(context, Constants.PREF_AUTH_TOKEN, "")
             saveToPreference(context, Constants.PREF_AUTH_EMAIL, "")
             saveToPreference(context, Constants.PREF_AUTH_PASSWORD, "")
             saveToPreference(context, Constants.PREF_AUTH_SOCIAL, "false")
         }
 
-        fun isConnectedToWifi(context: Context): Boolean{
+        fun isConnectedToWifi(context: Context): Boolean {
             val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
             return mWifi.isConnected

@@ -14,8 +14,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 
-class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator, HistoryFormCommunicator, ScreeningFormCommunicator, TreatmentFormCommunicator, ReferralFormCommunicator {
-
+class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator, HistoryFormCommunicator,
+    ScreeningFormCommunicator, TreatmentFormCommunicator, ReferralFormCommunicator {
 
 
     private lateinit var pager: ViewPager
@@ -30,11 +30,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
     private lateinit var context: Context
 
-    var history = History()
-    var screening = Screening()
-    var treatment = Treatment()
-    var referral  = Referral()
-    var encounter = Encounter()
+    private var history = History()
+    private var screening = Screening()
+    private var treatment = Treatment()
+    private var referral = Referral()
+    private var encounter = Encounter()
 
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,18 +84,22 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         tabLayout.setupWithViewPager(pager)
 
     }
-    override fun updateHistory(bloodDisorders: Boolean,diabetes: Boolean,liverProblem: Boolean,
-                               rheumaticFever: Boolean, seizuersOrEpilepsy: Boolean, hepatitisBOrC: Boolean,
-                               hiv: Boolean, other: String, noUnderlyingMedicalRecord:Boolean,medications: String,
-                               notTakingAnyMedications: Boolean, allergies: String) {
 
-        history = historyBox.query().equal(History_.encounterId, encounter.id).orderDesc(History_.id).build().findFirst()!!
+    override fun updateHistory(
+        bloodDisorders: Boolean, diabetes: Boolean, liverProblem: Boolean,
+        rheumaticFever: Boolean, seizuresOrEpilepsy: Boolean, hepatitisBOrC: Boolean,
+        hiv: Boolean, other: String, noUnderlyingMedicalRecord: Boolean, medications: String,
+        notTakingAnyMedications: Boolean, allergies: String
+    ) {
+
+        history =
+            historyBox.query().equal(History_.encounterId, encounter.id).orderDesc(History_.id).build().findFirst()!!
 
         history.blood_disorder = bloodDisorders
         history.diabetes = diabetes
         history.liver_problem = liverProblem
         history.rheumatic_fever = rheumaticFever
-        history.seizuers_or_epilepsy = seizuersOrEpilepsy
+        history.seizuers_or_epilepsy = seizuresOrEpilepsy
         history.hepatitis_b_or_c = hepatitisBOrC
         history.hiv = hiv
         history.other = other
@@ -105,6 +109,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         history.allergies = allergies
         historyBox.put(history)
     }
+
     override fun updateScreening(
         carriesRisk: String,
         decayedPrimaryTeeth: String,
@@ -118,17 +123,20 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         needExtraction: Boolean
     ) {
 
-        screening = screeningBox.query().equal(Screening_.encounterId, encounter.id).orderDesc(Screening_.id).build().findFirst()!!
+        screening = screeningBox.query().equal(
+            Screening_.encounterId,
+            encounter.id
+        ).orderDesc(Screening_.id).build().findFirst()!!
 
         screening.carries_risk = carriesRisk
-        try{
+        try {
             screening.decayed_pimary_teeth = decayedPrimaryTeeth.toInt()
-        }catch (e: NumberFormatException){
+        } catch (e: NumberFormatException) {
             screening.decayed_pimary_teeth = 0
         }
         try {
             screening.decayed_permanent_teeth = decayedPermanentTeeth.toInt()
-        }catch(e: java.lang.NumberFormatException){
+        } catch (e: java.lang.NumberFormatException) {
 
             screening.decayed_permanent_teeth = 0
         }
@@ -142,13 +150,17 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         screeningBox.put(screening)
     }
+
     override fun updateTreatment(
         notes: String,
         fvApplied: Boolean,
         treatmentPlanComplete: Boolean,
         teeth: Array<String>
     ) {
-        treatment = treatmentBox.query().equal(Treatment_.encounterId, encounter.id).orderDesc(Treatment_.id).build().findFirst()!!
+        treatment = treatmentBox.query().equal(
+            Treatment_.encounterId,
+            encounter.id
+        ).orderDesc(Treatment_.id).build().findFirst()!!
 
         treatment.fv_applied = fvApplied
         treatment.notes = notes
@@ -199,9 +211,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         hygienist: Boolean,
         dentist: Boolean,
         generalPhysician: Boolean,
-        other: Boolean
+        other: Boolean,
+        otherDetails: String
     ) {
-        referral = referralBox.query().equal(Referral_.encounterId, encounter.id).orderDesc(Referral_.id).build().findFirst()!!
+        referral =
+            referralBox.query().equal(Referral_.encounterId, encounter.id).orderDesc(Referral_.id).build().findFirst()!!
 
         referral.no_referral = noReferral
         referral.health_post = healthPost
@@ -209,6 +223,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         referral.dentist = dentist
         referral.general_physician = generalPhysician
         referral.other = other
+        referral.other_details = otherDetails
 
         referralBox.put(referral)
     }
@@ -224,19 +239,19 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     }
 
     override fun goBack() {
-        if(pager.currentItem == 0){
+        if (pager.currentItem == 0) {
             pager.currentItem = 3
-        }else{
+        } else {
             pager.currentItem -= 1
         }
 
     }
 
     override fun goForward() {
-        if(pager.currentItem == 3){
+        if (pager.currentItem == 3) {
             pager.currentItem = 0
             onBackPressed()
-        }else {
+        } else {
             pager.currentItem += 1
         }
     }

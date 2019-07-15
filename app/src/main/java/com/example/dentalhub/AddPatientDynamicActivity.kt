@@ -9,7 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.models.FormField
 
-class AddPatientDynamicActivity : AppCompatActivity(){
+class AddPatientDynamicActivity : AppCompatActivity() {
 
 
     private lateinit var mainLayout: LinearLayout
@@ -39,8 +39,8 @@ class AddPatientDynamicActivity : AppCompatActivity(){
         fields.add(FormField("select", "Gender", "gender", "Select gender", listOf("Male", "Female")))
         fields.add(FormField("checkbox", "Accept", "accept", "I accept", null))
         fields.add(FormField("seekbar", "Range", "range", "I accept", listOf("20")))
-        fields.add(FormField("calendar", "Select Date", "date", "Select date",null))
-        fields.add(FormField("ratingbar", "Rating", "rating", "Rating",listOf("5","1","0")))
+        fields.add(FormField("calendar", "Select Date", "date", "Select date", null))
+        fields.add(FormField("ratingbar", "Rating", "rating", "Rating", listOf("5", "1", "0")))
     }
 
     private fun setupUI() {
@@ -127,11 +127,11 @@ class AddPatientDynamicActivity : AppCompatActivity(){
                     Log.d("spiner : ", widget.selectedItem.toString())
                 } else if (widget is CheckBox) {
                     Log.d("checkbox", widget.isChecked.toString())
-                } else if(widget is SeekBar){
+                } else if (widget is SeekBar) {
                     Log.d("seekbar: ", widget.progress.toString())
-                } else if(widget is CalendarView){
+                } else if (widget is CalendarView) {
                     Log.d("calendar: ", widget.date.toString())
-                } else if(widget is RatingBar){
+                } else if (widget is RatingBar) {
                     Log.d("ratingbar: ", widget.rating.toString())
                 }
             }
@@ -148,6 +148,7 @@ class AddPatientDynamicActivity : AppCompatActivity(){
         finish()
         return super.onSupportNavigateUp()
     }
+
     override fun onBackPressed() {
         finish()
         super.onBackPressed()

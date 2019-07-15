@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.utils.AdapterHelper
@@ -20,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddPatientActivity : AppCompatActivity(){
+class AddPatientActivity : AppCompatActivity() {
 
     private lateinit var btnAddPatient: Button
     private lateinit var spinnerGender: Spinner
@@ -79,22 +78,25 @@ class AddPatientActivity : AppCompatActivity(){
         spinnerGender = findViewById(R.id.spinnerGender)
         spinnerMaritalStatus = findViewById(R.id.spinnerMartialStatus)
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
-        spinnerGender.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.gender_list).toList())
-        spinnerMaritalStatus.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.martial_status_list).toList())
-        spinnerEducationLevel.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.education_level_list).toList())
+        spinnerGender.adapter =
+            AdapterHelper.createAdapter(context, resources.getStringArray(R.array.gender_list).toList())
+        spinnerMaritalStatus.adapter =
+            AdapterHelper.createAdapter(context, resources.getStringArray(R.array.martial_status_list).toList())
+        spinnerEducationLevel.adapter =
+            AdapterHelper.createAdapter(context, resources.getStringArray(R.array.education_level_list).toList())
 
         updateUI()
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
 
         btnAddPatient.setOnClickListener {
-            if(isFormValid()){
+            if (isFormValid()) {
                 savePatient()
             }
         }
     }
 
     private fun updateUI() {
-        if(patient != null){
+        if (patient != null) {
             etFirstName.setText(patient!!.first_name)
             etMiddleName.setText(patient!!.middle_name)
             etLastName.setText(patient!!.last_name)
@@ -127,9 +129,9 @@ class AddPatientActivity : AppCompatActivity(){
     }
 
     @AddTrace(name = "createPatientAddPatientActivity", enabled = true /* optional */)
-    private fun createPatient() : Patient{
+    private fun createPatient(): Patient {
         Log.d(TAG, "createPatient()")
-        val id: Long= 0
+        val id: Long = 0
         val firstName = etFirstName.text.toString()
         val middleName = etMiddleName.text.toString()
         val lastName = etLastName.text.toString()
@@ -146,7 +148,7 @@ class AddPatientActivity : AppCompatActivity(){
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentDate()
-        if(patient != null){
+        if (patient != null) {
             patient = patientsBox.get(patient!!.id)
             patient!!.first_name = firstName
             patient!!.middle_name = middleName
@@ -164,8 +166,27 @@ class AddPatientActivity : AppCompatActivity(){
             patient!!.longitude = longitude
             patient!!.date = date
             return patient!!
-        }else{
-            return Patient(id, firstName, middleName, lastName, gender, dob, phone, education, maritalStatus, streetAddress, ward, city, state, country, latitude, longitude, date, false)
+        } else {
+            return Patient(
+                id,
+                firstName,
+                middleName,
+                lastName,
+                gender,
+                dob,
+                phone,
+                education,
+                maritalStatus,
+                streetAddress,
+                ward,
+                city,
+                state,
+                country,
+                latitude,
+                longitude,
+                date,
+                false
+            )
         }
 
     }
@@ -182,12 +203,29 @@ class AddPatientActivity : AppCompatActivity(){
 
     @AddTrace(name = "saveToServerAddPatientActivity", enabled = true /* optional */)
     private fun saveToServer(patient: Patient) {
-        Log.d(TAG,"saveToServer()")
+        Log.d(TAG, "saveToServer()")
         Log.d(TAG, patient.toString())
-        val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN,"")
+        val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
-        val call = panelService.addPatient("JWT $token", patient.id, patient.first_name, patient.last_name, patient.gender, patient.phone, patient.middle_name, patient.dob,  patient.education, patient.street_address, patient.ward, patient.city, patient.state, patient.country, patient.latitude, patient.longitude)
-        call.enqueue(object: Callback<Patient>{
+        val call = panelService.addPatient(
+            "JWT $token",
+            patient.id,
+            patient.first_name,
+            patient.last_name,
+            patient.gender,
+            patient.phone,
+            patient.middle_name,
+            patient.dob,
+            patient.education,
+            patient.street_address,
+            patient.ward,
+            patient.city,
+            patient.state,
+            patient.country,
+            patient.latitude,
+            patient.longitude
+        )
+        call.enqueue(object : Callback<Patient> {
             override fun onFailure(call: Call<Patient>, t: Throwable) {
                 Log.d("onFailure", t.toString())
                 tvErrorMessage.text = t.message.toString()
@@ -196,8 +234,8 @@ class AddPatientActivity : AppCompatActivity(){
             }
 
             override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
-                if(null != response.body()){
-                    when(response.code()){
+                if (null != response.body()) {
+                    when (response.code()) {
                         200 -> {
                             val tempPatient = response.body() as Patient
                             val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
@@ -218,7 +256,7 @@ class AddPatientActivity : AppCompatActivity(){
                         }
                     }
                     loading.visibility = View.GONE
-                }else{
+                } else {
                     Log.d(TAG, response.code().toString())
                     Log.d(TAG, Gson().toJson(response.body()).toString())
                     tvErrorMessage.text = response.message()
@@ -239,27 +277,27 @@ class AddPatientActivity : AppCompatActivity(){
         val dob = etDOB.text.toString()
         val ward = etWard.text.toString()
 
-        if(firstName.isBlank() || firstName.isEmpty() || firstName.length < 2){
+        if (firstName.isBlank() || firstName.isEmpty() || firstName.length < 2) {
             tvErrorMessage.text = resources.getString(R.string.first_name_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        if(lastName.isBlank() || lastName.isEmpty() || lastName.length < 2){
+        if (lastName.isBlank() || lastName.isEmpty() || lastName.length < 2) {
             tvErrorMessage.text = resources.getString(R.string.last_name_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        if(phone.isBlank() || phone.isEmpty() || phone.length < 6){
+        if (phone.isBlank() || phone.isEmpty() || phone.length < 6) {
             tvErrorMessage.text = resources.getString(R.string.phone_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        if(!DateValidator.isValid(dob)){
+        if (!DateValidator.isValid(dob)) {
             tvErrorMessage.text = resources.getString(R.string.valid_date_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        if(ward.isEmpty() || ward.isBlank()){
+        if (ward.isEmpty() || ward.isBlank()) {
             tvErrorMessage.text = resources.getString(R.string.ward_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false

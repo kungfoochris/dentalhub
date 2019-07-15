@@ -12,16 +12,6 @@ import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
 import com.example.dentalhub.fragments.interfaces.HistoryFormCommunicator
 
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [HistoryFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [HistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class HistoryFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var historyFormCommunicator: HistoryFormCommunicator
@@ -91,8 +81,10 @@ class HistoryFragment : Fragment() {
             val notTakingAnyMedications = checkBoxNotTakingAnyMedications.isChecked
             val allergies = etAllergies.text.toString()
 
-            historyFormCommunicator.updateHistory(bloodDisorders, diabetes, liverProblem, rheumaticFever, seizuresOrEpilepsy,
-                hepatitisBOrC, hiv, other, noUnderlyingMedicalRecord, medications,notTakingAnyMedications, allergies)
+            historyFormCommunicator.updateHistory(
+                bloodDisorders, diabetes, liverProblem, rheumaticFever, seizuresOrEpilepsy,
+                hepatitisBOrC, hiv, other, noUnderlyingMedicalRecord, medications, notTakingAnyMedications, allergies
+            )
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {
@@ -100,7 +92,6 @@ class HistoryFragment : Fragment() {
         }
 
     }
-
 
 
 }

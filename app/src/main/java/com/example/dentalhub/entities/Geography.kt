@@ -14,8 +14,8 @@ class Geography(
     var city: String,
     var state: String,
     var country: String
-):Parcelable{
-    fun address(): String{
+) : Parcelable {
+    fun address(): String {
         return "$street_address $city"
     }
 }

@@ -17,7 +17,7 @@
             android:id="@+id/spinnerLocation"
             android:prompt="@string/select_location"
             android:layout_width="220dp"
-            android:layout_height="48dp" />
+            android:layout_height="48dp"/>
 
     <TextView
             android:text="@string/select_activity"
@@ -27,7 +27,7 @@
             android:id="@+id/spinnerActivity"
             android:prompt="@string/select_activity"
             android:layout_width="220dp"
-            android:layout_height="48dp" />
+            android:layout_height="48dp"/>
     <Button
             android:id="@+id/btnGo"
             android:text="@string/go"

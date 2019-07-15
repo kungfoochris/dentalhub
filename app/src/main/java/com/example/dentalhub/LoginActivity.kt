@@ -19,7 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var etEmail : EditText
+    private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var tvErrorMessage: TextView
     private lateinit var loading: ProgressBar
@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         tvErrorMessage = findViewById(R.id.tvErrorMessage)
 
         btnLogin.setOnClickListener {
-            if(formIsValid()){
+            if (formIsValid()) {
                 processLogin()
             }
         }
@@ -61,18 +61,18 @@ class LoginActivity : AppCompatActivity() {
         val email = etEmail.text.toString()
         val password = etPassword.text.toString()
         val panelService = DjangoInterface.create(this)
-        val call = panelService.login(email,password)
-        call.enqueue(object: Callback<LoginResponse> {
+        val call = panelService.login(email, password)
+        call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 Log.d(TAG, "onResponse()")
                 Log.d("Resp", response.toString())
-                if(null != response.body()){
-                    when(response.code()){
-                        200-> {
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
                             val loginResponse = response.body() as LoginResponse
                             DentalApp.saveToPreference(context, Constants.PREF_AUTH_TOKEN, loginResponse.token)
-                            DentalApp.saveToPreference(context,Constants.PREF_AUTH_EMAIL, email)
-                            DentalApp.saveToPreference(context,Constants.PREF_AUTH_PASSWORD, password)
+                            DentalApp.saveToPreference(context, Constants.PREF_AUTH_EMAIL, email)
+                            DentalApp.saveToPreference(context, Constants.PREF_AUTH_PASSWORD, password)
                             startActivity(Intent(context, SelectorActivity::class.java))
                         }
                         400 -> {
@@ -89,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                     loading.visibility = View.GONE
-                }else{
+                } else {
                     tvErrorMessage.text = response.message()
                     tvErrorMessage.visibility = View.VISIBLE
                     loading.visibility = View.GONE
@@ -106,23 +106,24 @@ class LoginActivity : AppCompatActivity() {
         })
 
     }
+
     @AddTrace(name = "formIsValid", enabled = true /* optional */)
     private fun formIsValid(): Boolean {
         tvErrorMessage.visibility = View.GONE
         var status = false
-        if(etEmail.text.isBlank()) {
+        if (etEmail.text.isBlank()) {
             status = false
             tvErrorMessage.text = getString(R.string.email_is_required)
             tvErrorMessage.visibility = View.VISIBLE
-        }else if(!EmailValidator.isEmailValid(etEmail.text.toString())){
+        } else if (!EmailValidator.isEmailValid(etEmail.text.toString())) {
             status = false
             tvErrorMessage.text = getString(R.string.invalid_email)
             tvErrorMessage.visibility = View.VISIBLE
-        }else if(etPassword.text.isBlank()){
+        } else if (etPassword.text.isBlank()) {
             status = false
             tvErrorMessage.text = getString(R.string.password_is_required)
             tvErrorMessage.visibility = View.VISIBLE
-        }else{
+        } else {
             status = true
         }
         return status

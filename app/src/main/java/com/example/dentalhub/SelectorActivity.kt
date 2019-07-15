@@ -2,10 +2,10 @@ package com.example.dentalhub
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.Activity
 import com.example.dentalhub.entities.Geography
 import com.example.dentalhub.utils.AdapterHelper
@@ -56,7 +56,7 @@ class SelectorActivity : AppCompatActivity() {
     private fun setupActivities() {
         val allActivities = activitiesQuery.find()
         val activities = mutableListOf<String>()
-        for(activity in allActivities){
+        for (activity in allActivities) {
             activities.add(activity.name)
         }
 
@@ -66,7 +66,7 @@ class SelectorActivity : AppCompatActivity() {
     private fun setupGeograhies() {
         val allGeographies = geographiesQuery.find()
         val geographies = mutableListOf<String>()
-        for(geography in allGeographies){
+        for (geography in allGeographies) {
             geographies.add(geography.address())
         }
         spinnerLocation.adapter = AdapterHelper.createAdapter(context, geographies)

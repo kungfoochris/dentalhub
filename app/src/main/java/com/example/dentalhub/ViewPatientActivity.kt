@@ -1,34 +1,30 @@
 package com.example.dentalhub
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dentalhub.entities.Patient
-import com.google.firebase.perf.metrics.AddTrace
-import android.widget.Toast
-import android.content.DialogInterface
-import android.view.View
-import android.widget.ProgressBar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.adapters.EncounterAdapter
-import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.entities.Encounter_
+import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 
 
-class ViewPatientActivity: AppCompatActivity(){
+class ViewPatientActivity : AppCompatActivity() {
 
     private lateinit var context: Context
     private lateinit var patient: Patient
@@ -90,16 +86,12 @@ class ViewPatientActivity: AppCompatActivity(){
 
         btnAddNewEncounter.setOnClickListener {
             displayEncounterTypeSelector()
-//            val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
-//            addEncounterIntent.putExtra("patient", patient)
-//            startActivity(addEncounterIntent)
         }
     }
 
     private fun listEncounters() {
         val allEnCounters = encounterBox.query().equal(Encounter_.patientId, patient.id).build().find()
-        //val en = patient.encounters
-        encounterAdapter = EncounterAdapter(context, allEnCounters, object: EncounterAdapter.EncounterClickListener{
+        encounterAdapter = EncounterAdapter(context, allEnCounters, object : EncounterAdapter.EncounterClickListener {
             override fun onEncounterClick(encounter: Encounter) {
                 // start the encounter view
             }
@@ -118,12 +110,12 @@ class ViewPatientActivity: AppCompatActivity(){
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.view_patient,menu)
+        menuInflater.inflate(R.menu.view_patient, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.editPatient -> {
                 val addPatientIntent = Intent(this, AddPatientActivity::class.java)
                 addPatientIntent.putExtra("patient", patient)
@@ -146,7 +138,12 @@ class ViewPatientActivity: AppCompatActivity(){
     @AddTrace(name = "displaySearchDialogMainActivity", enabled = true /* optional */)
     private fun displayEncounterTypeSelector() {
 
-        val grpName = arrayOf(getString(R.string.checkup_screening), getString(R.string.relief_of_pain), getString(R.string.continuation_of_treament_plan), getString(R.string.other_problem))
+        val grpName = arrayOf(
+            getString(R.string.checkup_screening),
+            getString(R.string.relief_of_pain),
+            getString(R.string.continuation_of_treament_plan),
+            getString(R.string.other_problem)
+        )
         val encounterTypeChooser = AlertDialog.Builder(this)
         encounterTypeChooser.setTitle(getString(R.string.primary_reason_for_encounter))
         encounterTypeChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
@@ -165,13 +162,11 @@ class ViewPatientActivity: AppCompatActivity(){
 
     private fun openAddEncounter(encounterType: String) {
         val date = ""
-
-            //val encounter = Encounter(0, encounterType, date)
         val encounter = Encounter()
         encounter.id = 0
         encounter.encounter_type = encounterType
         encounter.date = date
-        encounter.patient?.target  = patient
+        encounter.patient?.target = patient
         encounterBox.put(encounter)
 
         val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)

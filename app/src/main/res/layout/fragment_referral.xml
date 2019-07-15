@@ -4,126 +4,131 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 >
-<LinearLayout
-        android:focusableInTouchMode="true"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="8dp"
->
     <LinearLayout
-            android:orientation="horizontal"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <CheckBox
-                android:id="@+id/checkBoxNoReferral"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:labelFor="@+id/checkBoxNoReferral"
-                android:text="@string/no_referral"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <CheckBox
-                android:id="@+id/checkBoxHealthPost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:labelFor="@+id/checkBoxHealthPost"
-                android:text="@string/health_post"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <CheckBox
-                android:id="@+id/checkBoxHygienist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:text="@string/hygienist"
-                android:labelFor="@+id/checkBoxHygienist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <CheckBox
-                android:id="@+id/checkBoxDentist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:text="@string/dentist"
-                android:labelFor="@+id/checkBoxDentist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <CheckBox
-                android:id="@+id/checkBoxGeneralPhysician"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:text="@string/general_physician"
-                android:labelFor="@+id/checkBoxGeneralPhysician"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <CheckBox
-                android:id="@+id/checkBoxOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:text="@string/other"
-                android:labelFor="@+id/checkBoxOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-            android:weightSum="1"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <Button
-                android:id="@+id/btnBack"
-                android:layout_weight="0.5"
-                android:text="@string/back"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+    >
+        <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-        />
-        <Button
-                android:id="@+id/btnNext"
-                android:layout_weight="0.5"
-                android:text="@string/save"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/checkBoxNoReferral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:labelFor="@+id/checkBoxNoReferral"
+                    android:text="@string/no_referral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/checkBoxHealthPost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:labelFor="@+id/checkBoxHealthPost"
+                    android:text="@string/health_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/checkBoxHygienist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="@string/hygienist"
+                    android:labelFor="@+id/checkBoxHygienist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/checkBoxDentist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="@string/dentist"
+                    android:labelFor="@+id/checkBoxDentist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/checkBoxGeneralPhysician"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="@string/general_physician"
+                    android:labelFor="@+id/checkBoxGeneralPhysician"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <CheckBox
+                    android:id="@+id/checkBoxOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="@string/other"
+                    android:labelFor="@+id/checkBoxOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <EditText
+                android:id="@+id/etOtherDetails"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
         />
 
+        <LinearLayout
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <Button
+                    android:id="@+id/btnBack"
+                    android:layout_weight="0.5"
+                    android:text="@string/back"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+            />
+            <Button
+                    android:id="@+id/btnNext"
+                    android:layout_weight="0.5"
+                    android:text="@string/save"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+            />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 
 </ScrollView>

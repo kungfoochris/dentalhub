@@ -1,12 +1,13 @@
 package com.example.dentalhub.fragments.interfaces
 
-interface ReferralFormCommunicator{
+interface ReferralFormCommunicator {
     fun updateReferral(
         noReferral: Boolean,
         healthPost: Boolean,
         hygienist: Boolean,
         dentist: Boolean,
         generalPhysician: Boolean,
-        other: Boolean
+        other: Boolean,
+        otherDetails: String
     )
 }

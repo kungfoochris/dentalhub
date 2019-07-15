@@ -12,15 +12,17 @@ import com.example.dentalhub.entities.Patient
 
 //import com.example.dentalhub.models.Patient
 
-class PatientAdapter(var context: Context, private var data:List<Patient>, var listener: PatientClickListener): RecyclerView.Adapter<PatientAdapter.PatientViewHolder>(){
+class PatientAdapter(var context: Context, private var data: List<Patient>, var listener: PatientClickListener) :
+    RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var patientClickListener: PatientClickListener = listener
 
-    interface PatientClickListener{
-        //fun onAddEncounterButtonClick(patient: Patient)
+    interface PatientClickListener {
         fun onViewPatientDetailClick(patient: Patient)
+
         fun onCallPatientClick(patient: Patient)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientViewHolder {
         val view = inflater.inflate(R.layout.single_patient, parent, false)
         return PatientViewHolder(view)
@@ -33,16 +35,18 @@ class PatientAdapter(var context: Context, private var data:List<Patient>, var l
 
     override fun getItemCount() = data.size
 
-    inner class PatientViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    inner class PatientViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var tvName: TextView = itemView.findViewById(R.id.tvName)
         private var tvAddress: TextView = itemView.findViewById(R.id.tvAddress)
         private var tvPhone: TextView = itemView.findViewById(R.id.tvPhone)
         private var btnViewPatientDetail: Button = itemView.findViewById(R.id.btnViewPatientDetail)
         private var btnCall: Button = itemView.findViewById(R.id.btnCall)
+
         init {
 
         }
-        fun bindPatient(patient: Patient){
+
+        fun bindPatient(patient: Patient) {
             tvName.text = "${patient.first_name} ${patient.last_name}"
             tvAddress.text = ""
             tvPhone.text = patient.phone
@@ -54,7 +58,6 @@ class PatientAdapter(var context: Context, private var data:List<Patient>, var l
                 patientClickListener.onViewPatientDetailClick(patient)
             }
         }
-
 
 
     }

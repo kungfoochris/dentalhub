@@ -8,5 +8,5 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity
 class User(
-    @Id var id:Long
-): Parcelable
+    @Id var id: Long
+) : Parcelable

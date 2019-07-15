@@ -64,10 +64,10 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var btnId37: Button
     private lateinit var btnId38: Button
 
-    var selectedTreatment = ""
-    var btnBackground: Drawable? = null
+    private var selectedTreatment = ""
+    private var btnBackground: Drawable? = null
 
-    private var teeth = Array(32){"NONE"}
+    private var teeth = Array(32) { "NONE" }
 
 
     override fun onCreateView(
@@ -157,13 +157,13 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnId48.setOnClickListener(this)
 
         treatmentSelector = view.findViewById(R.id.treatmentSelector)
-        treatmentSelector.setOnCheckedChangeListener { group, checkedId ->
-            when(checkedId){
+        treatmentSelector.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
                 R.id.btnSDF -> {
                     selectedTreatment = "SDF"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
                 }
-                R.id.btnSEAL->{
+                R.id.btnSEAL -> {
                     selectedTreatment = "SEAL"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
                 }
@@ -201,7 +201,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         val notes = etNotes.text.toString()
         val fvApplied = checkBoxFVApplied.isChecked
         val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
-        treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete,teeth)
+        treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete, teeth)
 
         btnNext.setOnClickListener {
             fragmentCommunicator.goForward()
@@ -213,16 +213,17 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        var buttons= arrayOf(R.id.btnId11, R.id.btnId12, R.id.btnId13, R.id.btnId14, R.id.btnId15, R.id.btnId16,
+        val buttons = arrayOf(
+            R.id.btnId11, R.id.btnId12, R.id.btnId13, R.id.btnId14, R.id.btnId15, R.id.btnId16,
             R.id.btnId17, R.id.btnId18, R.id.btnId21, R.id.btnId22, R.id.btnId23, R.id.btnId24, R.id.btnId25,
             R.id.btnId26, R.id.btnId27, R.id.btnId28, R.id.btnId31, R.id.btnId32, R.id.btnId33, R.id.btnId34,
             R.id.btnId35, R.id.btnId36, R.id.btnId37, R.id.btnId38, R.id.btnId41, R.id.btnId42, R.id.btnId43,
             R.id.btnId44, R.id.btnId45, R.id.btnId46, R.id.btnId47, R.id.btnId47
-            )
-        if(buttons.contains(v.id)){
+        )
+        if (buttons.contains(v.id)) {
             v.background = btnBackground
         }
-        when(v.id){
+        when (v.id) {
             R.id.btnId18 -> teeth[0] = selectedTreatment
             R.id.btnId17 -> teeth[1] = selectedTreatment
             R.id.btnId16 -> teeth[2] = selectedTreatment
@@ -260,10 +261,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             R.id.btnId38 -> teeth[31] = selectedTreatment
 
         }
-
-
     }
-
-
 
 }

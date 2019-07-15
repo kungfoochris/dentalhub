@@ -5,7 +5,7 @@
             android:title="@string/add_patient"
             android:icon="@android:drawable/ic_input_add"
             app:showAsAction="always"
-        />
+    />
     <item
             android:id="@+id/refresh"
             android:title="@string/add_patient"

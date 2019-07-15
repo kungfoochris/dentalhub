@@ -24,34 +24,34 @@ interface DjangoInterface {
     @POST("patients")
     fun addPatient(
         @Header("Authorization") token: String,
-        @Field("id") id:Long,
+        @Field("id") id: Long,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
-        @Field("gender") gender:String,
-        @Field("phone") phone:String,
+        @Field("gender") gender: String,
+        @Field("phone") phone: String,
         @Field("middle_name") middleName: String?,
-        @Field("dob") dob:String,
-        @Field("education") education:String,
+        @Field("dob") dob: String,
+        @Field("education") education: String,
         @Field("street_address") street_address: String,
         @Field("ward") ward: Int,
-        @Field("city") city:String,
-        @Field("state") state:String,
-        @Field("country") country:String,
-        @Field("latitude") latitude:String,
-        @Field("longitude") longitude:String
-    ):Call<Patient>
+        @Field("city") city: String,
+        @Field("state") state: String,
+        @Field("country") country: String,
+        @Field("latitude") latitude: String,
+        @Field("longitude") longitude: String
+    ): Call<Patient>
 
     @GET("patients")
     fun searchPatient(@Query("s") s: String): Call<List<Patient>>
 
     @GET("patients")
-    fun listPatients(@Header("Authorization") token: String) : Call<List<Patient>>
+    fun listPatients(@Header("Authorization") token: String): Call<List<Patient>>
 
     @GET("geography")
-    fun listGeographies():Call<List<Geography>>
+    fun listGeographies(): Call<List<Geography>>
 
     @GET("activities")
-    fun listActivities():Call<List<Activity>>
+    fun listActivities(): Call<List<Activity>>
 
     companion object Factory {
         fun create(context: Context): DjangoInterface {
