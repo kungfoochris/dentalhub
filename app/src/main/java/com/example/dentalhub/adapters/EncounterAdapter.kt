@@ -1,6 +1,7 @@
 package com.example.dentalhub.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.dentalhub.entities.Encounter
 
 class EncounterAdapter(var context: Context, private var data: List<Encounter>, listener: EncounterClickListener) :
     RecyclerView.Adapter<EncounterAdapter.EncounterViewHolder>() {
+
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var encounterClickListener: EncounterClickListener = listener
 
@@ -32,7 +34,9 @@ class EncounterAdapter(var context: Context, private var data: List<Encounter>, 
 
     override fun getItemCount() = data.size
 
-    inner class EncounterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class EncounterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
         private var llSingleEncounter: LinearLayout = itemView.findViewById(R.id.llSingleEncounter)
@@ -42,6 +46,7 @@ class EncounterAdapter(var context: Context, private var data: List<Encounter>, 
             tvEncounterDate.text = encounter.date
 
             llSingleEncounter.setOnClickListener {
+                Log.d("EVH", " LinearLayout Single Encounter")
                 encounterClickListener.onEncounterClick(encounter)
             }
         }

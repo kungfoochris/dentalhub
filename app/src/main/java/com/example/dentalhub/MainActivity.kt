@@ -14,6 +14,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -222,6 +223,7 @@ class MainActivity : AppCompatActivity() {
             loading.visibility = View.VISIBLE
             //openAddEncounter(grpName[item])
             Log.d("DELAYED: ", patient.fullName()+" by "+ grpName[item])
+            Toast.makeText(this,"Work in progress", Toast.LENGTH_SHORT).show()
             dialog.dismiss()// dismiss the alert box after chose option
         })
         val alert = delayChooser.create()
