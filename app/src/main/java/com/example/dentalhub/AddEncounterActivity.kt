@@ -30,10 +30,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
     private lateinit var context: Context
 
-    val history = History()
-    val screening = Screening()
-    val treatment = Treatment()
-    val referral  = Referral()
+    var history = History()
+    var screening = Screening()
+    var treatment = Treatment()
+    var referral  = Referral()
+    var encounter = Encounter()
 
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,60 +53,20 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         patient = intent.getParcelableExtra("patient")
         title = patient.fullName()
 
-        val encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()
-
-
-
-        history.blood_disorder = false
-        history.diabetes = false
-        history.liver_problem = false
-        history.rheumatic_fever = false
-        history.seizuers_or_epilepsy = false
-        history.hepatitis_b_or_c = false
-        history.hiv = false
-        history.other = ""
-        history.no_underlying_medical_record = false
-        history.not_taking_any_medications = false
-        history.allergies = ""
+        encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()!!
 
         history.encounter?.target = encounter
         historyBox.put(history)
 
 
-
-        screening.carries_risk = "low"
-        screening.decayed_pimary_teeth = 0
-        screening.decayed_permanent_teeth = 0
-        screening.cavity_permanent_tooth = false
-        screening.cavity_permanent_anterior = false
-        screening.active_infection = false
-        screening.need_art_filling = false
-        screening.need_sealant = false
-        screening.need_sdf = false
-        screening.need_extraction = false
-
         screening.encounter?.target = encounter
         screeningBox.put(screening)
 
-
         treatment.encounter?.target = encounter
-
-        treatment.fv_applied = false
-        treatment.treatment_plan_complete = false
-        treatment.notes = ""
-
         treatmentBox.put(treatment)
 
 
-        treatment.encounter?.target = encounter
-
-        referral.no_referral = false
-        referral.health_post = false
-        referral.hygienist = false
-        referral.dentist = false
-        referral.general_physician = false
-        referral.other = false
-
+        referral.encounter?.target = encounter
         referralBox.put(referral)
 
         initUI()
@@ -127,6 +88,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                                rheumaticFever: Boolean, seizuersOrEpilepsy: Boolean, hepatitisBOrC: Boolean,
                                hiv: Boolean, other: String, noUnderlyingMedicalRecord:Boolean,medications: String,
                                notTakingAnyMedications: Boolean, allergies: String) {
+
+        history = historyBox.query().equal(History_.encounterId, encounter.id).orderDesc(History_.id).build().findFirst()!!
+
         history.blood_disorder = bloodDisorders
         history.diabetes = diabetes
         history.liver_problem = liverProblem
@@ -153,6 +117,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         needSDF: Boolean,
         needExtraction: Boolean
     ) {
+
+        screening = screeningBox.query().equal(Screening_.encounterId, encounter.id).orderDesc(Screening_.id).build().findFirst()!!
+
         screening.carries_risk = carriesRisk
         try{
             screening.decayed_pimary_teeth = decayedPrimaryTeeth.toInt()
@@ -175,9 +142,55 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         screeningBox.put(screening)
     }
+    override fun updateTreatment(
+        notes: String,
+        fvApplied: Boolean,
+        treatmentPlanComplete: Boolean,
+        teeth: Array<String>
+    ) {
+        treatment = treatmentBox.query().equal(Treatment_.encounterId, encounter.id).orderDesc(Treatment_.id).build().findFirst()!!
 
-    override fun updateTreatment() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        treatment.fv_applied = fvApplied
+        treatment.notes = notes
+        treatment.treatment_plan_complete = treatmentPlanComplete
+
+        treatment.tooth18 = teeth[0]
+        treatment.tooth17 = teeth[1]
+        treatment.tooth16 = teeth[2]
+        treatment.tooth15 = teeth[3]
+        treatment.tooth14 = teeth[4]
+        treatment.tooth13 = teeth[5]
+        treatment.tooth12 = teeth[6]
+        treatment.tooth11 = teeth[7]
+
+        treatment.tooth21 = teeth[8]
+        treatment.tooth22 = teeth[9]
+        treatment.tooth23 = teeth[10]
+        treatment.tooth24 = teeth[11]
+        treatment.tooth25 = teeth[12]
+        treatment.tooth26 = teeth[13]
+        treatment.tooth27 = teeth[14]
+        treatment.tooth28 = teeth[15]
+
+        treatment.tooth48 = teeth[16]
+        treatment.tooth47 = teeth[17]
+        treatment.tooth46 = teeth[18]
+        treatment.tooth45 = teeth[19]
+        treatment.tooth44 = teeth[20]
+        treatment.tooth43 = teeth[21]
+        treatment.tooth42 = teeth[22]
+        treatment.tooth41 = teeth[23]
+
+        treatment.tooth31 = teeth[24]
+        treatment.tooth32 = teeth[25]
+        treatment.tooth33 = teeth[26]
+        treatment.tooth34 = teeth[27]
+        treatment.tooth35 = teeth[28]
+        treatment.tooth36 = teeth[29]
+        treatment.tooth37 = teeth[30]
+        treatment.tooth38 = teeth[31]
+
+        treatmentBox.put(treatment)
     }
 
     override fun updateReferral(
@@ -188,6 +201,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         generalPhysician: Boolean,
         other: Boolean
     ) {
+        referral = referralBox.query().equal(Referral_.encounterId, encounter.id).orderDesc(Referral_.id).build().findFirst()!!
+
         referral.no_referral = noReferral
         referral.health_post = healthPost
         referral.hygienist = hygienist
@@ -220,6 +235,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun goForward() {
         if(pager.currentItem == 3){
             pager.currentItem = 0
+            onBackPressed()
         }else {
             pager.currentItem += 1
         }

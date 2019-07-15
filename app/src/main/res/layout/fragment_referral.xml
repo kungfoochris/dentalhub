@@ -118,7 +118,7 @@
         <Button
                 android:id="@+id/btnNext"
                 android:layout_weight="0.5"
-                android:text="@string/next"
+                android:text="@string/save"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
         />

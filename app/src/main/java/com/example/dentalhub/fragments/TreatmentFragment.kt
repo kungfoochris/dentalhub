@@ -1,24 +1,30 @@
 package com.example.dentalhub.fragments
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.core.content.ContextCompat
+import android.widget.CheckBox
+import android.widget.EditText
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
+import com.example.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import info.hoang8f.android.segmented.SegmentedGroup
 
 class TreatmentFragment : Fragment(), View.OnClickListener {
 
 
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
+    private lateinit var treatmentFormCommunicator: TreatmentFormCommunicator
+
     private lateinit var treatmentSelector: SegmentedGroup
+    private lateinit var checkBoxFVApplied: CheckBox
+    private lateinit var checkBoxTreatmentPlanComplete: CheckBox
+    private lateinit var etNotes: EditText
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
 
@@ -61,6 +67,8 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     var selectedTreatment = ""
     var btnBackground: Drawable? = null
 
+    private var teeth = Array(32){"NONE"}
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,6 +80,9 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
+        checkBoxFVApplied = view.findViewById(R.id.checkBoxFVApplied)
+        checkBoxTreatmentPlanComplete = view.findViewById(R.id.checkBoxTreatmentPlanComplete)
+        etNotes = view.findViewById(R.id.etNotes)
 
         btnId18 = view.findViewById(R.id.btnId18)
         btnId17 = view.findViewById(R.id.btnId17)
@@ -169,11 +180,11 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
                 }
                 R.id.btnNone -> {
-                    selectedTreatment = "None"
+                    selectedTreatment = "NONE"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
                 }
                 else -> {
-                    selectedTreatment = "None"
+                    selectedTreatment = "NONE"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
                 }
             }
@@ -185,6 +196,12 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
+        treatmentFormCommunicator = activity as TreatmentFormCommunicator
+
+        val notes = etNotes.text.toString()
+        val fvApplied = checkBoxFVApplied.isChecked
+        val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
+        treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete,teeth)
 
         btnNext.setOnClickListener {
             fragmentCommunicator.goForward()
@@ -205,6 +222,45 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         if(buttons.contains(v.id)){
             v.background = btnBackground
         }
+        when(v.id){
+            R.id.btnId18 -> teeth[0] = selectedTreatment
+            R.id.btnId17 -> teeth[1] = selectedTreatment
+            R.id.btnId16 -> teeth[2] = selectedTreatment
+            R.id.btnId15 -> teeth[3] = selectedTreatment
+            R.id.btnId14 -> teeth[4] = selectedTreatment
+            R.id.btnId13 -> teeth[5] = selectedTreatment
+            R.id.btnId12 -> teeth[6] = selectedTreatment
+            R.id.btnId11 -> teeth[7] = selectedTreatment
+
+            R.id.btnId21 -> teeth[8] = selectedTreatment
+            R.id.btnId22 -> teeth[9] = selectedTreatment
+            R.id.btnId23 -> teeth[10] = selectedTreatment
+            R.id.btnId24 -> teeth[11] = selectedTreatment
+            R.id.btnId25 -> teeth[12] = selectedTreatment
+            R.id.btnId26 -> teeth[13] = selectedTreatment
+            R.id.btnId27 -> teeth[14] = selectedTreatment
+            R.id.btnId28 -> teeth[15] = selectedTreatment
+
+            R.id.btnId48 -> teeth[16] = selectedTreatment
+            R.id.btnId47 -> teeth[17] = selectedTreatment
+            R.id.btnId46 -> teeth[18] = selectedTreatment
+            R.id.btnId45 -> teeth[19] = selectedTreatment
+            R.id.btnId44 -> teeth[20] = selectedTreatment
+            R.id.btnId43 -> teeth[21] = selectedTreatment
+            R.id.btnId42 -> teeth[22] = selectedTreatment
+            R.id.btnId41 -> teeth[23] = selectedTreatment
+
+            R.id.btnId31 -> teeth[24] = selectedTreatment
+            R.id.btnId32 -> teeth[25] = selectedTreatment
+            R.id.btnId33 -> teeth[26] = selectedTreatment
+            R.id.btnId34 -> teeth[27] = selectedTreatment
+            R.id.btnId35 -> teeth[28] = selectedTreatment
+            R.id.btnId36 -> teeth[29] = selectedTreatment
+            R.id.btnId37 -> teeth[30] = selectedTreatment
+            R.id.btnId38 -> teeth[31] = selectedTreatment
+
+        }
+
 
     }
 
