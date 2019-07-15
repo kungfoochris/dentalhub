@@ -133,6 +133,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAdapter() {
         patientAdapter = PatientAdapter(context, allPatients, object : PatientAdapter.PatientClickListener {
+            override fun onDelayPatientClick(patient: Patient) {
+                displayDelayDialog(patient)
+            }
+
             override fun onCallPatientClick(patient: Patient) {
                 // do the calling
             }
@@ -202,7 +206,8 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun delayDialog(){
+    private fun displayDelayDialog(patient: Patient){
+        // delay recall of patient
         val grpName = arrayOf(
             "1 week",
             "2 weeks",
@@ -211,14 +216,15 @@ class MainActivity : AppCompatActivity() {
             "2 months",
             "3 months"
         )
-        val encounterTypeChooser = androidx.appcompat.app.AlertDialog.Builder(this)
-        encounterTypeChooser.setTitle(getString(R.string.primary_reason_for_encounter))
-        encounterTypeChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
+        val delayChooser = androidx.appcompat.app.AlertDialog.Builder(this)
+        delayChooser.setTitle(getString(R.string.delay))
+        delayChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
             loading.visibility = View.VISIBLE
             //openAddEncounter(grpName[item])
-            dialog.dismiss()// dismiss the alertbox after chose option
+            Log.d("DELAYED: ", patient.fullName()+" by "+ grpName[item])
+            dialog.dismiss()// dismiss the alert box after chose option
         })
-        val alert = encounterTypeChooser.create()
+        val alert = delayChooser.create()
         alert.show()
     }
 

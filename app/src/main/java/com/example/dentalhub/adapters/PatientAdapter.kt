@@ -21,6 +21,7 @@ class PatientAdapter(var context: Context, private var data: List<Patient>, var 
         fun onViewPatientDetailClick(patient: Patient)
 
         fun onCallPatientClick(patient: Patient)
+        fun onDelayPatientClick(patient: Patient)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientViewHolder {
@@ -41,6 +42,7 @@ class PatientAdapter(var context: Context, private var data: List<Patient>, var 
         private var tvPhone: TextView = itemView.findViewById(R.id.tvPhone)
         private var btnViewPatientDetail: Button = itemView.findViewById(R.id.btnViewPatientDetail)
         private var btnCall: Button = itemView.findViewById(R.id.btnCall)
+        private var btnDelay: Button = itemView.findViewById(R.id.btnDelay)
 
         init {
 
@@ -53,6 +55,9 @@ class PatientAdapter(var context: Context, private var data: List<Patient>, var 
             btnCall.setOnClickListener {
                 //patientClickListener.onAddEncounterButtonClick(patient)
                 patientClickListener.onCallPatientClick(patient)
+            }
+            btnDelay.setOnClickListener{
+                patientClickListener.onDelayPatientClick(patient)
             }
             btnViewPatientDetail.setOnClickListener {
                 patientClickListener.onViewPatientDetailClick(patient)
