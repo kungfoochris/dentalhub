@@ -104,6 +104,7 @@
                         android:id="@+id/etDOB"
                         android:inputType="date"
                         android:layout_weight="@dimen/form_col_1_weight"
+                        android:hint="@string/date_format"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                 />

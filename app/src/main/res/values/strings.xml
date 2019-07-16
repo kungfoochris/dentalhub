@@ -118,6 +118,7 @@
     <string name="last_name_is_required">Last name is required.</string>
     <string name="phone_is_required">Phone is required.</string>
     <string name="valid_date_is_required">Valid date (format yyyy-MM-dd) is required.</string>
+    <string name="date_format">Enter in yyyy-MM-dd format.</string>
     <string name="call">Call</string>
     <string name="other_problem">Other Problem</string>
     <string name="checkup_screening">Checkup / Screening</string>
