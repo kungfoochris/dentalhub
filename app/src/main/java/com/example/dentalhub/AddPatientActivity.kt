@@ -164,7 +164,8 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.country = country
             patient!!.latitude = latitude
             patient!!.longitude = longitude
-            patient!!.date = date
+            patient!!.created_at = date
+            patient!!.updated_at = date
             return patient!!
         } else {
             return Patient(
@@ -184,6 +185,7 @@ class AddPatientActivity : AppCompatActivity() {
                 country,
                 latitude,
                 longitude,
+                date,
                 date,
                 false
             )
