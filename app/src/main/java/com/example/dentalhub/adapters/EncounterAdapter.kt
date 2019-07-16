@@ -48,7 +48,7 @@ class EncounterAdapter(var context: Context, private var data: List<Encounter>, 
 
         fun bindEncounter(encounter: Encounter) {
             tvEncounterName.text = encounter.encounter_type
-            tvEncounterDate.text = encounter.date
+            tvEncounterDate.text = encounter.created_at
 
         }
 
