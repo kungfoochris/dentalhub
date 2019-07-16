@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-class Recall: Parcelable {
+class Recall : Parcelable {
     @Id
     var id: Long = 0
     var date: String = ""

@@ -56,7 +56,7 @@ class PatientAdapter(var context: Context, private var data: List<Patient>, var 
                 //patientClickListener.onAddEncounterButtonClick(patient)
                 patientClickListener.onCallPatientClick(patient)
             }
-            btnDelay.setOnClickListener{
+            btnDelay.setOnClickListener {
                 patientClickListener.onDelayPatientClick(patient)
             }
             btnViewPatientDetail.setOnClickListener {

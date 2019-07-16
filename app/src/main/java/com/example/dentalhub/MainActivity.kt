@@ -116,11 +116,6 @@ class MainActivity : AppCompatActivity() {
 
     @AddTrace(name = "listPatientsMainActivity", enabled = true /* optional */)
     private fun listPatients() {
-//        if(DentalApp.isConnectedToWifi(this)){
-//            listPatientsFromServer()
-//        }else{
-//            listPatientsFromLocalDB()
-//        }
         listPatientsFromLocalDB()
     }
 
@@ -212,7 +207,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun displayDelayDialog(patient: Patient){
+    private fun displayDelayDialog(patient: Patient) {
         // delay recall of patient
         val grpName = arrayOf(
             "1 week",
@@ -226,9 +221,8 @@ class MainActivity : AppCompatActivity() {
         delayChooser.setTitle(getString(R.string.delay))
         delayChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
             loading.visibility = View.VISIBLE
-            //openAddEncounter(grpName[item])
-            Log.d("DELAYED: ", patient.fullName()+" by "+ grpName[item])
-            Toast.makeText(this,"Work in progress", Toast.LENGTH_SHORT).show()
+            Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
+            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show()
             dialog.dismiss()// dismiss the alert box after chose option
         })
         val alert = delayChooser.create()
@@ -240,7 +234,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("TAG", "displaySearchDialog()")
         val searchDialogView = LayoutInflater.from(this).inflate(R.layout.search_dialog, null)
         val mBuilder = AlertDialog.Builder(this).setView(searchDialogView).setTitle(getString(R.string.search))
-        val mAlertDialog = mBuilder.show()
+        mBuilder.show()
     }
 
     companion object {

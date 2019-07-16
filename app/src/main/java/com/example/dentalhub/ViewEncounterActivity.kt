@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.*
 import io.objectbox.Box
 
-class ViewEncounterActivity: AppCompatActivity() {
+class ViewEncounterActivity : AppCompatActivity() {
 
     private var history = History()
     private var screening = Screening()
@@ -55,7 +55,7 @@ class ViewEncounterActivity: AppCompatActivity() {
     private lateinit var tvHealthPost: TextView
     private lateinit var tvHygienist: TextView
     private lateinit var tvDentist: TextView
-    private lateinit var tvGeneralPhysician:TextView
+    private lateinit var tvGeneralPhysician: TextView
     private lateinit var tvOtherDetails: TextView
 
     var encounterId: Long = 0
@@ -72,7 +72,7 @@ class ViewEncounterActivity: AppCompatActivity() {
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
 
-        encounter = encounterBox.query().equal(Encounter_.id,encounterId).build().findFirst()!!
+        encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
         history = historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
         screening = screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
@@ -132,7 +132,7 @@ class ViewEncounterActivity: AppCompatActivity() {
         tvNeedSDF.text = screening.need_sdf.toString()
         tvNeedExtraction.text = screening.need_extraction.toString()
 
-        //treatment
+        // treatment
         tvFVApplied = findViewById(R.id.tvFVApplied)
         tvNotes = findViewById(R.id.tvNotes)
         tvTreatmentPlanComplete = findViewById(R.id.tvTreatmentPlanComplete)
@@ -141,7 +141,7 @@ class ViewEncounterActivity: AppCompatActivity() {
         tvTreatmentPlanComplete.text = treatment.treatment_plan_complete.toString()
         tvNotes.text = treatment.notes
 
-        //referral
+        // referral
         tvNoReferral = findViewById(R.id.tvNoReferral)
         tvHealthPost = findViewById(R.id.tvHealthPost)
         tvHygienist = findViewById(R.id.tvHygienist)

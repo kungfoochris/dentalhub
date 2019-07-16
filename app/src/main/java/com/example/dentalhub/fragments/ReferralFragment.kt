@@ -11,9 +11,8 @@ import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
 import com.example.dentalhub.fragments.interfaces.ReferralFormCommunicator
-import kotlinx.android.synthetic.main.fragment_history.*
 
-class ReferralFragment : Fragment(){
+class ReferralFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var referralFormCommunicator: ReferralFormCommunicator
 
@@ -44,9 +43,9 @@ class ReferralFragment : Fragment(){
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
 
         checkBoxOther.setOnCheckedChangeListener { compoundButton, b ->
-            if(compoundButton.isChecked){
+            if (compoundButton.isChecked) {
                 etOtherDetails.visibility = View.VISIBLE
-            }else{
+            } else {
                 etOtherDetails.visibility = View.GONE
             }
         }
@@ -71,7 +70,15 @@ class ReferralFragment : Fragment(){
             val other = checkBoxOther.isChecked
             val otherDetails = etOtherDetails.text.toString()
 
-            referralFormCommunicator.updateReferral(noReferral, healthPost, hygienist, dentist, generalPhysician, other, otherDetails)
+            referralFormCommunicator.updateReferral(
+                noReferral,
+                healthPost,
+                hygienist,
+                dentist,
+                generalPhysician,
+                other,
+                otherDetails
+            )
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {

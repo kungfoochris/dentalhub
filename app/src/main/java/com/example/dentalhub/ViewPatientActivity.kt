@@ -24,8 +24,6 @@ import com.example.dentalhub.utils.DateHelper
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class ViewPatientActivity : AppCompatActivity() {
@@ -100,7 +98,7 @@ class ViewPatientActivity : AppCompatActivity() {
                 // start the encounter view
                 Log.d("View PatientActivity", "show encounter detail")
                 val encounterDetailIntent: Intent = Intent(context, ViewEncounterActivity::class.java)
-                encounterDetailIntent.putExtra("ENCOUNTER_ID",encounter.id.toLong())
+                encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id.toLong())
                 startActivity(encounterDetailIntent)
             }
 

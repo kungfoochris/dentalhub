@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.R
@@ -40,7 +39,7 @@ class EncounterAdapter(var context: Context, private var data: List<Encounter>, 
 
     override fun getItemCount() = data.size
 
-    inner class EncounterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class EncounterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
