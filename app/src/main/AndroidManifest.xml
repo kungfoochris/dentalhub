@@ -46,6 +46,10 @@
                 android:label="@string/app_name"
                 android:screenOrientation="landscape"/>
         <activity
+                android:name=".ViewEncounterActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="landscape"/>
+        <activity
                 android:name=".SearchPatientActivity"
                 android:label="@string/app_name"
                 android:screenOrientation="landscape"/>
