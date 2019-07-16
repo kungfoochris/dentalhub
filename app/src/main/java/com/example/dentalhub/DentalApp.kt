@@ -1,9 +1,12 @@
 package com.example.dentalhub
 
+import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.multidex.MultiDexApplication
 import com.example.dentalhub.models.Location
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 
 
 class DentalApp : MultiDexApplication() {
@@ -68,5 +71,22 @@ class DentalApp : MultiDexApplication() {
             return mWifi.isConnected
 
         }
+//         fun checkPlayServices(context: Context): Boolean {
+//            var apiAvailability = GoogleApiAvailability.getInstance();
+//            val resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+//
+//            if (resultCode != ConnectionResult.SUCCESS) {
+//                if (apiAvailability.isUserResolvableError(resultCode)) {
+//                    apiAvailability.getErrorDialog(context as Activity?, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
+//                } else {
+//                    false
+//                }
+//
+//                return false
+//            }
+//
+//            return true
+//        }
+
     }
 }

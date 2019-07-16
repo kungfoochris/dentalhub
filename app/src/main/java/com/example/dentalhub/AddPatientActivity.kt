@@ -1,5 +1,7 @@
 package com.example.dentalhub
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,6 +20,8 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
+import java.util.*
 
 class AddPatientActivity : AppCompatActivity() {
 
@@ -78,6 +82,23 @@ class AddPatientActivity : AppCompatActivity() {
         spinnerGender = findViewById(R.id.spinnerGender)
         spinnerMaritalStatus = findViewById(R.id.spinnerMartialStatus)
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
+
+        etDOB.setOnFocusChangeListener { view, b ->
+            if(b){
+                val c = Calendar.getInstance()
+                val mYear = c.get(Calendar.YEAR)
+                val mMonth = c.get(Calendar.MONTH)
+                val mDay = c.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(context,
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> etDOB.setText(year.toString() +"-"+ DecimalFormat("00").format(monthOfYear+1).toString()+ "-"+dayOfMonth.toString()) },
+                    mYear,
+                    mMonth,
+                    mDay
+                )
+                datePickerDialog.show()
+            }
+        }
         spinnerGender.adapter =
             AdapterHelper.createAdapter(context, resources.getStringArray(R.array.gender_list).toList())
         spinnerMaritalStatus.adapter =

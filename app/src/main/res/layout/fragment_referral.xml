@@ -112,11 +112,13 @@
 
         <EditText
                 android:id="@+id/etRecallDate"
-                android:inputType="date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/date_format"
         />
+        <EditText
+                android:id="@+id/etRecallTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         <TextView
                 android:text="@string/select_location"
