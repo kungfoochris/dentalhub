@@ -98,7 +98,7 @@
     <string name="cavity_permanent_anterior">Cavity Permanent Anterior</string>
     <string name="active_infection">Active Infection</string>
     <string name="need_art_filling">Need ART Filling</string>
-    <string name="need_selant">Need Sealant</string>
+    <string name="need_sealant">Need Sealant</string>
     <string name="need_sdf">Need SDF</string>
     <string name="need_extraction">Need Extraction</string>
     <string name="caries_risk">Caries Risk</string>
@@ -123,8 +123,12 @@
     <string name="other_problem">Other Problem</string>
     <string name="checkup_screening">Checkup / Screening</string>
     <string name="relief_of_pain">Relief of pain</string>
-    <string name="continuation_of_treament_plan">Continuation of treament plan.</string>
+    <string name="continuation_of_treatment_plan">Continuation of treatment plan.</string>
     <string name="continue_">Continue</string>
     <string name="primary_reason_for_encounter">Primary reason for encounter</string>
     <string name="ward_is_required">Ward number is required</string>
+    <string name="history">History</string>
+    <string name="screening">Screening</string>
+    <string name="treatment">Treatment</string>
+    <string name="referral">Referral</string>
 </resources>
