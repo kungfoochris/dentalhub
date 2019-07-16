@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -22,6 +23,8 @@ import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ViewPatientActivity : AppCompatActivity() {
@@ -94,6 +97,10 @@ class ViewPatientActivity : AppCompatActivity() {
         encounterAdapter = EncounterAdapter(context, allEnCounters, object : EncounterAdapter.EncounterClickListener {
             override fun onEncounterClick(encounter: Encounter) {
                 // start the encounter view
+                Log.d("View PatientActivity", "show encounter detail")
+                val encounterDetailIntent: Intent = Intent(context, ViewEncounterActivity::class.java)
+                encounterDetailIntent.putExtra("ENCOUNTER_ID",encounter.id.toLong())
+                startActivity(encounterDetailIntent)
             }
 
         })
@@ -141,7 +148,7 @@ class ViewPatientActivity : AppCompatActivity() {
         val grpName = arrayOf(
             getString(R.string.checkup_screening),
             getString(R.string.relief_of_pain),
-            getString(R.string.continuation_of_treament_plan),
+            getString(R.string.continuation_of_treatment_plan),
             getString(R.string.other_problem)
         )
         val encounterTypeChooser = AlertDialog.Builder(this)
@@ -149,7 +156,7 @@ class ViewPatientActivity : AppCompatActivity() {
         encounterTypeChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
             loading.visibility = View.VISIBLE
             openAddEncounter(grpName[item])
-            dialog.dismiss()// dismiss the alertbox after chose option
+            dialog.dismiss()// dismiss the alert box after chose option
         })
         val alert = encounterTypeChooser.create()
         alert.show()
@@ -161,7 +168,10 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun openAddEncounter(encounterType: String) {
-        val date = ""
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val date = sdf.format(Date())
+
         val encounter = Encounter()
         encounter.id = 0
         encounter.encounter_type = encounterType
