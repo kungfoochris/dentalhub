@@ -20,6 +20,7 @@ import com.example.dentalhub.adapters.EncounterAdapter
 import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.entities.Encounter_
 import com.example.dentalhub.entities.Patient
+import com.example.dentalhub.utils.DateHelper
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
@@ -164,18 +165,18 @@ class ViewPatientActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        listEncounters()
         loading.visibility = View.GONE
     }
 
     private fun openAddEncounter(encounterType: String) {
-
-        val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        val date = sdf.format(Date())
+        val date = DateHelper.getCurrentDate()
 
         val encounter = Encounter()
         encounter.id = 0
         encounter.encounter_type = encounterType
-        encounter.date = date
+        encounter.created_at = date
+        encounter.updated_at = date
         encounter.patient?.target = patient
         encounterBox.put(encounter)
 
