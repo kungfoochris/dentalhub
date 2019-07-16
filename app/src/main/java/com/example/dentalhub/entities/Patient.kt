@@ -29,7 +29,8 @@ class Patient(
     var country: String,
     var latitude: String,
     var longitude: String,
-    var date: String,
+    var created_at: String,
+    var updated_at: String,
     var uploaded: Boolean
 ) : Parcelable {
 
