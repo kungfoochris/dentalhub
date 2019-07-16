@@ -29,6 +29,12 @@ class EncounterAdapter(var context: Context, private var data: List<Encounter>, 
 
     override fun onBindViewHolder(holder: EncounterViewHolder, position: Int) {
         val encounterItem: Encounter = data[position]
+        holder.itemView.isClickable = true
+        holder.itemView.isFocusable = true
+        holder.itemView.setOnClickListener {
+            Log.d("EncounterAdapter", "itemView clicked")
+            encounterClickListener.onEncounterClick(encounterItem)
+        }
         holder.bindEncounter(encounterItem)
     }
 
@@ -39,16 +45,11 @@ class EncounterAdapter(var context: Context, private var data: List<Encounter>, 
 
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
-        private var llSingleEncounter: LinearLayout = itemView.findViewById(R.id.llSingleEncounter)
 
         fun bindEncounter(encounter: Encounter) {
             tvEncounterName.text = encounter.encounter_type
             tvEncounterDate.text = encounter.date
 
-            llSingleEncounter.setOnClickListener {
-                Log.d("EVH", " LinearLayout Single Encounter")
-                encounterClickListener.onEncounterClick(encounter)
-            }
         }
 
 
