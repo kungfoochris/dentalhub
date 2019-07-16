@@ -12,7 +12,8 @@ class Encounter : Parcelable {
     @Id
     var id: Long = 0
     var encounter_type: String = ""
-    var date: String = ""
+    var created_at: String = ""
+    var updated_at: String = ""
     var uploaded: Boolean = false
     var patient: ToOne<Patient>? = null
 }
