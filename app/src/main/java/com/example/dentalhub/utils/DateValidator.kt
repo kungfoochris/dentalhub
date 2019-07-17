@@ -6,9 +6,9 @@ import java.text.SimpleDateFormat
 class DateValidator {
     companion object {
         fun isValid(date: String): Boolean {
-            var status = false;
+            var status = false
             val format = SimpleDateFormat("yyyy-MM-dd")
-            format.setLenient(false)
+            format.isLenient = false
             try {
                 format.parse(date)
                 status = true

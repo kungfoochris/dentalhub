@@ -1,5 +1,7 @@
 package com.example.dentalhub.fragments
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +13,8 @@ import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
 import com.example.dentalhub.fragments.interfaces.ReferralFormCommunicator
-import android.widget.DatePicker
-import android.app.DatePickerDialog
-import java.util.*
-import android.widget.TimePicker
-import android.app.TimePickerDialog
-import android.content.Context
-import androidx.fragment.app.FragmentActivity
 import java.text.DecimalFormat
+import java.util.*
 
 
 class ReferralFragment : Fragment() {
@@ -35,7 +31,6 @@ class ReferralFragment : Fragment() {
 
     private lateinit var etRecallDate: EditText
     private lateinit var etRecallTime: EditText
-
 
 
     private lateinit var btnNext: Button
@@ -69,14 +64,21 @@ class ReferralFragment : Fragment() {
         }
 
         etRecallDate.setOnFocusChangeListener { view, b ->
-            if(b){
+            if (b) {
                 val c = Calendar.getInstance()
                 val mYear = c.get(Calendar.YEAR)
                 val mMonth = c.get(Calendar.MONTH)
                 val mDay = c.get(Calendar.DAY_OF_MONTH)
 
-                val datePickerDialog = DatePickerDialog(activity,
-                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> etRecallDate.setText( year.toString() +"-"+ DecimalFormat("00").format(monthOfYear+1).toString()+ "-"+DecimalFormat("00").format(dayOfMonth).toString()) },
+                val datePickerDialog = DatePickerDialog(
+                    activity,
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                        etRecallDate.setText(
+                            year.toString() + "-" + DecimalFormat("00").format(monthOfYear + 1).toString() + "-" + DecimalFormat(
+                                "00"
+                            ).format(dayOfMonth).toString()
+                        )
+                    },
                     mYear,
                     mMonth,
                     mDay
@@ -84,23 +86,30 @@ class ReferralFragment : Fragment() {
                 datePickerDialog.show()
             }
         }
-       etRecallTime.setOnFocusChangeListener { view, b ->
-           if(b){
-               // Get Current Time
-               val c = Calendar.getInstance()
-               val mHour = c.get(Calendar.HOUR_OF_DAY)
-               val mMinute = c.get(Calendar.MINUTE)
+        etRecallTime.setOnFocusChangeListener { view, b ->
+            if (b) {
+                // Get Current Time
+                val c = Calendar.getInstance()
+                val mHour = c.get(Calendar.HOUR_OF_DAY)
+                val mMinute = c.get(Calendar.MINUTE)
 
-               // Launch Time Picker Dialog
-               val timePickerDialog = TimePickerDialog(activity,
-                   TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> etRecallTime.setText(DecimalFormat("00").format(hourOfDay)+":"+DecimalFormat("00").format(minute)) },
-                   mHour,
-                   mMinute,
-                   false
-               )
-               timePickerDialog.show()
-           }
-       }
+                // Launch Time Picker Dialog
+                val timePickerDialog = TimePickerDialog(
+                    activity,
+                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                        etRecallTime.setText(
+                            DecimalFormat("00").format(
+                                hourOfDay
+                            ) + ":" + DecimalFormat("00").format(minute)
+                        )
+                    },
+                    mHour,
+                    mMinute,
+                    false
+                )
+                timePickerDialog.show()
+            }
+        }
 
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)

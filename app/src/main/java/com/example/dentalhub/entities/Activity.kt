@@ -11,5 +11,4 @@ class Activity(
     @Id var id: Long,
     var remote_id: Long,
     var name: String
-) : Parcelable {
-}
+) : Parcelable

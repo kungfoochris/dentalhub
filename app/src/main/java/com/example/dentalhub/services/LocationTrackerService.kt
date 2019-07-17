@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import com.example.dentalhub.DentalApp
@@ -13,9 +12,10 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 
 
-class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks,
+    GoogleApiClient.OnConnectionFailedListener {
     override fun onConnected(p0: Bundle?) {
-       // location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        // location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
     }
 
     override fun onConnectionSuspended(p0: Int) {
@@ -41,7 +41,8 @@ class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks, G
     @SuppressLint("MissingPermission")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        googleApiClient = GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build()
+        googleApiClient = GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this).build()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
 

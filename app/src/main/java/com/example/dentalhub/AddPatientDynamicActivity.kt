@@ -24,7 +24,7 @@ class AddPatientDynamicActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitle(R.string.add_patient)
 
-        readFormConfiguration();
+        readFormConfiguration()
         setupUI()
 
     }

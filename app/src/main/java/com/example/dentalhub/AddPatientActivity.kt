@@ -1,7 +1,6 @@
 package com.example.dentalhub
 
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -84,14 +83,21 @@ class AddPatientActivity : AppCompatActivity() {
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
 
         etDOB.setOnFocusChangeListener { view, b ->
-            if(b){
+            if (b) {
                 val c = Calendar.getInstance()
                 val mYear = c.get(Calendar.YEAR)
                 val mMonth = c.get(Calendar.MONTH)
                 val mDay = c.get(Calendar.DAY_OF_MONTH)
 
-                val datePickerDialog = DatePickerDialog(context,
-                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> etDOB.setText(year.toString() +"-"+ DecimalFormat("00").format(monthOfYear+1).toString()+ "-"+DecimalFormat("00").format(dayOfMonth).toString()) },
+                val datePickerDialog = DatePickerDialog(
+                    context,
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                        etDOB.setText(
+                            year.toString() + "-" + DecimalFormat(
+                                "00"
+                            ).format(monthOfYear + 1).toString() + "-" + DecimalFormat("00").format(dayOfMonth).toString()
+                        )
+                    },
                     mYear,
                     mMonth,
                     mDay

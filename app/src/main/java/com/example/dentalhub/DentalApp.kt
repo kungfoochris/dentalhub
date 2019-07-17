@@ -1,12 +1,9 @@
 package com.example.dentalhub
 
-import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.multidex.MultiDexApplication
 import com.example.dentalhub.models.Location
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 
 
 class DentalApp : MultiDexApplication() {
