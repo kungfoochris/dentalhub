@@ -18,16 +18,20 @@ class DentalApp : MultiDexApplication() {
 
         context = applicationContext
 
-        defaultChannelId = applicationContext.packageName+applicationContext.getString(R.string.app_name)
-        syncChannelId = applicationContext.packageName+applicationContext.getString(R.string.app_name)+"-sync"
+        defaultChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name)
+        syncChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name) + "-sync"
 
-        NotificationHelper.createNotificationChannel(this,
+        NotificationHelper.createNotificationChannel(
+            this,
             NotificationManagerCompat.IMPORTANCE_DEFAULT, false,
-            getString(R.string.app_name), "App notification channel.")
+            getString(R.string.app_name), "App notification channel."
+        )
 
-        NotificationHelper.createNotificationChannel(this,
+        NotificationHelper.createNotificationChannel(
+            this,
             NotificationManagerCompat.IMPORTANCE_DEFAULT, false,
-            getString(R.string.app_name)+"-sync", "Notification channel for sync service.")
+            getString(R.string.app_name) + "-sync", "Notification channel for sync service."
+        )
 
     }
 
@@ -90,7 +94,7 @@ class DentalApp : MultiDexApplication() {
 
         }
 
-        fun displayNotification(id: Int, title: String, desc: String, longDesc: String){
+        fun displayNotification(id: Int, title: String, desc: String, longDesc: String) {
             val notificationBuilder = NotificationCompat.Builder(context, syncChannelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
@@ -98,7 +102,8 @@ class DentalApp : MultiDexApplication() {
                 .setTicker(context.getString(R.string.sync_ticker))
                 .setStyle(
                     NotificationCompat.BigTextStyle()
-                        .bigText(longDesc))
+                        .bigText(longDesc)
+                )
                 .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
@@ -106,7 +111,8 @@ class DentalApp : MultiDexApplication() {
 
             notificationManager.notify(id, notificationBuilder.build())
         }
-        fun cancelNotification(id: Int){
+
+        fun cancelNotification(id: Int) {
             val notificationManager = NotificationManagerCompat.from(context)
             notificationManager.cancel(id)
         }

@@ -1,11 +1,8 @@
 package com.example.dentalhub.services
 
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
-import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
 import com.example.dentalhub.DentalApp
 import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.entities.Encounter
@@ -13,7 +10,7 @@ import com.example.dentalhub.entities.Patient
 import io.objectbox.Box
 import kotlin.concurrent.fixedRateTimer
 
-class SyncService: Service() {
+class SyncService : Service() {
 
 
     private lateinit var patientsBox: Box<Patient>
@@ -44,11 +41,11 @@ class SyncService: Service() {
 //                mainHandler.postDelayed(this, 1000)
 //            }
 //        })
-        var i = 0;
-        fixedRateTimer("default", false, 0L, 1000){
-            i+=1
-            DentalApp.displayNotification(1001,"Title","Short Description: $i", "Long Description")
-            if (i>10){
+        var i = 0
+        fixedRateTimer("default", false, 0L, 1000) {
+            i += 1
+            DentalApp.displayNotification(1001, "Title", "Short Description: $i", "Long Description")
+            if (i > 10) {
                 DentalApp.cancelNotification(1001)
                 cancel()
                 stopSelf()
@@ -57,8 +54,6 @@ class SyncService: Service() {
 
 
     }
-
-
 
 
 }

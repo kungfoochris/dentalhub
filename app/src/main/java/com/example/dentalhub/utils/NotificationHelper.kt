@@ -7,7 +7,13 @@ import android.os.Build
 
 class NotificationHelper {
     companion object {
-        fun createNotificationChannel(context: Context, importance: Int, showBadge: Boolean, name: String, description: String) {
+        fun createNotificationChannel(
+            context: Context,
+            importance: Int,
+            showBadge: Boolean,
+            name: String,
+            description: String
+        ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val channelId = "${context.packageName}-$name"
 
