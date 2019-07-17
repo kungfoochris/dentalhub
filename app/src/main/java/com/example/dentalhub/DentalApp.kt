@@ -90,19 +90,25 @@ class DentalApp : MultiDexApplication() {
 
         }
 
-        fun displayNotification(title: String, desc: String, longDesc: String){
+        fun displayNotification(id: Int, title: String, desc: String, longDesc: String){
             val notificationBuilder = NotificationCompat.Builder(context, syncChannelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(desc)
+                .setTicker(context.getString(R.string.sync_ticker))
                 .setStyle(
                     NotificationCompat.BigTextStyle()
                         .bigText(longDesc))
+                .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
             val notificationManager = NotificationManagerCompat.from(context)
 
-            notificationManager.notify(1001, notificationBuilder.build())
+            notificationManager.notify(id, notificationBuilder.build())
+        }
+        fun cancelNotification(id: Int){
+            val notificationManager = NotificationManagerCompat.from(context)
+            notificationManager.cancel(id)
         }
 
 
