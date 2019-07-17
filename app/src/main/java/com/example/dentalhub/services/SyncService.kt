@@ -50,13 +50,13 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         displayNotification()
     }
     override fun networkAvailable() {
-       // startSync()
         Log.d("SyncService", "networkAvailable()")
+        startSync()
     }
 
     override fun networkUnavailable() {
-        //pauseSync()
         Log.d("SyncService", "networkUnavailable()")
+        pauseSync()
     }
 
     private fun pauseSync() {
