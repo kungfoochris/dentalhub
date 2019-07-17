@@ -25,6 +25,7 @@ import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.services.LocationTrackerService
+import com.example.dentalhub.services.SyncService
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
@@ -198,6 +199,9 @@ class MainActivity : AppCompatActivity() {
             R.id.search -> {
                 Log.d("PARAS", "do the search stuff")
                 displaySearchDialog()
+            }
+            R.id.sync -> {
+                startService(Intent(this, SyncService::class.java))
             }
             R.id.logout -> {
                 startActivity(Intent(this, LoginActivity::class.java))

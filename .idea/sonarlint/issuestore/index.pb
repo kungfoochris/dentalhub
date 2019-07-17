@@ -1,0 +1,25 @@
+
+k
+;app/src/main/java/com/example/dentalhub/utils/DateHelper.kt,a/2/a26f59a73dab79d07f343bebcc805cb8573980d3
+x
+Happ/src/main/java/com/example/dentalhub/TreatmentFragmentCommunicator.kt,d/d/dd1b0bbb5fa1d78c6d27563a88a56c5c91072430
+i
+9app/src/main/java/com/example/dentalhub/SplashActivity.kt,2/9/297dab5985ad4b259818c7206734794473321619
+g
+7app/src/main/java/com/example/dentalhub/MainActivity.kt,1/f/1fb60d9e28d7e076c8e911b0484f762cc7983ea6
+n
+>app/src/main/java/com/example/dentalhub/ViewPatientActivity.kt,5/4/543b040b76f17d2baf5cf6909ba823f17f5fb0f3
+p
+@app/src/main/java/com/example/dentalhub/ViewEncounterActivity.kt,d/1/d15f5b81f9312aa5a6b79fdad6e2e22754189dd5
+k
+;app/src/main/java/com/example/dentalhub/SelectorActivity.kt,f/7/f7f441dff688859fc533e8fa868aa0752a5a358f
+z
+Japp/src/main/java/com/example/dentalhub/services/LocationTrackerService.kt,b/a/ba2899c5476fc421d16d43d455231400fcd2c061
+d
+4app/src/main/java/com/example/dentalhub/DentalApp.kt,4/b/4ba9c50a09191170c0f8cfd6b74136cebf7b6082
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+u
+Eapp/src/main/java/com/example/dentalhub/fragments/ReferralFragment.kt,b/f/bf5f4070566a9f0db1e1cdf6bbbaaf69ce3af8a4
+m
+=app/src/main/java/com/example/dentalhub/AddPatientActivity.kt,c/e/ce922490da998d27671ebac6fa39e82ec96e9ac5

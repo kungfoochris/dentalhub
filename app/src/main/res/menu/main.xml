@@ -20,6 +20,10 @@
     />
 
     <item
+            android:id="@+id/sync"
+            android:title="@string/sync"
+    />
+    <item
             android:id="@+id/logout"
             android:title="@string/logout"
             android:icon="@android:drawable/ic_secure"

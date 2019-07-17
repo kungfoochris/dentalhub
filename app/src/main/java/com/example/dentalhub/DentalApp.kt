@@ -2,15 +2,33 @@ package com.example.dentalhub
 
 import android.content.Context
 import android.net.ConnectivityManager
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.multidex.MultiDexApplication
 import com.example.dentalhub.models.Location
+import com.example.dentalhub.utils.NotificationHelper
 
 
 class DentalApp : MultiDexApplication() {
 
+
     override fun onCreate() {
         super.onCreate()
         ObjectBox.init(this)
+
+        context = applicationContext
+
+        defaultChannelId = applicationContext.packageName+applicationContext.getString(R.string.app_name)
+        syncChannelId = applicationContext.packageName+applicationContext.getString(R.string.app_name)+"-sync"
+
+        NotificationHelper.createNotificationChannel(this,
+            NotificationManagerCompat.IMPORTANCE_DEFAULT, false,
+            getString(R.string.app_name), "App notification channel.")
+
+        NotificationHelper.createNotificationChannel(this,
+            NotificationManagerCompat.IMPORTANCE_DEFAULT, false,
+            getString(R.string.app_name)+"-sync", "Notification channel for sync service.")
+
     }
 
 
@@ -20,6 +38,9 @@ class DentalApp : MultiDexApplication() {
 
         var geography: String = ""
         var activity: String = ""
+        var defaultChannelId: String = ""
+        var syncChannelId: String = ""
+        lateinit var context: Context
 
         fun saveToPreference(context: Context, preferenceName: String, preferenceValue: String) {
             val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
@@ -68,6 +89,23 @@ class DentalApp : MultiDexApplication() {
             return mWifi.isConnected
 
         }
+
+        fun displayNotification(title: String, desc: String, longDesc: String){
+            val notificationBuilder = NotificationCompat.Builder(context, syncChannelId)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(desc)
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(longDesc))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+            val notificationManager = NotificationManagerCompat.from(context)
+
+            notificationManager.notify(1001, notificationBuilder.build())
+        }
+
+
 //         fun checkPlayServices(context: Context): Boolean {
 //            var apiAvailability = GoogleApiAvailability.getInstance();
 //            val resultCode = apiAvailability.isGooglePlayServicesAvailable(this);

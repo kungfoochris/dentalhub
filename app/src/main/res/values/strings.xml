@@ -131,4 +131,7 @@
     <string name="screening">Screening</string>
     <string name="treatment">Treatment</string>
     <string name="referral">Referral</string>
+    <string name="channel_name">DentalHub Sync Service</string>
+    <string name="channel_description">Channel used to sync transits.</string>
+    <string name="sync">Sync</string>
 </resources>

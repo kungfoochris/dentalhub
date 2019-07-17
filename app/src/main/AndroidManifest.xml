@@ -77,6 +77,9 @@
                 android:name=".services.BootstrapService"
                 android:exported="false"
                 android:stopWithTask="false"/>
+        <service android:name=".services.SyncService"
+                 android:exported="false"
+                 android:stopWithTask="false" />
     </application>
 
 </manifest>
