@@ -91,7 +91,7 @@ class AddPatientActivity : AppCompatActivity() {
                 val mDay = c.get(Calendar.DAY_OF_MONTH)
 
                 val datePickerDialog = DatePickerDialog(context,
-                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> etDOB.setText(year.toString() +"-"+ DecimalFormat("00").format(monthOfYear+1).toString()+ "-"+dayOfMonth.toString()) },
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> etDOB.setText(year.toString() +"-"+ DecimalFormat("00").format(monthOfYear+1).toString()+ "-"+DecimalFormat("00").format(dayOfMonth).toString()) },
                     mYear,
                     mMonth,
                     mDay

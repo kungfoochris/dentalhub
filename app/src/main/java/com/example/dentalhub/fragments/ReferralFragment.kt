@@ -76,7 +76,7 @@ class ReferralFragment : Fragment() {
                 val mDay = c.get(Calendar.DAY_OF_MONTH)
 
                 val datePickerDialog = DatePickerDialog(activity,
-                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> etRecallDate.setText( year.toString() +"-"+ DecimalFormat("00").format(monthOfYear+1).toString()+ "-"+dayOfMonth.toString()) },
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> etRecallDate.setText( year.toString() +"-"+ DecimalFormat("00").format(monthOfYear+1).toString()+ "-"+DecimalFormat("00").format(dayOfMonth).toString()) },
                     mYear,
                     mMonth,
                     mDay
@@ -93,7 +93,7 @@ class ReferralFragment : Fragment() {
 
                // Launch Time Picker Dialog
                val timePickerDialog = TimePickerDialog(activity,
-                   TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> etRecallTime.setText("$hourOfDay:$minute") },
+                   TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> etRecallTime.setText(DecimalFormat("00").format(hourOfDay)+":"+DecimalFormat("00").format(minute)) },
                    mHour,
                    mMinute,
                    false
