@@ -16,7 +16,6 @@ import kotlin.concurrent.fixedRateTimer
 class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener {
 
 
-
     private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<Encounter>
     private lateinit var networkStateReceiver: NetworkStateReceiver
@@ -49,6 +48,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     private fun startSync() {
         displayNotification()
     }
+
     override fun networkAvailable() {
         Log.d("SyncService", "networkAvailable()")
         startSync()
@@ -61,7 +61,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
     private fun pauseSync() {
         // stop the sync
-        DentalApp.cancelNotification(1001)
+        DentalApp.cancelNotification(applicationContext, 1001)
     }
 
     private fun displayNotification() {
@@ -75,9 +75,15 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         var i = 0
         fixedRateTimer("default", false, 0L, 1000) {
             i += 1
-            DentalApp.displayNotification(1001, "Title", "Short Description: $i", "Long Description")
+            DentalApp.displayNotification(
+                applicationContext,
+                1001,
+                "Title",
+                "Short Description: $i",
+                "Long Description"
+            )
             if (i > 10) {
-                DentalApp.cancelNotification(1001)
+                DentalApp.cancelNotification(applicationContext, 1001)
                 cancel()
                 stopSelf()
             }
