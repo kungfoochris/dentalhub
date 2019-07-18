@@ -6,6 +6,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.multidex.MultiDexApplication
 import com.example.dentalhub.models.Location
+import com.example.dentalhub.utils.FirebaseConfig
 import com.example.dentalhub.utils.NotificationHelper
 
 
@@ -16,11 +17,12 @@ class DentalApp : MultiDexApplication() {
         super.onCreate()
         ObjectBox.init(this)
 
-        context = applicationContext
 
         defaultChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name)
         syncChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name) + "-sync"
 
+        val firebaseConfig: FirebaseConfig = FirebaseConfig()
+        editableDuration = firebaseConfig.fetchEditableTime()
         NotificationHelper.createNotificationChannel(
             this,
             NotificationManagerCompat.IMPORTANCE_DEFAULT, false,
@@ -44,7 +46,8 @@ class DentalApp : MultiDexApplication() {
         var activity: String = ""
         var defaultChannelId: String = ""
         var syncChannelId: String = ""
-        lateinit var context: Context
+        var editableDuration: Long = 21600
+
 
         fun saveToPreference(context: Context, preferenceName: String, preferenceValue: String) {
             val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
@@ -94,7 +97,7 @@ class DentalApp : MultiDexApplication() {
 
         }
 
-        fun displayNotification(id: Int, title: String, desc: String, longDesc: String) {
+        fun displayNotification(context: Context, id: Int, title: String, desc: String, longDesc: String) {
             val notificationBuilder = NotificationCompat.Builder(context, syncChannelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
@@ -112,7 +115,7 @@ class DentalApp : MultiDexApplication() {
             notificationManager.notify(id, notificationBuilder.build())
         }
 
-        fun cancelNotification(id: Int) {
+        fun cancelNotification(context: Context, id: Int) {
             val notificationManager = NotificationManagerCompat.from(context)
             notificationManager.cancel(id)
         }
