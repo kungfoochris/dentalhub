@@ -23,3 +23,15 @@ u
 Eapp/src/main/java/com/example/dentalhub/fragments/ReferralFragment.kt,b/f/bf5f4070566a9f0db1e1cdf6bbbaaf69ce3af8a4
 m
 =app/src/main/java/com/example/dentalhub/AddPatientActivity.kt,c/e/ce922490da998d27671ebac6fa39e82ec96e9ac5
+t
+Dapp/src/main/java/com/example/dentalhub/services/BootstrapService.kt,a/4/a41b321f5e9d6320ff439eb7fba9b171d18b788b
+s
+Capp/src/main/java/com/example/dentalhub/utils/NotificationHelper.kt,f/3/f3c8eee23387708eb97be3fa3a04ec7d1ac90bb3
+@
+app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
+<
+build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
+‚
+Rapp/src/main/java/com/example/dentalhub/broadcastreceivers/NetworkStateReceiver.kt,0/0/00900c333f65e90e696322993d700b6092c6ff40
+o
+?app/src/main/java/com/example/dentalhub/services/SyncService.kt,e/5/e5020ee7f079c2d0bd781b92b855123eff48a1c5

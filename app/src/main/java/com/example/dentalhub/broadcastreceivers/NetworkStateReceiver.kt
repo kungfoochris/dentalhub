@@ -7,7 +7,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 
 
-class NetworkStateReceiver: BroadcastReceiver() {
+class NetworkStateReceiver : BroadcastReceiver() {
 
     private var listeners: MutableSet<NetworkStateReceiverListener> = HashSet()
     private var connected: Boolean? = null
