@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.R
@@ -44,10 +45,16 @@ class EncounterAdapter(var context: Context, private var data: List<Encounter>, 
 
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
+        private var ibEdit : ImageButton = itemView.findViewById(R.id.ibEdit)
 
         fun bindEncounter(encounter: Encounter) {
             tvEncounterName.text = encounter.encounter_type
             tvEncounterDate.text = encounter.created_at
+            if(encounter.isEditable()){
+                ibEdit.visibility = View.VISIBLE
+            }else{
+                ibEdit.visibility = View.INVISIBLE
+            }
 
         }
 

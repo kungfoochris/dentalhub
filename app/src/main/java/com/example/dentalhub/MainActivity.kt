@@ -76,6 +76,8 @@ class MainActivity : AppCompatActivity() {
         }
         startService(Intent(this, LocationTrackerService::class.java))
 
+
+
         setupUI()
 
         listPatients()
@@ -186,6 +188,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         listPatients()
+        DateTimeHelper.compareDate()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

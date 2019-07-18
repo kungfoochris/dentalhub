@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/llSingleEncounter"
               android:clickable="true"
               android:focusable="true"
-              android:orientation="horizontal"
-              android:weightSum="1"
               android:layout_width="match_parent"
-              android:gravity="center"
               android:layout_height="24dp">
     <TextView
+            android:layout_alignParentStart="true"
             android:id="@+id/tvEncounterName"
             android:text="@string/app_name"
-            android:layout_weight="0.25"
+            android:layout_toStartOf="@+id/tvEncounterDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    <TextView
-            android:id="@+id/tvEncounterDate"
-            android:layout_weight="0.75"
-            android:text="YYYY-MM-dd hh:mm:ss"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-</LinearLayout>
+
+        <TextView
+                android:id="@+id/tvEncounterDate"
+                android:text="@string/app_name"
+                android:layout_toStartOf="@+id/ibEdit"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <ImageButton
+                android:layout_marginStart="8dp"
+                android:id="@+id/ibEdit"
+                android:visibility="invisible"
+                android:layout_alignParentEnd="true"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>

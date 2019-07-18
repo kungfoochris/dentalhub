@@ -92,7 +92,7 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun listEncounters() {
-        val allEnCounters = encounterBox.query().equal(Encounter_.patientId, patient.id).build().find()
+        val allEnCounters = encounterBox.query().equal(Encounter_.patientId, patient.id).orderDesc(Encounter_.id).build().find()
         encounterAdapter = EncounterAdapter(context, allEnCounters, object : EncounterAdapter.EncounterClickListener {
             override fun onEncounterClick(encounter: Encounter) {
                 // start the encounter view

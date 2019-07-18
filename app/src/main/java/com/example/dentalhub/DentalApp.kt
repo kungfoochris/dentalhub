@@ -23,6 +23,9 @@ class DentalApp : MultiDexApplication() {
 
         val firebaseConfig: FirebaseConfig = FirebaseConfig()
         editableDuration = firebaseConfig.fetchEditableTime()
+
+
+
         NotificationHelper.createNotificationChannel(
             this,
             NotificationManagerCompat.IMPORTANCE_DEFAULT, false,
