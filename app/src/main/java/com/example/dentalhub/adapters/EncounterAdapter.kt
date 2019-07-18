@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.R
 import com.example.dentalhub.entities.Encounter
+import kotlinx.android.synthetic.main.single_encounter.view.*
 
 
 class EncounterAdapter(var context: Context, private var data: List<Encounter>, listener: EncounterClickListener) :
@@ -31,6 +33,10 @@ class EncounterAdapter(var context: Context, private var data: List<Encounter>, 
         val encounterItem: Encounter = data[position]
         holder.itemView.isClickable = true
         holder.itemView.isFocusable = true
+        holder.itemView.ibEdit.setOnClickListener {
+            Log.d("ENcounterAdapter", "do the edit operation")
+            Toast.makeText(context,"Awesome", Toast.LENGTH_SHORT).show()
+        }
         holder.itemView.setOnClickListener {
             Log.d("EncounterAdapter", "itemView clicked")
             encounterClickListener.onEncounterClick(encounterItem)
