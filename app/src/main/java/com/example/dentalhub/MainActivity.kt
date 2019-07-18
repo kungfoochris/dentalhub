@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         listPatients()
-        DateTimeHelper.compareDate()
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
