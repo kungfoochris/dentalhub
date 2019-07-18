@@ -35,6 +35,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private var treatment = Treatment()
     private var referral = Referral()
     private var encounter = Encounter()
+    var encounterId: Long = 0
 
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,28 +49,55 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
 
         context = this
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         patient = intent.getParcelableExtra("patient")
         title = patient.fullName()
 
-        encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()!!
-
-        history.encounter?.target = encounter
-        historyBox.put(history)
-
-
-        screening.encounter?.target = encounter
-        screeningBox.put(screening)
-
-        treatment.encounter?.target = encounter
-        treatmentBox.put(treatment)
-
-
-        referral.encounter?.target = encounter
-        referralBox.put(referral)
-
         initUI()
+
+        encounterId = intent.getLongExtra("ENCOUNTER_ID", 0)
+
+        if (encounterId.equals(0)) {
+            encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()!!
+
+            history.encounter?.target = encounter
+            historyBox.put(history)
+
+
+            screening.encounter?.target = encounter
+            screeningBox.put(screening)
+
+            treatment.encounter?.target = encounter
+            treatmentBox.put(treatment)
+
+
+            referral.encounter?.target = encounter
+            referralBox.put(referral)
+        } else {
+            encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
+
+            history =
+                historyBox.query().equal(
+                    History_.encounterId,
+                    encounter.id
+                ).orderDesc(History_.id).build().findFirst()!!
+            screening = screeningBox.query().equal(
+                Screening_.encounterId,
+                encounter.id
+            ).orderDesc(Screening_.id).build().findFirst()!!
+            treatment = treatmentBox.query().equal(
+                Treatment_.encounterId,
+                encounter.id
+            ).orderDesc(Treatment_.id).build().findFirst()!!
+            referral =
+                referralBox.query().equal(
+                    Referral_.encounterId,
+                    encounter.id
+                ).orderDesc(Referral_.id).build().findFirst()!!
+
+        }
+
+
     }
 
     @AddTrace(name = "initUITrace", enabled = true /* optional */)
