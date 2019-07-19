@@ -12,6 +12,7 @@ class Recall : Parcelable {
     @Id
     var id: Long = 0
     var date: String = ""
+    var time: String = ""
     var geography: String = ""
     var activity: String = ""
     var patient: ToOne<Patient>? = null

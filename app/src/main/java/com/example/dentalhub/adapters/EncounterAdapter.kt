@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.AddEncounterActivity
 import com.example.dentalhub.R
@@ -17,7 +16,12 @@ import com.example.dentalhub.entities.Patient
 import kotlinx.android.synthetic.main.single_encounter.view.*
 
 
-class EncounterAdapter(var context: Context, var patient: Patient, private var data: List<Encounter>, listener: EncounterClickListener) :
+class EncounterAdapter(
+    var context: Context,
+    var patient: Patient,
+    private var data: List<Encounter>,
+    listener: EncounterClickListener
+) :
     RecyclerView.Adapter<EncounterAdapter.EncounterViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -57,14 +61,14 @@ class EncounterAdapter(var context: Context, var patient: Patient, private var d
 
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
-        private var ibEdit : ImageButton = itemView.findViewById(R.id.ibEdit)
+        private var ibEdit: ImageButton = itemView.findViewById(R.id.ibEdit)
 
         fun bindEncounter(encounter: Encounter) {
             tvEncounterName.text = encounter.encounter_type
             tvEncounterDate.text = encounter.created_at
-            if(encounter.isEditable()){
+            if (encounter.isEditable()) {
                 ibEdit.visibility = View.VISIBLE
-            }else{
+            } else {
                 ibEdit.visibility = View.INVISIBLE
             }
 

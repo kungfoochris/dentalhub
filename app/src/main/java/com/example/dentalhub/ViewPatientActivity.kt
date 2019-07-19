@@ -92,17 +92,19 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun listEncounters() {
-        val allEnCounters = encounterBox.query().equal(Encounter_.patientId, patient.id).orderDesc(Encounter_.id).build().find()
-        encounterAdapter = EncounterAdapter(context, patient, allEnCounters, object : EncounterAdapter.EncounterClickListener {
-            override fun onEncounterClick(encounter: Encounter) {
-                // start the encounter view
-                Log.d("View PatientActivity", "show encounter detail")
-                val encounterDetailIntent: Intent = Intent(context, ViewEncounterActivity::class.java)
-                encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id.toLong())
-                startActivity(encounterDetailIntent)
-            }
+        val allEnCounters =
+            encounterBox.query().equal(Encounter_.patientId, patient.id).orderDesc(Encounter_.id).build().find()
+        encounterAdapter =
+            EncounterAdapter(context, patient, allEnCounters, object : EncounterAdapter.EncounterClickListener {
+                override fun onEncounterClick(encounter: Encounter) {
+                    // start the encounter view
+                    Log.d("View PatientActivity", "show encounter detail")
+                    val encounterDetailIntent: Intent = Intent(context, ViewEncounterActivity::class.java)
+                    encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id.toLong())
+                    startActivity(encounterDetailIntent)
+                }
 
-        })
+            })
         recyclerView.adapter = encounterAdapter
         encounterAdapter.notifyDataSetChanged()
     }

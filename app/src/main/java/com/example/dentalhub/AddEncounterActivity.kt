@@ -27,6 +27,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
+    private lateinit var recallBox: Box<Recall>
 
     private lateinit var context: Context
 
@@ -34,6 +35,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private var screening = Screening()
     private var treatment = Treatment()
     private var referral = Referral()
+    private var recall = Recall()
     private var encounter = Encounter()
     var encounterId: Long = 0
 
@@ -47,6 +49,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
+        recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -73,6 +76,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
             referral.encounter?.target = encounter
             referralBox.put(referral)
+
+            recall.encounter?.target = encounter
+            recallBox.put(recall)
+
         } else {
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
@@ -81,19 +88,24 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                     History_.encounterId,
                     encounter.id
                 ).orderDesc(History_.id).build().findFirst()!!
+
             screening = screeningBox.query().equal(
                 Screening_.encounterId,
                 encounter.id
             ).orderDesc(Screening_.id).build().findFirst()!!
+
             treatment = treatmentBox.query().equal(
                 Treatment_.encounterId,
                 encounter.id
             ).orderDesc(Treatment_.id).build().findFirst()!!
+
             referral =
                 referralBox.query().equal(
                     Referral_.encounterId,
                     encounter.id
                 ).orderDesc(Referral_.id).build().findFirst()!!
+
+            recall = recallBox.query().equal(Recall_.id, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
 
         }
 

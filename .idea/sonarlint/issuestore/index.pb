@@ -35,3 +35,14 @@ Capp/src/main/java/com/example/dentalhub/utils/NotificationHelper.kt,f/3/f3c8ee
 Rapp/src/main/java/com/example/dentalhub/broadcastreceivers/NetworkStateReceiver.kt,0/0/00900c333f65e90e696322993d700b6092c6ff40
 o
 ?app/src/main/java/com/example/dentalhub/services/SyncService.kt,e/5/e5020ee7f079c2d0bd781b92b855123eff48a1c5
+o
+?app/src/main/java/com/example/dentalhub/utils/FirebaseConfig.kt,2/6/267c589683656a19f81aa8207b578c1b246441c8
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+m
+=app/src/main/java/com/example/dentalhub/entities/Encounter.kt,8/6/8607ca1cb27eef6313ffe91e4053e25ce90d2530
+o
+?app/src/main/java/com/example/dentalhub/AddEncounterActivity.kt,c/9/c9d4a481b5c1144b40a22a7a848f6670da515d2e
+t
+Dapp/src/main/java/com/example/dentalhub/adapters/EncounterAdapter.kt,6/1/612afd3c5f9152dfad1adc0a33b4c65761c6a4f7
