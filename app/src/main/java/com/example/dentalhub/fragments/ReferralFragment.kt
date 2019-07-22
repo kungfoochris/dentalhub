@@ -80,6 +80,7 @@ class ReferralFragment : Fragment() {
         setupActivities(activity as Context)
         setupGeographies(activity as Context)
 
+
         checkBoxOther.setOnCheckedChangeListener { compoundButton, b ->
             if (compoundButton.isChecked) {
                 etOtherDetails.visibility = View.VISIBLE
@@ -88,7 +89,7 @@ class ReferralFragment : Fragment() {
             }
         }
 
-        etRecallDate.setOnFocusChangeListener { view, b ->
+        etRecallDate.setOnFocusChangeListener { _, b ->
             if (b) {
                 val c = Calendar.getInstance()
                 val mYear = c.get(Calendar.YEAR)
@@ -97,7 +98,7 @@ class ReferralFragment : Fragment() {
 
                 val datePickerDialog = DatePickerDialog(
                     activity,
-                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                         etRecallDate.setText(
                             year.toString() + "-" + DecimalFormat("00").format(monthOfYear + 1).toString() + "-" + DecimalFormat(
                                 "00"
@@ -108,6 +109,7 @@ class ReferralFragment : Fragment() {
                     mMonth,
                     mDay
                 )
+                datePickerDialog.datePicker.minDate = Date().time
                 datePickerDialog.show()
             }
         }
