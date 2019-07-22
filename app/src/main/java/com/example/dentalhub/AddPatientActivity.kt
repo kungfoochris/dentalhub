@@ -82,7 +82,7 @@ class AddPatientActivity : AppCompatActivity() {
         spinnerMaritalStatus = findViewById(R.id.spinnerMartialStatus)
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
 
-        etDOB.setOnFocusChangeListener { view, b ->
+        etDOB.setOnFocusChangeListener { _, b ->
             if (b) {
                 val c = Calendar.getInstance()
                 val mYear = c.get(Calendar.YEAR)
@@ -91,7 +91,7 @@ class AddPatientActivity : AppCompatActivity() {
 
                 val datePickerDialog = DatePickerDialog(
                     context,
-                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                         etDOB.setText(
                             year.toString() + "-" + DecimalFormat(
                                 "00"
@@ -102,6 +102,7 @@ class AddPatientActivity : AppCompatActivity() {
                     mMonth,
                     mDay
                 )
+                datePickerDialog.datePicker.maxDate = Date().time
                 datePickerDialog.show()
             }
         }
