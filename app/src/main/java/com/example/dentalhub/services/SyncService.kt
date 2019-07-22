@@ -65,13 +65,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     private fun displayNotification() {
-//        val mainHandler = Handler(Looper.getMainLooper())
-//        mainHandler.post(object : Runnable {
-//            override fun run() {
-//                DentalApp.displayNotification(1001,"Title","Short Description: "+System.currentTimeMillis().toString(), "Long Description")
-//                mainHandler.postDelayed(this, 1000)
-//            }
-//        })
         var i = 0
         fixedRateTimer("default", false, 0L, 1000) {
             i += 1

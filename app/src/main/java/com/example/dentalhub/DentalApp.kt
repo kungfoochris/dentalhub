@@ -124,22 +124,6 @@ class DentalApp : MultiDexApplication() {
         }
 
 
-//         fun checkPlayServices(context: Context): Boolean {
-//            var apiAvailability = GoogleApiAvailability.getInstance();
-//            val resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-//
-//            if (resultCode != ConnectionResult.SUCCESS) {
-//                if (apiAvailability.isUserResolvableError(resultCode)) {
-//                    apiAvailability.getErrorDialog(context as Activity?, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
-//                } else {
-//                    false
-//                }
-//
-//                return false
-//            }
-//
-//            return true
-//        }
 
     }
 }
