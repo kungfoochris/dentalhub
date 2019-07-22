@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.R
 import com.example.dentalhub.entities.Patient
 
-class PatientAdapter(var context: Context, private var data: List<Patient>, var listener: PatientClickListener) :
+class PatientAdapter(context: Context, private var data: List<Patient>, listener: PatientClickListener) :
     RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var patientClickListener: PatientClickListener = listener
