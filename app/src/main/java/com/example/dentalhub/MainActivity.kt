@@ -203,9 +203,9 @@ class MainActivity : AppCompatActivity() {
                 Log.d("PARAS", "do the search stuff")
                 displaySearchDialog()
             }
-            R.id.sync -> {
-                startService(Intent(this, SyncService::class.java))
-            }
+//            R.id.sync -> {
+//                startService(Intent(this, SyncService::class.java))
+//            }
             R.id.logout -> {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()

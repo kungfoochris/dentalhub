@@ -10,4 +10,10 @@ interface ReferralFormCommunicator {
         other: Boolean,
         otherDetails: String
     )
+    fun updateRecall(
+        recallDate: String,
+        recallTime: String,
+        selectedGeography: String,
+        selectedActivity: String
+    )
 }

@@ -2,6 +2,7 @@ package com.example.dentalhub
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.dentalhub.adapters.FormPageAdapter
@@ -58,9 +59,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         initUI()
 
-        encounterId = intent.getLongExtra("ENCOUNTER_ID", 0)
+        encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
+        Log.d("encounterId", encounterId.toString())
 
-        if (encounterId.equals(0)) {
+        if (encounterId == "0".toLong()) {
             encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()!!
 
             history.encounter?.target = encounter
@@ -267,6 +269,24 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         referralBox.put(referral)
     }
+
+    override fun updateRecall(
+        recallDate: String,
+        recallTime: String,
+        selectedGeography: String,
+        selectedActivity: String
+    ) {
+        recall =
+            recallBox.query().equal(Recall_.encounterId, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
+
+        recall.date = recallDate
+        recall.time = recallTime
+        recall.geography = selectedGeography
+        recall.activity = selectedActivity
+
+        recallBox.put(recall)
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         finish()

@@ -100,7 +100,7 @@ class ViewPatientActivity : AppCompatActivity() {
                     // start the encounter view
                     Log.d("View PatientActivity", "show encounter detail")
                     val encounterDetailIntent: Intent = Intent(context, ViewEncounterActivity::class.java)
-                    encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id.toLong())
+                    encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id)
                     startActivity(encounterDetailIntent)
                 }
 
@@ -182,6 +182,7 @@ class ViewPatientActivity : AppCompatActivity() {
 
         val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
         addEncounterIntent.putExtra("patient", patient)
+        addEncounterIntent.putExtra("ENCOUNTER_ID","0".toLong())
         startActivity(addEncounterIntent)
     }
 }

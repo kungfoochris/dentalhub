@@ -17,7 +17,6 @@ import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
 import com.example.dentalhub.entities.Activity
 import com.example.dentalhub.entities.Geography
-import com.example.dentalhub.fragments.interfaces.RecallFormCommunicator
 import com.example.dentalhub.fragments.interfaces.ReferralFormCommunicator
 import com.example.dentalhub.utils.AdapterHelper
 import io.objectbox.Box
@@ -29,7 +28,6 @@ import java.util.*
 class ReferralFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var referralFormCommunicator: ReferralFormCommunicator
-    private lateinit var recallFormCommunicator: RecallFormCommunicator
 
     private lateinit var checkBoxNoReferral: CheckBox
     private lateinit var checkBoxHealthPost: CheckBox
@@ -80,7 +78,7 @@ class ReferralFragment : Fragment() {
         spinnerActivity = view.findViewById(R.id.spinnerActivity)
 
         setupActivities(activity as Context)
-        setupGeograhies(activity as Context)
+        setupGeographies(activity as Context)
 
         checkBoxOther.setOnCheckedChangeListener { compoundButton, b ->
             if (compoundButton.isChecked) {
@@ -147,7 +145,7 @@ class ReferralFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         referralFormCommunicator = activity as ReferralFormCommunicator
-        recallFormCommunicator = activity as RecallFormCommunicator
+
 
         btnNext.setOnClickListener {
 
@@ -173,7 +171,7 @@ class ReferralFragment : Fragment() {
             val recallTime = etRecallTime.text.toString()
             val selectedGeography = spinnerLocation.selectedItem.toString()
             val selectedActivity = spinnerActivity.selectedItem.toString()
-            recallFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
+            referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
 
             fragmentCommunicator.goForward()
         }
@@ -193,7 +191,7 @@ class ReferralFragment : Fragment() {
         spinnerActivity.adapter = AdapterHelper.createAdapter(context, activities)
     }
 
-    private fun setupGeograhies(context: Context) {
+    private fun setupGeographies(context: Context) {
         val allGeographies = geographiesQuery.find()
         val geographies = mutableListOf<String>()
         for (geography in allGeographies) {
