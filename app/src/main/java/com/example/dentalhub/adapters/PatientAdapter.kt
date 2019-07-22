@@ -47,7 +47,7 @@ class PatientAdapter(var context: Context, private var data: List<Patient>, var 
         }
 
         fun bindPatient(patient: Patient) {
-            tvName.text = "${patient.first_name} ${patient.last_name}"
+            tvName.text = patient.fullName()
             tvAddress.text = ""
             tvPhone.text = patient.phone
             btnCall.setOnClickListener {
