@@ -112,11 +112,13 @@
 
         <EditText
                 android:id="@+id/etRecallDate"
+                android:hint="@string/recall_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
         />
         <EditText
                 android:id="@+id/etRecallTime"
+                android:hint="@string/recall_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

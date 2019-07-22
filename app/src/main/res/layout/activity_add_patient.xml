@@ -85,7 +85,8 @@
                         android:layout_width="match_parent" android:layout_height="wrap_content"/>
                 <Spinner
                         android:layout_weight="@dimen/form_col_2_weight"
-                        android:id="@+id/spinnerGender" android:layout_width="match_parent"
+                        android:id="@+id/spinnerGender"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
 
@@ -104,7 +105,7 @@
                         android:id="@+id/etDOB"
                         android:inputType="date"
                         android:layout_weight="@dimen/form_col_1_weight"
-                        android:hint="@string/date_format"
+                        android:hint="@string/date_of_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                 />
@@ -122,6 +123,7 @@
                 <EditText
                         android:id="@+id/etPhone"
                         android:layout_weight="@dimen/form_col_1_weight"
+                        android:hint="@string/phone"
                         android:inputType="phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -140,6 +142,7 @@
                 <EditText
                         android:id="@+id/etStreetAddress"
                         android:layout_weight="@dimen/form_col_1_weight"
+                        android:hint="@string/street_address"
                         android:inputType="textPostalAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -158,6 +161,7 @@
                 <EditText
                         android:id="@+id/etWard"
                         android:inputType="number"
+                        android:hint="@string/ward"
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -176,6 +180,7 @@
                 <EditText
                         android:id="@+id/etCity"
                         android:layout_weight="@dimen/form_col_1_weight"
+                        android:hint="@string/city"
                         android:inputType="textPostalAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -194,6 +199,7 @@
                 <EditText
                         android:id="@+id/etState"
                         android:layout_weight="@dimen/form_col_1_weight"
+                        android:hint="@string/state"
                         android:inputType="textPostalAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -211,6 +217,7 @@
                         android:layout_height="wrap_content"/>
                 <EditText
                         android:id="@+id/etCountry"
+                        android:hint="@string/country"
                         android:inputType="textPostalAddress"
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:layout_width="match_parent"
