@@ -135,4 +135,9 @@
     <string name="channel_description">Channel used to sync transits.</string>
     <string name="sync">Sync</string>
     <string name="sync_ticker">Syncing</string>
+    <string name="recall">Recall</string>
+    <string name="recall_date">Recall Date</string>
+    <string name="recall_time">Recall Time</string>
+    <string name="recall_geography">Recall Geography</string>
+    <string name="recall_activity">Recall Activity</string>
 </resources>

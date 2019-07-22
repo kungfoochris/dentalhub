@@ -13,12 +13,14 @@ class ViewEncounterActivity : AppCompatActivity() {
     private var treatment = Treatment()
     private var referral = Referral()
     private var encounter = Encounter()
+    private var recall = Recall()
 
     private lateinit var encounterBox: Box<Encounter>
     private lateinit var historyBox: Box<History>
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
+    private lateinit var recallBox: Box<Recall>
 
     // history
     private lateinit var tvBloodDisorderOrBleedingProblem: TextView
@@ -58,6 +60,12 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvGeneralPhysician: TextView
     private lateinit var tvOtherDetails: TextView
 
+    // recall
+    private lateinit var tvRecallDate: TextView
+    private lateinit var tvRecallTime: TextView
+    private lateinit var tvRecallGeography: TextView
+    private lateinit var tvRecallActivity: TextView
+
     var encounterId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +79,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
+        recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
@@ -78,6 +87,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         screening = screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
         treatment = treatmentBox.query().equal(Treatment_.encounterId, encounter.id).build().findFirst()!!
         referral = referralBox.query().equal(Referral_.encounterId, encounter.id).build().findFirst()!!
+        recall = recallBox.query().equal(Recall_.encounterId, encounter.id).build().findFirst()!!
 
 
         initUI()
@@ -157,6 +167,16 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvOtherDetails.text = referral.other_details
 
         // schedule
+
+        tvRecallDate = findViewById(R.id.tvRecallDate)
+        tvRecallTime = findViewById(R.id.tvRecallTime)
+        tvRecallActivity = findViewById(R.id.tvRecallActivity)
+        tvRecallGeography = findViewById(R.id.tvRecallGeography)
+
+        tvRecallDate.text = recall.date
+        tvRecallTime.text = recall.time
+        tvRecallActivity.text = recall.activity
+        tvRecallGeography.text = recall.geography
 
     }
 
