@@ -15,17 +15,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.services.LocationTrackerService
-import com.example.dentalhub.services.SyncService
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box

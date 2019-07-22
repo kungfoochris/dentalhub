@@ -182,7 +182,7 @@ class ViewPatientActivity : AppCompatActivity() {
 
         val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
         addEncounterIntent.putExtra("patient", patient)
-        addEncounterIntent.putExtra("ENCOUNTER_ID","0".toLong())
+        addEncounterIntent.putExtra("ENCOUNTER_ID", "0".toLong())
         startActivity(addEncounterIntent)
     }
 }
