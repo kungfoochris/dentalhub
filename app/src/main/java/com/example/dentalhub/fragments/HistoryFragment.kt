@@ -65,7 +65,7 @@ class HistoryFragment : Fragment() {
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         historyFormCommunicator = activity as HistoryFormCommunicator
 
-
+        setupUI()
 
         btnNext.setOnClickListener {
             val bloodDisorders = checkBoxBloodDisorderOrBleedingProblem.isChecked
@@ -90,6 +90,10 @@ class HistoryFragment : Fragment() {
         btnBack.setOnClickListener {
             fragmentCommunicator.goBack()
         }
+
+    }
+
+    private fun setupUI() {
 
     }
 

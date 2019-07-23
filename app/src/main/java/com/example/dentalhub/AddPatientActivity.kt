@@ -40,6 +40,7 @@ class AddPatientActivity : AppCompatActivity() {
     private lateinit var context: Context
     private var patient: Patient? = null
     private val TAG = "AddPatientActivity"
+    private var action = "new"
 
     private lateinit var patientsBox: Box<Patient>
 
@@ -48,6 +49,7 @@ class AddPatientActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_patient)
         patient = intent.getParcelableExtra("patient")
+        action = intent.getStringExtra("ACTION")
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -217,7 +219,12 @@ class AddPatientActivity : AppCompatActivity() {
         patientsBox.put(patient)
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
         viewPatientIntent.putExtra("patient", patient)
-        startActivity(viewPatientIntent)
+        if(action.equals("new")){
+            startActivity(viewPatientIntent)
+        }else{
+            finish()
+        }
+
 
     }
 

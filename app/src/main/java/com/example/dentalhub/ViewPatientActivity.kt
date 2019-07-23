@@ -127,6 +127,7 @@ class ViewPatientActivity : AppCompatActivity() {
             R.id.editPatient -> {
                 val addPatientIntent = Intent(this, AddPatientActivity::class.java)
                 addPatientIntent.putExtra("patient", patient)
+                addPatientIntent.putExtra("ACTION", "edit")
                 startActivity(addPatientIntent)
             }
         }

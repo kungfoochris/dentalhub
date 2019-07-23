@@ -159,7 +159,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.addPatient -> {
-                startActivity(Intent(this, AddPatientActivity::class.java))
+                val addPatientActivityIntent =Intent(this, AddPatientActivity::class.java)
+                addPatientActivityIntent.putExtra("ACTION", "new")
+                startActivity(addPatientActivityIntent)
             }
             R.id.refresh -> {
                 listPatients()

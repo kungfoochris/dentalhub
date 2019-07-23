@@ -57,8 +57,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         patient = intent.getParcelableExtra("patient")
         title = patient.fullName()
 
-        initUI()
-
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
         Log.d("encounterId", encounterId.toString())
 
@@ -110,6 +108,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             recall = recallBox.query().equal(Recall_.id, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
 
         }
+
+        initUI()
+
 
 
     }
