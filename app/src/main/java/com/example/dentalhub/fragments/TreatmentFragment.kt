@@ -218,7 +218,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             R.id.btnId17, R.id.btnId18, R.id.btnId21, R.id.btnId22, R.id.btnId23, R.id.btnId24, R.id.btnId25,
             R.id.btnId26, R.id.btnId27, R.id.btnId28, R.id.btnId31, R.id.btnId32, R.id.btnId33, R.id.btnId34,
             R.id.btnId35, R.id.btnId36, R.id.btnId37, R.id.btnId38, R.id.btnId41, R.id.btnId42, R.id.btnId43,
-            R.id.btnId44, R.id.btnId45, R.id.btnId46, R.id.btnId47, R.id.btnId47
+            R.id.btnId44, R.id.btnId45, R.id.btnId46, R.id.btnId47, R.id.btnId48
         )
         if (buttons.contains(v.id)) {
             v.background = btnBackground
