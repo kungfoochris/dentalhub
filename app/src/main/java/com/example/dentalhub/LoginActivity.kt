@@ -98,8 +98,8 @@ class LoginActivity : AppCompatActivity() {
                     loading.visibility = View.GONE
                 } else {
                     val gson = Gson()
-                    val errorResponse = gson.fromJson(response.errorBody()?.string(),ErrorResponse::class.java)
-                    tvErrorMessage.text = errorResponse.non_field_errors.get(0)
+                    val errorResponse = gson.fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
+                    tvErrorMessage.text = errorResponse.non_field_errors[0]
                     tvErrorMessage.visibility = View.VISIBLE
                     loading.visibility = View.GONE
                 }
@@ -115,6 +115,7 @@ class LoginActivity : AppCompatActivity() {
         })
 
     }
+
     private fun listGeographies() {
         Log.d(TAG, "listGeographies()")
         val panelService = DjangoInterface.create(this)

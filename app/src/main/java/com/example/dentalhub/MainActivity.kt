@@ -21,15 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.entities.Patient
-import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.services.LocationTrackerService
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.query.Query
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
@@ -147,7 +143,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = patientAdapter
         patientAdapter.notifyDataSetChanged()
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

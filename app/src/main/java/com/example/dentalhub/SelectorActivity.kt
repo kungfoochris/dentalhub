@@ -3,21 +3,15 @@ package com.example.dentalhub
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.Activity
 import com.example.dentalhub.entities.Geography
-import com.example.dentalhub.entities.Geography_
-import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.utils.AdapterHelper
 import io.objectbox.Box
 import io.objectbox.query.Query
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SelectorActivity : AppCompatActivity() {
     private lateinit var spinnerLocation: Spinner
@@ -59,13 +53,13 @@ class SelectorActivity : AppCompatActivity() {
 
         btnGo.setOnClickListener {
 
-            if(geographies.size>0){
+            if (geographies.size > 0) {
 
                 DentalApp.geography = spinnerLocation.selectedItem.toString()
                 DentalApp.activity = spinnerActivity.selectedItem.toString()
 
                 startActivity(Intent(this, MainActivity::class.java))
-            }else{
+            } else {
                 Toast.makeText(context, "You do not have permission to login to any location", Toast.LENGTH_LONG).show()
             }
         }
@@ -92,9 +86,9 @@ class SelectorActivity : AppCompatActivity() {
         for (geography in allGeographies) {
             geographies.add(geography.address())
         }
-        if(geographies.size>0){
+        if (geographies.size > 0) {
             spinnerLocation.adapter = AdapterHelper.createAdapter(context, geographies)
-        }else{
+        } else {
             Toast.makeText(context, "You do not have permission to login to any location", Toast.LENGTH_LONG).show()
         }
 

@@ -1,16 +1,5 @@
 package com.example.dentalhub
 
-import android.content.Intent
-import android.util.Log
-import android.view.View
-import com.example.dentalhub.entities.Patient
-import com.example.dentalhub.interfaces.DjangoInterface
-import com.google.firebase.perf.metrics.AddTrace
-import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 
 //@AddTrace(name = "saveToServerAddPatientActivity", enabled = true /* optional */)
 //private fun saveToServer(patient: Patient) {
@@ -107,7 +96,6 @@ import retrofit2.Response
 //
 //}
 //
-
 
 
 //         fun checkPlayServices(context: Context): Boolean {

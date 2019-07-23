@@ -124,6 +124,5 @@ class DentalApp : MultiDexApplication() {
         }
 
 
-
     }
 }

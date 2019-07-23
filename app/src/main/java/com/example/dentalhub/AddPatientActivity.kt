@@ -9,16 +9,11 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.Patient
-import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.utils.AdapterHelper
 import com.example.dentalhub.utils.DateHelper
 import com.example.dentalhub.utils.DateValidator
 import com.google.firebase.perf.metrics.AddTrace
-import com.google.gson.Gson
 import io.objectbox.Box
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.DecimalFormat
 import java.util.*
 
