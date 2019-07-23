@@ -13,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.Geography
 import com.example.dentalhub.entities.Geography_
 import com.example.dentalhub.interfaces.DjangoInterface
+import com.example.dentalhub.models.ErrorResponse
 import com.example.dentalhub.models.LoginResponse
 import com.example.dentalhub.utils.EmailValidator
 import com.google.firebase.perf.metrics.AddTrace
+import com.google.gson.Gson
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
@@ -95,7 +97,9 @@ class LoginActivity : AppCompatActivity() {
                     }
                     loading.visibility = View.GONE
                 } else {
-                    tvErrorMessage.text = response.message()
+                    val gson = Gson()
+                    val errorResponse = gson.fromJson(response.errorBody()?.string(),ErrorResponse::class.java)
+                    tvErrorMessage.text = errorResponse.non_field_errors.get(0)
                     tvErrorMessage.visibility = View.VISIBLE
                     loading.visibility = View.GONE
                 }
