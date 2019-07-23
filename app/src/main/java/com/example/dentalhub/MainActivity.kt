@@ -177,6 +177,7 @@ class MainActivity : AppCompatActivity() {
 //                startService(Intent(this, SyncService::class.java))
 //            }
             R.id.logout -> {
+                DentalApp.clearAuthDetails(context)
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
@@ -211,6 +212,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("TAG", "displaySearchDialog()")
         val searchDialogView = LayoutInflater.from(this).inflate(R.layout.search_dialog, null)
         val mBuilder = AlertDialog.Builder(this).setView(searchDialogView).setTitle(getString(R.string.search))
+
         mBuilder.show()
     }
 

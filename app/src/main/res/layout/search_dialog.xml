@@ -8,9 +8,16 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
     />
+
     <Button
+            android:id="@+id/btnSearch"
             android:text="@string/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
     />
+    <Button
+            android:id="@+id/btnAddPatient"
+            android:text="@string/add_new_patient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 </LinearLayout>

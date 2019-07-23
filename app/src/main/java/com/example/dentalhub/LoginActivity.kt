@@ -10,10 +10,13 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dentalhub.entities.Geography
+import com.example.dentalhub.entities.Geography_
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.models.LoginResponse
 import com.example.dentalhub.utils.EmailValidator
 import com.google.firebase.perf.metrics.AddTrace
+import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loading: ProgressBar
     private lateinit var btnLogin: Button
     private lateinit var context: Context
+    private lateinit var geographiesBox: Box<Geography>
 
     private val TAG = "LoginActivity"
 
@@ -34,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         context = this
-
+        geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
         setupUI()
     }
 
@@ -73,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
                             DentalApp.saveToPreference(context, Constants.PREF_AUTH_TOKEN, loginResponse.token)
                             DentalApp.saveToPreference(context, Constants.PREF_AUTH_EMAIL, email)
                             DentalApp.saveToPreference(context, Constants.PREF_AUTH_PASSWORD, password)
+                            listGeographies()
                             startActivity(Intent(context, SelectorActivity::class.java))
                         }
                         400 -> {
@@ -101,6 +106,42 @@ class LoginActivity : AppCompatActivity() {
                 tvErrorMessage.text = t.message.toString()
                 tvErrorMessage.visibility = View.VISIBLE
                 loading.visibility = View.GONE
+            }
+
+        })
+
+    }
+    private fun listGeographies() {
+        Log.d(TAG, "listGeographies()")
+        val panelService = DjangoInterface.create(this)
+        val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
+        val call = panelService.listGeographies("JWT $token")
+        call.enqueue(object : Callback<List<Geography>> {
+            override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
+                Log.d(TAG, "onFailure()")
+                Log.d(TAG, t.toString())
+            }
+
+            override fun onResponse(call: Call<List<Geography>>, response: Response<List<Geography>>) {
+                Log.d(TAG, "onResponse()")
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
+                            val allGeographies: List<Geography> = response.body() as List<Geography>
+                            for (geography in allGeographies) {
+
+                                val a =
+                                    geographiesBox.query().equal(Geography_.street_address, geography.street_address)
+                                        .equal(Geography_.city, geography.city).build().findFirst()
+                                if (a == null) {
+                                    geography.remote_id = geography.id
+                                    geography.id = 0
+                                    geographiesBox.put(geography)
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
         })

@@ -140,4 +140,5 @@
     <string name="recall_time">Recall Time</string>
     <string name="recall_geography">Recall Geography</string>
     <string name="recall_activity">Recall Activity</string>
+    <string name="add_new_patient">Add new patient</string>
 </resources>

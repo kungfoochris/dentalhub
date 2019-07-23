@@ -3,19 +3,27 @@ package com.example.dentalhub
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.Activity
 import com.example.dentalhub.entities.Geography
+import com.example.dentalhub.entities.Geography_
+import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.utils.AdapterHelper
 import io.objectbox.Box
 import io.objectbox.query.Query
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SelectorActivity : AppCompatActivity() {
     private lateinit var spinnerLocation: Spinner
     private lateinit var spinnerActivity: Spinner
     private lateinit var btnGo: Button
+    private lateinit var btnLogout: Button
 
     private lateinit var activitiesBox: Box<Activity>
     private lateinit var geographiesBox: Box<Geography>
@@ -23,6 +31,9 @@ class SelectorActivity : AppCompatActivity() {
     private lateinit var geographiesQuery: Query<Geography>
 
     private lateinit var context: Context
+
+    private var geographies = mutableListOf<String>()
+    private val TAG = "selectorActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +52,27 @@ class SelectorActivity : AppCompatActivity() {
         spinnerLocation = findViewById(R.id.spinnerLocation)
         spinnerActivity = findViewById(R.id.spinnerActivity)
         btnGo = findViewById(R.id.btnGo)
+        btnLogout = findViewById(R.id.btnLogout)
 
         setupActivities()
-        setupGeograhies()
+        setupGeographies()
 
         btnGo.setOnClickListener {
-            DentalApp.geography = spinnerLocation.selectedItem.toString()
-            DentalApp.activity = spinnerActivity.selectedItem.toString()
 
-            startActivity(Intent(this, MainActivity::class.java))
+            if(geographies.size>0){
+
+                DentalApp.geography = spinnerLocation.selectedItem.toString()
+                DentalApp.activity = spinnerActivity.selectedItem.toString()
+
+                startActivity(Intent(this, MainActivity::class.java))
+            }else{
+                Toast.makeText(context, "You do not have permission to login to any location", Toast.LENGTH_LONG).show()
+            }
+        }
+        btnLogout.setOnClickListener {
+            DentalApp.clearAuthDetails(context)
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 
@@ -63,14 +86,20 @@ class SelectorActivity : AppCompatActivity() {
         spinnerActivity.adapter = AdapterHelper.createAdapter(context, activities)
     }
 
-    private fun setupGeograhies() {
+    private fun setupGeographies() {
         val allGeographies = geographiesQuery.find()
-        val geographies = mutableListOf<String>()
+        geographies = mutableListOf<String>()
         for (geography in allGeographies) {
             geographies.add(geography.address())
         }
-        spinnerLocation.adapter = AdapterHelper.createAdapter(context, geographies)
+        if(geographies.size>0){
+            spinnerLocation.adapter = AdapterHelper.createAdapter(context, geographies)
+        }else{
+            Toast.makeText(context, "You do not have permission to login to any location", Toast.LENGTH_LONG).show()
+        }
+
     }
+
 
     override fun onPause() {
         super.onPause()

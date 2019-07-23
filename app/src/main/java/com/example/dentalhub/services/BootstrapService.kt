@@ -4,6 +4,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import com.example.dentalhub.Constants
+import com.example.dentalhub.DentalApp
 import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.entities.Activity
 import com.example.dentalhub.entities.Activity_
@@ -36,8 +38,9 @@ class BootstrapService : Service() {
 
     private fun listGeographies() {
         Log.d(TAG, "listGeographies()")
+        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
-        val call = panelService.listGeographies()
+        val call = panelService.listGeographies("JWT $token")
         call.enqueue(object : Callback<List<Geography>> {
             override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")

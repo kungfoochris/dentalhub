@@ -48,7 +48,7 @@ interface DjangoInterface {
     fun listPatients(@Header("Authorization") token: String): Call<List<Patient>>
 
     @GET("geography")
-    fun listGeographies(): Call<List<Geography>>
+    fun listGeographies(@Header("Authorization") token: String): Call<List<Geography>>
 
     @GET("activities")
     fun listActivities(): Call<List<Activity>>

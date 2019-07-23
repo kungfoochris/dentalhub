@@ -87,10 +87,10 @@ class DentalApp : MultiDexApplication() {
         }
 
         fun clearAuthDetails(context: Context) {
-            saveToPreference(context, Constants.PREF_AUTH_TOKEN, "")
-            saveToPreference(context, Constants.PREF_AUTH_EMAIL, "")
-            saveToPreference(context, Constants.PREF_AUTH_PASSWORD, "")
-            saveToPreference(context, Constants.PREF_AUTH_SOCIAL, "false")
+            removeFromPreference(context, Constants.PREF_AUTH_TOKEN)
+            removeFromPreference(context, Constants.PREF_AUTH_EMAIL)
+            removeFromPreference(context, Constants.PREF_AUTH_PASSWORD)
+            removeFromPreference(context, Constants.PREF_AUTH_SOCIAL)
         }
 
         fun isConnectedToWifi(context: Context): Boolean {
