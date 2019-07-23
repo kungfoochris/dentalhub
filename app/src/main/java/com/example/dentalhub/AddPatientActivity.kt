@@ -241,8 +241,13 @@ class AddPatientActivity : AppCompatActivity() {
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        if (phone.isBlank() || phone.isEmpty() || phone.length < 6) {
+        if (phone.isBlank() || phone.isEmpty() ) {
             tvErrorMessage.text = resources.getString(R.string.phone_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
+        if(phone.length < 5){
+            tvErrorMessage.text = resources.getString(R.string.valid_phone_number_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
