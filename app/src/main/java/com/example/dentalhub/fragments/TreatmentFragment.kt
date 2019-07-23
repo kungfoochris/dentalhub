@@ -179,10 +179,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     selectedTreatment = "UNTR"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
                 }
-                R.id.btnNone -> {
-                    selectedTreatment = "NONE"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
-                }
                 else -> {
                     selectedTreatment = "NONE"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
