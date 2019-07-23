@@ -20,6 +20,7 @@ import com.example.dentalhub.adapters.EncounterAdapter
 import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.entities.Encounter_
 import com.example.dentalhub.entities.Patient
+import com.example.dentalhub.entities.Patient_
 import com.example.dentalhub.utils.DateHelper
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
@@ -45,6 +46,7 @@ class ViewPatientActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var encounterBox: Box<Encounter>
+    private lateinit var patientBox: Box<Patient>
 
     val TAG = "ViewPatientActivity"
 
@@ -64,6 +66,8 @@ class ViewPatientActivity : AppCompatActivity() {
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
     private fun initUI() {
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+        patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
+
         recyclerView = findViewById(R.id.recyclerView)
         tvAddress = findViewById(R.id.tvAddress)
         tvAge = findViewById(R.id.tvAge)
@@ -110,6 +114,7 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun updateInfo() {
+        title = patient.fullName()
         tvAge.text = patient.age()
         tvGender.text = patient.gender
         tvPhone.text = patient.phone
@@ -166,8 +171,14 @@ class ViewPatientActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        getUpdatedPatient()
         listEncounters()
         loading.visibility = View.GONE
+    }
+
+    private fun getUpdatedPatient() {
+        patient = patientBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
+        updateInfo()
     }
 
     private fun openAddEncounter(encounterType: String) {
