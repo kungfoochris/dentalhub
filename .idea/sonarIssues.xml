@@ -93,6 +93,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/dentalhub/entities/Patient.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/dentalhub/entities/Recall.kt">
           <value>
             <set />
@@ -174,6 +179,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/menu/main.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <value>
             <set />
           </value>

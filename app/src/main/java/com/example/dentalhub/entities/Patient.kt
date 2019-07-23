@@ -60,6 +60,9 @@ class Patient(
         if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
             age--
         }
+        if(age < 0){
+            age = 0
+        }
 
         val ageInt = age
 

@@ -40,7 +40,7 @@
     <string-array name="gender_list">
         <item>male</item>
         <item>female</item>
-        <item>others</item>
+        <item>other</item>
     </string-array>
     <string-array name="martial_status_list">
         <item>single</item>
@@ -81,7 +81,7 @@
     <string name="diabetes">Diabetes</string>
     <string name="liver_problem">Liver problem</string>
     <string name="rheumatic_fever">Rheumatic fever</string>
-    <string name="seizures_or_epilepsy">Seizuers or epilepsy</string>
+    <string name="seizures_or_epilepsy">Seizures or epilepsy</string>
     <string name="hepatitis_b_or_c">Hepatitis B or C</string>
     <string name="hiv">HIV</string>
     <string name="no_underlying_medical_record">No underlying medical record</string>
