@@ -3,12 +3,15 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="8dp"
 >
     <LinearLayout
                   android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
         <TextView
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/history"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
@@ -20,8 +23,10 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/blood_disorder_or_bleeding_problem"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
             />
             <TextView
                     android:id="@+id/tvBloodDisorderOrBleedingProblem"
@@ -34,6 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/diabetes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -49,6 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/liver_problem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,6 +73,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/rheumatic_fever"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,6 +90,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/seizures_or_epilepsy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -94,6 +107,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/hepatitis_b_or_c"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,6 +124,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/hiv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -124,6 +141,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/other"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,6 +158,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/no_underlying_medical_record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -154,6 +175,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/not_taking_any_medications"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -169,6 +192,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/allergies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -182,6 +207,8 @@
 
 
         <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:textSize="20sp"
                 android:text="@string/screening"
                 android:layout_width="match_parent"
@@ -191,6 +218,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/caries_risk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -206,6 +235,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/decayed_primary_teeth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,6 +252,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/decayed_permanent_teeth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -236,6 +269,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/cavity_permanent_tooth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -251,6 +286,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/cavity_permanent_anterior"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -266,6 +303,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/active_infection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -281,6 +320,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/need_art_filling"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -296,6 +337,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/need_sealant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -311,6 +354,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/need_sdf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -326,6 +371,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/need_extraction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -337,6 +384,8 @@
             />
         </LinearLayout>
         <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:textSize="20sp"
                 android:text="@string/treatment"
                 android:layout_width="match_parent"
@@ -346,6 +395,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/fv_applied"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -361,6 +412,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
                     android:text="@string/treatment_plan_complete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -376,6 +429,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/notes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -388,6 +442,8 @@
         </LinearLayout>
 
         <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:textSize="20sp"
                 android:text="@string/referral"
                 android:layout_width="match_parent"
@@ -397,6 +453,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/no_referral"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -412,6 +469,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/health_post"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -427,6 +485,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/hygienist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -442,6 +501,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/dentist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -457,6 +517,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/general_physician"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -472,6 +533,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/other"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -484,6 +546,8 @@
         </LinearLayout>
 
         <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:textSize="20sp"
                 android:text="@string/recall"
                 android:layout_width="match_parent"
@@ -493,6 +557,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/recall_geography"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -508,6 +573,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/recall_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -523,6 +589,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/recall_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -538,6 +605,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:textStyle="bold"
                     android:text="@string/recall_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
