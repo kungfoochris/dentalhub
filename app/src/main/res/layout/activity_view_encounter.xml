@@ -429,6 +429,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/notes"
                     android:layout_width="wrap_content"
@@ -453,6 +454,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/no_referral"
                     android:layout_width="wrap_content"
@@ -469,6 +471,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/health_post"
                     android:layout_width="wrap_content"
@@ -485,6 +488,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/hygienist"
                     android:layout_width="wrap_content"
@@ -501,6 +505,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/dentist"
                     android:layout_width="wrap_content"
@@ -517,6 +522,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/general_physician"
                     android:layout_width="wrap_content"
@@ -533,6 +539,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/other"
                     android:layout_width="wrap_content"
@@ -557,6 +564,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/recall_geography"
                     android:layout_width="wrap_content"
@@ -573,6 +581,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/recall_activity"
                     android:layout_width="wrap_content"
@@ -589,6 +598,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/recall_date"
                     android:layout_width="wrap_content"
@@ -605,6 +615,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/recall_time"
                     android:layout_width="wrap_content"
@@ -623,3 +634,4 @@
 
 
 </ScrollView>
+
