@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.services.LocationTrackerService
+import com.example.dentalhub.services.SyncService
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
@@ -43,10 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
 
-    // lists for permissions
-    private var permissionsToRequest: java.util.ArrayList<String>? = null
-    private val permissionsRejected = java.util.ArrayList<String>()
-    private val permissions = java.util.ArrayList<String>()
+
 
 
     @AddTrace(name = "onCreateMainActivity", enabled = true /* optional */)
@@ -57,16 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         context = this
 
-        // we add permissions we need to request location of the users
-        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
-        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
-        permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-        permissionsToRequest = permissionsToRequest(permissions)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissionsToRequest!!.size > 0) {
-            requestPermissions(permissionsToRequest!!.toTypedArray(), ALL_PERMISSIONS_RESULT)
-        }
         startService(Intent(this, LocationTrackerService::class.java))
 
 
@@ -91,24 +80,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.addItemDecoration(divider)
     }
 
-    private fun permissionsToRequest(wantedPermissions: java.util.ArrayList<String>): java.util.ArrayList<String> {
-        val result = java.util.ArrayList<String>()
 
-        for (perm in wantedPermissions) {
-            if (!hasPermission(perm)) {
-                result.add(perm)
-            }
-        }
-
-        return result
-    }
-
-    private fun hasPermission(permission: String): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
-        } else true
-
-    }
 
     @AddTrace(name = "listPatientsMainActivity", enabled = true /* optional */)
     private fun listPatients() {
@@ -170,9 +142,9 @@ class MainActivity : AppCompatActivity() {
                 Log.d("PARAS", "do the search stuff")
                 displaySearchDialog()
             }
-//            R.id.sync -> {
-//                startService(Intent(this, SyncService::class.java))
-//            }
+            R.id.sync -> {
+                startService(Intent(this, SyncService::class.java))
+            }
             R.id.logout -> {
                 DentalApp.clearAuthDetails(context)
                 startActivity(Intent(this, LoginActivity::class.java))
@@ -213,13 +185,6 @@ class MainActivity : AppCompatActivity() {
         mBuilder.show()
     }
 
-    companion object {
-        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
-        private const val UPDATE_INTERVAL: Long = 5000
-        private const val FASTEST_INTERVAL: Long = 5000 // = 5 seconds
-        // integer for permissions results request
-        private const val ALL_PERMISSIONS_RESULT = 1011
-    }
 
 
 }

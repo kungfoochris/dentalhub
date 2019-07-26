@@ -1,71 +1,7 @@
 package com.example.dentalhub
 
 
-//@AddTrace(name = "saveToServerAddPatientActivity", enabled = true /* optional */)
-//private fun saveToServer(patient: Patient) {
-//    Log.d(TAG, "saveToServer()")
-//    Log.d(TAG, patient.toString())
-//    val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
-//    val panelService = DjangoInterface.create(this)
-//    val call = panelService.addPatient(
-//        "JWT $token",
-//        patient.id,
-//        patient.first_name,
-//        patient.last_name,
-//        patient.gender,
-//        patient.phone,
-//        patient.middle_name,
-//        patient.dob,
-//        patient.education,
-//        patient.street_address,
-//        patient.ward,
-//        patient.city,
-//        patient.state,
-//        patient.country,
-//        patient.latitude,
-//        patient.longitude
-//    )
-//    call.enqueue(object : Callback<Patient> {
-//        override fun onFailure(call: Call<Patient>, t: Throwable) {
-//            Log.d("onFailure", t.toString())
-//            tvErrorMessage.text = t.message.toString()
-//            tvErrorMessage.visibility = View.VISIBLE
-//            loading.visibility = View.GONE
-//        }
-//
-//        override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
-//            if (null != response.body()) {
-//                when (response.code()) {
-//                    200 -> {
-//                        val tempPatient = response.body() as Patient
-//                        val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-//                        viewPatientIntent.putExtra("patient", tempPatient)
-//                        startActivity(viewPatientIntent)
-//                    }
-//                    400 -> {
-//                        tvErrorMessage.text = getString(R.string.error_http_400)
-//                        tvErrorMessage.visibility = View.VISIBLE
-//                    }
-//                    404 -> {
-//                        tvErrorMessage.text = getString(R.string.error_http_404)
-//                        tvErrorMessage.visibility = View.VISIBLE
-//                    }
-//                    else -> {
-//                        tvErrorMessage.text = getString(R.string.error_http_500)
-//                        tvErrorMessage.visibility = View.VISIBLE
-//                    }
-//                }
-//                loading.visibility = View.GONE
-//            } else {
-//                Log.d(TAG, response.code().toString())
-//                Log.d(TAG, Gson().toJson(response.body()).toString())
-//                tvErrorMessage.text = response.message()
-//                tvErrorMessage.visibility = View.VISIBLE
-//                loading.visibility = View.GONE
-//            }
-//        }
-//    })
-//}
+
 
 
 //@AddTrace(name = "listPatientsFromServerMainActivity", enabled = true /* optional */)

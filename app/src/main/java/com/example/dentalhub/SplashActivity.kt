@@ -1,8 +1,11 @@
 package com.example.dentalhub
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.example.dentalhub.services.BootstrapService
@@ -16,7 +19,11 @@ class SplashActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         context = this
+
+
+
         startService(Intent(this, BootstrapService::class.java))
+
         Handler().postDelayed({
             val token: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
             val email: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL, "")
@@ -34,4 +41,6 @@ class SplashActivity : Activity() {
         super.onPause()
         finish()
     }
+
+
 }
