@@ -1,9 +1,6 @@
 package com.example.dentalhub
 
 
-
-
-
 //@AddTrace(name = "listPatientsFromServerMainActivity", enabled = true /* optional */)
 //private fun listPatientsFromServer() {
 //    Log.d(TAG, "listPatientsFromServer")

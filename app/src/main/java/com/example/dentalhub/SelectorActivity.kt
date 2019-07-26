@@ -136,11 +136,11 @@ class SelectorActivity : AppCompatActivity() {
     }
 
 
-
     override fun onPause() {
         super.onPause()
         finish()
     }
+
     companion object {
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
         private const val UPDATE_INTERVAL: Long = 5000

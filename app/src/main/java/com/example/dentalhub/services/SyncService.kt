@@ -15,11 +15,9 @@ import com.example.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
 import io.objectbox.Box
-import io.objectbox.query.Query
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.concurrent.fixedRateTimer
 
 class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener {
 
@@ -74,7 +72,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
     private fun displayNotification() {
         allPatients = patientsBox.query().build().find()
-        for(patient in allPatients){
+        for (patient in allPatients) {
             DentalApp.displayNotification(
                 applicationContext,
                 1001,
@@ -140,7 +138,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                     when (response.code()) {
                         200 -> {
                             val tempPatient = response.body() as Patient
-                            Log.d("saveToServer", tempPatient.fullName()+" saved.")
+                            Log.d("saveToServer", tempPatient.fullName() + " saved.")
                         }
                         400 -> {
                             Log.d("saveToServer", "400 bad request")

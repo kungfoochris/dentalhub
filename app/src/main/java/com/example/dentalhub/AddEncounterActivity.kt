@@ -112,7 +112,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         initUI()
 
 
-
     }
 
     @AddTrace(name = "initUITrace", enabled = true /* optional */)

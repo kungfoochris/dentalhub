@@ -219,9 +219,9 @@ class AddPatientActivity : AppCompatActivity() {
         patientsBox.put(patient)
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
         viewPatientIntent.putExtra("patient", patient)
-        if(action.equals("new")){
+        if (action.equals("new")) {
             startActivity(viewPatientIntent)
-        }else{
+        } else {
             finish()
         }
 
@@ -248,12 +248,12 @@ class AddPatientActivity : AppCompatActivity() {
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        if (phone.isBlank() || phone.isEmpty() ) {
+        if (phone.isBlank() || phone.isEmpty()) {
             tvErrorMessage.text = resources.getString(R.string.phone_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        if(phone.length < 5){
+        if (phone.length < 5) {
             tvErrorMessage.text = resources.getString(R.string.valid_phone_number_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false

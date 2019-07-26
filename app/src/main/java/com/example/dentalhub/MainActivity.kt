@@ -1,12 +1,9 @@
 package com.example.dentalhub
 
-import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,8 +42,6 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
 
 
-
-
     @AddTrace(name = "onCreateMainActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         val divider = RecyclerViewItemSeparator(20)
         recyclerView.addItemDecoration(divider)
     }
-
 
 
     @AddTrace(name = "listPatientsMainActivity", enabled = true /* optional */)
@@ -131,7 +125,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.addPatient -> {
-                val addPatientActivityIntent =Intent(this, AddPatientActivity::class.java)
+                val addPatientActivityIntent = Intent(this, AddPatientActivity::class.java)
                 addPatientActivityIntent.putExtra("ACTION", "new")
                 startActivity(addPatientActivityIntent)
             }
@@ -184,7 +178,6 @@ class MainActivity : AppCompatActivity() {
 
         mBuilder.show()
     }
-
 
 
 }
