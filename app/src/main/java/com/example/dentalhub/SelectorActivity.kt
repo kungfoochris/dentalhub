@@ -35,6 +35,8 @@ class SelectorActivity : AppCompatActivity() {
     private lateinit var geographiesQuery: Query<Geography>
 
     private lateinit var context: Context
+    var allGeographies = mutableListOf<Geography>()
+    var allActivities = mutableListOf<Activity>()
 
     private var geographies = mutableListOf<String>()
     private val TAG = "selectorActivity"
@@ -77,10 +79,11 @@ class SelectorActivity : AppCompatActivity() {
 
             if (geographies.size > 0) {
 
-                DentalApp.geography = spinnerLocation.selectedItem.toString()
-                DentalApp.activity = spinnerActivity.selectedItem.toString()
+                DentalApp.geography = getGeographyId(spinnerLocation.selectedItem.toString())
+                DentalApp.activity = getActivityId(spinnerActivity.selectedItem.toString())
 
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             } else {
                 Toast.makeText(context, "You do not have permission to login to any location", Toast.LENGTH_LONG).show()
             }
@@ -92,8 +95,26 @@ class SelectorActivity : AppCompatActivity() {
         }
     }
 
+    private fun getActivityId(activityName: String): String {
+        for (activity in allActivities) {
+            if (activity.name.equals(activityName)) {
+                return activity.remote_id.toString()
+            }
+        }
+        return ""
+    }
+
+    private fun getGeographyId(address: String): String {
+        for (geography in allGeographies) {
+            if (geography.address().equals(address)) {
+                return geography.remote_id.toString()
+            }
+        }
+        return ""
+    }
+
     private fun setupActivities() {
-        val allActivities = activitiesQuery.find()
+        allActivities = activitiesQuery.find()
         val activities = mutableListOf<String>()
         for (activity in allActivities) {
             activities.add(activity.name)
@@ -103,7 +124,7 @@ class SelectorActivity : AppCompatActivity() {
     }
 
     private fun setupGeographies() {
-        val allGeographies = geographiesQuery.find()
+        allGeographies = geographiesQuery.find()
         geographies = mutableListOf<String>()
         for (geography in allGeographies) {
             geographies.add(geography.address())
@@ -135,11 +156,6 @@ class SelectorActivity : AppCompatActivity() {
 
     }
 
-
-    override fun onPause() {
-        super.onPause()
-        finish()
-    }
 
     companion object {
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000

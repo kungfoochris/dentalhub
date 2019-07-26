@@ -80,8 +80,9 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                 patient.fullName(),
                 "Long Description"
             )
+            saveToServer(patient)
         }
-        DentalApp.cancelNotification(applicationContext, 1001)
+
         stopSelf()
 
 //        var i = 0
@@ -126,11 +127,15 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             patient.state,
             patient.country,
             patient.latitude,
-            patient.longitude
+            patient.longitude,
+            patient.marital_status,
+            patient.activityarea_id,
+            patient.geography_id
         )
         call.enqueue(object : Callback<Patient> {
             override fun onFailure(call: Call<Patient>, t: Throwable) {
                 Log.d("onFailure", t.toString())
+                DentalApp.cancelNotification(applicationContext, 1001)
             }
 
             override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
@@ -154,8 +159,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                     Log.d("saveToServer", response.code().toString())
                     Log.d("saveToServer", Gson().toJson(response.body()).toString())
                     //tvErrorMessage.text = response.message()
+                    Log.d("saveToServer", response.message())
                 }
+                DentalApp.cancelNotification(applicationContext, 1001)
             }
+
         })
     }
 

@@ -152,7 +152,7 @@
     },
     {
       "id": "5:4893344603032408592",
-      "lastPropertyId": "20:4856807886471703374",
+      "lastPropertyId": "22:3601763742423251608",
       "name": "Patient",
       "properties": [
         {
@@ -230,6 +230,14 @@
         {
           "id": "20:4856807886471703374",
           "name": "updated_at"
+        },
+        {
+          "id": "21:4489526639219427095",
+          "name": "geography_id"
+        },
+        {
+          "id": "22:3601763742423251608",
+          "name": "activityarea_id"
         }
       ],
       "relations": []

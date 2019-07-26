@@ -165,6 +165,8 @@ class AddPatientActivity : AppCompatActivity() {
         val city = etCity.text.toString()
         val state = etState.text.toString()
         val country = etCountry.text.toString()
+        val geography = DentalApp.geography
+        val activity = DentalApp.activity
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentDate()
@@ -184,6 +186,8 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.country = country
             patient!!.latitude = latitude
             patient!!.longitude = longitude
+            patient!!.geography_id = DentalApp.geography
+            patient!!.activityarea_id = DentalApp.activity
             patient!!.created_at = date
             patient!!.updated_at = date
             return patient!!
@@ -205,6 +209,8 @@ class AddPatientActivity : AppCompatActivity() {
                 country,
                 latitude,
                 longitude,
+                geography,
+                activity,
                 date,
                 date,
                 false

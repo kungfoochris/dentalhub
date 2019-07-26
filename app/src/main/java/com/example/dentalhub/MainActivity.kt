@@ -137,6 +137,7 @@ class MainActivity : AppCompatActivity() {
                 displaySearchDialog()
             }
             R.id.sync -> {
+                Log.d(TAG, "startSync")
                 startService(Intent(this, SyncService::class.java))
             }
             R.id.logout -> {

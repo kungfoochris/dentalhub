@@ -38,7 +38,10 @@ interface DjangoInterface {
         @Field("state") state: String,
         @Field("country") country: String,
         @Field("latitude") latitude: String,
-        @Field("longitude") longitude: String
+        @Field("longitude") longitude: String,
+        @Field("marital_status") maritalStatus: String,
+        @Field("activityarea_id") activity_area_id: String,
+        @Field("geography_id") geography_id: String
     ): Call<Patient>
 
     @GET("patients")

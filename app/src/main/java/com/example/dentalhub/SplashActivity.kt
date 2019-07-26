@@ -17,8 +17,6 @@ class SplashActivity : Activity() {
         setContentView(R.layout.activity_splash)
         context = this
 
-
-
         startService(Intent(this, BootstrapService::class.java))
 
         Handler().postDelayed({

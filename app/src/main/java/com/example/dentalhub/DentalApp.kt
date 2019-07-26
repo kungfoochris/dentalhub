@@ -47,6 +47,7 @@ class DentalApp : MultiDexApplication() {
 
         var geography: String = ""
         var activity: String = ""
+
         var defaultChannelId: String = ""
         var syncChannelId: String = ""
         var editableDuration: Long = 21600

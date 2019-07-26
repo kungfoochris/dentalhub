@@ -29,6 +29,8 @@ class Patient(
     var country: String,
     var latitude: String,
     var longitude: String,
+    var geography_id: String,
+    var activityarea_id: String,
     var created_at: String,
     var updated_at: String,
     var uploaded: Boolean

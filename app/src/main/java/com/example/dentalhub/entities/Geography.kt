@@ -18,4 +18,5 @@ class Geography(
     fun address(): String {
         return "$street_address $city"
     }
+
 }
