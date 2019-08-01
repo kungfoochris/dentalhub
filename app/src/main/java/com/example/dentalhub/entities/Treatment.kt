@@ -51,5 +51,30 @@ class Treatment : Parcelable {
     var tooth37 = "NONE"
     var tooth38 = "NONE"
 
+
+    var tooth51 = "NONE"
+    var tooth52 = "NONE"
+    var tooth53 = "NONE"
+    var tooth54 = "NONE"
+    var tooth55 = "NONE"
+
+    var tooth61 = "NONE"
+    var tooth62 = "NONE"
+    var tooth63 = "NONE"
+    var tooth64 = "NONE"
+    var tooth65 = "NONE"
+
+    var tooth81 = "NONE"
+    var tooth82 = "NONE"
+    var tooth83 = "NONE"
+    var tooth84 = "NONE"
+    var tooth85 = "NONE"
+
+    var tooth71 = "NONE"
+    var tooth72 = "NONE"
+    var tooth73 = "NONE"
+    var tooth74 = "NONE"
+    var tooth75 = "NONE"
+
     var encounter: ToOne<Encounter>? = null
 }

@@ -252,6 +252,32 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         treatment.tooth37 = teeth[30]
         treatment.tooth38 = teeth[31]
 
+
+        //primary teeth
+        treatment.tooth51 = teeth[32]
+        treatment.tooth52 = teeth[33]
+        treatment.tooth53 = teeth[34]
+        treatment.tooth54 = teeth[35]
+        treatment.tooth55 = teeth[36]
+
+        treatment.tooth61 = teeth[37]
+        treatment.tooth62 = teeth[38]
+        treatment.tooth63 = teeth[39]
+        treatment.tooth64 = teeth[40]
+        treatment.tooth65 = teeth[41]
+
+        treatment.tooth81 = teeth[42]
+        treatment.tooth82 = teeth[43]
+        treatment.tooth83 = teeth[44]
+        treatment.tooth84 = teeth[45]
+        treatment.tooth85 = teeth[46]
+
+        treatment.tooth71 = teeth[47]
+        treatment.tooth72 = teeth[48]
+        treatment.tooth73 = teeth[49]
+        treatment.tooth74 = teeth[50]
+        treatment.tooth75 = teeth[51]
+
         treatmentBox.put(treatment)
     }
 

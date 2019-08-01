@@ -65,12 +65,34 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var btnId37: Button
     private lateinit var btnId38: Button
 
+    private lateinit var btnId55: Button
+    private lateinit var btnId54: Button
+    private lateinit var btnId53: Button
+    private lateinit var btnId52: Button
+    private lateinit var btnId51: Button
+    private lateinit var btnId61: Button
+    private lateinit var btnId62: Button
+    private lateinit var btnId63: Button
+    private lateinit var btnId64: Button
+    private lateinit var btnId65: Button
+
+    private lateinit var btnId85: Button
+    private lateinit var btnId84: Button
+    private lateinit var btnId83: Button
+    private lateinit var btnId82: Button
+    private lateinit var btnId81: Button
+    private lateinit var btnId71: Button
+    private lateinit var btnId72: Button
+    private lateinit var btnId73: Button
+    private lateinit var btnId74: Button
+    private lateinit var btnId75: Button
+
     private var selectedTreatment = ""
     private var defaultTreatment = "NONE"
     private var btnBackground: Drawable? = null
     private var defaultBackground: Drawable? = null
 
-    private var teeth = Array(32) { "NONE" }
+    private var teeth = Array(52) { "NONE" }
 
 
 
@@ -124,6 +146,31 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnId37 = view.findViewById(R.id.btnId37)
         btnId38 = view.findViewById(R.id.btnId38)
 
+        // primary teeth
+        btnId51 = view.findViewById(R.id.btnId51)
+        btnId52 = view.findViewById(R.id.btnId52)
+        btnId53 = view.findViewById(R.id.btnId53)
+        btnId54 = view.findViewById(R.id.btnId54)
+        btnId55 = view.findViewById(R.id.btnId55)
+
+        btnId61 = view.findViewById(R.id.btnId61)
+        btnId62 = view.findViewById(R.id.btnId62)
+        btnId63 = view.findViewById(R.id.btnId63)
+        btnId64 = view.findViewById(R.id.btnId64)
+        btnId65 = view.findViewById(R.id.btnId65)
+
+        btnId81 = view.findViewById(R.id.btnId81)
+        btnId82 = view.findViewById(R.id.btnId82)
+        btnId83 = view.findViewById(R.id.btnId83)
+        btnId84 = view.findViewById(R.id.btnId84)
+        btnId85 = view.findViewById(R.id.btnId85)
+
+        btnId71 = view.findViewById(R.id.btnId71)
+        btnId72 = view.findViewById(R.id.btnId72)
+        btnId73 = view.findViewById(R.id.btnId73)
+        btnId74 = view.findViewById(R.id.btnId74)
+        btnId75 = view.findViewById(R.id.btnId75)
+
         btnId11.setOnClickListener(this)
         btnId12.setOnClickListener(this)
         btnId13.setOnClickListener(this)
@@ -159,6 +206,31 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnId46.setOnClickListener(this)
         btnId47.setOnClickListener(this)
         btnId48.setOnClickListener(this)
+
+        // primary teeth
+        btnId51.setOnClickListener(this)
+        btnId52.setOnClickListener(this)
+        btnId53.setOnClickListener(this)
+        btnId54.setOnClickListener(this)
+        btnId55.setOnClickListener(this)
+
+        btnId61.setOnClickListener(this)
+        btnId62.setOnClickListener(this)
+        btnId63.setOnClickListener(this)
+        btnId64.setOnClickListener(this)
+        btnId65.setOnClickListener(this)
+
+        btnId81.setOnClickListener(this)
+        btnId82.setOnClickListener(this)
+        btnId83.setOnClickListener(this)
+        btnId84.setOnClickListener(this)
+        btnId85.setOnClickListener(this)
+
+        btnId71.setOnClickListener(this)
+        btnId72.setOnClickListener(this)
+        btnId73.setOnClickListener(this)
+        btnId74.setOnClickListener(this)
+        btnId75.setOnClickListener(this)
 
         treatmentSelector = view.findViewById(R.id.treatmentSelector)
         treatmentSelector.setOnCheckedChangeListener { _, checkedId ->
@@ -241,7 +313,13 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             R.id.btnId17, R.id.btnId18, R.id.btnId21, R.id.btnId22, R.id.btnId23, R.id.btnId24, R.id.btnId25,
             R.id.btnId26, R.id.btnId27, R.id.btnId28, R.id.btnId31, R.id.btnId32, R.id.btnId33, R.id.btnId34,
             R.id.btnId35, R.id.btnId36, R.id.btnId37, R.id.btnId38, R.id.btnId41, R.id.btnId42, R.id.btnId43,
-            R.id.btnId44, R.id.btnId45, R.id.btnId46, R.id.btnId47, R.id.btnId48
+            R.id.btnId44, R.id.btnId45, R.id.btnId46, R.id.btnId47, R.id.btnId48,
+
+            R.id.btnId55, R.id.btnId54, R.id.btnId53, R.id.btnId52, R.id.btnId51,
+            R.id.btnId65, R.id.btnId64, R.id.btnId63, R.id.btnId62, R.id.btnId61,
+            R.id.btnId85, R.id.btnId84, R.id.btnId83, R.id.btnId82, R.id.btnId81,
+            R.id.btnId75, R.id.btnId74, R.id.btnId73, R.id.btnId72, R.id.btnId71
+
         )
         if (buttons.contains(v.id)) {
             if(v.background==btnBackground){
@@ -251,6 +329,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             }
         }
         when (v.id) {
+            //secondary teeth
             R.id.btnId18 -> toggleTreatment(0)
             R.id.btnId17 -> toggleTreatment(1)
             R.id.btnId16 -> toggleTreatment(2)
@@ -286,6 +365,32 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             R.id.btnId36 -> toggleTreatment(29)
             R.id.btnId37 -> toggleTreatment(30)
             R.id.btnId38 -> toggleTreatment(31)
+
+            // primary teeth
+            R.id.btnId51 -> toggleTreatment(32)
+            R.id.btnId52 -> toggleTreatment(33)
+            R.id.btnId53 -> toggleTreatment(34)
+            R.id.btnId54 -> toggleTreatment(35)
+            R.id.btnId55 -> toggleTreatment(36)
+
+            R.id.btnId61 -> toggleTreatment(37)
+            R.id.btnId62 -> toggleTreatment(38)
+            R.id.btnId63 -> toggleTreatment(39)
+            R.id.btnId64 -> toggleTreatment(40)
+            R.id.btnId65 -> toggleTreatment(41)
+
+            R.id.btnId81 -> toggleTreatment(42)
+            R.id.btnId82 -> toggleTreatment(43)
+            R.id.btnId83 -> toggleTreatment(44)
+            R.id.btnId84 -> toggleTreatment(45)
+            R.id.btnId85 -> toggleTreatment(46)
+
+            R.id.btnId71 -> toggleTreatment(47)
+            R.id.btnId72 -> toggleTreatment(48)
+            R.id.btnId73 -> toggleTreatment(49)
+            R.id.btnId74 -> toggleTreatment(50)
+            R.id.btnId75 -> toggleTreatment(51)
+
 
         }
     }
