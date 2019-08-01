@@ -65,9 +65,12 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var btnId38: Button
 
     private var selectedTreatment = ""
+    private var defaultTreatment = "NONE"
     private var btnBackground: Drawable? = null
+    private var defaultBackground: Drawable? = null
 
     private var teeth = Array(32) { "NONE" }
+
 
 
     override fun onCreateView(
@@ -179,6 +182,11 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     selectedTreatment = "UNTR"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
                 }
+                R.id.btnSMART -> {
+                    selectedTreatment = "SMART"
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+
+                }
                 else -> {
                     selectedTreatment = "NONE"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
@@ -191,6 +199,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        defaultBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         treatmentFormCommunicator = activity as TreatmentFormCommunicator
 
@@ -217,45 +226,58 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             R.id.btnId44, R.id.btnId45, R.id.btnId46, R.id.btnId47, R.id.btnId48
         )
         if (buttons.contains(v.id)) {
-            v.background = btnBackground
+            if(v.background==btnBackground){
+                v.background = defaultBackground
+            }else{
+                v.background = btnBackground
+            }
         }
         when (v.id) {
-            R.id.btnId18 -> teeth[0] = selectedTreatment
-            R.id.btnId17 -> teeth[1] = selectedTreatment
-            R.id.btnId16 -> teeth[2] = selectedTreatment
-            R.id.btnId15 -> teeth[3] = selectedTreatment
-            R.id.btnId14 -> teeth[4] = selectedTreatment
-            R.id.btnId13 -> teeth[5] = selectedTreatment
-            R.id.btnId12 -> teeth[6] = selectedTreatment
-            R.id.btnId11 -> teeth[7] = selectedTreatment
+            R.id.btnId18 -> toggleTreatment(0)
+            R.id.btnId17 -> toggleTreatment(1)
+            R.id.btnId16 -> toggleTreatment(2)
+            R.id.btnId15 -> toggleTreatment(3)
+            R.id.btnId14 -> toggleTreatment(4)
+            R.id.btnId13 -> toggleTreatment(5)
+            R.id.btnId12 -> toggleTreatment(6)
+            R.id.btnId11 -> toggleTreatment(7)
 
-            R.id.btnId21 -> teeth[8] = selectedTreatment
-            R.id.btnId22 -> teeth[9] = selectedTreatment
-            R.id.btnId23 -> teeth[10] = selectedTreatment
-            R.id.btnId24 -> teeth[11] = selectedTreatment
-            R.id.btnId25 -> teeth[12] = selectedTreatment
-            R.id.btnId26 -> teeth[13] = selectedTreatment
-            R.id.btnId27 -> teeth[14] = selectedTreatment
-            R.id.btnId28 -> teeth[15] = selectedTreatment
+            R.id.btnId21 -> toggleTreatment(8)
+            R.id.btnId22 -> toggleTreatment(9)
+            R.id.btnId23 -> toggleTreatment(10)
+            R.id.btnId24 -> toggleTreatment(11)
+            R.id.btnId25 -> toggleTreatment(12)
+            R.id.btnId26 -> toggleTreatment(13)
+            R.id.btnId27 -> toggleTreatment(14)
+            R.id.btnId28 -> toggleTreatment(15)
 
-            R.id.btnId48 -> teeth[16] = selectedTreatment
-            R.id.btnId47 -> teeth[17] = selectedTreatment
-            R.id.btnId46 -> teeth[18] = selectedTreatment
-            R.id.btnId45 -> teeth[19] = selectedTreatment
-            R.id.btnId44 -> teeth[20] = selectedTreatment
-            R.id.btnId43 -> teeth[21] = selectedTreatment
-            R.id.btnId42 -> teeth[22] = selectedTreatment
-            R.id.btnId41 -> teeth[23] = selectedTreatment
+            R.id.btnId48 -> toggleTreatment(16)
+            R.id.btnId47 -> toggleTreatment(17)
+            R.id.btnId46 -> toggleTreatment(18)
+            R.id.btnId45 -> toggleTreatment(19)
+            R.id.btnId44 -> toggleTreatment(20)
+            R.id.btnId43 -> toggleTreatment(21)
+            R.id.btnId42 -> toggleTreatment(22)
+            R.id.btnId41 -> toggleTreatment(23)
 
-            R.id.btnId31 -> teeth[24] = selectedTreatment
-            R.id.btnId32 -> teeth[25] = selectedTreatment
-            R.id.btnId33 -> teeth[26] = selectedTreatment
-            R.id.btnId34 -> teeth[27] = selectedTreatment
-            R.id.btnId35 -> teeth[28] = selectedTreatment
-            R.id.btnId36 -> teeth[29] = selectedTreatment
-            R.id.btnId37 -> teeth[30] = selectedTreatment
-            R.id.btnId38 -> teeth[31] = selectedTreatment
+            R.id.btnId31 -> toggleTreatment(24)
+            R.id.btnId32 -> toggleTreatment(25)
+            R.id.btnId33 -> toggleTreatment(26)
+            R.id.btnId34 -> toggleTreatment(27)
+            R.id.btnId35 -> toggleTreatment(28)
+            R.id.btnId36 -> toggleTreatment(29)
+            R.id.btnId37 -> toggleTreatment(30)
+            R.id.btnId38 -> toggleTreatment(31)
 
+        }
+    }
+
+    private fun toggleTreatment(teethNumber: Int) {
+        if(teeth[teethNumber]==selectedTreatment){
+            teeth[teethNumber] = defaultTreatment
+        }else{
+            teeth[teethNumber] = selectedTreatment
+            
         }
     }
 

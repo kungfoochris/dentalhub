@@ -56,10 +56,10 @@
                         android:text="UNTR"
                         style="@style/RadioButton"/>
                 <RadioButton
-                        android:id="@+id/btnNone"
+                        android:id="@+id/btnSMART"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="None"
+                        android:text="SMART"
                         style="@style/RadioButton"/>
 
             </info.hoang8f.android.segmented.SegmentedGroup>
