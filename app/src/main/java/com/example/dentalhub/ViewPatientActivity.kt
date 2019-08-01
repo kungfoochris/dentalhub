@@ -59,6 +59,8 @@ class ViewPatientActivity : AppCompatActivity() {
         patient = intent.getParcelableExtra("patient")
         context = this
 
+        supportActionBar?.setHomeButtonEnabled(true)
+
         title = patient.fullName()
         initUI()
     }
@@ -129,6 +131,9 @@ class ViewPatientActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.home -> {
+                Log.d(TAG, "Display Detail")
+            }
             R.id.editPatient -> {
                 val addPatientIntent = Intent(this, AddPatientActivity::class.java)
                 addPatientIntent.putExtra("patient", patient)

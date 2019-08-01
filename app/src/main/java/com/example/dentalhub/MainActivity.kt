@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
 
         context = this
 
-
         startService(Intent(this, LocationTrackerService::class.java))
 
 

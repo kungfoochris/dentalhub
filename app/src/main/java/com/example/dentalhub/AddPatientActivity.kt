@@ -122,6 +122,7 @@ class AddPatientActivity : AppCompatActivity() {
 
     private fun updateUI() {
         if (patient != null) {
+            title = patient!!.fullName()
             etFirstName.setText(patient!!.first_name)
             etMiddleName.setText(patient!!.middle_name)
             etLastName.setText(patient!!.last_name)
@@ -181,6 +182,7 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.education = education
             patient!!.marital_status
             patient!!.street_address = streetAddress
+            patient!!.ward = ward
             patient!!.state = state
             patient!!.city = city
             patient!!.country = country
