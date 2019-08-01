@@ -6,9 +6,9 @@
         android:padding="8dp"
 >
     <LinearLayout
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
@@ -212,7 +212,7 @@
                 android:textSize="20sp"
                 android:text="@string/screening"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -389,7 +389,7 @@
                 android:textSize="20sp"
                 android:text="@string/treatment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
 
         <HorizontalScrollView
@@ -669,7 +669,7 @@
                 android:textSize="20sp"
                 android:text="@string/referral"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -779,7 +779,7 @@
                 android:textSize="20sp"
                 android:text="@string/recall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -849,9 +849,6 @@
             />
         </LinearLayout>
     </LinearLayout>
-
-
-
 
 
 </ScrollView>

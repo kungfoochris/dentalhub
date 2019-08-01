@@ -95,7 +95,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private var teeth = Array(52) { "NONE" }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -322,9 +321,9 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
         )
         if (buttons.contains(v.id)) {
-            if(v.background==btnBackground){
+            if (v.background == btnBackground) {
                 v.background = defaultBackground
-            }else{
+            } else {
                 v.background = btnBackground
             }
         }
@@ -396,11 +395,11 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     }
 
     private fun toggleTreatment(teethNumber: Int) {
-        if(teeth[teethNumber]==selectedTreatment){
+        if (teeth[teethNumber] == selectedTreatment) {
             teeth[teethNumber] = defaultTreatment
-        }else{
+        } else {
             teeth[teethNumber] = selectedTreatment
-            
+
         }
     }
 

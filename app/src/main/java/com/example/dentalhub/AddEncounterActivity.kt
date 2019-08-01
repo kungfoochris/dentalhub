@@ -14,10 +14,6 @@ import com.example.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
-import android.view.MotionEvent
-import android.view.View
-import android.view.View.OnTouchListener
-
 
 
 class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator, HistoryFormCommunicator,

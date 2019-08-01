@@ -93,8 +93,19 @@ class HistoryFragment : Fragment() {
             val allergies = etAllergies.text.toString()
 
             historyFormCommunicator.updateHistory(
-                bloodDisorders, diabetes, liverProblem, rheumaticFever, seizuresOrEpilepsy,
-                hepatitisBOrC, hiv, other, noUnderlyingMedicalCondition, medications, notTakingAnyMedications, noAllergies, allergies
+                bloodDisorders,
+                diabetes,
+                liverProblem,
+                rheumaticFever,
+                seizuresOrEpilepsy,
+                hepatitisBOrC,
+                hiv,
+                other,
+                noUnderlyingMedicalCondition,
+                medications,
+                notTakingAnyMedications,
+                noAllergies,
+                allergies
             )
             fragmentCommunicator.goForward()
         }
