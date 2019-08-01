@@ -142,4 +142,5 @@
     <string name="recall_activity">Recall Activity</string>
     <string name="add_new_patient">Add new patient</string>
     <string name="valid_phone_number_is_required">Valid phone number is required.</string>
+    <string name="default_country">Nepal</string>
 </resources>

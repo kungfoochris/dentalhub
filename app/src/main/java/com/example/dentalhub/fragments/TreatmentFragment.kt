@@ -2,6 +2,7 @@ package com.example.dentalhub.fragments
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -203,15 +204,32 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         treatmentFormCommunicator = activity as TreatmentFormCommunicator
 
-        val notes = etNotes.text.toString()
-        val fvApplied = checkBoxFVApplied.isChecked
-        val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
-        treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete, teeth)
+
 
         btnNext.setOnClickListener {
+            val notes = etNotes.text.toString()
+            val fvApplied = checkBoxFVApplied.isChecked
+            val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
+
+            Log.d("TPC", treatmentPlanComplete.toString())
+            Log.d("notes", notes)
+            Log.d("fvApplied", fvApplied.toString())
+            Log.d("teeth", teeth.toString())
+
+            treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete, teeth)
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {
+            val notes = etNotes.text.toString()
+            val fvApplied = checkBoxFVApplied.isChecked
+            val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
+
+            Log.d("TPC", treatmentPlanComplete.toString())
+            Log.d("notes", notes)
+            Log.d("fvApplied", fvApplied.toString())
+            Log.d("teeth", teeth.toString())
+
+            treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete, teeth)
             fragmentCommunicator.goBack()
         }
 

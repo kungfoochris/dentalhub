@@ -218,6 +218,7 @@
                 <EditText
                         android:id="@+id/etCountry"
                         android:hint="@string/country"
+                        android:text="@string/default_country"
                         android:inputType="textPostalAddress"
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:layout_width="match_parent"
