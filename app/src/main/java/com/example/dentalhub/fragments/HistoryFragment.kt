@@ -23,8 +23,9 @@ class HistoryFragment : Fragment() {
     private lateinit var checkBoxSeizuresOrEpilepsy: CheckBox
     private lateinit var checkBoxHepatitisBOrC: CheckBox
     private lateinit var checkBoxHIV: CheckBox
-    private lateinit var checkBoxNoUnderlyingMedicalRecord: CheckBox
+    private lateinit var checkBoxNoUnderlyingMedicalCondition: CheckBox
     private lateinit var checkBoxNotTakingAnyMedications: CheckBox
+    private lateinit var checkBoxNoAllergies: CheckBox
 
     private lateinit var etOther: EditText
     private lateinit var etMedications: EditText
@@ -48,8 +49,9 @@ class HistoryFragment : Fragment() {
         checkBoxSeizuresOrEpilepsy = view.findViewById(R.id.checkBoxSeizuresOrEpilepsy)
         checkBoxHepatitisBOrC = view.findViewById(R.id.checkBoxHepatitisBOrC)
         checkBoxHIV = view.findViewById(R.id.checkBoxHIV)
-        checkBoxNoUnderlyingMedicalRecord = view.findViewById(R.id.checkBoxNoUnderlyingMedicalRecord)
+        checkBoxNoUnderlyingMedicalCondition = view.findViewById(R.id.checkBoxNoUnderlyingMedicalCondition)
         checkBoxNotTakingAnyMedications = view.findViewById(R.id.checkBoxNotTakingAnyMedications)
+        checkBoxNoAllergies = view.findViewById(R.id.checkBoxNoAllergies)
 
         etOther = view.findViewById(R.id.etOther)
         etMedications = view.findViewById(R.id.etMedications)
@@ -67,6 +69,14 @@ class HistoryFragment : Fragment() {
 
         setupUI()
 
+        checkBoxNoAllergies.setOnCheckedChangeListener { compoundButton, _ ->
+            if (!compoundButton.isChecked) {
+                etAllergies.visibility = View.VISIBLE
+            } else {
+                etAllergies.visibility = View.GONE
+            }
+        }
+
         btnNext.setOnClickListener {
             val bloodDisorders = checkBoxBloodDisorderOrBleedingProblem.isChecked
             val diabetes = checkBoxDiabetes.isChecked
@@ -76,14 +86,15 @@ class HistoryFragment : Fragment() {
             val hepatitisBOrC = checkBoxHepatitisBOrC.isChecked
             val hiv = checkBoxHIV.isChecked
             val other = etOther.text.toString()
-            val noUnderlyingMedicalRecord = checkBoxNoUnderlyingMedicalRecord.isChecked
+            val noUnderlyingMedicalCondition = checkBoxNoUnderlyingMedicalCondition.isChecked
             val medications = etMedications.text.toString()
             val notTakingAnyMedications = checkBoxNotTakingAnyMedications.isChecked
+            val noAllergies = checkBoxNoAllergies.isChecked
             val allergies = etAllergies.text.toString()
 
             historyFormCommunicator.updateHistory(
                 bloodDisorders, diabetes, liverProblem, rheumaticFever, seizuresOrEpilepsy,
-                hepatitisBOrC, hiv, other, noUnderlyingMedicalRecord, medications, notTakingAnyMedications, allergies
+                hepatitisBOrC, hiv, other, noUnderlyingMedicalCondition, medications, notTakingAnyMedications, noAllergies, allergies
             )
             fragmentCommunicator.goForward()
         }

@@ -137,8 +137,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun updateHistory(
         bloodDisorders: Boolean, diabetes: Boolean, liverProblem: Boolean,
         rheumaticFever: Boolean, seizuresOrEpilepsy: Boolean, hepatitisBOrC: Boolean,
-        hiv: Boolean, other: String, noUnderlyingMedicalRecord: Boolean, medications: String,
-        notTakingAnyMedications: Boolean, allergies: String
+        hiv: Boolean, other: String, noUnderlyingMedicalCondition: Boolean, medications: String,
+        notTakingAnyMedications: Boolean, noAllergies: Boolean, allergies: String
     ) {
 
         history =
@@ -153,8 +153,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         history.hiv = hiv
         history.other = other
         history.medications = medications
-        history.no_underlying_medical_record = noUnderlyingMedicalRecord
+        history.no_underlying_medical_condition = noUnderlyingMedicalCondition
         history.not_taking_any_medications = notTakingAnyMedications
+        history.no_allergies = noAllergies
         history.allergies = allergies
         historyBox.put(history)
     }

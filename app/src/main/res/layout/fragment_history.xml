@@ -124,12 +124,12 @@
             <LinearLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <CheckBox
-                        android:id="@+id/checkBoxNoUnderlyingMedicalRecord"
+                        android:id="@+id/checkBoxNoUnderlyingMedicalCondition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
-                        android:text="@string/no_underlying_medical_record"
-                        android:labelFor="@+id/checkBoxNoUnderlyingMedicalRecord"
+                        android:text="@string/no_underlying_medical_condition"
+                        android:labelFor="@+id/checkBoxNoUnderlyingMedicalCondition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -159,6 +159,22 @@
                         android:layout_height="wrap_content"/>
 
             </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <CheckBox
+                        android:id="@+id/checkBoxNoAllergies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="@string/no_allergies"
+                        android:labelFor="@+id/checkBoxNoAllergies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
                         android:id="@+id/tvAllergies"

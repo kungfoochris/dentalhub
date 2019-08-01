@@ -84,7 +84,7 @@
     <string name="seizures_or_epilepsy">Seizures or epilepsy</string>
     <string name="hepatitis_b_or_c">Hepatitis B or C</string>
     <string name="hiv">HIV</string>
-    <string name="no_underlying_medical_record">No underlying medical record</string>
+    <string name="no_underlying_medical_condition">No underlying medical condition</string>
     <string name="not_taking_any_medications">Not taking any medications</string>
     <string name="no_referral">No referral</string>
     <string name="health_post">Health Post</string>
@@ -143,4 +143,5 @@
     <string name="add_new_patient">Add new patient</string>
     <string name="valid_phone_number_is_required">Valid phone number is required.</string>
     <string name="default_country">Nepal</string>
+    <string name="no_allergies">No Allergies</string>
 </resources>

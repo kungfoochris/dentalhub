@@ -50,7 +50,7 @@ class DentalApp : MultiDexApplication() {
 
         var defaultChannelId: String = ""
         var syncChannelId: String = ""
-        var editableDuration: Long = 21600
+        var editableDuration: Long = 86400
 
 
         fun saveToPreference(context: Context, preferenceName: String, preferenceValue: String) {

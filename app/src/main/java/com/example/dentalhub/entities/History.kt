@@ -20,8 +20,9 @@ class History : Parcelable {
     var hepatitis_b_or_c: Boolean = false
     var hiv: Boolean = false
     var other: String = ""
-    var no_underlying_medical_record: Boolean = false
+    var no_underlying_medical_condition: Boolean = false
     var medications: String = ""
     var not_taking_any_medications: Boolean = false
+    var no_allergies: Boolean = true
     var allergies: String = ""
 }

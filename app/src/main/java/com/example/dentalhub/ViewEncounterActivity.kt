@@ -31,7 +31,7 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvHepatitisBOrC: TextView
     private lateinit var tvHIV: TextView
     private lateinit var tvOther: TextView
-    private lateinit var tvNoUnderlyingMedicalRecord: TextView
+    private lateinit var tvNoUnderlyingMedicalCondition: TextView
     private lateinit var tvNotTakingAnyMedications: TextView
     private lateinit var tvAllergies: TextView
 
@@ -103,7 +103,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvHepatitisBOrC = findViewById(R.id.tvHepatitisBOrC)
         tvHIV = findViewById(R.id.tvHIV)
         tvOther = findViewById(R.id.tvOther)
-        tvNoUnderlyingMedicalRecord = findViewById(R.id.tvNoUnderlyingMedicalRecord)
+        tvNoUnderlyingMedicalCondition = findViewById(R.id.tvNoUnderlyingMedicalCondition)
         tvNotTakingAnyMedications = findViewById(R.id.tvNotTakingAnyMedications)
         tvAllergies = findViewById(R.id.tvAllergies)
 
@@ -115,7 +115,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvHepatitisBOrC.text = history.hepatitis_b_or_c.toString()
         tvHIV.text = history.hiv.toString()
         tvOther.text = history.other
-        tvNoUnderlyingMedicalRecord.text = history.no_underlying_medical_record.toString()
+        tvNoUnderlyingMedicalCondition.text = history.no_underlying_medical_condition.toString()
         tvNotTakingAnyMedications.text = history.not_taking_any_medications.toString()
         tvAllergies.text = history.allergies
 
