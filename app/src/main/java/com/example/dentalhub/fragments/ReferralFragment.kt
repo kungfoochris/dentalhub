@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.R
@@ -83,6 +80,7 @@ class ReferralFragment : Fragment() {
 
         checkBoxOther.setOnCheckedChangeListener { compoundButton, b ->
             if (compoundButton.isChecked) {
+                etOtherDetails.setText("")
                 etOtherDetails.visibility = View.VISIBLE
             } else {
                 etOtherDetails.visibility = View.GONE
@@ -151,35 +149,56 @@ class ReferralFragment : Fragment() {
 
         btnNext.setOnClickListener {
 
-            val noReferral = checkBoxNoReferral.isChecked
-            val healthPost = checkBoxHealthPost.isChecked
-            val hygienist = checkBoxHygienist.isChecked
-            val dentist = checkBoxDentist.isChecked
-            val generalPhysician = checkBoxGeneralPhysician.isChecked
-            val other = checkBoxOther.isChecked
-            val otherDetails = etOtherDetails.text.toString()
 
-            referralFormCommunicator.updateReferral(
-                noReferral,
-                healthPost,
-                hygienist,
-                dentist,
-                generalPhysician,
-                other,
-                otherDetails
-            )
 
-            val recallDate = etRecallDate.text.toString()
-            val recallTime = etRecallTime.text.toString()
-            val selectedGeography = spinnerLocation.selectedItem.toString()
-            val selectedActivity = spinnerActivity.selectedItem.toString()
-            referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
+            if(isFormValid()){
+                val noReferral = checkBoxNoReferral.isChecked
+                val healthPost = checkBoxHealthPost.isChecked
+                val hygienist = checkBoxHygienist.isChecked
+                val dentist = checkBoxDentist.isChecked
+                val generalPhysician = checkBoxGeneralPhysician.isChecked
+                val other = checkBoxOther.isChecked
+                val otherDetails = etOtherDetails.text.toString()
 
-            fragmentCommunicator.goForward()
+                referralFormCommunicator.updateReferral(
+                    noReferral,
+                    healthPost,
+                    hygienist,
+                    dentist,
+                    generalPhysician,
+                    other,
+                    otherDetails
+                )
+
+                val recallDate = etRecallDate.text.toString()
+                val recallTime = etRecallTime.text.toString()
+                val selectedGeography = spinnerLocation.selectedItem.toString()
+                val selectedActivity = spinnerActivity.selectedItem.toString()
+                referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
+
+                fragmentCommunicator.goForward()
+
+            }else{
+                // form is not valid
+            }
+
+
         }
         btnBack.setOnClickListener {
             fragmentCommunicator.goBack()
         }
+
+    }
+
+
+
+    private fun isFormValid(): Boolean {
+        var status = false
+
+        if( (checkBoxOther.isChecked && etOtherDetails.text.toString().isNotEmpty()) || (!checkBoxOther.isChecked) && etOtherDetails.text.isEmpty()){
+            status = true
+        }
+        return status
 
     }
 

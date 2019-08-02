@@ -3,6 +3,8 @@ package com.example.dentalhub
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.dentalhub.adapters.FormPageAdapter
@@ -114,6 +116,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
 
     }
+
 
     @AddTrace(name = "initUITrace", enabled = true /* optional */)
     private fun initUI() {
