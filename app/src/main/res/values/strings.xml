@@ -102,7 +102,7 @@
     <string name="need_sdf">Need SDF</string>
     <string name="need_extraction">Need Extraction</string>
     <string name="caries_risk">Caries Risk</string>
-    <string name="decayed_primary_teeth">Decayed Primary Teeth</string>
+    <string name="decayed_primary_teeth">No. of decayed primary teeth</string>
     <string name="decayed_permanent_teeth">Decayed Permanent Teeth</string>
     <string name="save">Save</string>
     <string name="back">Back</string>
@@ -145,4 +145,5 @@
     <string name="default_country">Nepal</string>
     <string name="no_allergies">No Allergies</string>
     <string name="edit">Edit</string>
+    <string name="refresh">Refresh</string>
 </resources>

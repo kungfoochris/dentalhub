@@ -19,6 +19,7 @@ class ScreeningFragment : Fragment() {
     private lateinit var screeningFormCommunicator: ScreeningFormCommunicator
 
     private lateinit var spinnerRisk: Spinner
+    private lateinit var spinnerDecayedPrimaryTeeth: Spinner
     private lateinit var etDecayedPrimaryTeeth: EditText
     private lateinit var etDecayedPermanentTeeth: EditText
 
@@ -41,7 +42,7 @@ class ScreeningFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_screening, container, false)
 
         spinnerRisk = view.findViewById(R.id.spinnerRisk)
-        etDecayedPrimaryTeeth = view.findViewById(R.id.etDecayedPrimaryTeeth)
+        spinnerDecayedPrimaryTeeth = view.findViewById(R.id.spinnerDecayedPrimaryTeeth)
         etDecayedPermanentTeeth = view.findViewById(R.id.etDecayedPermanentTeeth)
         checkBoxCavityPermanentTooth = view.findViewById(R.id.checkBoxCavityPermanentTooth)
         checkBoxCavityPermanentAnterior = view.findViewById(R.id.checkBoxCavityPermanentAnterior)
@@ -57,7 +58,10 @@ class ScreeningFragment : Fragment() {
         if (container != null) {
             spinnerRisk.adapter =
                 AdapterHelper.createAdapter(container.context, resources.getStringArray(R.array.carries_risk).toList())
+            spinnerDecayedPrimaryTeeth.adapter =
+                AdapterHelper.createAdapterWithInts(container.context, (1..20).toList())
         }
+
         return view
     }
 

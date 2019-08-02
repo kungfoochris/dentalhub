@@ -3,7 +3,7 @@
   <component name="issues">
     <option name="index">
       <map>
-        <entry key="/fragment.java">
+        <entry key="$PROJECT_DIR$/../MyFirstKotlinApp/app/src/main/java/com/example/myfirstkotlinapp/adapters/MovieAdapter.kt">
           <value>
             <set />
           </value>
@@ -133,6 +133,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/dentalhub/fragments/ScreeningFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/dentalhub/fragments/TreatmentFragment.kt">
           <value>
             <set />
@@ -169,6 +174,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/dentalhub/services/SyncService.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/dentalhub/utils/AdapterHelper.kt">
           <value>
             <set />
           </value>
@@ -218,6 +228,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_screening.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_treatment.xml">
           <value>
             <set />
@@ -244,6 +259,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/xml/remote_config_defaults.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/fragment.java">
           <value>
             <set />
           </value>
