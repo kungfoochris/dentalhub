@@ -18,6 +18,7 @@ import com.example.dentalhub.fragments.interfaces.ReferralFormCommunicator
 import com.example.dentalhub.utils.AdapterHelper
 import io.objectbox.Box
 import io.objectbox.query.Query
+import kotlinx.android.synthetic.main.fragment_referral.*
 import java.text.DecimalFormat
 import java.util.*
 
@@ -26,12 +27,13 @@ class ReferralFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var referralFormCommunicator: ReferralFormCommunicator
 
-    private lateinit var checkBoxNoReferral: CheckBox
-    private lateinit var checkBoxHealthPost: CheckBox
-    private lateinit var checkBoxHygienist: CheckBox
-    private lateinit var checkBoxDentist: CheckBox
-    private lateinit var checkBoxGeneralPhysician: CheckBox
-    private lateinit var checkBoxOther: CheckBox
+//    private lateinit var radioButtonNoReferral: RadioButton
+//    private lateinit var radioButtonHealthPost: RadioButton
+//    private lateinit var radioButtonHygienist: RadioButton
+//    private lateinit var radioButtonDentist: RadioButton
+//    private lateinit var radioButtonGeneralPhysician: RadioButton
+//    private lateinit var radioButtonOther: RadioButton
+    private lateinit var rgReferrals : RadioGroup
     private lateinit var etOtherDetails: EditText
 
     private lateinit var etRecallDate: EditText
@@ -61,13 +63,15 @@ class ReferralFragment : Fragment() {
         activitiesQuery = activitiesBox.query().build()
         geographiesQuery = geographiesBox.query().build()
 
-        checkBoxNoReferral = view.findViewById(R.id.checkBoxNoReferral)
-        checkBoxHealthPost = view.findViewById(R.id.checkBoxHealthPost)
-        checkBoxHygienist = view.findViewById(R.id.checkBoxHygienist)
-        checkBoxDentist = view.findViewById(R.id.checkBoxDentist)
-        checkBoxGeneralPhysician = view.findViewById(R.id.checkBoxGeneralPhysician)
-        checkBoxOther = view.findViewById(R.id.checkBoxOther)
+//        radioButtonNoReferral = view.findViewById(R.id.radioNoReferral)
+//        radioButtonHealthPost = view.findViewById(R.id.radioHealthPost)
+//        radioButtonHygienist = view.findViewById(R.id.radioHygienist)
+//        radioButtonDentist = view.findViewById(R.id.radioDentist)
+//        radioButtonGeneralPhysician = view.findViewById(R.id.radioGeneralPhysician)
+//        radioButtonOther = view.findViewById(R.id.radioOther)
+        rgReferrals = view.findViewById(R.id.rgReferrals)
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
+
 
         etRecallDate = view.findViewById(R.id.etRecallDate)
         etRecallTime = view.findViewById(R.id.etRecallTime)
@@ -77,9 +81,8 @@ class ReferralFragment : Fragment() {
         setupActivities(activity as Context)
         setupGeographies(activity as Context)
 
-
-        checkBoxOther.setOnCheckedChangeListener { compoundButton, b ->
-            if (compoundButton.isChecked) {
+        rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
+            if (i == R.id.radioOther) {
                 etOtherDetails.setText("")
                 etOtherDetails.visibility = View.VISIBLE
             } else {
@@ -146,18 +149,14 @@ class ReferralFragment : Fragment() {
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         referralFormCommunicator = activity as ReferralFormCommunicator
 
-
         btnNext.setOnClickListener {
-
-
-
             if(isFormValid()){
-                val noReferral = checkBoxNoReferral.isChecked
-                val healthPost = checkBoxHealthPost.isChecked
-                val hygienist = checkBoxHygienist.isChecked
-                val dentist = checkBoxDentist.isChecked
-                val generalPhysician = checkBoxGeneralPhysician.isChecked
-                val other = checkBoxOther.isChecked
+                val noReferral = radioNoReferral.isChecked
+                val healthPost = radioHealthPost.isChecked
+                val hygienist = radioHygienist.isChecked
+                val dentist = radioDentist.isChecked
+                val generalPhysician = radioGeneralPhysician.isChecked
+                val other = radioOther.isChecked
                 val otherDetails = etOtherDetails.text.toString()
 
                 referralFormCommunicator.updateReferral(
@@ -195,9 +194,16 @@ class ReferralFragment : Fragment() {
     private fun isFormValid(): Boolean {
         var status = false
 
-        if( (checkBoxOther.isChecked && etOtherDetails.text.toString().isNotEmpty()) || (!checkBoxOther.isChecked) && etOtherDetails.text.isEmpty()){
+        if( (radioOther.isChecked && etOtherDetails.text.toString().isNotEmpty()) || (!radioOther.isChecked) && etOtherDetails.text.isEmpty()){
             status = true
         }
+
+        // For checking if any radio button is clicked or not
+        if (rgReferrals.checkedRadioButtonId == -1) {
+            Toast.makeText(activity, "Radio button is not selected", Toast.LENGTH_SHORT).show()
+            status = false
+        }
+
         return status
 
     }
