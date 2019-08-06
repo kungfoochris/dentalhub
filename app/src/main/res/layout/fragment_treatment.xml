@@ -12,57 +12,84 @@
             android:padding="8dp"
     >
         <LinearLayout
+                android:id="@+id/treatmentSelector"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <info.hoang8f.android.segmented.SegmentedGroup
-                    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/treatmentSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:textAlignment="center">
+            <Button
+                    android:id="@+id/btnSDF"
+                    android:text="SDF"
+                    android:background="@color/grey_500"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal"
-                    segmentedgroup:sc_border_width="2dp"
-                    segmentedgroup:sc_corner_radius="10dp">
+                    android:layout_height="match_parent"/>
+            <Button
+                    android:id="@+id/btnSEAL"
+                    android:text="SEAL"
+                    android:background="@color/grey_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            <Button
+                    android:id="@+id/btnART"
+                    android:text="ART"
+                    android:background="@color/grey_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            <Button
+                    android:id="@+id/btnEXO"
+                    android:text="EXO"
+                    android:background="@color/grey_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            <Button
+                    android:id="@+id/btnUNTR"
+                    android:text="UNTR"
+                    android:background="@color/grey_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            <Button
+                    android:id="@+id/btnSMART"
+                    android:text="SMART"
+                    android:background="@color/grey_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            <!--<info.hoang8f.android.segmented.SegmentedGroup-->
+                    <!--xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--segmentedgroup:sc_border_width="2dp"-->
+                    <!--segmentedgroup:sc_corner_radius="10dp">-->
 
-                <RadioButton
-                        android:id="@+id/btnSDF"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SDF"
-                        style="@style/RadioButton"/>
+                <!--<RadioButton-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/RadioButton"/>-->
 
-                <RadioButton
-                        android:id="@+id/btnSEAL"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SEAL"
-                        style="@style/RadioButton"/>
-                <RadioButton
-                        android:id="@+id/btnART"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ART"
-                        style="@style/RadioButton"/>
-                <RadioButton
-                        android:id="@+id/btnEXO"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="EXO"
-                        style="@style/RadioButton"/>
-                <RadioButton
-                        android:id="@+id/btnUNTR"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="UNTR"
-                        style="@style/RadioButton"/>
-                <RadioButton
-                        android:id="@+id/btnSMART"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SMART"
-                        style="@style/RadioButton"/>
+                <!--<RadioButton-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/RadioButton"/>-->
+                <!--<RadioButton-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/RadioButton"/>-->
+                <!--<RadioButton-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/RadioButton"/>-->
+                <!--<RadioButton-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/RadioButton"/>-->
+                <!--<RadioButton-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/RadioButton"/>-->
 
-            </info.hoang8f.android.segmented.SegmentedGroup>
+            <!--</info.hoang8f.android.segmented.SegmentedGroup>-->
         </LinearLayout>
 
         <HorizontalScrollView

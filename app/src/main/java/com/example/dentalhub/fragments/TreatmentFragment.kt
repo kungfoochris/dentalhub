@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
@@ -22,7 +24,17 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var treatmentFormCommunicator: TreatmentFormCommunicator
 
-    private lateinit var treatmentSelector: SegmentedGroup
+//    private lateinit var treatmentSelector: SegmentedGroup
+
+    // Treatment Type buttons initialization
+    private  lateinit var btnSDF: Button
+    private  lateinit var btnSEAL: Button
+    private  lateinit var btnART: Button
+    private  lateinit var btnEXO: Button
+    private  lateinit var btnUNTR: Button
+    private  lateinit var btnSMART: Button
+
+
     private lateinit var checkBoxFVApplied: CheckBox
     private lateinit var checkBoxTreatmentPlanComplete: CheckBox
     private lateinit var etNotes: EditText
@@ -91,6 +103,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private var defaultTreatment = "NONE"
     private var btnBackground: Drawable? = null
     private var defaultBackground: Drawable? = null
+    private var btnDefaultBackground: Drawable? = null
 
     private var teeth = Array(52) { "NONE" }
 
@@ -103,11 +116,20 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_treatment, container, false)
 
         btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
+        btnDefaultBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_button_default_color, null)
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
         checkBoxFVApplied = view.findViewById(R.id.checkBoxFVApplied)
         checkBoxTreatmentPlanComplete = view.findViewById(R.id.checkBoxTreatmentPlanComplete)
         etNotes = view.findViewById(R.id.etNotes)
+
+        // finding Treatment button from View
+        btnSDF = view.findViewById(R.id.btnSDF)
+        btnSEAL = view.findViewById(R.id.btnSEAL)
+        btnART = view.findViewById(R.id.btnART)
+        btnEXO = view.findViewById(R.id.btnEXO)
+        btnUNTR = view.findViewById(R.id.btnUNTR)
+        btnSMART = view.findViewById(R.id.btnSMART)
 
         btnId18 = view.findViewById(R.id.btnId18)
         btnId17 = view.findViewById(R.id.btnId17)
@@ -170,6 +192,14 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnId74 = view.findViewById(R.id.btnId74)
         btnId75 = view.findViewById(R.id.btnId75)
 
+        // for Treatment Type button onClick event listener
+        btnSDF.setOnClickListener(this)
+        btnSEAL.setOnClickListener(this)
+        btnART.setOnClickListener(this)
+        btnEXO.setOnClickListener(this)
+        btnUNTR.setOnClickListener(this)
+        btnSMART.setOnClickListener(this)
+
         btnId11.setOnClickListener(this)
         btnId12.setOnClickListener(this)
         btnId13.setOnClickListener(this)
@@ -231,41 +261,41 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnId74.setOnClickListener(this)
         btnId75.setOnClickListener(this)
 
-        treatmentSelector = view.findViewById(R.id.treatmentSelector)
-        treatmentSelector.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.btnSDF -> {
-                    selectedTreatment = "SDF"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
-                }
-                R.id.btnSEAL -> {
-                    selectedTreatment = "SEAL"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
-                }
-                R.id.btnART -> {
-                    selectedTreatment = "ART"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
-                }
-                R.id.btnEXO -> {
-                    selectedTreatment = "EXO"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
-                }
-                R.id.btnUNTR -> {
-                    selectedTreatment = "UNTR"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
-                }
-                R.id.btnSMART -> {
-                    selectedTreatment = "SMART"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
 
-                }
-                else -> {
-                    selectedTreatment = "NONE"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
-                }
-            }
-
-        }
+//        treatmentSelector = view.findViewById(R.id.treatmentSelector)
+//        treatmentSelector.setOnCheckedChangeListener { _, checkedId ->
+//            when (checkedId) {
+//                R.id.btnSDF -> {
+//                    selectedTreatment = "SDF"
+//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+//                }
+//                R.id.btnSEAL -> {
+//                    selectedTreatment = "SEAL"
+//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
+//                }
+//                R.id.btnART -> {
+//                    selectedTreatment = "ART"
+//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
+//                }
+//                R.id.btnEXO -> {
+//                    selectedTreatment = "EXO"
+//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
+//                }
+//                R.id.btnUNTR -> {
+//                    selectedTreatment = "UNTR"
+//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
+//                }
+//                R.id.btnSMART -> {
+//                    selectedTreatment = "SMART"
+//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+//
+//                }
+//                else -> {
+//                    selectedTreatment = "NONE"
+//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
+//                }
+//            }
+//        }
         return view
     }
 
@@ -274,8 +304,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         defaultBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         treatmentFormCommunicator = activity as TreatmentFormCommunicator
-
-
 
         btnNext.setOnClickListener {
             val notes = etNotes.text.toString()
@@ -303,7 +331,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete, teeth)
             fragmentCommunicator.goBack()
         }
-
     }
 
     override fun onClick(v: View) {
@@ -318,8 +345,71 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             R.id.btnId65, R.id.btnId64, R.id.btnId63, R.id.btnId62, R.id.btnId61,
             R.id.btnId85, R.id.btnId84, R.id.btnId83, R.id.btnId82, R.id.btnId81,
             R.id.btnId75, R.id.btnId74, R.id.btnId73, R.id.btnId72, R.id.btnId71
-
         )
+        // for Treatment Type OnClick event array
+        val buttonsTreatmentType = arrayOf(
+            R.id.btnSDF, R.id.btnSEAL, R.id.btnART, R.id.btnEXO, R.id.btnUNTR, R.id.btnSMART
+        )
+
+        // for Treatment Type color change according to its name
+        if (buttonsTreatmentType.contains(v.id)) {
+
+            when (v.id) {
+                R.id.btnSDF -> {
+                    Toast.makeText(context, "Treatment SDF Type clicked", Toast.LENGTH_SHORT).show()
+                    selectedTreatment = "SDF"
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+                    treatmentTypeBackgroundColor()
+                    btnSDF.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+                }
+
+                R.id.btnSEAL -> {
+                    Toast.makeText(context, "Treatment SEAL Type clicked", Toast.LENGTH_SHORT).show()
+                    selectedTreatment = "SEAL"
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
+                    treatmentTypeBackgroundColor()
+                    btnSEAL.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
+                }
+
+                R.id.btnART -> {
+                    Toast.makeText(context, "Treatment btnART Type clicked", Toast.LENGTH_SHORT).show()
+
+                    selectedTreatment = "ART"
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
+                    treatmentTypeBackgroundColor()
+                    btnART.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
+                }
+
+                R.id.btnEXO -> {
+                    Toast.makeText(context, "Treatment btnEXO Type clicked", Toast.LENGTH_SHORT).show()
+
+                    selectedTreatment = "EXO"
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
+                    treatmentTypeBackgroundColor()
+                    btnEXO.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
+                }
+
+                R.id.btnUNTR -> {
+                    Toast.makeText(context, "Treatment btnUNTR Type clicked", Toast.LENGTH_SHORT).show()
+
+                    selectedTreatment = "UNTR"
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
+                    treatmentTypeBackgroundColor()
+                    btnUNTR.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
+                }
+
+                R.id.btnSMART -> {
+                    Toast.makeText(context, "Treatment btnSMART Type clicked", Toast.LENGTH_SHORT).show()
+
+                    selectedTreatment = "SMART"
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+                    treatmentTypeBackgroundColor()
+                    btnSMART.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+                }
+
+            }
+        }
+
         if (buttons.contains(v.id)) {
             if (v.background == btnBackground) {
                 v.background = defaultBackground
@@ -389,8 +479,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             R.id.btnId73 -> toggleTreatment(49)
             R.id.btnId74 -> toggleTreatment(50)
             R.id.btnId75 -> toggleTreatment(51)
-
-
         }
     }
 
@@ -403,4 +491,12 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun treatmentTypeBackgroundColor() {
+        btnSDF.background = btnDefaultBackground
+        btnSEAL.background = btnDefaultBackground
+        btnART.background = btnDefaultBackground
+        btnEXO.background = btnDefaultBackground
+        btnUNTR.background = btnDefaultBackground
+        btnSMART.background = btnDefaultBackground
+    }
 }

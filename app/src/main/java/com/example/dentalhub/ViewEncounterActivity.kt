@@ -277,7 +277,6 @@ class ViewEncounterActivity : AppCompatActivity() {
 //        tvOtherDetails.text = referral.other_details
 
         // schedule
-
         tvRecallDate = findViewById(R.id.tvRecallDate)
         tvRecallTime = findViewById(R.id.tvRecallTime)
         tvRecallActivity = findViewById(R.id.tvRecallActivity)

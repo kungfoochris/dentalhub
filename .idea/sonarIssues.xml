@@ -3,6 +3,11 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0d45e468e6c719d1740737543702178b/jars/classes.jar!/info/hoang8f/android/segmented/SegmentedGroup.class">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../MyFirstKotlinApp/app/src/main/java/com/example/myfirstkotlinapp/adapters/MovieAdapter.kt">
           <value>
             <set />
@@ -204,6 +209,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/dentalhub/utils/ViewPatientPopUp.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/drawable/treatment_button_default_color.xml">
           <value>
             <set />
           </value>
