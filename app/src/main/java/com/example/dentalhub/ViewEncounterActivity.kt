@@ -202,16 +202,18 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNeedSDF = findViewById(R.id.tvNeedSDF)
         tvNeedExtraction = findViewById(R.id.tvNeedExtraction)
 
+        // to hide if screeing items are unchecked while adding encounter
 //        tvCarriesRisk.text = screening.carries_risk
-        tvDecayedPrimaryTeeth.text = screening.decayed_pimary_teeth.toString()
-        tvDecayedPermanentTeeth.text = screening.decayed_permanent_teeth.toString()
-        tvCavityPermanentTooth.text = screening.cavity_permanent_tooth.toString()
-        tvCavityPermanentAnterior.text = screening.cavity_permanent_anterior.toString()
-        tvActiveInfection.text = screening.active_infection.toString()
-        tvNeedARTFilling.text = screening.need_art_filling.toString()
-        tvNeedSealant.text = screening.need_sealant.toString()
-        tvNeedSDF.text = screening.need_sdf.toString()
-        tvNeedExtraction.text = screening.need_extraction.toString()
+//        tvDecayedPrimaryTeeth.text = screening.decayed_pimary_teeth.toString()
+//        tvDecayedPermanentTeeth.text = screening.decayed_permanent_teeth.toString()
+
+        hideTextView(screening.cavity_permanent_tooth, tvCavityPermanentToothTitle, tvCavityPermanentTooth)
+        hideTextView(screening.cavity_permanent_anterior, tvCavityPermanentAnteriorTitle, tvCavityPermanentAnterior)
+        hideTextView(screening.active_infection, tvActiveInfectionTitle, tvActiveInfection)
+        hideTextView(screening.need_art_filling, tvNeedARTFillingTitle, tvNeedARTFilling)
+        hideTextView(screening.need_sealant, tvNeedSealantTitle, tvNeedSealant)
+        hideTextView(screening.need_sdf, tvNeedSDFTitle, tvNeedSDF)
+        hideTextView(screening.need_extraction, tvNeedExtractionTitle, tvNeedExtraction)
 
         // treatment
         tvFVApplied = findViewById(R.id.tvFVApplied)
