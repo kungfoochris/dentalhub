@@ -80,11 +80,28 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvNeedExtraction: TextView
 
     // treatment
+
+    // Treatment Title TextView
+    private lateinit var tvFVAppliedTitle: TextView
+    private lateinit var tvTreatmentPlanCompleteTitle: TextView
+    private lateinit var tvNotesTitle: TextView
+
+    // Treatment Data TextView
     private lateinit var tvFVApplied: TextView
     private lateinit var tvTreatmentPlanComplete: TextView
     private lateinit var tvNotes: TextView
 
     // referral
+
+    // Referral Title TextView
+    private lateinit var tvNoReferralTitle: TextView
+    private lateinit var tvHealthPostTitle: TextView
+    private lateinit var tvHygienistTitle: TextView
+    private lateinit var tvDentistTitle: TextView
+    private lateinit var tvGeneralPhysicianTitle: TextView
+    private lateinit var tvOtherDetailsTitle: TextView
+
+    // Referral Data TextView
     private lateinit var tvNoReferral: TextView
     private lateinit var tvHealthPost: TextView
     private lateinit var tvHygienist: TextView
@@ -207,6 +224,7 @@ class ViewEncounterActivity : AppCompatActivity() {
 //        tvDecayedPrimaryTeeth.text = screening.decayed_pimary_teeth.toString()
 //        tvDecayedPermanentTeeth.text = screening.decayed_permanent_teeth.toString()
 
+
         hideTextView(screening.cavity_permanent_tooth, tvCavityPermanentToothTitle, tvCavityPermanentTooth)
         hideTextView(screening.cavity_permanent_anterior, tvCavityPermanentAnteriorTitle, tvCavityPermanentAnterior)
         hideTextView(screening.active_infection, tvActiveInfectionTitle, tvActiveInfection)
@@ -216,15 +234,33 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideTextView(screening.need_extraction, tvNeedExtractionTitle, tvNeedExtraction)
 
         // treatment
+
+        // Treatment Title TextView
+        tvFVAppliedTitle = findViewById(R.id.tvFVAppliedTitle)
+        tvNotesTitle = findViewById(R.id.tvNotesTitle)
+        tvTreatmentPlanCompleteTitle = findViewById(R.id.tvTreatmentPlanCompleteTitle)
+
+        // Treatment Data TextView
         tvFVApplied = findViewById(R.id.tvFVApplied)
         tvNotes = findViewById(R.id.tvNotes)
         tvTreatmentPlanComplete = findViewById(R.id.tvTreatmentPlanComplete)
 
-        tvFVApplied.text = treatment.fv_applied.toString()
-        tvTreatmentPlanComplete.text = treatment.treatment_plan_complete.toString()
-        tvNotes.text = treatment.notes
+        hideTextView(treatment.fv_applied, tvFVAppliedTitle, tvFVApplied)
+        hideTextView(treatment.treatment_plan_complete, tvTreatmentPlanCompleteTitle, tvTreatmentPlanComplete)
+        // notes is in string value
+//        tvNotes.text = treatment.notes
 
         // referral
+
+        // Referral Title TextView
+        tvNoReferralTitle = findViewById(R.id.tvNoReferralTitle)
+        tvHealthPostTitle = findViewById(R.id.tvHealthPostTitle)
+        tvHygienistTitle = findViewById(R.id.tvHygienistTitle)
+        tvDentistTitle = findViewById(R.id.tvDentistTitle)
+        tvGeneralPhysicianTitle = findViewById(R.id.tvGeneralPhysicianTitle)
+        tvOtherDetailsTitle = findViewById(R.id.tvOtherDetailsTitle)
+
+        // Referral Data TextView
         tvNoReferral = findViewById(R.id.tvNoReferral)
         tvHealthPost = findViewById(R.id.tvHealthPost)
         tvHygienist = findViewById(R.id.tvHygienist)
@@ -232,12 +268,13 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvGeneralPhysician = findViewById(R.id.tvGeneralPhysician)
         tvOtherDetails = findViewById(R.id.tvOtherDetails)
 
-        tvNoReferral.text = referral.no_referral.toString()
-        tvHealthPost.text = referral.health_post.toString()
-        tvHygienist.text = referral.hygienist.toString()
-        tvDentist.text = referral.dentist.toString()
-        tvGeneralPhysician.text = referral.general_physician.toString()
-        tvOtherDetails.text = referral.other_details
+        hideTextView(referral.no_referral, tvNoReferralTitle, tvNoReferral)
+        hideTextView(referral.health_post, tvHealthPostTitle, tvHealthPost)
+        hideTextView(referral.hygienist, tvHygienistTitle, tvHygienist)
+        hideTextView(referral.dentist, tvDentistTitle, tvDentist)
+        hideTextView(referral.general_physician, tvGeneralPhysicianTitle, tvGeneralPhysician)
+        // Other Detail left
+//        tvOtherDetails.text = referral.other_details
 
         // schedule
 

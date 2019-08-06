@@ -641,6 +641,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvFVAppliedTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/fv_applied"
@@ -658,6 +659,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvTreatmentPlanCompleteTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/treatment_plan_complete"
@@ -675,6 +677,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvNotesTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/notes"
@@ -687,7 +690,9 @@
                     android:layout_height="wrap_content"
             />
         </LinearLayout>
+        <!--End Treatment-->
 
+        <!--Referral-->
         <TextView
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
@@ -700,6 +705,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvNoReferralTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/no_referral"
@@ -717,6 +723,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvHealthPostTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/health_post"
@@ -734,6 +741,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvHygienistTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/hygienist"
@@ -751,6 +759,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvDentistTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/dentist"
@@ -768,6 +777,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvGeneralPhysicianTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/general_physician"
@@ -785,6 +795,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvOtherDetailsTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/other"
@@ -797,7 +808,9 @@
                     android:layout_height="wrap_content"
             />
         </LinearLayout>
+        <!--End Referral-->
 
+        <!--Recall-->
         <TextView
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
