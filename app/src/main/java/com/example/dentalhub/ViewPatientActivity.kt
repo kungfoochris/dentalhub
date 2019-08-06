@@ -1,16 +1,16 @@
 package com.example.dentalhub
 
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -139,6 +139,15 @@ class ViewPatientActivity : AppCompatActivity() {
                 addPatientIntent.putExtra("patient", patient)
                 addPatientIntent.putExtra("ACTION", "edit")
                 startActivity(addPatientIntent)
+            }
+            R.id.viewPatient -> {
+                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
+                val inflate : LayoutInflater = layoutInflater
+                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
+                builder.setView(view)
+                var dialog : Dialog = builder.create()
+                dialog.show()
+
             }
         }
         return super.onOptionsItemSelected(item)

@@ -1,7 +1,9 @@
 package com.example.dentalhub
 
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.*
 import io.objectbox.Box
@@ -23,6 +25,22 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var recallBox: Box<Recall>
 
     // history
+
+    // History Titles TextView
+    private lateinit var tvBloodDisorderOrBleedingProblemTitle: TextView
+    private lateinit var tvDiabetesTitle: TextView
+    private lateinit var tvLiverProblemTitle: TextView
+    private lateinit var tvRheumaticFeverTitle: TextView
+    private lateinit var tvSeizuresOrEpilepsyTitle: TextView
+    private lateinit var tvHepatitisBOrCTitle: TextView
+    private lateinit var tvHIVTitle: TextView
+    private lateinit var tvOtherTitle: TextView
+    private lateinit var tvNoUnderlyingMedicalConditionTitle: TextView
+    private lateinit var tvNotTakingAnyMedicationsTitle: TextView
+    private lateinit var tvAllergiesTitle: TextView
+    // Didn't saw the Medications information -----------
+
+    // History Data TextView
     private lateinit var tvBloodDisorderOrBleedingProblem: TextView
     private lateinit var tvDiabetes: TextView
     private lateinit var tvLiverProblem: TextView
@@ -36,6 +54,20 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvAllergies: TextView
 
     // screening
+
+    // Screening Titles TextView
+    private lateinit var tvCarriesRiskTitle: TextView
+    private lateinit var tvDecayedPrimaryTeethTitle: TextView
+    private lateinit var tvDecayedPermanentTeethTitle: TextView
+    private lateinit var tvCavityPermanentToothTitle: TextView
+    private lateinit var tvCavityPermanentAnteriorTitle: TextView
+    private lateinit var tvActiveInfectionTitle: TextView
+    private lateinit var tvNeedARTFillingTitle: TextView
+    private lateinit var tvNeedSealantTitle: TextView
+    private lateinit var tvNeedSDFTitle: TextView
+    private lateinit var tvNeedExtractionTitle: TextView
+
+    // Screening Data TextView
     private lateinit var tvCarriesRisk: TextView
     private lateinit var tvDecayedPrimaryTeeth: TextView
     private lateinit var tvDecayedPermanentTeeth: TextView
@@ -95,6 +127,21 @@ class ViewEncounterActivity : AppCompatActivity() {
 
     private fun initUI() {
         // history
+
+        // History Title TextView
+        tvBloodDisorderOrBleedingProblemTitle = findViewById(R.id.tvBloodDisorderOrBleedingProblemTitle)
+        tvDiabetesTitle = findViewById(R.id.tvDiabetesTitle)
+        tvLiverProblemTitle = findViewById(R.id.tvLiverProblemTitle)
+        tvRheumaticFeverTitle = findViewById(R.id.tvRheumaticFeverTitle)
+        tvSeizuresOrEpilepsyTitle = findViewById(R.id.tvSeizuresOrEpilepsyTitle)
+        tvHepatitisBOrCTitle = findViewById(R.id.tvHepatitisBOrCTitle)
+        tvHIVTitle = findViewById(R.id.tvHIVTitle)
+        tvOtherTitle = findViewById(R.id.tvOtherTitle)
+        tvNoUnderlyingMedicalConditionTitle = findViewById(R.id.tvNoUnderlyingMedicalConditionTitle)
+        tvNotTakingAnyMedicationsTitle = findViewById(R.id.tvNotTakingAnyMedicationsTitle)
+        tvAllergiesTitle = findViewById(R.id.tvAllergiesTitle)
+
+        // History Data TextView
         tvBloodDisorderOrBleedingProblem = findViewById(R.id.tvBloodDisorderOrBleedingProblem)
         tvDiabetes = findViewById(R.id.tvDiabetes)
         tvLiverProblem = findViewById(R.id.tvLiverProblem)
@@ -107,19 +154,43 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNotTakingAnyMedications = findViewById(R.id.tvNotTakingAnyMedications)
         tvAllergies = findViewById(R.id.tvAllergies)
 
-        tvBloodDisorderOrBleedingProblem.text = history.blood_disorder.toString()
-        tvDiabetes.text = history.diabetes.toString()
-        tvLiverProblem.text = history.liver_problem.toString()
-        tvRheumaticFever.text = history.rheumatic_fever.toString()
-        tvSeizuresOrEpilepsy.text = history.seizuers_or_epilepsy.toString()
-        tvHepatitisBOrC.text = history.hepatitis_b_or_c.toString()
-        tvHIV.text = history.hiv.toString()
-        tvOther.text = history.other
-        tvNoUnderlyingMedicalCondition.text = history.no_underlying_medical_condition.toString()
-        tvNotTakingAnyMedications.text = history.not_taking_any_medications.toString()
-        tvAllergies.text = history.allergies
+        hideTextView(history.blood_disorder, tvBloodDisorderOrBleedingProblemTitle, tvBloodDisorderOrBleedingProblem)
+        hideTextView(history.diabetes, tvDiabetesTitle, tvDiabetes)
+        hideTextView(history.liver_problem, tvLiverProblemTitle, tvLiverProblem)
+        hideTextView(history.rheumatic_fever, tvRheumaticFeverTitle, tvRheumaticFever)
+        hideTextView(history.seizuers_or_epilepsy, tvSeizuresOrEpilepsyTitle, tvSeizuresOrEpilepsy)
+        hideTextView(history.hepatitis_b_or_c, tvHepatitisBOrCTitle, tvHepatitisBOrC)
+        hideTextView(history.hiv, tvHIVTitle, tvHIV)
+        // left to history.other
+        hideTextView(history.no_underlying_medical_condition, tvNoUnderlyingMedicalConditionTitle, tvNoUnderlyingMedicalCondition)
+        // left to history.medicine Edit Text
+        // left to history.not_taking_any_medications Boolean
+        // left to alleragies Boolean
+        // left to allerigies Edit Text
+
+
+//        if (!history.other.isNullOrBlank()) {
+//            tvOther.text = history.other
+//        } else {
+//            goneTextView(tvOtherTitle)
+//            goneTextView(tvOther)
+//        }
 
         // screening
+
+        // Screening Title TextView
+        tvCarriesRiskTitle = findViewById(R.id.tvCarriesRiskTitle)
+        tvDecayedPrimaryTeethTitle = findViewById(R.id.tvDecayedPrimaryTeethTitle)
+        tvDecayedPermanentTeethTitle = findViewById(R.id.tvDecayedPermanentTeethTitle)
+        tvCavityPermanentToothTitle = findViewById(R.id.tvCavityPermanentToothTitle)
+        tvCavityPermanentAnteriorTitle = findViewById(R.id.tvCavityPermanentAnteriorTitle)
+        tvActiveInfectionTitle = findViewById(R.id.tvActiveInfectionTitle)
+        tvNeedARTFillingTitle = findViewById(R.id.tvNeedARTFillingTitle)
+        tvNeedSealantTitle = findViewById(R.id.tvNeedSealantTitle)
+        tvNeedSDFTitle = findViewById(R.id.tvNeedSDFTitle)
+        tvNeedExtractionTitle = findViewById(R.id.tvNeedExtractionTitle)
+
+        // Screening Data TextView
         tvCarriesRisk = findViewById(R.id.tvCarriesRisk)
         tvDecayedPrimaryTeeth = findViewById(R.id.tvDecayedPrimaryTeeth)
         tvDecayedPermanentTeeth = findViewById(R.id.tvDecayedPermanentTeeth)
@@ -131,7 +202,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNeedSDF = findViewById(R.id.tvNeedSDF)
         tvNeedExtraction = findViewById(R.id.tvNeedExtraction)
 
-        tvCarriesRisk.text = screening.carries_risk
+//        tvCarriesRisk.text = screening.carries_risk
         tvDecayedPrimaryTeeth.text = screening.decayed_pimary_teeth.toString()
         tvDecayedPermanentTeeth.text = screening.decayed_permanent_teeth.toString()
         tvCavityPermanentTooth.text = screening.cavity_permanent_tooth.toString()
@@ -178,6 +249,16 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvRecallActivity.text = recall.activity
         tvRecallGeography.text = recall.geography
 
+    }
+
+    private fun hideTextView(disease : Boolean, viewTitle : View, view : TextView) {
+        if (disease) {
+            view.text = disease.toString()
+
+        } else {
+            viewTitle.visibility = View.GONE
+            view.visibility = View.GONE
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

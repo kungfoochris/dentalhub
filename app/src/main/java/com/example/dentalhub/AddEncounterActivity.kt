@@ -1,10 +1,16 @@
 package com.example.dentalhub
 
+import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.RadioButton
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.dentalhub.adapters.FormPageAdapter
@@ -198,6 +204,26 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         screening.need_extraction = needExtraction
 
         screeningBox.put(screening)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.view_patient_info, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.viewPatient -> {
+                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
+                val inflate : LayoutInflater = layoutInflater
+                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
+                builder.setView(view)
+                var dialog : Dialog = builder.create()
+                dialog.show()
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun updateTreatment(

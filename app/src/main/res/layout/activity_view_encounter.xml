@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvBloodDisorderOrBleedingProblemTitle"
                     android:text="@string/blood_disorder_or_bleeding_problem"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
@@ -39,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvDiabetesTitle"
                     android:textStyle="bold"
                     android:layout_marginEnd="16dp"
                     android:text="@string/diabetes"
@@ -56,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvLiverProblemTitle"
                     android:textStyle="bold"
                     android:layout_marginEnd="16dp"
                     android:text="@string/liver_problem"
@@ -73,6 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvRheumaticFeverTitle"
                     android:textStyle="bold"
                     android:layout_marginEnd="16dp"
                     android:text="@string/rheumatic_fever"
@@ -90,6 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvSeizuresOrEpilepsyTitle"
                     android:textStyle="bold"
                     android:layout_marginEnd="16dp"
                     android:text="@string/seizures_or_epilepsy"
@@ -107,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvHepatitisBOrCTitle"
                     android:textStyle="bold"
                     android:layout_marginEnd="16dp"
                     android:text="@string/hepatitis_b_or_c"
@@ -124,6 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvHIVTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/hiv"
@@ -141,6 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvOtherTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/other"
@@ -158,6 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvNoUnderlyingMedicalConditionTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/no_underlying_medical_condition"
@@ -175,6 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvNotTakingAnyMedicationsTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/not_taking_any_medications"
@@ -192,6 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvAllergiesTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/allergies"
@@ -204,8 +215,9 @@
                     android:layout_height="wrap_content"
             />
         </LinearLayout>
+        <!--End History-->
 
-
+        <!--Screening-->
         <TextView
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
@@ -218,6 +230,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvCarriesRiskTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/caries_risk"
@@ -235,6 +248,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvDecayedPrimaryTeethTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/decayed_primary_teeth"
@@ -252,6 +266,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvDecayedPermanentTeethTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/decayed_permanent_teeth"
@@ -269,6 +284,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvCavityPermanentToothTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/cavity_permanent_tooth"
@@ -286,6 +302,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvCavityPermanentAnteriorTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/cavity_permanent_anterior"
@@ -303,6 +320,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvActiveInfectionTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/active_infection"
@@ -320,6 +338,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvNeedARTFillingTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/need_art_filling"
@@ -337,6 +356,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvNeedSealantTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/need_sealant"
@@ -354,6 +374,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvNeedSDFTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/need_sdf"
@@ -371,6 +392,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvNeedExtractionTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/need_extraction"
@@ -383,6 +405,9 @@
                     android:layout_height="wrap_content"
             />
         </LinearLayout>
+        <!--End Screening-->
+
+        <!--Treatment-->
         <TextView
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"

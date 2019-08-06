@@ -146,4 +146,5 @@
     <string name="no_allergies">No Allergies</string>
     <string name="edit">Edit</string>
     <string name="refresh">Refresh</string>
+    <string name="view_patient_info">View Patient Info</string>
 </resources>

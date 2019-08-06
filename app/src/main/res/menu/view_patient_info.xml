@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
             android:id="@+id/viewPatient"
             android:title="@string/view_patient_info"
             android:icon="@android:drawable/ic_menu_view"
             app:showAsAction="always"
     />
-    <item
-            android:id="@+id/editPatient"
-            android:title="@string/modify_patient"
-            android:icon="@android:drawable/ic_menu_edit"
-            app:showAsAction="always"
-    />
+
 </menu>
