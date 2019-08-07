@@ -9,14 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
 import com.example.dentalhub.fragments.interfaces.TreatmentFormCommunicator
-import info.hoang8f.android.segmented.SegmentedGroup
 
 class TreatmentFragment : Fragment(), View.OnClickListener {
 
@@ -261,41 +258,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnId74.setOnClickListener(this)
         btnId75.setOnClickListener(this)
 
-
-//        treatmentSelector = view.findViewById(R.id.treatmentSelector)
-//        treatmentSelector.setOnCheckedChangeListener { _, checkedId ->
-//            when (checkedId) {
-//                R.id.btnSDF -> {
-//                    selectedTreatment = "SDF"
-//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
-//                }
-//                R.id.btnSEAL -> {
-//                    selectedTreatment = "SEAL"
-//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
-//                }
-//                R.id.btnART -> {
-//                    selectedTreatment = "ART"
-//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
-//                }
-//                R.id.btnEXO -> {
-//                    selectedTreatment = "EXO"
-//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
-//                }
-//                R.id.btnUNTR -> {
-//                    selectedTreatment = "UNTR"
-//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
-//                }
-//                R.id.btnSMART -> {
-//                    selectedTreatment = "SMART"
-//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
-//
-//                }
-//                else -> {
-//                    selectedTreatment = "NONE"
-//                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
-//                }
-//            }
-//        }
         return view
     }
 
@@ -356,7 +318,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
             when (v.id) {
                 R.id.btnSDF -> {
-                    Toast.makeText(context, "Treatment SDF Type clicked", Toast.LENGTH_SHORT).show()
                     selectedTreatment = "SDF"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
                     treatmentTypeBackgroundColor()
@@ -364,7 +325,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                 }
 
                 R.id.btnSEAL -> {
-                    Toast.makeText(context, "Treatment SEAL Type clicked", Toast.LENGTH_SHORT).show()
                     selectedTreatment = "SEAL"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
                     treatmentTypeBackgroundColor()
@@ -372,8 +332,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                 }
 
                 R.id.btnART -> {
-                    Toast.makeText(context, "Treatment btnART Type clicked", Toast.LENGTH_SHORT).show()
-
                     selectedTreatment = "ART"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
                     treatmentTypeBackgroundColor()
@@ -381,8 +339,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                 }
 
                 R.id.btnEXO -> {
-                    Toast.makeText(context, "Treatment btnEXO Type clicked", Toast.LENGTH_SHORT).show()
-
                     selectedTreatment = "EXO"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
                     treatmentTypeBackgroundColor()
@@ -390,8 +346,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                 }
 
                 R.id.btnUNTR -> {
-                    Toast.makeText(context, "Treatment btnUNTR Type clicked", Toast.LENGTH_SHORT).show()
-
                     selectedTreatment = "UNTR"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
                     treatmentTypeBackgroundColor()
@@ -399,8 +353,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                 }
 
                 R.id.btnSMART -> {
-                    Toast.makeText(context, "Treatment btnSMART Type clicked", Toast.LENGTH_SHORT).show()
-
                     selectedTreatment = "SMART"
                     btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
                     treatmentTypeBackgroundColor()
