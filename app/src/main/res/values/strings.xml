@@ -103,7 +103,7 @@
     <string name="need_extraction">Need Extraction</string>
     <string name="caries_risk">Caries Risk</string>
     <string name="decayed_primary_teeth">No. of decayed primary teeth</string>
-    <string name="decayed_permanent_teeth">Decayed Permanent Teeth</string>
+    <string name="decayed_permanent_teeth">No. of decayed permanent teeth</string>
     <string name="save">Save</string>
     <string name="back">Back</string>
     <string name="next">Next</string>

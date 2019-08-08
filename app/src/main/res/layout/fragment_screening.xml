@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"/>
             <Spinner
                     android:id="@+id/spinnerNoOfDecayedPrimaryTeeth"
-                    android:layout_width="75dp"
+                    android:layout_width="100dp"
                     android:dropDownWidth="75dp"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -46,13 +46,11 @@
                     android:text="@string/decayed_permanent_teeth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-            <EditText
-                    android:id="@+id/etDecayedPermanentTeeth"
-                    android:inputType="number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-            />
-
+            <Spinner
+                    android:id="@+id/spinnerNoOfDecayedPermanentTeeth"
+                    android:layout_width="100dp"
+                    android:dropDownWidth="75dp"
+                    android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"

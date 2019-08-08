@@ -20,7 +20,7 @@ class ScreeningFragment : Fragment() {
 
     private lateinit var spinnerRisk: Spinner
     private lateinit var spinnerNoOfDecayedPrimaryTeeth: Spinner
-    private lateinit var etDecayedPermanentTeeth: EditText
+    private lateinit var spinnerNoOfDecayedPermanentTeeth: Spinner
 
     private lateinit var checkBoxCavityPermanentTooth: CheckBox
     private lateinit var checkBoxCavityPermanentAnterior: CheckBox
@@ -42,7 +42,7 @@ class ScreeningFragment : Fragment() {
 
         spinnerRisk = view.findViewById(R.id.spinnerRisk)
         spinnerNoOfDecayedPrimaryTeeth = view.findViewById(R.id.spinnerNoOfDecayedPrimaryTeeth)
-        etDecayedPermanentTeeth = view.findViewById(R.id.etDecayedPermanentTeeth)
+        spinnerNoOfDecayedPermanentTeeth = view.findViewById(R.id.spinnerNoOfDecayedPermanentTeeth)
         checkBoxCavityPermanentTooth = view.findViewById(R.id.checkBoxCavityPermanentTooth)
         checkBoxCavityPermanentAnterior = view.findViewById(R.id.checkBoxCavityPermanentAnterior)
         checkBoxActiveInfection = view.findViewById(R.id.checkBoxActiveInfection)
@@ -58,7 +58,9 @@ class ScreeningFragment : Fragment() {
             spinnerRisk.adapter =
                 AdapterHelper.createAdapter(container.context, resources.getStringArray(R.array.carries_risk).toList())
             spinnerNoOfDecayedPrimaryTeeth.adapter =
-                AdapterHelper.createAdapterWithInts(container.context, (1..20).toList())
+                AdapterHelper.createAdapterWithInts(container.context, (0..20).toList())
+            spinnerNoOfDecayedPermanentTeeth.adapter =
+                AdapterHelper.createAdapterWithInts(container.context, (0..32).toList())
         }
 
         return view
@@ -72,7 +74,7 @@ class ScreeningFragment : Fragment() {
         btnNext.setOnClickListener {
             val carriesRisk = spinnerRisk.selectedItem.toString()
             val noOfdecayedPrimaryTeeth = spinnerNoOfDecayedPrimaryTeeth.selectedItem.toString()
-            val decayedPermanentTeeth = etDecayedPermanentTeeth.text.toString()
+            val noOfdecayedPermanentTeeth = spinnerNoOfDecayedPermanentTeeth.selectedItem.toString()
             val cavityPermanentTooth = checkBoxCavityPermanentTooth.isChecked
             val cavityPermanentAnterior = checkBoxCavityPermanentAnterior.isChecked
             val activeInfection = checkBoxActiveInfection.isChecked
@@ -82,7 +84,7 @@ class ScreeningFragment : Fragment() {
             val needExtraction = checkBoxNeedSDF.isChecked
 
             screeningFormCommunicator.updateScreening(
-                carriesRisk, noOfdecayedPrimaryTeeth, decayedPermanentTeeth,
+                carriesRisk, noOfdecayedPrimaryTeeth, noOfdecayedPermanentTeeth,
                 cavityPermanentTooth, cavityPermanentAnterior, activeInfection, needARTFilling, needSealant, needSDF,
                 needExtraction
             )

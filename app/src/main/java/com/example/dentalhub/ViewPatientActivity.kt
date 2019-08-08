@@ -59,9 +59,6 @@ class ViewPatientActivity : AppCompatActivity() {
         patient = intent.getParcelableExtra("patient")
         context = this
 
-//        println("This is for patient printing " + patient)
-//        println("Patient id is " + patient.id)
-
         supportActionBar?.setHomeButtonEnabled(true)
 
         title = patient.fullName()
@@ -148,19 +145,19 @@ class ViewPatientActivity : AppCompatActivity() {
                 val view : View = inflate.inflate(R.layout.popup_view_patient, null)
 
                 // to get all id of the textView
-                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
-                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
-                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
-                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
-                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
-                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
-                val tvAddresspopupView = view.findViewById<TextView>(R.id.tvAddresspopupView)
-                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
-                val tvCityView = view.findViewById<TextView>(R.id.tvCityView)
-                val tvStateView = view.findViewById<TextView>(R.id.tvStateView)
-                val tvCountryView = view.findViewById<TextView>(R.id.tvCountryView)
-                val tvMaritalStatusView = view.findViewById<TextView>(R.id.tvMaritalStatusView)
-                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
+                var tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
+                var tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
+                var tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
+                var tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
+                var tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
+                var tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
+                var tvAddresspopupView = view.findViewById<TextView>(R.id.tvAddresspopupView)
+                var tvWardView = view.findViewById<TextView>(R.id.tvWardView)
+                var tvCityView = view.findViewById<TextView>(R.id.tvCityView)
+                var tvStateView = view.findViewById<TextView>(R.id.tvStateView)
+                var tvCountryView = view.findViewById<TextView>(R.id.tvCountryView)
+                var tvMaritalStatusView = view.findViewById<TextView>(R.id.tvMaritalStatusView)
+                var tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
 
                 // to set the details of the patient on Alert Dialog i.e. View Patient
                 tvFirstNameView.text = patient.first_name
