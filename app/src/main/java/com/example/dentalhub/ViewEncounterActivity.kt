@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dentalhub.entities.*
 import io.objectbox.Box
+import kotlinx.android.synthetic.main.fragment_history.*
 
 class ViewEncounterActivity : AppCompatActivity() {
 
@@ -57,8 +58,8 @@ class ViewEncounterActivity : AppCompatActivity() {
 
     // Screening Titles TextView
     private lateinit var tvCarriesRiskTitle: TextView
-    private lateinit var tvDecayedPrimaryTeethTitle: TextView
-    private lateinit var tvDecayedPermanentTeethTitle: TextView
+    private lateinit var tvNoOfDecayedPrimaryTeethTitle: TextView
+    private lateinit var tvNoOfDecayedPermanentTeethTitle: TextView
     private lateinit var tvCavityPermanentToothTitle: TextView
     private lateinit var tvCavityPermanentAnteriorTitle: TextView
     private lateinit var tvActiveInfectionTitle: TextView
@@ -69,8 +70,8 @@ class ViewEncounterActivity : AppCompatActivity() {
 
     // Screening Data TextView
     private lateinit var tvCarriesRisk: TextView
-    private lateinit var tvDecayedPrimaryTeeth: TextView
-    private lateinit var tvDecayedPermanentTeeth: TextView
+    private lateinit var tvNoOfDecayedPrimaryTeeth: TextView
+    private lateinit var tvNoOfDecayedPermanentTeeth: TextView
     private lateinit var tvCavityPermanentTooth: TextView
     private lateinit var tvCavityPermanentAnterior: TextView
     private lateinit var tvActiveInfection: TextView
@@ -171,34 +172,27 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNotTakingAnyMedications = findViewById(R.id.tvNotTakingAnyMedications)
         tvAllergies = findViewById(R.id.tvAllergies)
 
-        hideTextView(history.blood_disorder, tvBloodDisorderOrBleedingProblemTitle, tvBloodDisorderOrBleedingProblem)
-        hideTextView(history.diabetes, tvDiabetesTitle, tvDiabetes)
-        hideTextView(history.liver_problem, tvLiverProblemTitle, tvLiverProblem)
-        hideTextView(history.rheumatic_fever, tvRheumaticFeverTitle, tvRheumaticFever)
-        hideTextView(history.seizuers_or_epilepsy, tvSeizuresOrEpilepsyTitle, tvSeizuresOrEpilepsy)
-        hideTextView(history.hepatitis_b_or_c, tvHepatitisBOrCTitle, tvHepatitisBOrC)
-        hideTextView(history.hiv, tvHIVTitle, tvHIV)
-        // left to history.other
-        hideTextView(history.no_underlying_medical_condition, tvNoUnderlyingMedicalConditionTitle, tvNoUnderlyingMedicalCondition)
+        hideBoolean(history.blood_disorder, tvBloodDisorderOrBleedingProblemTitle, tvBloodDisorderOrBleedingProblem)
+        hideBoolean(history.diabetes, tvDiabetesTitle, tvDiabetes)
+        hideBoolean(history.liver_problem, tvLiverProblemTitle, tvLiverProblem)
+        hideBoolean(history.rheumatic_fever, tvRheumaticFeverTitle, tvRheumaticFever)
+        hideBoolean(history.seizuers_or_epilepsy, tvSeizuresOrEpilepsyTitle, tvSeizuresOrEpilepsy)
+        hideBoolean(history.hepatitis_b_or_c, tvHepatitisBOrCTitle, tvHepatitisBOrC)
+        hideBoolean(history.hiv, tvHIVTitle, tvHIV)
+        hideString(history.other, tvOtherTitle, tvOther)
+        hideBoolean(history.no_underlying_medical_condition, tvNoUnderlyingMedicalConditionTitle, tvNoUnderlyingMedicalCondition)
+
         // left to history.medicine Edit Text
-        // left to history.not_taking_any_medications Boolean
+        hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
         // left to alleragies Boolean
         // left to allerigies Edit Text
-
-
-//        if (!history.other.isNullOrBlank()) {
-//            tvOther.text = history.other
-//        } else {
-//            goneTextView(tvOtherTitle)
-//            goneTextView(tvOther)
-//        }
 
         // screening
 
         // Screening Title TextView
         tvCarriesRiskTitle = findViewById(R.id.tvCarriesRiskTitle)
-        tvDecayedPrimaryTeethTitle = findViewById(R.id.tvDecayedPrimaryTeethTitle)
-        tvDecayedPermanentTeethTitle = findViewById(R.id.tvDecayedPermanentTeethTitle)
+        tvNoOfDecayedPrimaryTeethTitle = findViewById(R.id.tvNoOfDecayedPrimaryTeethTitle)
+        tvNoOfDecayedPermanentTeethTitle = findViewById(R.id.tvNoOfDecayedPermanentTeethTitle)
         tvCavityPermanentToothTitle = findViewById(R.id.tvCavityPermanentToothTitle)
         tvCavityPermanentAnteriorTitle = findViewById(R.id.tvCavityPermanentAnteriorTitle)
         tvActiveInfectionTitle = findViewById(R.id.tvActiveInfectionTitle)
@@ -209,8 +203,8 @@ class ViewEncounterActivity : AppCompatActivity() {
 
         // Screening Data TextView
         tvCarriesRisk = findViewById(R.id.tvCarriesRisk)
-        tvDecayedPrimaryTeeth = findViewById(R.id.tvDecayedPrimaryTeeth)
-        tvDecayedPermanentTeeth = findViewById(R.id.tvDecayedPermanentTeeth)
+        tvNoOfDecayedPrimaryTeeth = findViewById(R.id.tvNoOfDecayedPrimaryTeeth)
+        tvNoOfDecayedPermanentTeeth = findViewById(R.id.tvNoOfDecayedPermanentTeeth)
         tvCavityPermanentTooth = findViewById(R.id.tvCavityPermanentTooth)
         tvCavityPermanentAnterior = findViewById(R.id.tvCavityPermanentAnterior)
         tvActiveInfection = findViewById(R.id.tvActiveInfection)
@@ -219,19 +213,17 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNeedSDF = findViewById(R.id.tvNeedSDF)
         tvNeedExtraction = findViewById(R.id.tvNeedExtraction)
 
-        // to hide if screeing items are unchecked while adding encounter
-//        tvCarriesRisk.text = screening.carries_risk
-//        tvDecayedPrimaryTeeth.text = screening.decayed_pimary_teeth.toString()
-//        tvDecayedPermanentTeeth.text = screening.decayed_permanent_teeth.toString()
-
-
-        hideTextView(screening.cavity_permanent_tooth, tvCavityPermanentToothTitle, tvCavityPermanentTooth)
-        hideTextView(screening.cavity_permanent_anterior, tvCavityPermanentAnteriorTitle, tvCavityPermanentAnterior)
-        hideTextView(screening.active_infection, tvActiveInfectionTitle, tvActiveInfection)
-        hideTextView(screening.need_art_filling, tvNeedARTFillingTitle, tvNeedARTFilling)
-        hideTextView(screening.need_sealant, tvNeedSealantTitle, tvNeedSealant)
-        hideTextView(screening.need_sdf, tvNeedSDFTitle, tvNeedSDF)
-        hideTextView(screening.need_extraction, tvNeedExtractionTitle, tvNeedExtraction)
+        // to hide if screening items are unchecked while adding encounter
+        hideString(screening.carries_risk, tvCarriesRiskTitle, tvCarriesRisk)
+        hideInt(screening.decayed_pimary_teeth, tvNoOfDecayedPrimaryTeethTitle, tvNoOfDecayedPrimaryTeeth)
+        hideInt(screening.decayed_permanent_teeth, tvNoOfDecayedPermanentTeethTitle, tvNoOfDecayedPermanentTeeth)
+        hideBoolean(screening.cavity_permanent_tooth, tvCavityPermanentToothTitle, tvCavityPermanentTooth)
+        hideBoolean(screening.cavity_permanent_anterior, tvCavityPermanentAnteriorTitle, tvCavityPermanentAnterior)
+        hideBoolean(screening.active_infection, tvActiveInfectionTitle, tvActiveInfection)
+        hideBoolean(screening.need_art_filling, tvNeedARTFillingTitle, tvNeedARTFilling)
+        hideBoolean(screening.need_sealant, tvNeedSealantTitle, tvNeedSealant)
+        hideBoolean(screening.need_sdf, tvNeedSDFTitle, tvNeedSDF)
+        hideBoolean(screening.need_extraction, tvNeedExtractionTitle, tvNeedExtraction)
 
         // treatment
 
@@ -245,8 +237,8 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNotes = findViewById(R.id.tvNotes)
         tvTreatmentPlanComplete = findViewById(R.id.tvTreatmentPlanComplete)
 
-        hideTextView(treatment.fv_applied, tvFVAppliedTitle, tvFVApplied)
-        hideTextView(treatment.treatment_plan_complete, tvTreatmentPlanCompleteTitle, tvTreatmentPlanComplete)
+        hideBoolean(treatment.fv_applied, tvFVAppliedTitle, tvFVApplied)
+        hideBoolean(treatment.treatment_plan_complete, tvTreatmentPlanCompleteTitle, tvTreatmentPlanComplete)
         // notes is in string value
 //        tvNotes.text = treatment.notes
 
@@ -268,20 +260,22 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvGeneralPhysician = findViewById(R.id.tvGeneralPhysician)
         tvOtherDetails = findViewById(R.id.tvOtherDetails)
 
-        hideTextView(referral.no_referral, tvNoReferralTitle, tvNoReferral)
-        hideTextView(referral.health_post, tvHealthPostTitle, tvHealthPost)
-        hideTextView(referral.hygienist, tvHygienistTitle, tvHygienist)
-        hideTextView(referral.dentist, tvDentistTitle, tvDentist)
-        hideTextView(referral.general_physician, tvGeneralPhysicianTitle, tvGeneralPhysician)
-        // Other Detail left
-//        tvOtherDetails.text = referral.other_details
+        hideBoolean(referral.no_referral, tvNoReferralTitle, tvNoReferral)
+        hideBoolean(referral.health_post, tvHealthPostTitle, tvHealthPost)
+        hideBoolean(referral.hygienist, tvHygienistTitle, tvHygienist)
+        hideBoolean(referral.dentist, tvDentistTitle, tvDentist)
+        hideBoolean(referral.general_physician, tvGeneralPhysicianTitle, tvGeneralPhysician)
+        hideString(referral.other_details, tvOtherDetailsTitle, tvOtherDetails)
 
         // schedule
+
+        // Schedule Title TextView
         tvRecallDate = findViewById(R.id.tvRecallDate)
         tvRecallTime = findViewById(R.id.tvRecallTime)
         tvRecallActivity = findViewById(R.id.tvRecallActivity)
         tvRecallGeography = findViewById(R.id.tvRecallGeography)
 
+        // Schedule Data TextView
         tvRecallDate.text = recall.date
         tvRecallTime.text = recall.time
         tvRecallActivity.text = recall.activity
@@ -289,10 +283,28 @@ class ViewEncounterActivity : AppCompatActivity() {
 
     }
 
-    private fun hideTextView(disease : Boolean, viewTitle : View, view : TextView) {
+    private fun hideBoolean(disease : Boolean, viewTitle : View, view : TextView) {
         if (disease) {
             view.text = disease.toString()
 
+        } else {
+            viewTitle.visibility = View.GONE
+            view.visibility = View.GONE
+        }
+    }
+
+    private fun hideString(disease: String, viewTitle: View, view: TextView) {
+        if (!disease.isNullOrBlank()) {
+            view.text = disease
+        } else {
+            viewTitle.visibility = View.GONE
+            view.visibility = View.GONE
+        }
+    }
+
+    private fun hideInt(disease: Int, viewTitle: View, view: TextView) {
+        if (disease != 0) {
+            view.text = disease.toString()
         } else {
             viewTitle.visibility = View.GONE
             view.visibility = View.GONE

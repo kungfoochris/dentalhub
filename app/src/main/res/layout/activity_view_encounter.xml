@@ -248,7 +248,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                    android:id="@+id/tvDecayedPrimaryTeethTitle"
+                    android:id="@+id/tvNoOfDecayedPrimaryTeethTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/decayed_primary_teeth"
@@ -256,7 +256,7 @@
                     android:layout_height="wrap_content"
             />
             <TextView
-                    android:id="@+id/tvDecayedPrimaryTeeth"
+                    android:id="@+id/tvNoOfDecayedPrimaryTeeth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
             />
@@ -266,7 +266,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                    android:id="@+id/tvDecayedPermanentTeethTitle"
+                    android:id="@+id/tvNoOfDecayedPermanentTeethTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
                     android:text="@string/decayed_permanent_teeth"
@@ -274,7 +274,7 @@
                     android:layout_height="wrap_content"
             />
             <TextView
-                    android:id="@+id/tvDecayedPermanentTeeth"
+                    android:id="@+id/tvNoOfDecayedPermanentTeeth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
             />
