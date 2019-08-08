@@ -180,13 +180,10 @@ class ReferralFragment : Fragment() {
             }else{
                 // form is not valid
             }
-
-
         }
         btnBack.setOnClickListener {
             fragmentCommunicator.goBack()
         }
-
     }
 
 
@@ -200,12 +197,10 @@ class ReferralFragment : Fragment() {
 
         // For checking if any radio button is clicked or not
         if (rgReferrals.checkedRadioButtonId == -1) {
-            Toast.makeText(activity, "Radio button is not selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(activity, "Radio button is not selected", Toast.LENGTH_SHORT).show()
             status = false
         }
-
         return status
-
     }
 
     private fun setupActivities(context: Context) {

@@ -59,6 +59,9 @@ class ViewPatientActivity : AppCompatActivity() {
         patient = intent.getParcelableExtra("patient")
         context = this
 
+//        println("This is for patient printing " + patient)
+//        println("Patient id is " + patient.id)
+
         supportActionBar?.setHomeButtonEnabled(true)
 
         title = patient.fullName()
@@ -85,8 +88,6 @@ class ViewPatientActivity : AppCompatActivity() {
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         val divider = RecyclerViewItemSeparator(20)
         recyclerView.addItemDecoration(divider)
-
-
 
         updateInfo()
 
@@ -133,6 +134,7 @@ class ViewPatientActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.home -> {
                 Log.d(TAG, "Display Detail")
+                println("Name is selected")
             }
             R.id.editPatient -> {
                 val addPatientIntent = Intent(this, AddPatientActivity::class.java)
@@ -144,6 +146,37 @@ class ViewPatientActivity : AppCompatActivity() {
                 val builder : AlertDialog.Builder = AlertDialog.Builder(this)
                 val inflate : LayoutInflater = layoutInflater
                 val view : View = inflate.inflate(R.layout.popup_view_patient, null)
+
+                // to get all id of the textView
+                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
+                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
+                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
+                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
+                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
+                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
+                val tvAddresspopupView = view.findViewById<TextView>(R.id.tvAddresspopupView)
+                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
+                val tvCityView = view.findViewById<TextView>(R.id.tvCityView)
+                val tvStateView = view.findViewById<TextView>(R.id.tvStateView)
+                val tvCountryView = view.findViewById<TextView>(R.id.tvCountryView)
+                val tvMaritalStatusView = view.findViewById<TextView>(R.id.tvMaritalStatusView)
+                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
+
+                // to set the details of the patient on Alert Dialog i.e. View Patient
+                tvFirstNameView.text = patient.first_name
+                tvMiddleNameView.text = patient.middle_name
+                tvLastNameView.text = patient.last_name
+                tvGenderpopupView.text = patient.gender
+                tvDateofBirthView.text = patient.dob
+                tvPhonepopupView.text = patient.phone
+                tvAddresspopupView.text = patient.street_address
+                tvWardView.text = patient.ward.toString()
+                tvCityView.text = patient.city
+                tvStateView.text = patient.state
+                tvCountryView.text = patient.country
+                tvMaritalStatusView.text = patient.marital_status
+                tvEducationLevelView.text = patient.education
+
                 builder.setView(view)
                 var dialog : Dialog = builder.create()
                 dialog.show()

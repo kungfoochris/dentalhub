@@ -8,7 +8,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../MyFirstKotlinApp/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../MyFirstKotlinApp/app/src/main/java/com/example/myfirstkotlinapp/activities/APIExampleActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../MyFirstKotlinApp/app/src/main/java/com/example/myfirstkotlinapp/adapters/MovieAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../MyFirstKotlinApp/app/src/main/java/com/example/myfirstkotlinapp/interface/ApixuWeatherApiService.kt">
           <value>
             <set />
           </value>
@@ -299,6 +314,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/xml/remote_config_defaults.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/StudioProjects/transit-points/app/src/main/java/com/abhiyantrik/transitpoints/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/StudioProjects/transit-points/app/src/main/res/layout/activity_main.xml">
           <value>
             <set />
           </value>

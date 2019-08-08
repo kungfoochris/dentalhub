@@ -21,8 +21,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var treatmentFormCommunicator: TreatmentFormCommunicator
 
-//    private lateinit var treatmentSelector: SegmentedGroup
-
     // Treatment Type buttons initialization
     private  lateinit var btnSDF: Button
     private  lateinit var btnSEAL: Button
