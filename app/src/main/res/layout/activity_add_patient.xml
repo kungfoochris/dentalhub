@@ -35,6 +35,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_first_name"
+                        android:digits="abcdefghijklmnopqustuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
                 />
             </LinearLayout>
             <LinearLayout
@@ -46,7 +48,8 @@
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/middle_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:digits="abcdefghijklmnopqustuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
                 <EditText
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:id="@+id/etMiddleName"
@@ -54,6 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_middle_name"
+                        android:digits="abcdefghijklmnopqustuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 />
             </LinearLayout>
             <LinearLayout
