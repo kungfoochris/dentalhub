@@ -2,9 +2,11 @@ package com.example.dentalhub
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.example.dentalhub.entities.*
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_history.*
@@ -91,6 +93,46 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvFVApplied: TextView
     private lateinit var tvTreatmentPlanComplete: TextView
     private lateinit var tvNotes: TextView
+
+    // Treatment Buttons
+
+    // Treatment Buttons Row 1
+    private lateinit var btn11: Button
+    private lateinit var btn12: Button
+    private lateinit var btn13: Button
+    private lateinit var btn14: Button
+    private lateinit var btn15: Button
+    private lateinit var btn16: Button
+    private lateinit var btn17: Button
+    private lateinit var btn18: Button
+
+    private lateinit var btn21: Button
+    private lateinit var btn22: Button
+    private lateinit var btn23: Button
+    private lateinit var btn24: Button
+    private lateinit var btn25: Button
+    private lateinit var btn26: Button
+    private lateinit var btn27: Button
+    private lateinit var btn28: Button
+
+    // Treatment Buttons Row 2
+    private lateinit var btn41: Button
+    private lateinit var btn42: Button
+    private lateinit var btn43: Button
+    private lateinit var btn44: Button
+    private lateinit var btn45: Button
+    private lateinit var btn46: Button
+    private lateinit var btn47: Button
+    private lateinit var btn48: Button
+
+    private lateinit var btn31: Button
+    private lateinit var btn32: Button
+    private lateinit var btn33: Button
+    private lateinit var btn34: Button
+    private lateinit var btn35: Button
+    private lateinit var btn36: Button
+    private lateinit var btn37: Button
+    private lateinit var btn38: Button
 
     // referral
 
@@ -182,10 +224,14 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideString(history.other, tvOtherTitle, tvOther)
         hideBoolean(history.no_underlying_medical_condition, tvNoUnderlyingMedicalConditionTitle, tvNoUnderlyingMedicalCondition)
 
-        // left to history.medicine Edit Text
+        // left to history.medicine Edit Text ------------
         hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
-        // left to alleragies Boolean
-        // left to allerigies Edit Text
+        // since alleragies is little different i.e. if no_allergies is True show allergies(String) else don't show both no_allergies(Int) and allergies(String)
+        if (history.no_allergies) {
+            hideBoolean(false, tvAllergiesTitle, tvAllergies)
+        } else {
+            tvAllergies.text = history.allergies
+        }
 
         // screening
 
@@ -237,10 +283,13 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNotes = findViewById(R.id.tvNotes)
         tvTreatmentPlanComplete = findViewById(R.id.tvTreatmentPlanComplete)
 
+
+        // ToDo all buttons to be active
+
+        buttonInit()
         hideBoolean(treatment.fv_applied, tvFVAppliedTitle, tvFVApplied)
         hideBoolean(treatment.treatment_plan_complete, tvTreatmentPlanCompleteTitle, tvTreatmentPlanComplete)
-        // notes is in string value
-//        tvNotes.text = treatment.notes
+        hideString(treatment.notes, tvNotesTitle, tvNotes)
 
         // referral
 
@@ -283,6 +332,62 @@ class ViewEncounterActivity : AppCompatActivity() {
 
     }
 
+    private fun buttonInit() {
+
+        // Treatment Buttons
+
+        // Treatment Buttons Row 1
+        btn11 = findViewById(R.id.btnId11)
+        btn12 = findViewById(R.id.btnId12)
+        btn13 = findViewById(R.id.btnId13)
+        btn14 = findViewById(R.id.btnId14)
+        btn15 = findViewById(R.id.btnId15)
+        btn16 = findViewById(R.id.btnId16)
+        btn17 = findViewById(R.id.btnId17)
+        btn18 = findViewById(R.id.btnId18)
+
+        btn21 = findViewById(R.id.btnId21)
+        btn22 = findViewById(R.id.btnId22)
+        btn23 = findViewById(R.id.btnId23)
+        btn24 = findViewById(R.id.btnId24)
+        btn25 = findViewById(R.id.btnId25)
+        btn26 = findViewById(R.id.btnId26)
+        btn27 = findViewById(R.id.btnId27)
+        btn28 = findViewById(R.id.btnId28)
+
+        // Treatment Buttons Row 2
+        btn41 = findViewById(R.id.btnId41)
+        btn42 = findViewById(R.id.btnId42)
+        btn43 = findViewById(R.id.btnId43)
+        btn44 = findViewById(R.id.btnId44)
+        btn45 = findViewById(R.id.btnId45)
+        btn46 = findViewById(R.id.btnId46)
+        btn47 = findViewById(R.id.btnId47)
+        btn48 = findViewById(R.id.btnId48)
+
+        btn31 = findViewById(R.id.btnId31)
+        btn32 = findViewById(R.id.btnId32)
+        btn33 = findViewById(R.id.btnId33)
+        btn34 = findViewById(R.id.btnId34)
+        btn35 = findViewById(R.id.btnId35)
+        btn36 = findViewById(R.id.btnId36)
+        btn37 = findViewById(R.id.btnId37)
+        btn38 = findViewById(R.id.btnId38)
+
+        // Fill the color of each button
+        setButtonColor(btn11, treatment.tooth11)
+
+    }
+
+    private fun setButtonColor(button: Button, treatmentType: String) {
+        when (treatmentType) {
+            "SDF" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+        }
+    }
+
+
+    /* To show or hide the fields with Boolean data in the
+    Fragements -> History, Screening, Treatment, Referral and Recall */
     private fun hideBoolean(disease : Boolean, viewTitle : View, view : TextView) {
         if (disease) {
             view.text = disease.toString()
@@ -293,6 +398,8 @@ class ViewEncounterActivity : AppCompatActivity() {
         }
     }
 
+    /*To show or hide the fields with String data in the
+    Fragements -> History, Screening, Treatment, Referral and Recall*/
     private fun hideString(disease: String, viewTitle: View, view: TextView) {
         if (!disease.isNullOrBlank()) {
             view.text = disease
@@ -302,6 +409,8 @@ class ViewEncounterActivity : AppCompatActivity() {
         }
     }
 
+    /* To show or hide the fields with Integer data in the
+    Fragements -> History, Screening, Treatment, Referral and Recall*/
     private fun hideInt(disease: Int, viewTitle: View, view: TextView) {
         if (disease != 0) {
             view.text = disease.toString()
