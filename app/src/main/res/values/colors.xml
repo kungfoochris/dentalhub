@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#0055b8</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="btnColor">#20a263</color>
+    <color name="etColor">#ebf4f7</color>
+    <color name="authPrepend">#33aacc</color>
+
+
 
     <!-- Red -->
     <color name="red_50">#FFEBEE</color>
