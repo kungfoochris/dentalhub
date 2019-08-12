@@ -65,7 +65,6 @@ class DentalApp : MultiDexApplication() {
             val editor = prefs.edit()
             editor.remove(preferenceName)
             editor.apply()
-
         }
 
         fun readFromPreference(context: Context, preferenceName: String, defaultValue: String): String {

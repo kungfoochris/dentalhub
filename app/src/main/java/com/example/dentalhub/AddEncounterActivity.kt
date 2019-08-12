@@ -23,6 +23,7 @@ import com.example.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import android.content.SharedPreferences
 
 
 class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator, HistoryFormCommunicator,
@@ -50,6 +51,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private var encounter = Encounter()
     var encounterId: Long = 0
 
+
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +71,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
         Log.d("encounterId", encounterId.toString())
+        println("Encounter with edit mode :  $encounterId")
 
         if (encounterId == "0".toLong()) {
             encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()!!
@@ -76,13 +79,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             history.encounter?.target = encounter
             historyBox.put(history)
 
-
             screening.encounter?.target = encounter
             screeningBox.put(screening)
 
             treatment.encounter?.target = encounter
             treatmentBox.put(treatment)
-
 
             referral.encounter?.target = encounter
             referralBox.put(referral)
@@ -90,7 +91,12 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             recall.encounter?.target = encounter
             recallBox.put(recall)
 
+            DentalApp.saveToPreference(this, "Encounter_ID", "0")
+
         } else {
+
+            DentalApp.saveToPreference(this, "Encounter_ID", encounterId.toString())
+
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
             history =
@@ -120,7 +126,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         }
 
         initUI()
-
 
     }
 
@@ -220,19 +225,19 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                 val view : View = inflate.inflate(R.layout.popup_view_patient, null)
 
                 // to get all id of the textView
-                var tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
-                var tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
-                var tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
-                var tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
-                var tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
-                var tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
-                var tvAddresspopupView = view.findViewById<TextView>(R.id.tvAddresspopupView)
-                var tvWardView = view.findViewById<TextView>(R.id.tvWardView)
-                var tvCityView = view.findViewById<TextView>(R.id.tvCityView)
-                var tvStateView = view.findViewById<TextView>(R.id.tvStateView)
-                var tvCountryView = view.findViewById<TextView>(R.id.tvCountryView)
-                var tvMaritalStatusView = view.findViewById<TextView>(R.id.tvMaritalStatusView)
-                var tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
+                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
+                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
+                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
+                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
+                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
+                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
+                val tvAddresspopupView = view.findViewById<TextView>(R.id.tvAddresspopupView)
+                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
+                val tvCityView = view.findViewById<TextView>(R.id.tvCityView)
+                val tvStateView = view.findViewById<TextView>(R.id.tvStateView)
+                val tvCountryView = view.findViewById<TextView>(R.id.tvCountryView)
+                val tvMaritalStatusView = view.findViewById<TextView>(R.id.tvMaritalStatusView)
+                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
 
                 // to set the details of the patient on Alert Dialog i.e. View Patient
                 tvFirstNameView.text = patient.first_name

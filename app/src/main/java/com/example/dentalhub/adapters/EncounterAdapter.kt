@@ -43,7 +43,7 @@ class EncounterAdapter(
         holder.itemView.ibEdit.setOnClickListener {
             Log.d("EncounterAdapter", "do the edit operation")
             val addEncounterActivityIntent = Intent(context, AddEncounterActivity::class.java)
-            addEncounterActivityIntent.putExtra("ENCOUNTER_ID", 0.toLong())
+            addEncounterActivityIntent.putExtra("ENCOUNTER_ID", encounterItem.id)
             addEncounterActivityIntent.putExtra("patient", patient)
             context.startActivity(addEncounterActivityIntent)
         }
