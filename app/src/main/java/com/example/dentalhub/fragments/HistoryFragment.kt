@@ -1,5 +1,6 @@
 package com.example.dentalhub.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,13 +9,25 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.example.dentalhub.DentalApp
+import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
+import com.example.dentalhub.entities.Encounter
+import com.example.dentalhub.entities.Encounter_
+import com.example.dentalhub.entities.History
+import com.example.dentalhub.entities.History_
 import com.example.dentalhub.fragments.interfaces.HistoryFormCommunicator
+import io.objectbox.Box
 
 class HistoryFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var historyFormCommunicator: HistoryFormCommunicator
+
+    private lateinit var encounterBox: Box<Encounter>
+    private var encounter = Encounter()
+    private lateinit var historyBox: Box<History>
+    private var history = History()
 
     private lateinit var checkBoxBloodDisorderOrBleedingProblem: CheckBox
     private lateinit var checkBoxDiabetes: CheckBox
@@ -35,12 +48,16 @@ class HistoryFragment : Fragment() {
     private lateinit var btnBack: Button
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_history, container, false)
+
+        encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+        historyBox = ObjectBox.boxStore.boxFor(History::class.java)
 
         checkBoxBloodDisorderOrBleedingProblem = view.findViewById(R.id.checkBoxBloodDisorderOrBleedingProblem)
         checkBoxDiabetes = view.findViewById(R.id.checkBoxDiabetes)
@@ -62,12 +79,13 @@ class HistoryFragment : Fragment() {
         return view
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         historyFormCommunicator = activity as HistoryFormCommunicator
 
-        setupUI()
+        setupUI(activity as Context)
 
         checkBoxNoAllergies.setOnCheckedChangeListener { compoundButton, _ ->
             if (!compoundButton.isChecked) {
@@ -115,9 +133,36 @@ class HistoryFragment : Fragment() {
 
     }
 
-    private fun setupUI() {
+    private fun setupUI(applicationContext: Context) {
+        val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
 
+        if (encounterId != 0.toLong()) {
+            println("Encounter Id for the History Fragement is $encounterId")
+
+            encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
+
+            history =
+                historyBox.query().equal(
+                    History_.encounterId,
+                    encounter.id
+                ).orderDesc(History_.id).build().findFirst()!!
+
+            if (history.blood_disorder) checkBoxBloodDisorderOrBleedingProblem.isChecked = true
+            if (history.diabetes) checkBoxDiabetes.isChecked = true
+            if (history.liver_problem) checkBoxLiverProblem.isChecked = true
+            if (history.rheumatic_fever) checkBoxRheumaticFever.isChecked = true
+            if (history.seizuers_or_epilepsy) checkBoxSeizuresOrEpilepsy.isChecked = true
+            if (history.hepatitis_b_or_c) checkBoxHepatitisBOrC.isChecked = true
+            if (history.hiv) checkBoxHIV.isChecked = true
+            etOther.setText(history.other)
+            if (history.no_underlying_medical_condition) checkBoxNoUnderlyingMedicalCondition.isChecked = true
+            etMedications.setText(history.medications)
+            if (history.not_taking_any_medications) checkBoxNotTakingAnyMedications.isChecked = true
+            if (history.no_allergies) {
+                etAllergies.visibility = View.INVISIBLE
+            } else {
+                etAllergies.setText(history.allergies)
+            }
+        }
     }
-
-
 }
