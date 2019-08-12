@@ -1,22 +1,33 @@
 package com.example.dentalhub.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import com.example.dentalhub.DentalApp
+import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
+import com.example.dentalhub.entities.*
 import com.example.dentalhub.fragments.interfaces.ScreeningFormCommunicator
 import com.example.dentalhub.utils.AdapterHelper
+import io.objectbox.Box
 
 class ScreeningFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var screeningFormCommunicator: ScreeningFormCommunicator
+
+    private lateinit var encounterBox: Box<Encounter>
+    private var encounter = Encounter()
+    private lateinit var screeningBox: Box<Screening>
+    private var screening = Screening()
+
 
     private lateinit var spinnerRisk: Spinner
     private lateinit var spinnerNoOfDecayedPrimaryTeeth: Spinner
@@ -39,6 +50,9 @@ class ScreeningFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_screening, container, false)
+
+        encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+        screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
 
         spinnerRisk = view.findViewById(R.id.spinnerRisk)
         spinnerNoOfDecayedPrimaryTeeth = view.findViewById(R.id.spinnerNoOfDecayedPrimaryTeeth)
@@ -71,6 +85,8 @@ class ScreeningFragment : Fragment() {
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         screeningFormCommunicator = activity as ScreeningFormCommunicator
 
+        setupUI(activity as Context)
+
         btnNext.setOnClickListener {
             val carriesRisk = spinnerRisk.selectedItem.toString()
             val noOfdecayedPrimaryTeeth = spinnerNoOfDecayedPrimaryTeeth.selectedItem.toString()
@@ -96,5 +112,27 @@ class ScreeningFragment : Fragment() {
 
     }
 
+    private fun setupUI(applicationContext: Context) {
+
+        val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+        println("Encounter Id is in screening $encounterId")
+
+        if (encounterId != 0.toLong()) {
+
+            encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
+
+            screening = screeningBox.query().equal(
+                Screening_.encounterId,
+                encounter.id
+            ).orderDesc(Screening_.id).build().findFirst()!!
+
+            if (!screening.carries_risk.isNullOrEmpty()) {
+                val riskValue = resources.getStringArray(R.array.carries_risk).toList()
+                val indexofRisk = riskValue.indexOf(screening.carries_risk)
+                println("Carrier rist index is $indexofRisk and the value is ${screening.carries_risk}")
+                spinnerRisk.setSelection(indexofRisk)
+            }
+        }
+    }
 
 }

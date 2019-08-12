@@ -130,7 +130,6 @@ class HistoryFragment : Fragment() {
         btnBack.setOnClickListener {
             fragmentCommunicator.goBack()
         }
-
     }
 
     private fun setupUI(applicationContext: Context) {
