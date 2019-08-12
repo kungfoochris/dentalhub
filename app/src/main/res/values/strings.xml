@@ -147,4 +147,5 @@
     <string name="edit">Edit</string>
     <string name="refresh">Refresh</string>
     <string name="view_patient_info">View Patient Info</string>
+    <string name="patient_list">Patient List</string>
 </resources>
