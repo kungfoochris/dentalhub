@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.dentalhub.DentalApp
 import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
-import com.example.dentalhub.entities.Activity
-import com.example.dentalhub.entities.Geography
+import com.example.dentalhub.entities.*
 import com.example.dentalhub.fragments.interfaces.ReferralFormCommunicator
 import com.example.dentalhub.utils.AdapterHelper
 import io.objectbox.Box
@@ -26,6 +26,11 @@ import java.util.*
 class ReferralFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var referralFormCommunicator: ReferralFormCommunicator
+
+    private lateinit var encounterBox: Box<Encounter>
+    private var encounter = Encounter()
+    private lateinit var referralBox: Box<Referral>
+    private var referral = Referral()
 
 //    private lateinit var radioButtonNoReferral: RadioButton
 //    private lateinit var radioButtonHealthPost: RadioButton
@@ -59,6 +64,9 @@ class ReferralFragment : Fragment() {
 
         activitiesBox = ObjectBox.boxStore.boxFor(Activity::class.java)
         geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
+
+        encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+        referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
 
         activitiesQuery = activitiesBox.query().build()
         geographiesQuery = geographiesBox.query().build()
@@ -148,6 +156,8 @@ class ReferralFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         referralFormCommunicator = activity as ReferralFormCommunicator
+        
+        setupUI(activity as Context)
 
         btnNext.setOnClickListener {
             if(isFormValid()){
@@ -186,6 +196,36 @@ class ReferralFragment : Fragment() {
         }
     }
 
+    private fun setupUI(applicationContext: Context) {
+
+        val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+
+        if (encounterId != 0.toLong()) {
+
+            encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
+
+
+
+            referral = referralBox.query()
+                .equal(Referral_.encounterId, encounter.id)
+                .orderDesc(Referral_.id).build().findFirst()!!
+
+            var radioButtonMap = mapOf(radioNoReferral to referral.no_referral,
+                radioHealthPost to referral.health_post, radioHygienist to referral.hygienist,
+                radioDentist to referral.dentist, radioGeneralPhysician to referral.general_physician,
+                radioOther to referral.other)
+
+            for (radioButton in radioButtonMap) {
+                if (radioButton.value) {
+                    radioButton.key.isChecked = true
+                    break
+                }
+            }
+
+            if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
+        }
+
+    }
 
 
     private fun isFormValid(): Boolean {
