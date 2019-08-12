@@ -3,7 +3,7 @@
     <item
             android:id="@+id/addPatient"
             android:title="@string/add_patient"
-            android:icon="@android:drawable/ic_input_add"
+            android:icon="@drawable/add"
             app:showAsAction="always"
     />
     <item
@@ -15,10 +15,9 @@
     <item
             android:id="@+id/search"
             android:title="@string/search"
-            android:icon="@android:drawable/ic_menu_search"
+            android:icon="@drawable/search"
             app:showAsAction="ifRoom"
     />
-
     <item
             android:id="@+id/sync"
             android:title="@string/sync"
