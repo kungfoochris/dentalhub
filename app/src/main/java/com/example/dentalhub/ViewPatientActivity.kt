@@ -158,6 +158,7 @@ class ViewPatientActivity : AppCompatActivity() {
                 val tvCountryView = view.findViewById<TextView>(R.id.tvCountryView)
                 val tvMaritalStatusView = view.findViewById<TextView>(R.id.tvMaritalStatusView)
                 val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
+                val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
 
                 // to set the details of the patient on Alert Dialog i.e. View Patient
                 tvFirstNameView.text = patient.first_name
@@ -174,9 +175,14 @@ class ViewPatientActivity : AppCompatActivity() {
                 tvMaritalStatusView.text = patient.marital_status
                 tvEducationLevelView.text = patient.education
 
+
                 builder.setView(view)
-                var dialog : Dialog = builder.create()
+                val dialog : Dialog = builder.create()
                 dialog.show()
+
+                btnCloseDialog.setOnClickListener {
+                    dialog.dismiss()
+                }
 
             }
         }

@@ -148,4 +148,18 @@
     <string name="refresh">Refresh</string>
     <string name="view_patient_info">View Patient Info</string>
     <string name="patient_list">Patient List</string>
+    <string name="details">Details</string>
+    <string name="first_name_">First Name :</string>
+    <string name="middle_name_">Middle Name :</string>
+    <string name="last_name_">Last Name :</string>
+    <string name="gender_">Gender :</string>
+    <string name="education_level_">Education Level :</string>
+    <string name="martial_status_">Marital Status :</string>
+    <string name="country_">Country :</string>
+    <string name="state_">State :</string>
+    <string name="city_">City :</string>
+    <string name="ward_">Ward :</string>
+    <string name="address_">Address :</string>
+    <string name="phone_">Phone :</string>
+    <string name="date_of_birth_">Date of birth :</string>
 </resources>
