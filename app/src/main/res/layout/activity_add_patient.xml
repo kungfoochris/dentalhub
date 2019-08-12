@@ -270,7 +270,11 @@
             <Button
                     android:id="@+id/btnAddPatient"
                     android:text="@string/save_patient"
-                    android:layout_width="wrap_content"
+                    android:background="@drawable/default_button_background"
+                    android:layout_gravity="center"
+                    android:paddingStart="42dp"
+                    android:paddingEnd="42dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
 

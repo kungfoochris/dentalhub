@@ -65,8 +65,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/etEmail"
                 android:textAlignment="center"
                 android:layout_marginTop="16dp"
-                android:padding="8dp"
-        />
+                android:padding="8dp"/>
 
         <TextView
                 android:id="@+id/tvErrorMessage"
