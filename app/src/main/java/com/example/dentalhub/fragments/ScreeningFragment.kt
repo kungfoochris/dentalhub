@@ -132,6 +132,19 @@ class ScreeningFragment : Fragment() {
                 println("Carrier rist index is $indexofRisk and the value is ${screening.carries_risk}")
                 spinnerRisk.setSelection(indexofRisk)
             }
+
+            if (screening.decayed_pimary_teeth != 0) spinnerNoOfDecayedPrimaryTeeth
+                .setSelection(screening.decayed_pimary_teeth)
+            if (screening.decayed_permanent_teeth != 0) spinnerNoOfDecayedPermanentTeeth
+                .setSelection(screening.decayed_permanent_teeth)
+
+            if (screening.cavity_permanent_anterior) checkBoxCavityPermanentAnterior.isChecked = true
+            if (screening.cavity_permanent_tooth) checkBoxCavityPermanentTooth.isChecked = true
+            if (screening.active_infection) checkBoxActiveInfection.isChecked = true
+            if (screening.need_art_filling) checkBoxNeedARTFilling.isChecked = true
+            if (screening.need_sealant) checkBoxNeedSealant.isChecked = true
+            if (screening.need_sdf) checkBoxNeedSDF.isChecked = true
+            if (screening.need_extraction) checkBoxNeedExtraction.isChecked = true
         }
     }
 
