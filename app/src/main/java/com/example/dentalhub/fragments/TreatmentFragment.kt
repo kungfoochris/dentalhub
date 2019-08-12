@@ -1,5 +1,6 @@
 package com.example.dentalhub.fragments
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -11,15 +12,24 @@ import android.widget.CheckBox
 import android.widget.EditText
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.example.dentalhub.DentalApp
+import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.R
 import com.example.dentalhub.TreatmentFragmentCommunicator
+import com.example.dentalhub.entities.*
 import com.example.dentalhub.fragments.interfaces.TreatmentFormCommunicator
+import io.objectbox.Box
 
 class TreatmentFragment : Fragment(), View.OnClickListener {
 
 
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
     private lateinit var treatmentFormCommunicator: TreatmentFormCommunicator
+
+    private lateinit var encounterBox: Box<Encounter>
+    private var encounter = Encounter()
+    private lateinit var treatmentBox: Box<Treatment>
+    private var treatment = Treatment()
 
     // Treatment Type buttons initialization
     private  lateinit var btnSDF: Button
@@ -109,6 +119,9 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_treatment, container, false)
+
+        encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+        treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
 
         btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
         btnDefaultBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_button_default_color, null)
@@ -265,6 +278,8 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         treatmentFormCommunicator = activity as TreatmentFormCommunicator
 
+        setupUI(activity as Context)
+
         btnNext.setOnClickListener {
             val notes = etNotes.text.toString()
             val fvApplied = checkBoxFVApplied.isChecked
@@ -290,6 +305,97 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
             treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete, teeth)
             fragmentCommunicator.goBack()
+        }
+    }
+
+    private fun setupUI(applicationContext: Context) {
+
+        val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+
+        if (encounterId != 0.toLong()) {
+            encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
+
+            // query to retrive the data of the encounter by id
+            treatment = treatmentBox.query()
+                .equal(Treatment_.encounterId, encounter.id)
+                .orderDesc(Treatment_.id).build().findFirst()!!
+
+            if (treatment.tooth11 != "NONE") setColorForButton(btnId11, treatment.tooth11)
+            if (treatment.tooth12 != "NONE") setColorForButton(btnId12, treatment.tooth12)
+            if (treatment.tooth13 != "NONE") setColorForButton(btnId13, treatment.tooth13)
+            if (treatment.tooth14 != "NONE") setColorForButton(btnId14, treatment.tooth14)
+            if (treatment.tooth15 != "NONE") setColorForButton(btnId15, treatment.tooth15)
+            if (treatment.tooth16 != "NONE") setColorForButton(btnId16, treatment.tooth16)
+            if (treatment.tooth17 != "NONE") setColorForButton(btnId17, treatment.tooth17)
+            if (treatment.tooth18 != "NONE") setColorForButton(btnId18, treatment.tooth18)
+
+            if (treatment.tooth21 != "NONE") setColorForButton(btnId21, treatment.tooth21)
+            if (treatment.tooth22 != "NONE") setColorForButton(btnId22, treatment.tooth22)
+            if (treatment.tooth23 != "NONE") setColorForButton(btnId23, treatment.tooth23)
+            if (treatment.tooth24 != "NONE") setColorForButton(btnId24, treatment.tooth24)
+            if (treatment.tooth25 != "NONE") setColorForButton(btnId25, treatment.tooth25)
+            if (treatment.tooth26 != "NONE") setColorForButton(btnId26, treatment.tooth26)
+            if (treatment.tooth27 != "NONE") setColorForButton(btnId27, treatment.tooth27)
+            if (treatment.tooth28 != "NONE") setColorForButton(btnId28, treatment.tooth28)
+
+            if (treatment.tooth31 != "NONE") setColorForButton(btnId31, treatment.tooth31)
+            if (treatment.tooth32 != "NONE") setColorForButton(btnId32, treatment.tooth32)
+            if (treatment.tooth33 != "NONE") setColorForButton(btnId33, treatment.tooth33)
+            if (treatment.tooth34 != "NONE") setColorForButton(btnId34, treatment.tooth34)
+            if (treatment.tooth35 != "NONE") setColorForButton(btnId35, treatment.tooth35)
+            if (treatment.tooth36 != "NONE") setColorForButton(btnId36, treatment.tooth36)
+            if (treatment.tooth37 != "NONE") setColorForButton(btnId37, treatment.tooth37)
+            if (treatment.tooth38 != "NONE") setColorForButton(btnId38, treatment.tooth38)
+
+            if (treatment.tooth41 != "NONE") setColorForButton(btnId41, treatment.tooth41)
+            if (treatment.tooth42 != "NONE") setColorForButton(btnId42, treatment.tooth42)
+            if (treatment.tooth43 != "NONE") setColorForButton(btnId43, treatment.tooth43)
+            if (treatment.tooth44 != "NONE") setColorForButton(btnId44, treatment.tooth44)
+            if (treatment.tooth45 != "NONE") setColorForButton(btnId45, treatment.tooth45)
+            if (treatment.tooth46 != "NONE") setColorForButton(btnId46, treatment.tooth46)
+            if (treatment.tooth47 != "NONE") setColorForButton(btnId47, treatment.tooth47)
+            if (treatment.tooth48 != "NONE") setColorForButton(btnId48, treatment.tooth48)
+
+            if (treatment.tooth51 != "NONE") setColorForButton(btnId51, treatment.tooth51)
+            if (treatment.tooth52 != "NONE") setColorForButton(btnId52, treatment.tooth52)
+            if (treatment.tooth53 != "NONE") setColorForButton(btnId53, treatment.tooth53)
+            if (treatment.tooth54 != "NONE") setColorForButton(btnId54, treatment.tooth54)
+            if (treatment.tooth55 != "NONE") setColorForButton(btnId55, treatment.tooth55)
+
+            if (treatment.tooth61 != "NONE") setColorForButton(btnId61, treatment.tooth61)
+            if (treatment.tooth62 != "NONE") setColorForButton(btnId62, treatment.tooth62)
+            if (treatment.tooth63 != "NONE") setColorForButton(btnId63, treatment.tooth63)
+            if (treatment.tooth64 != "NONE") setColorForButton(btnId64, treatment.tooth64)
+            if (treatment.tooth65 != "NONE") setColorForButton(btnId65, treatment.tooth65)
+
+            if (treatment.tooth71 != "NONE") setColorForButton(btnId71, treatment.tooth71)
+            if (treatment.tooth72 != "NONE") setColorForButton(btnId72, treatment.tooth72)
+            if (treatment.tooth73 != "NONE") setColorForButton(btnId73, treatment.tooth73)
+            if (treatment.tooth74 != "NONE") setColorForButton(btnId74, treatment.tooth74)
+            if (treatment.tooth75 != "NONE") setColorForButton(btnId75, treatment.tooth75)
+
+            if (treatment.tooth81 != "NONE") setColorForButton(btnId81, treatment.tooth81)
+            if (treatment.tooth82 != "NONE") setColorForButton(btnId82, treatment.tooth82)
+            if (treatment.tooth83 != "NONE") setColorForButton(btnId83, treatment.tooth83)
+            if (treatment.tooth84 != "NONE") setColorForButton(btnId84, treatment.tooth84)
+            if (treatment.tooth85 != "NONE") setColorForButton(btnId85, treatment.tooth85)
+
+
+            if (treatment.fv_applied) checkBoxFVApplied.isChecked = true
+            if (treatment.treatment_plan_complete) checkBoxTreatmentPlanComplete.isChecked = true
+            if (!treatment.notes.isNullOrEmpty()) etNotes.setText(treatment.notes)
+        }
+    }
+
+    private fun setColorForButton(button: Button, buttonValue: String) {
+
+        when (buttonValue) {
+            "SDF" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+            "SEAL" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
+            "ART" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
+            "EXO" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
+            "UNTR" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
+            "SMART" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
         }
     }
 
@@ -356,7 +462,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     treatmentTypeBackgroundColor()
                     btnSMART.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
                 }
-
             }
         }
 
@@ -437,7 +542,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             teeth[teethNumber] = defaultTreatment
         } else {
             teeth[teethNumber] = selectedTreatment
-
         }
     }
 

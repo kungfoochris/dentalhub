@@ -136,8 +136,6 @@ class HistoryFragment : Fragment() {
         val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
 
         if (encounterId != 0.toLong()) {
-            println("Encounter Id for the History Fragement is $encounterId")
-
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
             history =
