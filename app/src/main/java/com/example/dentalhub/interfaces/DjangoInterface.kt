@@ -3,7 +3,7 @@ package com.example.dentalhub.interfaces
 import android.content.Context
 import com.example.dentalhub.R
 import com.example.dentalhub.entities.Activity
-import com.example.dentalhub.entities.Geography
+import com.example.dentalhub.models.Geography
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.LoginResponse
 //import com.example.dentalhub.models.Patient

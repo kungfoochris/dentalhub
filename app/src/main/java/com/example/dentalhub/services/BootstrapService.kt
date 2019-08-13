@@ -31,46 +31,46 @@ class BootstrapService : Service() {
         activitiesBox = ObjectBox.boxStore.boxFor(Activity::class.java)
         geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
 
-        listGeographies()
+        //listGeographies()
         listActivities()
         return super.onStartCommand(intent, flags, startId)
     }
 
-    private fun listGeographies() {
-        Log.d(TAG, "listGeographies()")
-        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
-        val panelService = DjangoInterface.create(this)
-        val call = panelService.listGeographies("JWT $token")
-        call.enqueue(object : Callback<List<Geography>> {
-            override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
-                Log.d(TAG, "onFailure()")
-                Log.d(TAG, t.toString())
-            }
-
-            override fun onResponse(call: Call<List<Geography>>, response: Response<List<Geography>>) {
-                Log.d(TAG, "onResponse()")
-                if (null != response.body()) {
-                    when (response.code()) {
-                        200 -> {
-                            val allGeographies: List<Geography> = response.body() as List<Geography>
-                            for (geography in allGeographies) {
-                                val a =
-                                    geographiesBox.query().equal(Geography_.street_address, geography.street_address)
-                                        .equal(Geography_.city, geography.city).build().findFirst()
-                                if (a == null) {
-                                    geography.remote_id = geography.id
-                                    geography.id = 0
-                                    geographiesBox.put(geography)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-        })
-
-    }
+//    private fun listGeographies() {
+//        Log.d(TAG, "listGeographies()")
+//        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+//        val panelService = DjangoInterface.create(this)
+//        val call = panelService.listGeographies("JWT $token")
+//        call.enqueue(object : Callback<List<Geography>> {
+//            override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
+//                Log.d(TAG, "onFailure()")
+//                Log.d(TAG, t.toString())
+//            }
+//
+//            override fun onResponse(call: Call<List<Geography>>, response: Response<List<Geography>>) {
+//                Log.d(TAG, "onResponse()")
+//                if (null != response.body()) {
+//                    when (response.code()) {
+//                        200 -> {
+//                            val allGeographies: List<Geography> = response.body() as List<Geography>
+//                            for (geography in allGeographies) {
+//                                val a =
+//                                    geographiesBox.query().equal(Geography_.street_address, geography.street_address)
+//                                        .equal(Geography_.city, geography.city).build().findFirst()
+//                                if (a == null) {
+//                                    geography.remote_id = geography.id
+//                                    geography.id = 0
+//                                    geographiesBox.put(geography)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//        })
+//
+//    }
 
     private fun listActivities() {
         Log.d(TAG, "listActivities()")

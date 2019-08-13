@@ -60,6 +60,14 @@ class DentalApp : MultiDexApplication() {
             editor.apply()
         }
 
+        fun saveIntToPreference(context: Context, preferenceName: String, preferenceValue: Int){
+            val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putInt(preferenceName, preferenceValue)
+            editor.apply()
+        }
+
+
         fun removeFromPreference(context: Context, preferenceName: String) {
             val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             val editor = prefs.edit()
@@ -91,6 +99,7 @@ class DentalApp : MultiDexApplication() {
             removeFromPreference(context, Constants.PREF_AUTH_EMAIL)
             removeFromPreference(context, Constants.PREF_AUTH_PASSWORD)
             removeFromPreference(context, Constants.PREF_AUTH_SOCIAL)
+            removeFromPreference(context, "SELECTED_LOCATION")
         }
 
         fun isConnectedToWifi(context: Context): Boolean {

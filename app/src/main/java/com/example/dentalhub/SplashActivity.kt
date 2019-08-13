@@ -26,7 +26,7 @@ class SplashActivity : Activity() {
             if (token.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
-                startActivity(Intent(this, SelectorActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             }
 
         }, 3000)
