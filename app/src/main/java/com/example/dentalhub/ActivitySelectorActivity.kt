@@ -20,7 +20,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        btnGo = findViewById<Button>(R.id.btnGo)
+        btnGo = findViewById(R.id.btnGo)
         btnLogout = findViewById(R.id.btnLogout)
 
         btnGo.setOnClickListener {
