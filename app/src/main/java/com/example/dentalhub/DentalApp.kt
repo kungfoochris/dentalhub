@@ -47,6 +47,7 @@ class DentalApp : MultiDexApplication() {
 
         var geography: String = ""
         var activity: String = ""
+        var activityRemarks: String = ""
 
         var defaultChannelId: String = ""
         var syncChannelId: String = ""
@@ -78,6 +79,10 @@ class DentalApp : MultiDexApplication() {
         fun readFromPreference(context: Context, preferenceName: String, defaultValue: String): String {
             val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             return prefs.getString(preferenceName, defaultValue).toString()
+        }
+        fun readIntFromPreference(context: Context, preferenceName: String): Int {
+            val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
+            return prefs.getInt(preferenceName, 0)
         }
 
         fun hasAuthDetails(context: Context): Boolean {

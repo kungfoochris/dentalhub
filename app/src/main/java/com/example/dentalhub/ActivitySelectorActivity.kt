@@ -43,8 +43,8 @@ class ActivitySelectorActivity : AppCompatActivity() {
         }
 
         btnGo.setOnClickListener {
-            DentalApp.saveToPreference(context, "ACTIVITY_REMARK",etOtherDetails.text.toString())
-            DentalApp.saveToPreference(context, "ACTIVITY_NAME", selectedActivity)
+            DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_REMARKS,etOtherDetails.text.toString())
+            DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
         }

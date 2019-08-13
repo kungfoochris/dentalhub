@@ -112,7 +112,7 @@ class LocationSelectorActivity : AppCompatActivity() {
     private fun setupAdapter() {
         geographyAdapter = GeographyAdapter(context, allGeographies, object : GeographyAdapter.GeographyClickListener {
             override fun onGeographyClick(geography: Geography) {
-                DentalApp.saveIntToPreference(context, "SELECTED_LOCATION", geography.id)
+                DentalApp.saveIntToPreference(context, Constants.PREF_SELECTED_LOCATION, geography.id)
                 startActivity(Intent(context, ActivitySelectorActivity::class.java))
                 finish()
             }

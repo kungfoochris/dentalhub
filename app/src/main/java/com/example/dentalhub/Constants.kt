@@ -20,6 +20,13 @@ class Constants {
         val PREF_AUTH_SOCIAL = "AUTH-SOCIAL"
 
         @JvmStatic
+        val PREF_SELECTED_LOCATION = "SELECTED_LOCATION"
+        @JvmStatic
+        val PREF_ACTIVITY_NAME = "ACTIVITY_NAME"
+        @JvmStatic
+        val PREF_ACTIVITY_REMARKS = "ACTIVITY_REMARKS"
+
+        @JvmStatic
         val LOCATION_REQUEST = 1011
         @JvmStatic
         val GPS_REQUEST = 1012
