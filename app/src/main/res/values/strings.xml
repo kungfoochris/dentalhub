@@ -162,4 +162,7 @@
     <string name="address_">Address :</string>
     <string name="phone_">Phone :</string>
     <string name="date_of_birth_">Date of birth :</string>
+    <string name="school_seminar">School Seminar</string>
+    <string name="community_outreach">Community Outreach</string>
+    <string name="other_details">Other details</string>
 </resources>
