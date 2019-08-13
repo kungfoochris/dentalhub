@@ -41,6 +41,7 @@ class PatientAdapter(context: Context, private var data: List<Patient>, listener
         private var btnViewPatientDetail: Button = itemView.findViewById(R.id.btnViewPatientDetail)
         private var btnCall: Button = itemView.findViewById(R.id.btnCall)
         private var btnDelay: Button = itemView.findViewById(R.id.btnDelay)
+        private var border: View = itemView.findViewById(R.id.border)
 
         init {
 

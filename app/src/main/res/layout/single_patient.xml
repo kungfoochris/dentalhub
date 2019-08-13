@@ -2,47 +2,77 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="90dp">
+              android:layout_height="114dp">
     <TextView
             android:id="@+id/tvName"
             android:textColor="@android:color/black"
             android:text="@string/app_name"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
     />
     <TextView
-
             android:text="@string/app_name"
             android:id="@+id/tvAddress"
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
     />
     <TextView
-
+            android:layout_marginTop="4dp"
             android:text="@string/app_name"
             android:id="@+id/tvPhone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
     />
     <LinearLayout
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <Button
                 android:id="@+id/btnViewPatientDetail"
                 android:text="@string/view_patient_detail"
+                android:background="@drawable/default_button_background"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginEnd="8dp"
+        />
         <Button
                 android:id="@+id/btnCall"
                 android:text="@string/call"
+                android:background="@drawable/default_button_background"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+        />
         <Button
                 android:id="@+id/btnDelay"
                 android:text="@string/delay"
+                android:background="@drawable/btn_delay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
         />
     </LinearLayout>
+    <View
+            android:id="@+id/border"
+            android:layout_marginTop="6dp"
+            android:background="@color/grey_300"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+    />
 
 </LinearLayout>

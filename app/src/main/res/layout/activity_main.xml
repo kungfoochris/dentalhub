@@ -7,13 +7,15 @@
         android:id="@+id/mainActivityLayout"
         android:orientation="vertical"
         tools:context=".MainActivity"
-        android:padding="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
 >
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:focusable="true"
 
     />
