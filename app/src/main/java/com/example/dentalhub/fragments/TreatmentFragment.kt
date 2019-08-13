@@ -444,7 +444,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             when (v.id) {
                 R.id.btnSDF -> {
                     selectedTreatment = "SDF"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf_applied, null)
                     treatmentTypeBackgroundColor()
                     btnSDF.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnSDF.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
@@ -452,7 +452,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
                 R.id.btnSEAL -> {
                     selectedTreatment = "SEAL"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal_applied, null)
                     treatmentTypeBackgroundColor()
                     btnSEAL.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnSEAL.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
@@ -460,7 +460,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
                 R.id.btnART -> {
                     selectedTreatment = "ART"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art_applied, null)
                     treatmentTypeBackgroundColor()
                     btnART.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnART.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
@@ -468,7 +468,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
                 R.id.btnEXO -> {
                     selectedTreatment = "EXO"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo_applied, null)
                     treatmentTypeBackgroundColor()
                     btnEXO.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnEXO.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
@@ -476,7 +476,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
                 R.id.btnUNTR -> {
                     selectedTreatment = "UNTR"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr_applied, null)
                     treatmentTypeBackgroundColor()
                     btnUNTR.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnUNTR.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
@@ -484,7 +484,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
                 R.id.btnSMART -> {
                     selectedTreatment = "SMART"
-                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+                    btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_applied, null)
                     treatmentTypeBackgroundColor()
                     btnSMART.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnSMART.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
@@ -501,74 +501,76 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         }
         when (v.id) {
             //secondary teeth
-            R.id.btnId18 -> toggleTreatment(0)
-            R.id.btnId17 -> toggleTreatment(1)
-            R.id.btnId16 -> toggleTreatment(2)
-            R.id.btnId15 -> toggleTreatment(3)
-            R.id.btnId14 -> toggleTreatment(4)
-            R.id.btnId13 -> toggleTreatment(5)
-            R.id.btnId12 -> toggleTreatment(6)
-            R.id.btnId11 -> toggleTreatment(7)
+            R.id.btnId18 -> toggleTreatment(0, btnId18)
+            R.id.btnId17 -> toggleTreatment(1, btnId17)
+            R.id.btnId16 -> toggleTreatment(2, btnId16)
+            R.id.btnId15 -> toggleTreatment(3, btnId15)
+            R.id.btnId14 -> toggleTreatment(4, btnId14)
+            R.id.btnId13 -> toggleTreatment(5, btnId13)
+            R.id.btnId12 -> toggleTreatment(6, btnId12)
+            R.id.btnId11 -> toggleTreatment(7, btnId11)
 
-            R.id.btnId21 -> toggleTreatment(8)
-            R.id.btnId22 -> toggleTreatment(9)
-            R.id.btnId23 -> toggleTreatment(10)
-            R.id.btnId24 -> toggleTreatment(11)
-            R.id.btnId25 -> toggleTreatment(12)
-            R.id.btnId26 -> toggleTreatment(13)
-            R.id.btnId27 -> toggleTreatment(14)
-            R.id.btnId28 -> toggleTreatment(15)
+            R.id.btnId21 -> toggleTreatment(8, btnId21)
+            R.id.btnId22 -> toggleTreatment(9, btnId22)
+            R.id.btnId23 -> toggleTreatment(10, btnId23)
+            R.id.btnId24 -> toggleTreatment(11, btnId24)
+            R.id.btnId25 -> toggleTreatment(12, btnId25)
+            R.id.btnId26 -> toggleTreatment(13, btnId26)
+            R.id.btnId27 -> toggleTreatment(14, btnId27)
+            R.id.btnId28 -> toggleTreatment(15, btnId28)
 
-            R.id.btnId48 -> toggleTreatment(16)
-            R.id.btnId47 -> toggleTreatment(17)
-            R.id.btnId46 -> toggleTreatment(18)
-            R.id.btnId45 -> toggleTreatment(19)
-            R.id.btnId44 -> toggleTreatment(20)
-            R.id.btnId43 -> toggleTreatment(21)
-            R.id.btnId42 -> toggleTreatment(22)
-            R.id.btnId41 -> toggleTreatment(23)
+            R.id.btnId48 -> toggleTreatment(16, btnId48)
+            R.id.btnId47 -> toggleTreatment(17, btnId47)
+            R.id.btnId46 -> toggleTreatment(18, btnId46)
+            R.id.btnId45 -> toggleTreatment(19, btnId45)
+            R.id.btnId44 -> toggleTreatment(20, btnId44)
+            R.id.btnId43 -> toggleTreatment(21, btnId43)
+            R.id.btnId42 -> toggleTreatment(22, btnId42)
+            R.id.btnId41 -> toggleTreatment(23, btnId41)
 
-            R.id.btnId31 -> toggleTreatment(24)
-            R.id.btnId32 -> toggleTreatment(25)
-            R.id.btnId33 -> toggleTreatment(26)
-            R.id.btnId34 -> toggleTreatment(27)
-            R.id.btnId35 -> toggleTreatment(28)
-            R.id.btnId36 -> toggleTreatment(29)
-            R.id.btnId37 -> toggleTreatment(30)
-            R.id.btnId38 -> toggleTreatment(31)
+            R.id.btnId31 -> toggleTreatment(24, btnId31)
+            R.id.btnId32 -> toggleTreatment(25, btnId32)
+            R.id.btnId33 -> toggleTreatment(26, btnId33)
+            R.id.btnId34 -> toggleTreatment(27, btnId34)
+            R.id.btnId35 -> toggleTreatment(28, btnId35)
+            R.id.btnId36 -> toggleTreatment(29, btnId36)
+            R.id.btnId37 -> toggleTreatment(30, btnId37)
+            R.id.btnId38 -> toggleTreatment(31, btnId38)
 
             // primary teeth
-            R.id.btnId51 -> toggleTreatment(32)
-            R.id.btnId52 -> toggleTreatment(33)
-            R.id.btnId53 -> toggleTreatment(34)
-            R.id.btnId54 -> toggleTreatment(35)
-            R.id.btnId55 -> toggleTreatment(36)
+            R.id.btnId51 -> toggleTreatment(32, btnId51)
+            R.id.btnId52 -> toggleTreatment(33, btnId52)
+            R.id.btnId53 -> toggleTreatment(34, btnId53)
+            R.id.btnId54 -> toggleTreatment(35, btnId54)
+            R.id.btnId55 -> toggleTreatment(36, btnId55)
 
-            R.id.btnId61 -> toggleTreatment(37)
-            R.id.btnId62 -> toggleTreatment(38)
-            R.id.btnId63 -> toggleTreatment(39)
-            R.id.btnId64 -> toggleTreatment(40)
-            R.id.btnId65 -> toggleTreatment(41)
+            R.id.btnId61 -> toggleTreatment(37, btnId61)
+            R.id.btnId62 -> toggleTreatment(38, btnId62)
+            R.id.btnId63 -> toggleTreatment(39, btnId63)
+            R.id.btnId64 -> toggleTreatment(40, btnId64)
+            R.id.btnId65 -> toggleTreatment(41, btnId65)
 
-            R.id.btnId81 -> toggleTreatment(42)
-            R.id.btnId82 -> toggleTreatment(43)
-            R.id.btnId83 -> toggleTreatment(44)
-            R.id.btnId84 -> toggleTreatment(45)
-            R.id.btnId85 -> toggleTreatment(46)
+            R.id.btnId81 -> toggleTreatment(42, btnId81)
+            R.id.btnId82 -> toggleTreatment(43, btnId82)
+            R.id.btnId83 -> toggleTreatment(44, btnId83)
+            R.id.btnId84 -> toggleTreatment(45, btnId84)
+            R.id.btnId85 -> toggleTreatment(46, btnId85)
 
-            R.id.btnId71 -> toggleTreatment(47)
-            R.id.btnId72 -> toggleTreatment(48)
-            R.id.btnId73 -> toggleTreatment(49)
-            R.id.btnId74 -> toggleTreatment(50)
-            R.id.btnId75 -> toggleTreatment(51)
+            R.id.btnId71 -> toggleTreatment(47, btnId71)
+            R.id.btnId72 -> toggleTreatment(48, btnId72)
+            R.id.btnId73 -> toggleTreatment(49, btnId73)
+            R.id.btnId74 -> toggleTreatment(50, btnId74)
+            R.id.btnId75 -> toggleTreatment(51, btnId75)
         }
     }
 
-    private fun toggleTreatment(teethNumber: Int) {
+    private fun toggleTreatment(teethNumber: Int, button: Button) {
         if (teeth[teethNumber] == selectedTreatment) {
             teeth[teethNumber] = defaultTreatment
+            button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_default_text, null))
         } else {
             teeth[teethNumber] = selectedTreatment
+            button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
         }
     }
 
