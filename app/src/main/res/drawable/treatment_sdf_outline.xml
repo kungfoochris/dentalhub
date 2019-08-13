@@ -6,8 +6,7 @@
             <corners android:radius="8dip" />
             <stroke
                     android:width="3dp"
-                    android:color="@color/teal_300"></stroke>
+                    android:color="@color/colorSDF"></stroke>
         </shape>
-
     </item>
 </selector>

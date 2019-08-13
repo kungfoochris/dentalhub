@@ -14,61 +14,58 @@
         <LinearLayout
                 android:id="@+id/treatmentSelector"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textAlignment="center">
-            <!--<info.hoang8f.android.segmented.SegmentedGroup-->
-            <!--xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:orientation="horizontal"-->
-            <!--segmentedgroup:sc_border_width="2dp"-->
-            <!--segmentedgroup:sc_corner_radius="10dp">-->
+                android:layout_marginBottom="10dp">
             <Button
                     android:id="@+id/btnSDF"
                     android:text="SDF"
                     android:layout_margin="5dp"
-                    android:background="@color/grey_500"
+                    android:background="@drawable/treatment_sdf_outline"
+                    android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content"/>
             <Button
                     android:id="@+id/btnSEAL"
                     android:text="SEAL"
                     android:layout_margin="5dp"
-                    android:background="@color/grey_500"
+                    android:background="@drawable/treatment_seal_outline"
+                    android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content"/>
             <Button
                     android:id="@+id/btnART"
                     android:text="ART"
                     android:layout_margin="5dp"
                     android:background="@color/grey_500"
+                    android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content"/>
             <Button
                     android:id="@+id/btnEXO"
                     android:text="EXO"
                     android:layout_margin="5dp"
                     android:background="@color/grey_500"
+                    android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content"/>
             <Button
                     android:id="@+id/btnUNTR"
                     android:text="UNTR"
                     android:layout_margin="5dp"
                     android:background="@color/grey_500"
+                    android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content"/>
             <Button
                     android:id="@+id/btnSMART"
                     android:text="SMART"
                     android:layout_margin="5dp"
                     android:background="@color/grey_500"
+                    android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <HorizontalScrollView
