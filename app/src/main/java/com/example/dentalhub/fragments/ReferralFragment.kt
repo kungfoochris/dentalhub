@@ -224,9 +224,7 @@ class ReferralFragment : Fragment() {
 
             if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
         }
-
     }
-
 
     private fun isFormValid(): Boolean {
         var status = false

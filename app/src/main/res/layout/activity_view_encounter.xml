@@ -422,6 +422,7 @@
                 android:layout_height="wrap_content">
             <LinearLayout
                     android:orientation="vertical"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -527,6 +528,139 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"/>
 
+
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+
+                    <Button
+                            android:id="@+id/btnId55"
+                            android:text="55"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId54"
+                            android:text="54"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId53"
+                            android:text="53"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId52"
+                            android:text="52"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId51"
+                            android:text="51"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId61"
+                            android:text="61"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId62"
+                            android:text="62"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId63"
+                            android:text="63"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId64"
+                            android:text="64"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId65"
+                            android:text="65"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+
+                    <Button
+                            android:id="@+id/btnId85"
+                            android:text="85"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId84"
+                            android:text="84"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId83"
+                            android:text="83"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId82"
+                            android:text="82"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId81"
+                            android:text="81"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId71"
+                            android:text="71"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId72"
+                            android:text="72"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId73"
+                            android:text="73"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId74"
+                            android:text="74"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnId75"
+                            android:text="75"
+                            android:background="@drawable/treatment_none"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"/>
 
                 </LinearLayout>
 

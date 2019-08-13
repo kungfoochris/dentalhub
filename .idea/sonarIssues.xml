@@ -3,11 +3,6 @@
   <component name="issues">
     <option name="index">
       <map>
-        <entry key="/fragment.java">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0d45e468e6c719d1740737543702178b/jars/classes.jar!/info/hoang8f/android/segmented/SegmentedGroup.class">
           <value>
             <set />
@@ -243,6 +238,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/color/treatment_button_default.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/drawable/auth_fields.xml">
           <value>
             <set />
@@ -259,6 +259,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/drawable/treatment_sdf.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/drawable/treatment_sdf_outline.xml">
           <value>
             <set />
           </value>
@@ -364,6 +369,11 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/StudioProjects/transit-points/app/src/main/res/layout/activity_main.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/fragment.java">
           <value>
             <set />
           </value>

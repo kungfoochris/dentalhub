@@ -116,6 +116,32 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var btn28: Button
 
     // Treatment Buttons Row 2
+    private lateinit var btn51: Button
+    private lateinit var btn52: Button
+    private lateinit var btn53: Button
+    private lateinit var btn54: Button
+    private lateinit var btn55: Button
+
+    private lateinit var btn61: Button
+    private lateinit var btn62: Button
+    private lateinit var btn63: Button
+    private lateinit var btn64: Button
+    private lateinit var btn65: Button
+
+    // Treatment Buttons Row 3
+    private lateinit var btn71: Button
+    private lateinit var btn72: Button
+    private lateinit var btn73: Button
+    private lateinit var btn74: Button
+    private lateinit var btn75: Button
+
+    private lateinit var btn81: Button
+    private lateinit var btn82: Button
+    private lateinit var btn83: Button
+    private lateinit var btn84: Button
+    private lateinit var btn85: Button
+
+    // Treatment Buttons Row 4
     private lateinit var btn41: Button
     private lateinit var btn42: Button
     private lateinit var btn43: Button
@@ -283,9 +309,6 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNotes = findViewById(R.id.tvNotes)
         tvTreatmentPlanComplete = findViewById(R.id.tvTreatmentPlanComplete)
 
-
-        // ToDo all buttons to be active
-
         buttonInit()
         hideBoolean(treatment.fv_applied, tvFVAppliedTitle, tvFVApplied)
         hideBoolean(treatment.treatment_plan_complete, tvTreatmentPlanCompleteTitle, tvTreatmentPlanComplete)
@@ -355,7 +378,34 @@ class ViewEncounterActivity : AppCompatActivity() {
         btn27 = findViewById(R.id.btnId27)
         btn28 = findViewById(R.id.btnId28)
 
+
         // Treatment Buttons Row 2
+        btn51 = findViewById(R.id.btnId51)
+        btn52 = findViewById(R.id.btnId52)
+        btn53 = findViewById(R.id.btnId53)
+        btn54 = findViewById(R.id.btnId54)
+        btn55 = findViewById(R.id.btnId55)
+
+        btn61 = findViewById(R.id.btnId61)
+        btn62 = findViewById(R.id.btnId62)
+        btn63 = findViewById(R.id.btnId63)
+        btn64 = findViewById(R.id.btnId64)
+        btn65 = findViewById(R.id.btnId65)
+
+        // Treatment Buttons Row 3
+        btn71 = findViewById(R.id.btnId71)
+        btn72 = findViewById(R.id.btnId72)
+        btn73 = findViewById(R.id.btnId73)
+        btn74 = findViewById(R.id.btnId74)
+        btn75 = findViewById(R.id.btnId75)
+
+        btn81 = findViewById(R.id.btnId81)
+        btn82 = findViewById(R.id.btnId82)
+        btn83 = findViewById(R.id.btnId83)
+        btn84 = findViewById(R.id.btnId84)
+        btn85 = findViewById(R.id.btnId85)
+
+        // Treatment Buttons Row 4
         btn41 = findViewById(R.id.btnId41)
         btn42 = findViewById(R.id.btnId42)
         btn43 = findViewById(R.id.btnId43)
@@ -375,13 +425,80 @@ class ViewEncounterActivity : AppCompatActivity() {
         btn38 = findViewById(R.id.btnId38)
 
         // Fill the color of each button
+        // Treatment Buttons Row 1
         setButtonColor(btn11, treatment.tooth11)
+        setButtonColor(btn12, treatment.tooth12)
+        setButtonColor(btn13, treatment.tooth13)
+        setButtonColor(btn14, treatment.tooth14)
+        setButtonColor(btn15, treatment.tooth15)
+        setButtonColor(btn16, treatment.tooth16)
+        setButtonColor(btn17, treatment.tooth17)
+        setButtonColor(btn18, treatment.tooth18)
+
+        setButtonColor(btn21, treatment.tooth21)
+        setButtonColor(btn22, treatment.tooth22)
+        setButtonColor(btn23, treatment.tooth23)
+        setButtonColor(btn24, treatment.tooth24)
+        setButtonColor(btn25, treatment.tooth25)
+        setButtonColor(btn26, treatment.tooth26)
+        setButtonColor(btn27, treatment.tooth27)
+        setButtonColor(btn28, treatment.tooth28)
+
+        // Treatment Buttons Row 2
+        setButtonColor(btn51, treatment.tooth51)
+        setButtonColor(btn52, treatment.tooth52)
+        setButtonColor(btn53, treatment.tooth53)
+        setButtonColor(btn54, treatment.tooth54)
+        setButtonColor(btn55, treatment.tooth55)
+
+        setButtonColor(btn61, treatment.tooth61)
+        setButtonColor(btn62, treatment.tooth62)
+        setButtonColor(btn63, treatment.tooth63)
+        setButtonColor(btn64, treatment.tooth64)
+        setButtonColor(btn65, treatment.tooth65)
+
+        // Treatment Buttons Row 3
+        setButtonColor(btn71, treatment.tooth71)
+        setButtonColor(btn72, treatment.tooth72)
+        setButtonColor(btn73, treatment.tooth73)
+        setButtonColor(btn74, treatment.tooth74)
+        setButtonColor(btn75, treatment.tooth75)
+
+        setButtonColor(btn81, treatment.tooth81)
+        setButtonColor(btn82, treatment.tooth82)
+        setButtonColor(btn83, treatment.tooth83)
+        setButtonColor(btn84, treatment.tooth84)
+        setButtonColor(btn85, treatment.tooth85)
+
+        // Treatment Buttons Row 4
+        setButtonColor(btn31, treatment.tooth31)
+        setButtonColor(btn32, treatment.tooth32)
+        setButtonColor(btn33, treatment.tooth33)
+        setButtonColor(btn34, treatment.tooth34)
+        setButtonColor(btn35, treatment.tooth35)
+        setButtonColor(btn36, treatment.tooth36)
+        setButtonColor(btn37, treatment.tooth37)
+        setButtonColor(btn38, treatment.tooth38)
+
+        setButtonColor(btn41, treatment.tooth41)
+        setButtonColor(btn42, treatment.tooth42)
+        setButtonColor(btn43, treatment.tooth43)
+        setButtonColor(btn44, treatment.tooth44)
+        setButtonColor(btn45, treatment.tooth45)
+        setButtonColor(btn46, treatment.tooth46)
+        setButtonColor(btn47, treatment.tooth47)
+        setButtonColor(btn48, treatment.tooth48)
 
     }
 
     private fun setButtonColor(button: Button, treatmentType: String) {
         when (treatmentType) {
             "SDF" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+            "SEAL" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
+            "ART" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
+            "EXO" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
+            "UNTR" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
+            "SMART" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
         }
     }
 
