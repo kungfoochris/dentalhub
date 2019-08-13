@@ -9,6 +9,7 @@ import android.widget.Button
 class ActivitySelectorActivity : AppCompatActivity() {
 
     private lateinit var btnGo: Button
+    private lateinit var btnLogout: Button
     private lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +21,16 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private fun initUI() {
         btnGo = findViewById<Button>(R.id.btnGo)
+        btnLogout = findViewById(R.id.btnLogout)
+
         btnGo.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
+        }
+        btnLogout.setOnClickListener {
+            DentalApp.clearAuthDetails(context)
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 
