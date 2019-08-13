@@ -210,7 +210,7 @@ class ReferralFragment : Fragment() {
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
 
-            var radioButtonMap = mapOf(radioNoReferral to referral.no_referral,
+            val radioButtonMap = mapOf(radioNoReferral to referral.no_referral,
                 radioHealthPost to referral.health_post, radioHygienist to referral.hygienist,
                 radioDentist to referral.dentist, radioGeneralPhysician to referral.general_physician,
                 radioOther to referral.other)
