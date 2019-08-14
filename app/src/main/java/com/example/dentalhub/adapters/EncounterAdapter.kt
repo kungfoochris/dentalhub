@@ -13,6 +13,7 @@ import com.example.dentalhub.AddEncounterActivity
 import com.example.dentalhub.R
 import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.entities.Patient
+import com.example.dentalhub.utils.DateHelper
 import kotlinx.android.synthetic.main.single_encounter.view.*
 
 
@@ -65,7 +66,7 @@ class EncounterAdapter(
 
         fun bindEncounter(encounter: Encounter) {
             tvEncounterName.text = encounter.encounter_type
-            tvEncounterDate.text = encounter.created_at
+            tvEncounterDate.text = DateHelper.formatDate(encounter.created_at)
             if (encounter.isEditable()) {
                 ibEdit.visibility = View.VISIBLE
             } else {
