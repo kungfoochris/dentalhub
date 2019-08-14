@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.DentalApp
 import com.example.dentalhub.ObjectBox
@@ -88,8 +89,16 @@ class HistoryFragment : Fragment() {
 
         setupUI(activity as Context)
 
+        uncheckNoUnderlyingMedicalCon(checkBoxBloodDisorderOrBleedingProblem)
+        uncheckNoUnderlyingMedicalCon(checkBoxDiabetes)
+        uncheckNoUnderlyingMedicalCon(checkBoxLiverProblem)
+        uncheckNoUnderlyingMedicalCon(checkBoxRheumaticFever)
+        uncheckNoUnderlyingMedicalCon(checkBoxSeizuresOrEpilepsy)
+        uncheckNoUnderlyingMedicalCon(checkBoxHepatitisBOrC)
+        uncheckNoUnderlyingMedicalCon(checkBoxHIV)
+
         checkBoxNoUnderlyingMedicalCondition.setOnCheckedChangeListener { compoundButton, _ ->
-            if (!compoundButton.isChecked) {
+            if (compoundButton.isChecked) {
                 checkBoxBloodDisorderOrBleedingProblem.isChecked = false
                 checkBoxDiabetes.isChecked = false
                 checkBoxLiverProblem.isChecked = false
@@ -105,8 +114,8 @@ class HistoryFragment : Fragment() {
                 etMedications.visibility = View.VISIBLE
                 tvMedications.visibility = View.VISIBLE
             } else {
-                etMedications.visibility = View.INVISIBLE
-                tvMedications.visibility = View.INVISIBLE
+                etMedications.visibility = View.GONE
+                tvMedications.visibility = View.GONE
             }
         }
 
@@ -115,8 +124,8 @@ class HistoryFragment : Fragment() {
                 etAllergies.visibility = View.VISIBLE
                 tvAllergies.visibility = View.VISIBLE
             } else {
-                etAllergies.visibility = View.INVISIBLE
-                tvAllergies.visibility = View.INVISIBLE
+                etAllergies.visibility = View.GONE
+                tvAllergies.visibility = View.GONE
             }
         }
 
@@ -157,6 +166,15 @@ class HistoryFragment : Fragment() {
         }
     }
 
+    private fun uncheckNoUnderlyingMedicalCon(checkbox: CheckBox) {
+        checkbox.setOnCheckedChangeListener { compoundButton, _ ->
+            if (checkBoxNoUnderlyingMedicalCondition.isChecked) {
+                compoundButton.isChecked = false
+                Toast.makeText(activity, "Please uncheck the Not underlying medical condition.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun setupUI(applicationContext: Context) {
         val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
 
@@ -183,15 +201,15 @@ class HistoryFragment : Fragment() {
 
             if (history.not_taking_any_medications) {
                 checkBoxNotTakingAnyMedications.isChecked = true
-                etMedications.visibility = View.INVISIBLE
-                tvMedications.visibility = View.INVISIBLE
+                etMedications.visibility = View.GONE
+                tvMedications.visibility = View.GONE
             } else {
                 etMedications.setText(history.medications)
             }
             if (history.no_allergies) {
                 checkBoxNoAllergies.isChecked = true
-                etAllergies.visibility = View.INVISIBLE
-                tvAllergies.visibility = View.INVISIBLE
+                etAllergies.visibility = View.GONE
+                tvAllergies.visibility = View.GONE
             } else {
                 etAllergies.setText(history.allergies)
             }

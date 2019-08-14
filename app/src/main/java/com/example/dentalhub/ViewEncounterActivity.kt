@@ -519,14 +519,12 @@ class ViewEncounterActivity : AppCompatActivity() {
             }
         }
     }
-
-
+    
     /* To show or hide the fields with Boolean data in the
     Fragements -> History, Screening, Treatment, Referral and Recall */
     private fun hideBoolean(disease : Boolean, viewTitle : View, view : TextView) {
         if (disease) {
-            view.text = disease.toString()
-
+            view.text = "Yes"
         } else {
             viewTitle.visibility = View.GONE
             view.visibility = View.GONE
