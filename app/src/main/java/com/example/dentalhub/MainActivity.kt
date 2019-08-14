@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.adapters.PatientAdapter
 import com.example.dentalhub.entities.Patient
+import com.example.dentalhub.entities.Patient_
 import com.example.dentalhub.services.LocationTrackerService
 import com.example.dentalhub.services.SyncService
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
         Log.d(TAG, "listPatientsFromLocalDB()")
-        allPatients = patientsQuery.find()
+        allPatients = patientsBox.query().equal(Patient_.geography_id, DentalApp.geography).equal(Patient_.activityarea_id, DentalApp.activity).build().find()
         setupAdapter()
 
     }
