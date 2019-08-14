@@ -21,18 +21,15 @@ class AddPatientActivity : AppCompatActivity() {
 
     private lateinit var btnAddPatient: Button
     private lateinit var spinnerGender: Spinner
-    private lateinit var spinnerMaritalStatus: Spinner
     private lateinit var spinnerEducationLevel: Spinner
     private lateinit var etFirstName: EditText
     private lateinit var etMiddleName: EditText
     private lateinit var etLastName: EditText
     private lateinit var etDOB: EditText
     private lateinit var etPhone: EditText
-    private lateinit var etStreetAddress: EditText
     private lateinit var etWard: EditText
-    private lateinit var etCity: EditText
-    private lateinit var etState: EditText
-    private lateinit var etCountry: EditText
+    private lateinit var etMunicipality: EditText
+    private lateinit var etDistrict: EditText
 
     private lateinit var loading: ProgressBar
     private lateinit var tvErrorMessage: TextView
@@ -65,18 +62,16 @@ class AddPatientActivity : AppCompatActivity() {
         etMiddleName = findViewById(R.id.etMiddleName)
         etLastName = findViewById(R.id.etLastName)
 
-        etStreetAddress = findViewById(R.id.etStreetAddress)
         etWard = findViewById(R.id.etWard)
-        etCity = findViewById(R.id.etCity)
-        etState = findViewById(R.id.etState)
-        etCountry = findViewById(R.id.etCountry)
+        etMunicipality = findViewById(R.id.etMunicipality)
+        etDistrict = findViewById(R.id.etDistrict)
+
 
         etPhone = findViewById(R.id.etPhone)
         etDOB = findViewById(R.id.etDOB)
 
         btnAddPatient = findViewById(R.id.btnAddPatient)
         spinnerGender = findViewById(R.id.spinnerGender)
-        spinnerMaritalStatus = findViewById(R.id.spinnerMartialStatus)
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
 
         etDOB.setOnFocusChangeListener { _, b ->
@@ -105,8 +100,7 @@ class AddPatientActivity : AppCompatActivity() {
         }
         spinnerGender.adapter =
             AdapterHelper.createAdapter(context, resources.getStringArray(R.array.gender_list).toList())
-        spinnerMaritalStatus.adapter =
-            AdapterHelper.createAdapter(context, resources.getStringArray(R.array.martial_status_list).toList())
+
         spinnerEducationLevel.adapter =
             AdapterHelper.createAdapter(context, resources.getStringArray(R.array.education_level_list).toList())
 
@@ -129,12 +123,11 @@ class AddPatientActivity : AppCompatActivity() {
             etDOB.setText(patient!!.dob)
             etPhone.setText(patient!!.phone)
             etWard.setText(patient!!.ward.toString())
-            etStreetAddress.setText(patient!!.street_address)
-            etCity.setText(patient!!.city)
-            etState.setText(patient!!.state)
-            etCountry.setText(patient!!.country)
+//            etStreetAddress.setText(patient!!.street_address)
+//            etCity.setText(patient!!.city)
+//            etState.setText(patient!!.state)
+//            etCountry.setText(patient!!.country)
             spinnerGender.setSelection(resources.getStringArray(R.array.gender_list).indexOf(patient!!.gender))
-            spinnerMaritalStatus.setSelection(resources.getStringArray(R.array.martial_status_list).indexOf(patient!!.marital_status))
             spinnerEducationLevel.setSelection(resources.getStringArray(R.array.education_level_list).indexOf(patient!!.education))
         }
     }
@@ -160,12 +153,9 @@ class AddPatientActivity : AppCompatActivity() {
         val dob = etDOB.text.toString()
         val phone = etPhone.text.toString()
         val education = spinnerEducationLevel.selectedItem.toString()
-        val maritalStatus = spinnerMaritalStatus.selectedItem.toString()
-        val streetAddress = etStreetAddress.text.toString()
         val ward = etWard.text.toString().toInt()
-        val city = etCity.text.toString()
-        val state = etState.text.toString()
-        val country = etCountry.text.toString()
+        val municipality = etMunicipality.text.toString().toInt()
+        val district = etDistrict.text.toString().toInt()
         val geography = DentalApp.geography
         val activity = DentalApp.activity
         val latitude = DentalApp.location.latitude
@@ -180,12 +170,9 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.dob = dob
             patient!!.phone = phone
             patient!!.education = education
-            patient!!.marital_status
-            patient!!.street_address = streetAddress
             patient!!.ward = ward
-            patient!!.state = state
-            patient!!.city = city
-            patient!!.country = country
+            patient!!.municipality = municipality
+            patient!!.district = district
             patient!!.latitude = latitude
             patient!!.longitude = longitude
             patient!!.geography_id = DentalApp.geography
@@ -203,12 +190,9 @@ class AddPatientActivity : AppCompatActivity() {
                 dob,
                 phone,
                 education,
-                maritalStatus,
-                streetAddress,
                 ward,
-                city,
-                state,
-                country,
+                municipality,
+                district,
                 latitude,
                 longitude,
                 geography,
@@ -245,6 +229,8 @@ class AddPatientActivity : AppCompatActivity() {
         val phone = etPhone.text.toString()
         val dob = etDOB.text.toString()
         val ward = etWard.text.toString()
+        val municipality = etMunicipality.text.toString()
+        val district = etDistrict.text.toString()
 
         if (firstName.isBlank() || firstName.isEmpty() || firstName.length < 2) {
             tvErrorMessage.text = resources.getString(R.string.first_name_is_required)
@@ -273,6 +259,16 @@ class AddPatientActivity : AppCompatActivity() {
         }
         if (ward.isEmpty() || ward.isBlank()) {
             tvErrorMessage.text = resources.getString(R.string.ward_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
+        if (municipality.isEmpty() || municipality.isBlank()) {
+            tvErrorMessage.text = resources.getString(R.string.municipality_is_required)
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
+        if (district.isEmpty() || district.isBlank()) {
+            tvErrorMessage.text = resources.getString(R.string.district_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }

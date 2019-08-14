@@ -32,14 +32,11 @@ interface DjangoInterface {
         @Field("middle_name") middleName: String?,
         @Field("dob") dob: String,
         @Field("education") education: String,
-        @Field("street_address") street_address: String,
         @Field("ward") ward: Int,
-        @Field("city") city: String,
-        @Field("state") state: String,
-        @Field("country") country: String,
+        @Field("municipality") municipality: Int,
+        @Field("district") district: Int,
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
-        @Field("marital_status") maritalStatus: String,
         @Field("activityarea_id") activity_area_id: String,
         @Field("geography_id") geography_id: String
     ): Call<Patient>

@@ -151,12 +151,9 @@ class ViewPatientActivity : AppCompatActivity() {
                 val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
                 val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
                 val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
-                val tvAddresspopupView = view.findViewById<TextView>(R.id.tvAddresspopupView)
                 val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
-                val tvCityView = view.findViewById<TextView>(R.id.tvCityView)
-                val tvStateView = view.findViewById<TextView>(R.id.tvStateView)
-                val tvCountryView = view.findViewById<TextView>(R.id.tvCountryView)
-                val tvMaritalStatusView = view.findViewById<TextView>(R.id.tvMaritalStatusView)
+                val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
+                val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
                 val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
                 val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
 
@@ -167,12 +164,9 @@ class ViewPatientActivity : AppCompatActivity() {
                 tvGenderpopupView.text = patient.gender
                 tvDateofBirthView.text = patient.dob
                 tvPhonepopupView.text = patient.phone
-                tvAddresspopupView.text = patient.street_address
                 tvWardView.text = patient.ward.toString()
-                tvCityView.text = patient.city
-                tvStateView.text = patient.state
-                tvCountryView.text = patient.country
-                tvMaritalStatusView.text = patient.marital_status
+                tvMunicipalityView.text = patient.municipality.toString()
+                tvDistrictView.text = patient.district.toString()
                 tvEducationLevelView.text = patient.education
 
 

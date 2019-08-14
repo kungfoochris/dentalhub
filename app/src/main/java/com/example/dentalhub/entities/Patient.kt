@@ -21,12 +21,9 @@ class Patient(
     var dob: String,
     var phone: String,
     var education: String,
-    var marital_status: String,
-    var street_address: String,
     var ward: Int,
-    var city: String,
-    var state: String,
-    var country: String,
+    var municipality: Int,
+    var district: Int,
     var latitude: String,
     var longitude: String,
     var geography_id: String,
@@ -41,7 +38,7 @@ class Patient(
     var encounters: ToMany<Encounter>? = null
 
     fun address(): String {
-        return "$street_address $ward, $city, $country"
+        return "$municipality $ward, $district"
     }
 
     fun fullName(): String {

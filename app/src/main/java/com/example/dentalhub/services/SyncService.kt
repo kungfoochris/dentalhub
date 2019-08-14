@@ -121,14 +121,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             patient.middle_name,
             patient.dob,
             patient.education,
-            patient.street_address,
             patient.ward,
-            patient.city,
-            patient.state,
-            patient.country,
+            patient.municipality,
+            patient.district,
             patient.latitude,
             patient.longitude,
-            patient.marital_status,
             patient.activityarea_id,
             patient.geography_id
         )

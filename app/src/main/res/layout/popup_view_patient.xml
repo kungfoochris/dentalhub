@@ -185,28 +185,6 @@
     </LinearLayout>
 
 
-    <LinearLayout
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-                android:id="@+id/tvAddresspopup"
-                android:layout_weight="0.65"
-                android:textSize="18sp"
-                android:text="@string/address_"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:id="@+id/tvAddresspopupView"
-                android:layout_weight="0.35"
-                android:textSize="18sp"
-                android:text="@string/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-    </LinearLayout>
 
 
     <LinearLayout
@@ -239,18 +217,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvCity"
+                android:id="@+id/tvMunicipality"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
-                android:text="@string/city_"
+                android:text="@string/municipality_"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         <TextView
-                android:id="@+id/tvCityView"
+                android:id="@+id/tvMunicipalityView"
                 android:layout_weight="0.35"
                 android:textSize="18sp"
-                android:text="@string/city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -263,70 +240,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvState"
+                android:id="@+id/tvDistrict"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
-                android:text="@string/state_"
+                android:text="@string/district_"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         <TextView
-                android:id="@+id/tvStateView"
+                android:id="@+id/tvDistrictView"
                 android:layout_weight="0.35"
                 android:textSize="18sp"
-                android:text="@string/state"
+                android:text="@string/district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
 
-    <LinearLayout
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-                android:id="@+id/tvCountry"
-                android:layout_weight="0.65"
-                android:textSize="18sp"
-                android:text="@string/country_"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:id="@+id/tvCountryView"
-                android:layout_weight="0.35"
-                android:textSize="18sp"
-                android:text="@string/country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-                android:id="@+id/tvMaritalStatus"
-                android:layout_weight="0.65"
-                android:textSize="18sp"
-                android:text="@string/martial_status_"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:id="@+id/tvMaritalStatusView"
-                android:layout_weight="0.35"
-                android:textSize="18sp"
-                android:text="@string/martial_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
 
 
     <LinearLayout

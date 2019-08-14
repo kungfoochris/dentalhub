@@ -166,4 +166,10 @@
     <string name="community_outreach">Community Outreach</string>
     <string name="other_details">Other details</string>
     <string name="training">Training</string>
+    <string name="municipality">Municipality</string>
+    <string name="district">District</string>
+    <string name="municipality_">Municipality :</string>
+    <string name="district_">District :</string>
+    <string name="municipality_is_required">Municipality is required.</string>
+    <string name="district_is_required">District is required.</string>
 </resources>
