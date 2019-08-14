@@ -1,0 +1,1086 @@
+[
+    {
+        "achham": [
+            {
+                "name": "mangalsen",
+                "type": "urban"
+            },
+            {
+                "name": "kamalbazar",
+                "type": "urban"
+            },
+            {
+                "name": "sanphebagar",
+                "type": "urban"
+            },
+            {
+                "name": "panchadeval binayak",
+                "type": "urban"
+            },
+            {
+                "name": "chaurpat",
+                "type": "rural"
+            },
+            {
+                "name": "mallekh",
+                "type": "rural"
+            },
+            {
+                "name": "bannigadi jayagad",
+                "type": "rural"
+            },
+            {
+                "name": "ramaroshan",
+                "type": "rural"
+            },
+            {
+                "name": "dhakari",
+                "type": "rural"
+            },
+            {
+                "name": "turmakhand",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "arghakhanchi": [
+            {
+                "name": "sandhikharka",
+                "type": "urban"
+            },
+            {
+                "name": "sitganga",
+                "type": "urban"
+            },
+            {
+                "name": "bhumikasthan",
+                "type": "urban"
+            },
+            {
+                "name": "chhatradev",
+                "type": "rural"
+            },
+            {
+                "name": "panini",
+                "type": "rural"
+            },
+            {
+                "name": "malarani",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "baglung": [
+            {
+                "name": "baglung",
+                "type": "urban"
+            },
+            {
+                "name": "dhorpatan",
+                "type": "urban"
+            },
+            {
+                "name": "galkot",
+                "type": "urban"
+            },
+            {
+                "name": "jaimuni",
+                "type": "urban"
+            },
+            {
+                "name": "bareng",
+                "type": "rural"
+            },
+            {
+                "name": "kanthekhola",
+                "type": "rural"
+            },
+            {
+                "name": "taman khola",
+                "type": "rural"
+            },
+            {
+                "name": "tara khola",
+                "type": "rural"
+            },
+            {
+                "name": "nisikhola",
+                "type": "rural"
+            },
+            {
+                "name": "badigad",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "baitadi": []
+    },
+    {
+        "bajhang": []
+    },
+    {
+        "bajura": []
+    },
+    {
+        "banke": []
+    },
+    {
+        "bara": []
+    },
+    {
+        "bardiya": []
+    },
+    {
+        "bhaktapur": [
+            {
+                "name": "bhaktapur",
+                "type": "urban"
+            },
+            {
+                "name": "changunarayan",
+                "type": "urban"
+            },
+            {
+                "name": "madhyapur",
+                "type": "urban"
+            },
+            {
+                "name": "suryabinayak",
+                "type": "urban"
+            }
+        ]
+    },
+    {
+        "bhojpur": []
+    },
+    {
+        "chitwan": [
+            {
+                "name": "bharatpur",
+                "type": "urban"
+            },
+            {
+                "name": "kalika",
+                "type": "urban"
+            },
+            {
+                "name": "khairahani",
+                "type": "urban"
+            },
+            {
+                "name": "madi",
+                "type": "urban"
+            },
+            {
+                "name": "ratmamagar",
+                "type": "urban"
+            },
+            {
+                "name": "rapti",
+                "type": "urban"
+            },
+            {
+                "name": "ichchhakamana",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "dadeldhura": []
+    },
+    {
+        "dailekh": []
+    },
+    {
+        "dang deukhuri": []
+    },
+    {
+        "darchula": []
+    },
+    {
+        "dhading": [
+            {
+                "name": "dhunibeshi",
+                "type": "urban"
+            },
+            {
+                "name": "nilkantha",
+                "type": "urban"
+            },
+            {
+                "name": "khaniyabas",
+                "type": "rural"
+            },
+            {
+                "name": "gajuri",
+                "type": "rural"
+            },
+            {
+                "name": "galchhi",
+                "type": "rural"
+            },
+            {
+                "name": "gangajamuna",
+                "type": "rural"
+            },
+            {
+                "name": "jwalamukhi",
+                "type": "rural"
+            },
+            {
+                "name": "thakre",
+                "type": "rural"
+            },
+            {
+                "name": "netrawati",
+                "type": "rural"
+            },
+            {
+                "name": "benighat",
+                "type": "rural"
+            },
+            {
+                "name": "rubi",
+                "type": "rural"
+            },
+            {
+                "name": "siddhalek",
+                "type": "rural"
+            },
+            {
+                "name": "tripurasundari",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "dhankuta": []
+    },
+    {
+        "dhanusa": []
+    },
+    {
+        "dolakha": [
+            {
+                "name": "bhimeswor",
+                "type": "urban"
+            },
+            {
+                "name": "jiri",
+                "type": "urban"
+            },
+            {
+                "name": "kalinchowk",
+                "type": "rural"
+            },
+            {
+                "name": "melung",
+                "type": "rural"
+            },
+            {
+                "name": "bigu",
+                "type": "rural"
+            },
+            {
+                "name": "gaurishankar",
+                "type": "rural"
+            },
+            {
+                "name": "baiteshwor",
+                "type": "rural"
+            },
+            {
+                "name": "sailung",
+                "type": "rural"
+            },
+            {
+                "name": "tamakoshi",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "dolpa": []
+    },
+    {
+        "doti": []
+    },
+    {
+        "Eastern Rukum": []
+    },
+    {
+        "gorkha": [
+            {
+                "name": "gorkha",
+                "type": "urban"
+            },
+            {
+                "name": "palungtar",
+                "type": "urban"
+            },
+            {
+                "name": "sulikot",
+                "type": "rural"
+            },
+            {
+                "name": "siranchok",
+                "type": "rural"
+            },
+            {
+                "name": "ajirkot",
+                "type": "rural"
+            },
+            {
+                "name": "chum nubri",
+                "type": "rural"
+            },
+            {
+                "name": "dharche",
+                "type": "rural"
+            },
+            {
+                "name": "bhimsen",
+                "type": "rural"
+            },
+            {
+                "name": "sahid lakhan",
+                "type": "rural"
+            },
+            {
+                "name": "aarughat",
+                "type": "rural"
+            },
+            {
+                "name": "gandaki",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "gulmi": []
+    },
+    {
+        "humla": []
+    },
+    {
+        "ilam": []
+    },
+    {
+        "jajarkot": []
+    },
+    {
+        "jhapa": []
+    },
+    {
+        "jumla": []
+    },
+    {
+        "kailali": []
+    },
+    {
+        "kalikot": [
+            {
+                "name": "khandachakra",
+                "type": "urban"
+            },
+            {
+                "name": "raskot",
+                "type": "urban"
+            },
+            {
+                "name": "tilagufa",
+                "type": "urban"
+            },
+            {
+                "name": "pachaljharana",
+                "type": "rural"
+            },
+            {
+                "name": "sanni triveni",
+                "type": "rural"
+            },
+            {
+                "name": "narharinath",
+                "type": "rural"
+            },
+            {
+                "name": "shubha kalika",
+                "type": "rural"
+            },
+            {
+                "name": "mahawai",
+                "type": "rural"
+            },
+            {
+                "name": "palata",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "kanchanpur": []
+    },
+    {
+        "kapilvastu": []
+    },
+    {
+        "kaski": [
+            {
+                "name": "pokhara",
+                "type": "urban"
+            },
+            {
+                "name": "annapurna",
+                "type": "rural"
+            },
+            {
+                "name": "machhapuchhre",
+                "type": "rural"
+            },
+            {
+                "name": "madi",
+                "type": "rural"
+            },
+            {
+                "name": "rupa",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "kathmandu": [
+            {
+                "name": "budanilkantha",
+                "type": "urban"
+            },
+            {
+                "name": "chandragiri",
+                "type": "urban"
+            },
+            {
+                "name": "dakshinkali",
+                "type": "urban"
+            },
+            {
+                "name": "gokarneshwar",
+                "type": "urban"
+            },
+            {
+                "name": "kagaeshwari manohara",
+                "type": "urban"
+            },
+            {
+                "name": "kathmandu",
+                "type": "urban"
+            },
+            {
+                "name": "kirtipur",
+                "type": "urban"
+            },
+            {
+                "name": "nagarjun",
+                "type": "urban"
+            },
+            {
+                "name": "shankharapur",
+                "type": "urban"
+            },
+            {
+                "name": "tarkeshwar",
+                "type": "urban"
+            },
+            {
+                "name": "tokha",
+                "type": "urban"
+            }
+        ]
+    },
+    {
+        "kavrepalanchok": []
+    },
+    {
+        "khotang": [
+            {
+                "name": "diktel rupakot majhuwagadi",
+                "type": "urban"
+            },
+            {
+                "name": "halesi",
+                "type": "urban"
+            },
+            {
+                "name": "khotehang",
+                "type": "rural"
+            },
+            {
+                "name": "diprung",
+                "type": "rural"
+            },
+            {
+                "name": "aiselukharka",
+                "type": "rural"
+            },
+            {
+                "name": "jantedhunga",
+                "type": "rural"
+            },
+            {
+                "name": "kepilasgadhi",
+                "type": "rural"
+            },
+            {
+                "name": "barahpokhari",
+                "type": "rural"
+            },
+            {
+                "name": "lamidanda",
+                "type": "rural"
+            },
+            {
+                "name": "sakela",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "lalitpur": [
+            {
+                "name": "lalitpur",
+                "type": "urban"
+            },
+            {
+                "name": "mahalaxmi",
+                "type": "urban"
+            },
+            {
+                "name": "godawari",
+                "type": "urban"
+            },
+            {
+                "name": "konjyoson",
+                "type": "rural"
+            },
+            {
+                "name": "bagmati",
+                "type": "rural"
+            },
+            {
+                "name": "mahankal",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "lamjung": [
+            {
+                "name": "besisahar",
+                "type": "urban"
+            },
+            {
+                "name": "dordi",
+                "type": "rural"
+            },
+            {
+                "name": "dudhpokhari",
+                "type": "rural"
+            },
+            {
+                "name": "kwhlosothar",
+                "type": "rural"
+            },
+            {
+                "name": "madhya nepal",
+                "type": "urban"
+            },
+            {
+                "name": "marsyandi",
+                "type": "rural"
+            },
+            {
+                "name": "rainas",
+                "type": "urban"
+            },
+            {
+                "name": "sundarbazar",
+                "type": "urban"
+            }
+        ]
+    },
+    {
+        "mahottari": []
+    },
+    {
+        "makwanpur": []
+    },
+    {
+        "manang": [
+            {
+                "name": "chame",
+                "type": "rural"
+            },
+            {
+                "name": "nashong",
+                "type": "rural"
+            },
+            {
+                "name": "narphu",
+                "type": "rural"
+            },
+            {
+                "name": "neshyang",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "morang": []
+    },
+    {
+        "mugu": []
+    },
+    {
+        "mustang": [
+            {
+                "name": "gharpajhong",
+                "type": "rural"
+            },
+            {
+                "name": "thasang",
+                "type": "rural"
+            },
+            {
+                "name": "barhagaun muktichhetra",
+                "type": "rural"
+            },
+            {
+                "name": "lomanthang",
+                "type": "rural"
+            },
+            {
+                "name": "dalome",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "myagdi": [
+            {
+                "name": "beni",
+                "type": "urban"
+            },
+            {
+                "name": "annapurna",
+                "type": "rural"
+            },
+            {
+                "name": "dhaulagiri",
+                "type": "rural"
+            },
+            {
+                "name": "mangala",
+                "type": "rural"
+            },
+            {
+                "name": "malika",
+                "type": "rural"
+            },
+            {
+                "name": "raghuganga",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "nawalpur": [
+            {
+                "name": "kawasoti",
+                "type": "urban"
+            },
+            {
+                "name": "gaindakot",
+                "type": "urban"
+            },
+            {
+                "name": "devachuli",
+                "type": "urban"
+            },
+            {
+                "name": "madhyabindu",
+                "type": "urban"
+            },
+            {
+                "name": "gaindakot",
+                "type": "rural"
+            },
+            {
+                "name": "bungdikali",
+                "type": "rural"
+            },
+            {
+                "name": "bulingtar",
+                "type": "rural"
+            },
+            {
+                "name": "binayi tribeni",
+                "type": "rural"
+            },
+            {
+                "name": "hupsekot",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "nuwakot": [
+            {
+                "name": "bidur",
+                "type": "urban"
+            },
+            {
+                "name": "belkotgadhi",
+                "type": "urban"
+            },
+            {
+                "name": "kakani",
+                "type": "rural"
+            },
+            {
+                "name": "panchakanya",
+                "type": "rural"
+            },
+            {
+                "name": "likhu",
+                "type": "rural"
+            },
+            {
+                "name": "dupcheswar",
+                "type": "rural"
+            },
+            {
+                "name": "shivapuri",
+                "type": "rural"
+            },
+            {
+                "name": "tadi",
+                "type": "rural"
+            },
+            {
+                "name": "suryagadhi",
+                "type": "rural"
+            },
+            {
+                "name": "tarkeshwar",
+                "type": "rural"
+            },
+            {
+                "name": "kispang",
+                "type": "rural"
+            },
+            {
+                "name": "myagang",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "okhaldhunga": []
+    },
+    {
+        "palpa": []
+    },
+    {
+        "panchthar": []
+    },
+    {
+        "parasi": [
+            {
+                "name": "bardghat",
+                "type": "urban"
+            },
+            {
+                "name": "ramgram",
+                "type": "urban"
+            },
+            {
+                "name": "sunwal",
+                "type": "urban"
+            },
+            {
+                "name": "susta",
+                "type": "rural"
+            },
+            {
+                "name": "palhinand",
+                "type": "rural"
+            },
+            {
+                "name": "pratappur",
+                "type": "rural"
+            },
+            {
+                "name": "sarawal",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "parbat": [
+            {
+                "name": "kusma",
+                "type": "urban"
+            },
+            {
+                "name": "phalewas",
+                "type": "urban"
+            },
+            {
+                "name": "jaljala",
+                "type": "rural"
+            },
+            {
+                "name": "paiyun",
+                "type": "rural"
+            },
+            {
+                "name": "mahashila",
+                "type": "rural"
+            },
+            {
+                "name": "modi",
+                "type": "rural"
+            },
+            {
+                "name": "bihadi",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "parsa": []
+    },
+    {
+        "pyuthan": []
+    },
+    {
+        "ramechhap": []
+    },
+    {
+        "rasuwa": [
+            {
+                "name": "kalika",
+                "type": "rural"
+            },
+            {
+                "name": "gosaikunda",
+                "type": "rural"
+            },
+            {
+                "name": "naukunda",
+                "type": "rural"
+            },
+            {
+                "name": "parbatikunda",
+                "type": "rural"
+            },
+            {
+                "name": "uttargaya",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "rautahat": []
+    },
+    {
+        "rolpa": []
+    },
+    {
+        "rupandehi": []
+    },
+    {
+        "salyan": []
+    },
+    {
+        "sankhuwasabha": []
+    },
+    {
+        "saptari": []
+    },
+    {
+        "sarlahi": []
+    },
+    {
+        "sindhuli": []
+    },
+    {
+        "sindhupalchok": [
+            {
+                "name": "chautara",
+                "type": "urban"
+            },
+            {
+                "name": "bahrabise",
+                "type": "urban"
+            },
+            {
+                "name": "melamchi",
+                "type": "urban"
+            },
+            {
+                "name": "balephi",
+                "type": "rural"
+            },
+            {
+                "name": "sunkoshi",
+                "type": "rural"
+            },
+            {
+                "name": "indravati",
+                "type": "rural"
+            },
+            {
+                "name": "jugal",
+                "type": "rural"
+            },
+            {
+                "name": "panchpokhari thangpal",
+                "type": "rural"
+            },
+            {
+                "name": "bhotekoshi",
+                "type": "rural"
+            },
+            {
+                "name": "lisangkhu pakhar",
+                "type": "rural"
+            },
+            {
+                "name": "helambu",
+                "type": "rural"
+            },
+            {
+                "name": "tripurasundari",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "siraha": []
+    },
+    {
+        "solukhumbu": []
+    },
+    {
+        "sunsari": []
+    },
+    {
+        "surkhet": []
+    },
+    {
+        "syangja": [
+            {
+                "name": "galyang",
+                "type": "urban"
+            },
+            {
+                "name": "chapakot",
+                "type": "urban"
+            },
+            {
+                "name": "putalibazar",
+                "type": "urban"
+            },
+            {
+                "name": "bheerkot",
+                "type": "urban"
+            },
+            {
+                "name": "waling",
+                "type": "urban"
+            },
+            {
+                "name": "arjun chaupari",
+                "type": "rural"
+            },
+            {
+                "name": "aandhikhola",
+                "type": "rural"
+            },
+            {
+                "name": "kaligandaki",
+                "type": "rural"
+            },
+            {
+                "name": "phedikhola",
+                "type": "rural"
+            },
+            {
+                "name": "harinas",
+                "type": "rural"
+            },
+            {
+                "name": "biruwa",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "tanahu": [
+            {
+                "name": "bhanu",
+                "type": "urban"
+            },
+            {
+                "name": "bhimad",
+                "type": "urban"
+            },
+            {
+                "name": "byas",
+                "type": "urban"
+            },
+            {
+                "name": "shuklagandaki",
+                "type": "urban"
+            },
+            {
+                "name": "anbu khaireni",
+                "type": "rural"
+            },
+            {
+                "name": "devghat",
+                "type": "rural"
+            },
+            {
+                "name": "bandipur",
+                "type": "rural"
+            },
+            {
+                "name": "rhishing",
+                "type": "rural"
+            },
+            {
+                "name": "ghiring",
+                "type": "rural"
+            },
+            {
+                "name": "myagde",
+                "type": "rural"
+            }
+        ]
+    },
+    {
+        "taplejung": []
+    },
+    {
+        "terhathum": []
+    },
+    {
+        "udayapur": []
+    },
+    {
+        "Western Rukum": []
+    }
+]
