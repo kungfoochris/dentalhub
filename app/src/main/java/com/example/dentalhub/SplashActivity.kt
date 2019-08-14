@@ -26,10 +26,13 @@ class SplashActivity : Activity() {
             if (token.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
-                DentalApp.geography = DentalApp.readIntFromPreference(context, Constants.PREF_SELECTED_LOCATION).toString()
-                DentalApp.activity = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
-                DentalApp.activityRemarks = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
-                if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty() || DentalApp.activityRemarks.isEmpty()){
+                val selectedLocation = DentalApp.readIntFromPreference(context, Constants.PREF_SELECTED_LOCATION).toString()
+                val selectedActivity = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
+                val remarks = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
+                DentalApp.geography = selectedLocation
+                DentalApp.activity = selectedActivity
+                DentalApp.activityRemarks = remarks
+                if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty()){
                     startActivity(Intent(this, LocationSelectorActivity::class.java))
                 }else{
                     startActivity(Intent(this, MainActivity::class.java))

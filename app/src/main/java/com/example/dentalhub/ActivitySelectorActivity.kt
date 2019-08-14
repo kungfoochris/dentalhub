@@ -40,6 +40,14 @@ class ActivitySelectorActivity : AppCompatActivity() {
             } else {
                 etOtherDetails.visibility = View.VISIBLE
             }
+            when(i){
+                R.id.radioHealthPost -> selectedActivity = "0"
+                R.id.radioSchoolSeminar -> selectedActivity = "1"
+                R.id.radioCommunityOutreach -> selectedActivity = "2"
+                R.id.radioTraining -> selectedActivity = "3"
+            }
+
+
         }
 
         btnGo.setOnClickListener {
