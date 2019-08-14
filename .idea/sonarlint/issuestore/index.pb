@@ -11,8 +11,6 @@ n
 >app/src/main/java/com/example/dentalhub/ViewPatientActivity.kt,5/4/543b040b76f17d2baf5cf6909ba823f17f5fb0f3
 p
 @app/src/main/java/com/example/dentalhub/ViewEncounterActivity.kt,d/1/d15f5b81f9312aa5a6b79fdad6e2e22754189dd5
-k
-;app/src/main/java/com/example/dentalhub/SelectorActivity.kt,f/7/f7f441dff688859fc533e8fa868aa0752a5a358f
 z
 Japp/src/main/java/com/example/dentalhub/services/LocationTrackerService.kt,b/a/ba2899c5476fc421d16d43d455231400fcd2c061
 d
