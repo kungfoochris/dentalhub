@@ -19,6 +19,7 @@ import com.example.dentalhub.entities.History
 import com.example.dentalhub.entities.History_
 import com.example.dentalhub.fragments.interfaces.HistoryFormCommunicator
 import io.objectbox.Box
+import kotlinx.android.synthetic.main.fragment_history.*
 
 class HistoryFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
@@ -87,11 +88,35 @@ class HistoryFragment : Fragment() {
 
         setupUI(activity as Context)
 
+        checkBoxNoUnderlyingMedicalCondition.setOnCheckedChangeListener { compoundButton, _ ->
+            if (!compoundButton.isChecked) {
+                checkBoxBloodDisorderOrBleedingProblem.isChecked = false
+                checkBoxDiabetes.isChecked = false
+                checkBoxLiverProblem.isChecked = false
+                checkBoxRheumaticFever.isChecked = false
+                checkBoxSeizuresOrEpilepsy.isChecked = false
+                checkBoxHepatitisBOrC.isChecked = false
+                checkBoxHIV.isChecked = false
+                etOther.setText("")
+            }
+        }
+        checkBoxNotTakingAnyMedications.setOnCheckedChangeListener { compoundButton, _ ->
+            if (!compoundButton.isChecked) {
+                etMedications.visibility = View.VISIBLE
+                tvMedications.visibility = View.VISIBLE
+            } else {
+                etMedications.visibility = View.INVISIBLE
+                tvMedications.visibility = View.INVISIBLE
+            }
+        }
+
         checkBoxNoAllergies.setOnCheckedChangeListener { compoundButton, _ ->
             if (!compoundButton.isChecked) {
                 etAllergies.visibility = View.VISIBLE
+                tvAllergies.visibility = View.VISIBLE
             } else {
-                etAllergies.visibility = View.GONE
+                etAllergies.visibility = View.INVISIBLE
+                tvAllergies.visibility = View.INVISIBLE
             }
         }
 
@@ -155,8 +180,18 @@ class HistoryFragment : Fragment() {
             if (history.no_underlying_medical_condition) checkBoxNoUnderlyingMedicalCondition.isChecked = true
             etMedications.setText(history.medications)
             if (history.not_taking_any_medications) checkBoxNotTakingAnyMedications.isChecked = true
+
+            if (history.not_taking_any_medications) {
+                checkBoxNotTakingAnyMedications.isChecked = true
+                etMedications.visibility = View.INVISIBLE
+                tvMedications.visibility = View.INVISIBLE
+            } else {
+                etMedications.setText(history.medications)
+            }
             if (history.no_allergies) {
+                checkBoxNoAllergies.isChecked = true
                 etAllergies.visibility = View.INVISIBLE
+                tvAllergies.visibility = View.INVISIBLE
             } else {
                 etAllergies.setText(history.allergies)
             }
