@@ -3,43 +3,53 @@
         "achham": [
             {
                 "name": "mangalsen",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "kamalbazar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "sanphebagar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "panchadeval binayak",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "chaurpat",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "mallekh",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bannigadi jayagad",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "ramaroshan",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "dhakari",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "turmakhand",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -47,27 +57,33 @@
         "arghakhanchi": [
             {
                 "name": "sandhikharka",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "sitganga",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "bhumikasthan",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "chhatradev",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "panini",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "malarani",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -75,43 +91,53 @@
         "baglung": [
             {
                 "name": "baglung",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "dhorpatan",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "galkot",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "jaimuni",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "bareng",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "kanthekhola",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "taman khola",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "tara khola",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "nisikhola",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "badigad",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -137,19 +163,23 @@
         "bhaktapur": [
             {
                 "name": "bhaktapur",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "changunarayan",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "madhyapur",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "suryabinayak",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             }
         ]
     },
@@ -160,31 +190,38 @@
         "chitwan": [
             {
                 "name": "bharatpur",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "kalika",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "khairahani",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "madi",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "ratmamagar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "rapti",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "ichchhakamana",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -204,55 +241,68 @@
         "dhading": [
             {
                 "name": "dhunibeshi",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "nilkantha",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "khaniyabas",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "gajuri",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "galchhi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "gangajamuna",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "jwalamukhi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "thakre",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "netrawati",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "benighat",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "rubi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "siddhalek",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "tripurasundari",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -266,39 +316,48 @@
         "dolakha": [
             {
                 "name": "bhimeswor",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "jiri",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "kalinchowk",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "melung",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bigu",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "gaurishankar",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "baiteshwor",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "sailung",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "tamakoshi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -315,47 +374,58 @@
         "gorkha": [
             {
                 "name": "gorkha",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "palungtar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "sulikot",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "siranchok",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "ajirkot",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "chum nubri",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "dharche",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bhimsen",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "sahid lakhan",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "aarughat",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "gandaki",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -384,39 +454,48 @@
         "kalikot": [
             {
                 "name": "khandachakra",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "raskot",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "tilagufa",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "pachaljharana",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "sanni triveni",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "narharinath",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "shubha kalika",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "mahawai",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "palata",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -430,23 +509,28 @@
         "kaski": [
             {
                 "name": "pokhara",
-                "type": "urban"
+                "type": "urban",
+                "wards": 33
             },
             {
                 "name": "annapurna",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "machhapuchhre",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "madi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "rupa",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -454,47 +538,58 @@
         "kathmandu": [
             {
                 "name": "budanilkantha",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "chandragiri",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "dakshinkali",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "gokarneshwar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "kagaeshwari manohara",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "kathmandu",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "kirtipur",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "nagarjun",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "shankharapur",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "tarkeshwar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "tokha",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             }
         ]
     },
@@ -505,43 +600,53 @@
         "khotang": [
             {
                 "name": "diktel rupakot majhuwagadi",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "halesi",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "khotehang",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "diprung",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "aiselukharka",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "jantedhunga",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "kepilasgadhi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "barahpokhari",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "lamidanda",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "sakela",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -549,27 +654,33 @@
         "lalitpur": [
             {
                 "name": "lalitpur",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "mahalaxmi",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "godawari",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "konjyoson",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bagmati",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "mahankal",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -577,35 +688,43 @@
         "lamjung": [
             {
                 "name": "besisahar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "dordi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "dudhpokhari",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "kwhlosothar",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "madhya nepal",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "marsyandi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "rainas",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "sundarbazar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             }
         ]
     },
@@ -619,19 +738,23 @@
         "manang": [
             {
                 "name": "chame",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "nashong",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "narphu",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "neshyang",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -645,23 +768,28 @@
         "mustang": [
             {
                 "name": "gharpajhong",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "thasang",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "barhagaun muktichhetra",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "lomanthang",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "dalome",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -669,27 +797,33 @@
         "myagdi": [
             {
                 "name": "beni",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "annapurna",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "dhaulagiri",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "mangala",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "malika",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "raghuganga",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -697,39 +831,48 @@
         "nawalpur": [
             {
                 "name": "kawasoti",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "gaindakot",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "devachuli",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "madhyabindu",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "gaindakot",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bungdikali",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bulingtar",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "binayi tribeni",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "hupsekot",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -737,51 +880,63 @@
         "nuwakot": [
             {
                 "name": "bidur",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "belkotgadhi",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "kakani",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "panchakanya",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "likhu",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "dupcheswar",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "shivapuri",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "tadi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "suryagadhi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "tarkeshwar",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "kispang",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "myagang",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -798,31 +953,38 @@
         "parasi": [
             {
                 "name": "bardghat",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "ramgram",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "sunwal",
-                "type": "urban"
+                "type": "urban",
+                "wards" :13
             },
             {
                 "name": "susta",
-                "type": "rural"
+                "type": "rural",
+                "wards": 5
             },
             {
                 "name": "palhinand",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "pratappur",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "sarawal",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -830,31 +992,38 @@
         "parbat": [
             {
                 "name": "kusma",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "phalewas",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "jaljala",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "paiyun",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "mahashila",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "modi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bihadi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -871,23 +1040,28 @@
         "rasuwa": [
             {
                 "name": "kalika",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "gosaikunda",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "naukunda",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "parbatikunda",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "uttargaya",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -898,7 +1072,88 @@
         "rolpa": []
     },
     {
-        "rupandehi": []
+        "rupandehi": [
+            {
+                "name": "butwal",
+                "type": "urban",
+                "wards": 19
+            },
+            {
+                "name": "devdaha",
+                "type": "urban",
+                "wards": 12
+            },
+            {
+                "name": "lumbini sanskritik",
+                "type": "urban",
+                "wards": 13
+            },
+            {
+                "name": "sainamaina",
+                "type": "urban",
+                "wards" :11
+            },
+            {
+                "name": "siddharthanagar",
+                "type": "urban",
+                "wards" :13
+            },
+            {
+                "name": "tilottama",
+                "type": "urban",
+                "wards":3
+            },
+            {
+                "name": "gaidahawa",
+                "type": "rural",
+                "wards" :0
+            },
+            {
+                "name": "kanchan",
+                "type": "rural",
+                "wards" :0
+            },
+            {
+                "name": "kotahimai",
+                "type": "rural",
+                "wards" :0
+            },
+            {
+                "name": "marchawari",
+                "type": "rural",
+                "wards" :0
+            },
+            {
+                "name": "mayadevi",
+                "type": "rural",
+                "wards" :0
+            },
+            {
+                "name": "omsatiya",
+                "type": "rural",
+                "wards" :0
+            },
+            {
+                "name": "rohini",
+                "type": "rural",
+                "wards" :7
+            },
+            {
+                "name": "sammarimai",
+                "type": "rural",
+                "wards" :0
+            },
+            {
+                "name": "siyari",
+                "type": "rural",
+                "wards" :7
+            },
+            {
+                "name": "suddodhan",
+                "type": "rural",
+                "wards" :0
+            }
+        ]
     },
     {
         "salyan": []
@@ -919,51 +1174,63 @@
         "sindhupalchok": [
             {
                 "name": "chautara",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "bahrabise",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "melamchi",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "balephi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "sunkoshi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "indravati",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "jugal",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "panchpokhari thangpal",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bhotekoshi",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "lisangkhu pakhar",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "helambu",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "tripurasundari",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -983,47 +1250,58 @@
         "syangja": [
             {
                 "name": "galyang",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "chapakot",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "putalibazar",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "bheerkot",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "waling",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "arjun chaupari",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "aandhikhola",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "kaligandaki",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "phedikhola",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "harinas",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "biruwa",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
@@ -1031,43 +1309,53 @@
         "tanahu": [
             {
                 "name": "bhanu",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "bhimad",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "byas",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "shuklagandaki",
-                "type": "urban"
+                "type": "urban",
+                "wards" :0
             },
             {
                 "name": "anbu khaireni",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "devghat",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "bandipur",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "rhishing",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "ghiring",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             },
             {
                 "name": "myagde",
-                "type": "rural"
+                "type": "rural",
+                "wards" :0
             }
         ]
     },
