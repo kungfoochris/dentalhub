@@ -133,7 +133,8 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.search -> {
                 Log.d("PARAS", "do the search stuff")
-                displaySearchDialog()
+                //displaySearchDialog()
+                startActivity(Intent(context, SearchActivity::class.java))
             }
             R.id.sync -> {
                 Log.d(TAG, "startSync")

@@ -23,7 +23,6 @@ import com.example.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
-import android.content.SharedPreferences
 import android.widget.ImageButton
 
 
@@ -143,6 +142,22 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         val fragmentAdapter = FormPageAdapter(supportFragmentManager)
         pager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(pager)
+
+//        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+//            override fun onTabReselected(p0: TabLayout.Tab?) {
+//                //
+//
+//            }
+//
+//            override fun onTabUnselected(p0: TabLayout.Tab?) {
+//                //
+//            }
+//
+//            override fun onTabSelected(p0: TabLayout.Tab?) {
+//                //
+//            }
+//
+//        })
 
     }
 

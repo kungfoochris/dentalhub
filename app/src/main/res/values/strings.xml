@@ -172,4 +172,6 @@
     <string name="district_">District :</string>
     <string name="municipality_is_required">Municipality is required.</string>
     <string name="district_is_required">District is required.</string>
+    <string name="search_label">Search</string>
+    <string name="search_hint">Search</string>
 </resources>
