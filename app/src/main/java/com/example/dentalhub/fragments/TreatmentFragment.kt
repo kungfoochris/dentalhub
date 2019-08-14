@@ -393,27 +393,27 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
         when (buttonValue) {
             "SDF" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf_applied, null)
                 teeth[buttonNumber] = "SDF"
             }
             "SEAL" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal_applied, null)
                 teeth[buttonNumber] = "SEAL"
             }
             "ART" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art_applied, null)
                 teeth[buttonNumber] = "ART"
             }
             "EXO" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo_applied, null)
                 teeth[buttonNumber] = "EXO"
             }
             "UNTR" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr_applied, null)
                 teeth[buttonNumber] = "UNTR"
             }
             "SMART" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_applied, null)
                 teeth[buttonNumber] = "SMART"
             }
         }
@@ -570,7 +570,9 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_default_text, null))
         } else {
             teeth[teethNumber] = selectedTreatment
-            button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+            if (selectedTreatment != "") {
+                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+            }
         }
     }
 
