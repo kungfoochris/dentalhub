@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.core.view.get
 
 class ActivitySelectorActivity : AppCompatActivity() {
@@ -46,21 +47,29 @@ class ActivitySelectorActivity : AppCompatActivity() {
                 R.id.radioCommunityOutreach -> selectedActivity = "2"
                 R.id.radioTraining -> selectedActivity = "3"
             }
-
-
         }
 
         btnGo.setOnClickListener {
-            DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_REMARKS,etOtherDetails.text.toString())
-            DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
+            if (isFormValid()) {
+                DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_REMARKS,etOtherDetails.text.toString())
+                DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(context, "Please select a activity.", Toast.LENGTH_SHORT).show()
+            }
         }
         btnLogout.setOnClickListener {
             DentalApp.clearAuthDetails(context)
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    private fun isFormValid(): Boolean {
+        var status = false
+        if (rgActivities.checkedRadioButtonId != -1) status = true
+        return status
     }
 
     override fun onPause() {

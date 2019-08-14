@@ -493,12 +493,30 @@ class ViewEncounterActivity : AppCompatActivity() {
 
     private fun setButtonColor(button: Button, treatmentType: String) {
         when (treatmentType) {
-            "SDF" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
-            "SEAL" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
-            "ART" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
-            "EXO" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
-            "UNTR" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
-            "SMART" -> button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+            "SDF" -> {
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf_applied, null)
+                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+            }
+            "SEAL" -> {
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal_applied, null)
+                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+            }
+            "ART" -> {
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art_applied, null)
+                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+            }
+            "EXO" -> {
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo_applied, null)
+                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+            }
+            "UNTR" -> {
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr_applied, null)
+                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+            }
+            "SMART" -> {
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_applied, null)
+                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+            }
         }
     }
 
