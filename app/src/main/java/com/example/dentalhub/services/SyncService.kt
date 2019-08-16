@@ -10,6 +10,7 @@ import com.example.dentalhub.DentalApp
 import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.broadcastreceivers.NetworkStateReceiver
 import com.example.dentalhub.entities.Encounter
+import com.example.dentalhub.models.Encounter as EncounterModel
 import com.example.dentalhub.entities.Encounter_
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.Patient as PatientModel
@@ -85,13 +86,20 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             DentalApp.displayNotification(
                 applicationContext,
                 1001,
-                "Title",
+                "Syncing...",
                 patient.fullName(),
-                "Long Description"
+                "Uploading patient detail"
             )
             savePatientToServer(patient)
             allEncounters = encountersBox.query().equal(Encounter_.patientId,patient.id).equal(Encounter_.uploaded, false).build().find()
             for(tempEncounter in allEncounters){
+                DentalApp.displayNotification(
+                    applicationContext,
+                    1001,
+                    "Syncing...",
+                    patient.fullName(),
+                    "Uploading encounter details"
+                )
                 saveEncounterToServer(tempEncounter)
 
             }
@@ -127,6 +135,31 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addEncounter("JWT $token", tempEncounter.encounter_type)
+        call.enqueue(object: Callback<EncounterModel>{
+            override fun onFailure(call: Call<EncounterModel>, t: Throwable) {
+                Log.d("onFailure", t.toString())
+            }
+
+            override fun onResponse(call: Call<EncounterModel>, response: Response<EncounterModel>) {
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
+                            val serverEncounter = response.body() as EncounterModel
+                            val dbEncounter = encountersBox.query().equal(Encounter_.id, tempEncounter.id).build().findFirst()
+                            dbEncounter!!.remote_id = serverEncounter.id
+                            dbEncounter.uploaded = true
+                            encountersBox.put(dbEncounter)
+                        }
+                    }
+                }else {
+                    Log.d("saveEncounterToServer", response.code().toString())
+                    Log.d("saveEncounterToServer", Gson().toJson(response.body()).toString())
+                    //tvErrorMessage.text = response.message()
+                    Log.d("saveEncounterToServer", response.message())
+                }
+            }
+
+        })
     }
 
     @AddTrace(name = "syncService_savePatientToServer", enabled = true /* optional */)
@@ -168,23 +201,23 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                             dbPatient!!.remote_id = tempPatient.id
                             dbPatient.uploaded = true
                             patientsBox.put(dbPatient)
-                            Log.d("saveToServer", tempPatient.fullName() + " saved.")
+                            Log.d("savePatientToServer", tempPatient.fullName() + " saved.")
                         }
                         400 -> {
-                            Log.d("saveToServer", "400 bad request")
+                            Log.d("savePatientToServer", "400 bad request")
                         }
                         404 -> {
-                            Log.d("saveToServer", "404 Page not found")
+                            Log.d("savePatientToServer", "404 Page not found")
                         }
                         else -> {
-                            Log.d("saveToServer", "unhandled request")
+                            Log.d("savePatientToServer", "unhandled request")
                         }
                     }
                 } else {
-                    Log.d("saveToServer", response.code().toString())
-                    Log.d("saveToServer", Gson().toJson(response.body()).toString())
+                    Log.d("savePatientToServer", response.code().toString())
+                    Log.d("savePatientToServer", Gson().toJson(response.body()).toString())
                     //tvErrorMessage.text = response.message()
-                    Log.d("saveToServer", response.message())
+                    Log.d("savePatientToServer", response.message())
                 }
 
             }

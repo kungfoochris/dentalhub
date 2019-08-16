@@ -14,6 +14,7 @@ import java.util.*
 class Encounter : Parcelable {
     @Id
     var id: Long = 0
+    var remote_id: Int = 0
     var encounter_type: String = ""
     var created_at: String = ""
     var updated_at: String = ""

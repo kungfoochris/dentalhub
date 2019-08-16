@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.dentalhub.R
 import com.example.dentalhub.entities.Activity
 import com.example.dentalhub.entities.Encounter
+import com.example.dentalhub.models.Encounter as EncounterModel
 import com.example.dentalhub.models.Geography
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.LoginResponse
@@ -47,7 +48,7 @@ interface DjangoInterface {
     fun addEncounter(
         @Header("Authorization") token: String,
         @Field("encounter_type") encounterType: String
-    ): Call<Encounter>
+    ): Call<EncounterModel>
 
     @GET("patients")
     fun searchPatient(@Query("s") s: String): Call<List<Patient>>
