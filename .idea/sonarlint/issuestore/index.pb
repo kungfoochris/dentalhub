@@ -116,3 +116,5 @@ s
 Capp/src/main/java/com/example/dentalhub/ActivitySelectorActivity.kt,8/3/838f5d728dbbdf16cf80dc50f664739134bacd27
 s
 Capp/src/main/java/com/example/dentalhub/LocationSelectorActivity.kt,e/8/e814395fe047e76405ca3624fb82d25fa6ebde54
+t
+Dapp/src/main/java/com/example/dentalhub/adapters/GeographyAdapter.kt,6/7/67041812602f190f32b2785d3c32ba82f127c40c

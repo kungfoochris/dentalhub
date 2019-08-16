@@ -17,6 +17,7 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/caries_risk"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <Spinner
@@ -31,6 +32,7 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/decayed_primary_teeth"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <Spinner
@@ -46,6 +48,7 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/decayed_permanent_teeth"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <Spinner
@@ -60,10 +63,13 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/cavity_permanent_tooth"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxCavityPermanentTooth"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -73,10 +79,13 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/cavity_permanent_anterior"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxCavityPermanentAnterior"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -86,10 +95,13 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/active_infection"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxActiveInfection"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -99,10 +111,13 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/need_art_filling"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedARTFilling"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -112,10 +127,13 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/need_sealant"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedSealant"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -125,10 +143,13 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/need_sdf"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedSDF"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -138,10 +159,13 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/need_extraction"
+                    android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedExtraction"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>

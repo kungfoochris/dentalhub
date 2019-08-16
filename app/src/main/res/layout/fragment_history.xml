@@ -15,11 +15,14 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxBloodDisorderOrBleedingProblem"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:labelFor="@+id/checkBoxBloodDisorderOrBleedingProblem"
                         android:text="@string/blood_disorder_or_bleeding_problem"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -27,12 +30,15 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxDiabetes"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:text="@string/diabetes"
                         android:labelFor="@+id/checkBoxDiabetes"
                         android:layout_width="wrap_content"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -40,11 +46,14 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxLiverProblem"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:labelFor="@+id/checkBoxLiverProblem"
                         android:text="@string/liver_problem"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -53,11 +62,14 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxRheumaticFever"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:labelFor="@+id/checkBoxRheumaticFever"
                         android:text="@string/rheumatic_fever"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -67,11 +79,14 @@
                     android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxSeizuresOrEpilepsy"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:labelFor="@+id/checkBoxSeizuresOrEpilepsy"
                         android:text="@string/seizures_or_epilepsy"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -81,11 +96,14 @@
                     android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxHepatitisBOrC"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:labelFor="@+id/checkBoxHepatitisBOrC"
                         android:text="@string/hepatitis_b_or_c"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -95,6 +113,8 @@
                     android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxHIV"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
@@ -122,11 +142,14 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxNoUnderlyingMedicalCondition"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
-                        android:text="@string/no_underlying_medical_condition"
                         android:labelFor="@+id/checkBoxNoUnderlyingMedicalCondition"
+                        android:text="@string/no_underlying_medical_condition"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -137,11 +160,14 @@
                     android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxNotTakingAnyMedications"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
-                        android:text="@string/not_taking_any_medications"
                         android:labelFor="@+id/checkBoxNotTakingAnyMedications"
+                        android:text="@string/not_taking_any_medications"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -161,14 +187,16 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxNoAllergies"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
-                        android:text="@string/no_allergies"
                         android:labelFor="@+id/checkBoxNoAllergies"
+                        android:text="@string/no_allergies"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-
             </LinearLayout>
 
 
@@ -181,6 +209,7 @@
                 <EditText
                         android:id="@+id/etAllergies"
                         android:labelFor="@+id/tvAllergies"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -201,6 +230,7 @@
                         android:id="@+id/btnNext"
                         android:layout_weight="0.5"
                         android:text="@string/next"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                 />

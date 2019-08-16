@@ -48,6 +48,7 @@
                 android:label="@string/patient_list"/>
         <activity
                 android:name=".LoginActivity"
+                android:configChanges="orientation"
                 android:label="@string/title_activity_login"/>
         <activity
                 android:name=".AddEncounterActivity"
