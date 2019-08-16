@@ -214,5 +214,8 @@ class HistoryFragment : Fragment() {
                 etAllergies.setText(history.allergies)
             }
         }
+        else {
+            history = historyBox.query().orderDesc(History_.id).build().findFirst()!!
+        }
     }
 }
