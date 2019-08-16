@@ -183,6 +183,7 @@ class AddPatientActivity : AppCompatActivity() {
         } else {
             return Patient(
                 id,
+                0,
                 firstName,
                 middleName,
                 lastName,

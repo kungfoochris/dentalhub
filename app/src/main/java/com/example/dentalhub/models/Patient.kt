@@ -1,20 +1,12 @@
-package com.example.dentalhub.entities
+package com.example.dentalhub.models
 
 import android.os.Parcelable
-import io.objectbox.annotation.Backlink
-import io.objectbox.annotation.Entity
-import io.objectbox.annotation.Id
-import io.objectbox.relation.ToMany
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-
-@Entity
 @Parcelize
 class Patient(
-    @Id var id: Long,
-    var remote_id: Int = 0,
+    var id: Int,
     var first_name: String,
     var middle_name: String,
     var last_name: String,
@@ -32,12 +24,7 @@ class Patient(
     var created_at: String,
     var updated_at: String,
     var uploaded: Boolean
-) : Parcelable {
-
-    @IgnoredOnParcel
-    @Backlink(to = "patient")
-    var encounters: ToMany<Encounter>? = null
-
+): Parcelable{
     fun address(): String {
         return "$municipality $ward, $district"
     }

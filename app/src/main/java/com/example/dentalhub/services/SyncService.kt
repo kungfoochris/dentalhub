@@ -10,7 +10,10 @@ import com.example.dentalhub.DentalApp
 import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.broadcastreceivers.NetworkStateReceiver
 import com.example.dentalhub.entities.Encounter
+import com.example.dentalhub.entities.Encounter_
 import com.example.dentalhub.entities.Patient
+import com.example.dentalhub.models.Patient as PatientModel
+import com.example.dentalhub.entities.Patient_
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
@@ -26,6 +29,12 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     private lateinit var encountersBox: Box<Encounter>
     private lateinit var networkStateReceiver: NetworkStateReceiver
     private lateinit var allPatients: List<Patient>
+    private lateinit var allEncounters: List<Encounter>
+
+    var totalTasks = 0
+    var failedTasks = 0
+    var successTasks = 0
+
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
@@ -71,7 +80,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     private fun displayNotification() {
-        allPatients = patientsBox.query().build().find()
+        allPatients = patientsBox.query().equal(Patient_.uploaded, false).build().find()
         for (patient in allPatients) {
             DentalApp.displayNotification(
                 applicationContext,
@@ -80,8 +89,14 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                 patient.fullName(),
                 "Long Description"
             )
-            saveToServer(patient)
+            savePatientToServer(patient)
+            allEncounters = encountersBox.query().equal(Encounter_.patientId,patient.id).equal(Encounter_.uploaded, false).build().find()
+            for(tempEncounter in allEncounters){
+                saveEncounterToServer(tempEncounter)
+
+            }
         }
+        DentalApp.cancelNotification(applicationContext, 1001)
 
         stopSelf()
 
@@ -105,10 +120,19 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
     }
 
-    @AddTrace(name = "syncService_saveToServer", enabled = true /* optional */)
-    private fun saveToServer(patient: Patient) {
-        Log.d("SyncService", "saveToServer()")
-        Log.d("saveToServer", patient.toString())
+    @AddTrace(name = "syncService_saveEncounterToServer", enabled = true /* optional */)
+    private fun saveEncounterToServer(tempEncounter: Encounter) {
+        Log.d("SyncService", "saveEncounterToServer()")
+        Log.d("saveEncounterToServer", tempEncounter.toString())
+        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        val panelService = DjangoInterface.create(this)
+        val call = panelService.addEncounter("JWT $token", tempEncounter.encounter_type)
+    }
+
+    @AddTrace(name = "syncService_savePatientToServer", enabled = true /* optional */)
+    private fun savePatientToServer(patient: Patient) {
+        Log.d("SyncService", "savePatientToServer()")
+        Log.d("savePatientToServer", patient.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addPatient(
@@ -129,17 +153,21 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             patient.activityarea_id,
             patient.geography_id
         )
-        call.enqueue(object : Callback<Patient> {
-            override fun onFailure(call: Call<Patient>, t: Throwable) {
+        call.enqueue(object : Callback<PatientModel> {
+            override fun onFailure(call: Call<PatientModel>, t: Throwable) {
                 Log.d("onFailure", t.toString())
-                DentalApp.cancelNotification(applicationContext, 1001)
+
             }
 
-            override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
+            override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
-                            val tempPatient = response.body() as Patient
+                            val tempPatient = response.body() as PatientModel
+                            val dbPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
+                            dbPatient!!.remote_id = tempPatient.id
+                            dbPatient.uploaded = true
+                            patientsBox.put(dbPatient)
                             Log.d("saveToServer", tempPatient.fullName() + " saved.")
                         }
                         400 -> {
@@ -158,7 +186,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                     //tvErrorMessage.text = response.message()
                     Log.d("saveToServer", response.message())
                 }
-                DentalApp.cancelNotification(applicationContext, 1001)
+
             }
 
         })

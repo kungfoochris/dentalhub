@@ -3,10 +3,11 @@ package com.example.dentalhub.interfaces
 import android.content.Context
 import com.example.dentalhub.R
 import com.example.dentalhub.entities.Activity
+import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.models.Geography
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.LoginResponse
-//import com.example.dentalhub.models.Patient
+import com.example.dentalhub.models.Patient as PatientModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -39,13 +40,20 @@ interface DjangoInterface {
         @Field("longitude") longitude: String,
         @Field("activityarea_id") activity_area_id: String,
         @Field("geography_id") geography_id: String
-    ): Call<Patient>
+    ): Call<PatientModel>
+
+    @FormUrlEncoded
+    @POST("encounters")
+    fun addEncounter(
+        @Header("Authorization") token: String,
+        @Field("encounter_type") encounterType: String
+    ): Call<Encounter>
 
     @GET("patients")
     fun searchPatient(@Query("s") s: String): Call<List<Patient>>
 
     @GET("patients")
-    fun listPatients(@Header("Authorization") token: String): Call<List<Patient>>
+    fun listPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
 
     @GET("geography")
     fun listGeographies(@Header("Authorization") token: String): Call<List<Geography>>
