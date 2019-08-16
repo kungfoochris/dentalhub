@@ -23,6 +23,6 @@ class History : Parcelable {
     var no_underlying_medical_condition: Boolean = false
     var medications: String = ""
     var not_taking_any_medications: Boolean = false
-    var no_allergies: Boolean = true
+    var no_allergies: Boolean = false
     var allergies: String = ""
 }
