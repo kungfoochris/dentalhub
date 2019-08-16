@@ -2,12 +2,11 @@ package com.example.dentalhub.models
 
 data class Geography(
         var id: Int,
-        var street_address: String,
-        var city: String,
-        var state: String,
-        var country: String
+        var ward: Ward,
+        var municipality: Municipality,
+        var district: District
 ){
     fun address(): String {
-        return "$street_address $city"
+        return "${municipality.name}-${ward.ward}, ${district.name}"
     }
 }

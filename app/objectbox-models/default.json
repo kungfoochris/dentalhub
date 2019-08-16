@@ -119,7 +119,7 @@
     },
     {
       "id": "4:1157577452900899492",
-      "lastPropertyId": "10:466259076947025597",
+      "lastPropertyId": "11:8784516982877373926",
       "name": "Encounter",
       "properties": [
         {
@@ -146,6 +146,10 @@
         {
           "id": "10:466259076947025597",
           "name": "updated_at"
+        },
+        {
+          "id": "11:8784516982877373926",
+          "name": "remote_id"
         }
       ],
       "relations": []
@@ -632,7 +636,7 @@
     },
     {
       "id": "11:5879306020069855923",
-      "lastPropertyId": "2:334193145003257446",
+      "lastPropertyId": "3:4697469304532939930",
       "name": "Ward",
       "properties": [
         {
@@ -643,6 +647,10 @@
           "id": "2:334193145003257446",
           "indexId": "9:2505731580970054181",
           "name": "municipalityId"
+        },
+        {
+          "id": "3:4697469304532939930",
+          "name": "ward"
         }
       ],
       "relations": []
@@ -666,7 +674,12 @@
           "name": "districtId"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "2:253196380465833548",
+          "name": "wards"
+        }
+      ]
     },
     {
       "id": "13:6534091832271946302",
@@ -682,12 +695,17 @@
           "name": "name"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "3:5570497786064776124",
+          "name": "municipalities"
+        }
+      ]
     }
   ],
   "lastEntityId": "13:6534091832271946302",
   "lastIndexId": "10:7830217148444823917",
-  "lastRelationId": "1:4855156061007441450",
+  "lastRelationId": "3:5570497786064776124",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,

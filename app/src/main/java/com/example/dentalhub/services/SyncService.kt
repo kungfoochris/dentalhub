@@ -81,7 +81,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     private fun displayNotification() {
-        allPatients = patientsBox.query().equal(Patient_.uploaded, false).build().find()
+        allPatients = patientsBox.query().build().find()
         for (patient in allPatients) {
             DentalApp.displayNotification(
                 applicationContext,
@@ -90,7 +90,12 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                 patient.fullName(),
                 "Uploading patient detail"
             )
-            savePatientToServer(patient)
+            if(!patient.uploaded){
+                savePatientToServer(patient)
+            }
+            // TODO: read the patient from db again so that you can get remote_id
+            val updatedLocalPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
+            val remoteId = updatedLocalPatient!!.remote_id
             allEncounters = encountersBox.query().equal(Encounter_.patientId,patient.id).equal(Encounter_.uploaded, false).build().find()
             for(tempEncounter in allEncounters){
                 DentalApp.displayNotification(
@@ -100,8 +105,43 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                     patient.fullName(),
                     "Uploading encounter details"
                 )
-                saveEncounterToServer(tempEncounter)
+                // TODO: set the patient id here also
+                saveEncounterToServer(remoteId, tempEncounter)
+                // TODO: read the encounter again from local db so that you can have remote Id
 
+                // TODO: save the history using the remoteId of encoutner
+                DentalApp.displayNotification(
+                    applicationContext,
+                    1001,
+                    "Syncing...",
+                    patient.fullName(),
+                    "Uploading history details"
+                )
+                // TODO: save the treatment using the remoteId of encoutner
+                DentalApp.displayNotification(
+                    applicationContext,
+                    1001,
+                    "Syncing...",
+                    patient.fullName(),
+                    "Uploading treatment details"
+                )
+                // TODO: save the screening using the remoteId of encoutner
+                DentalApp.displayNotification(
+                    applicationContext,
+                    1001,
+                    "Syncing...",
+                    patient.fullName(),
+                    "Uploading screening details"
+                )
+                // TODO: save the referral using the remoteId of encoutner
+                DentalApp.displayNotification(
+                    applicationContext,
+                    1001,
+                    "Syncing...",
+                    patient.fullName(),
+                    "Uploading referral details"
+                )
+                // TODO: save the recall using the remoteId of encoutner
             }
         }
         DentalApp.cancelNotification(applicationContext, 1001)
@@ -129,12 +169,12 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     @AddTrace(name = "syncService_saveEncounterToServer", enabled = true /* optional */)
-    private fun saveEncounterToServer(tempEncounter: Encounter) {
+    private fun saveEncounterToServer(patientId: Int,tempEncounter: Encounter) {
         Log.d("SyncService", "saveEncounterToServer()")
         Log.d("saveEncounterToServer", tempEncounter.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
-        val call = panelService.addEncounter("JWT $token", tempEncounter.encounter_type)
+        val call = panelService.addEncounter("JWT $token", patientId, tempEncounter.encounter_type)
         call.enqueue(object: Callback<EncounterModel>{
             override fun onFailure(call: Call<EncounterModel>, t: Throwable) {
                 Log.d("onFailure", t.toString())

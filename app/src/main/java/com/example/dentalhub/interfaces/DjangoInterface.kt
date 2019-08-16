@@ -3,6 +3,7 @@ package com.example.dentalhub.interfaces
 import android.content.Context
 import com.example.dentalhub.R
 import com.example.dentalhub.entities.Activity
+import com.example.dentalhub.models.District
 import com.example.dentalhub.entities.Encounter
 import com.example.dentalhub.models.Encounter as EncounterModel
 import com.example.dentalhub.models.Geography
@@ -44,9 +45,10 @@ interface DjangoInterface {
     ): Call<PatientModel>
 
     @FormUrlEncoded
-    @POST("encounters")
+    @POST("patient/{user}/encounters")
     fun addEncounter(
         @Header("Authorization") token: String,
+        @Path("user") user: Int,
         @Field("encounter_type") encounterType: String
     ): Call<EncounterModel>
 
@@ -55,6 +57,9 @@ interface DjangoInterface {
 
     @GET("patients")
     fun listPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
+
+    @GET("addresses")
+    fun listAddresses(): Call<List<District>>
 
     @GET("geography")
     fun listGeographies(@Header("Authorization") token: String): Call<List<Geography>>
