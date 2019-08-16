@@ -1,6 +1,7 @@
 package com.example.dentalhub.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.dentalhub.DentalApp
@@ -109,7 +111,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private var btnBackground: Drawable? = null
     private var defaultBackground: Drawable? = null
     private var btnDefaultBackground: Drawable? = null
-
+    private  var btnOnSelectTextColor: Int = 0
     private var teeth = Array(52) { "NONE" }
 
 
@@ -125,6 +127,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
         btnBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
         btnDefaultBackground = ResourcesCompat.getDrawable(resources, R.drawable.treatment_button_default_color, null)
+        btnOnSelectTextColor = ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null)
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
         checkBoxFVApplied = view.findViewById(R.id.checkBoxFVApplied)
@@ -395,26 +398,32 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             "SDF" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf_applied, null)
                 teeth[buttonNumber] = "SDF"
+                button.setTextColor(btnOnSelectTextColor)
             }
             "SEAL" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal_applied, null)
                 teeth[buttonNumber] = "SEAL"
+                button.setTextColor(btnOnSelectTextColor)
             }
             "ART" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art_applied, null)
                 teeth[buttonNumber] = "ART"
+                button.setTextColor(btnOnSelectTextColor)
             }
             "EXO" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo_applied, null)
                 teeth[buttonNumber] = "EXO"
+                button.setTextColor(btnOnSelectTextColor)
             }
             "UNTR" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr_applied, null)
                 teeth[buttonNumber] = "UNTR"
+                button.setTextColor(btnOnSelectTextColor)
             }
             "SMART" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_applied, null)
                 teeth[buttonNumber] = "SMART"
+                button.setTextColor(btnOnSelectTextColor)
             }
         }
 
@@ -568,10 +577,11 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         if (teeth[teethNumber] == selectedTreatment) {
             teeth[teethNumber] = defaultTreatment
             button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_default_text, null))
+            button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_button_default, null)
         } else {
             teeth[teethNumber] = selectedTreatment
             if (selectedTreatment != "") {
-                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+                button.setTextColor(btnOnSelectTextColor)
             }
         }
     }

@@ -26,6 +26,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -40,6 +41,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -145,6 +147,7 @@
         </LinearLayout>
         <LinearLayout
                 android:weightSum="1"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
