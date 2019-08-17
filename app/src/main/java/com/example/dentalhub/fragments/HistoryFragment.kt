@@ -2,6 +2,7 @@ package com.example.dentalhub.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.example.dentalhub.entities.History_
 import com.example.dentalhub.fragments.interfaces.HistoryFormCommunicator
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_history.*
+import android.text.TextWatcher as TextWatcher
 
 class HistoryFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
@@ -107,8 +109,14 @@ class HistoryFragment : Fragment() {
                 checkBoxHepatitisBOrC.isChecked = false
                 checkBoxHIV.isChecked = false
                 etOther.setText("")
+                etOther.visibility = View.GONE
+                tvOther.visibility = View.GONE
+            } else {
+                etOther.visibility = View.VISIBLE
+                tvOther.visibility = View.VISIBLE
             }
         }
+
         checkBoxNotTakingAnyMedications.setOnCheckedChangeListener { compoundButton, _ ->
             if (!compoundButton.isChecked) {
                 etMedications.visibility = View.VISIBLE

@@ -574,15 +574,18 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     }
 
     private fun toggleTreatment(teethNumber: Int, button: Button) {
-        if (teeth[teethNumber] == selectedTreatment) {
-            teeth[teethNumber] = defaultTreatment
-            button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_default_text, null))
-            button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_button_default, null)
-        } else {
-            teeth[teethNumber] = selectedTreatment
-            if (selectedTreatment != "") {
+
+        if (selectedTreatment != "") {
+            if (teeth[teethNumber] == selectedTreatment) {
+                teeth[teethNumber] = defaultTreatment
+                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_default_text, null))
+                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_button_default, null)
+            } else {
+                teeth[teethNumber] = selectedTreatment
                 button.setTextColor(btnOnSelectTextColor)
             }
+        } else {
+            button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_default_text, null))
         }
     }
 

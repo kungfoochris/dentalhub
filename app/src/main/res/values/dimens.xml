@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="form_col_1_weight">0.6</dimen>
     <dimen name="form_col_2_weight">0.4</dimen>
+    <dimen name="default_font_size">18sp</dimen>
+    <dimen name="default_checkbox_scaleX">1.5</dimen>
 </resources>

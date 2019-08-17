@@ -17,7 +17,6 @@ class PatientAdapter(context: Context, private var data: List<Patient>, listener
 
     interface PatientClickListener {
         fun onViewPatientDetailClick(patient: Patient)
-
         fun onCallPatientClick(patient: Patient)
         fun onDelayPatientClick(patient: Patient)
     }
