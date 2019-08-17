@@ -137,10 +137,10 @@ class MainActivity : AppCompatActivity() {
                 //displaySearchDialog()
                 startActivity(Intent(context, SearchActivity::class.java))
             }
-            R.id.sync -> {
-                Log.d(TAG, "startSync")
-                startService(Intent(this, SyncService::class.java))
-            }
+//            R.id.sync -> {
+//                Log.d(TAG, "startSync")
+//                startService(Intent(this, SyncService::class.java))
+//            }
             R.id.logout -> {
                 DentalApp.clearAuthDetails(context)
                 startActivity(Intent(this, LoginActivity::class.java))

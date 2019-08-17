@@ -8,23 +8,18 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.adapters.GeographyAdapter
 import com.example.dentalhub.entities.*
-import com.example.dentalhub.interfaces.DjangoInterface
 import com.example.dentalhub.models.Geography
 import com.example.dentalhub.models.District as DistrictModel
 import com.example.dentalhub.models.Municipality as MunicipalityModel
 import com.example.dentalhub.models.Ward as WardModel
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import io.objectbox.Box
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class LocationSelectorActivity : AppCompatActivity() {
@@ -42,8 +37,7 @@ class LocationSelectorActivity : AppCompatActivity() {
     private lateinit var dividerItemDecoration: DividerItemDecoration
     private lateinit var context: Context
     var allGeographies = mutableListOf<Geography>()
-    var allDistricts = listOf<DistrictModel>()
-    private var geographies = mutableListOf<String>()
+
     private lateinit var geographyAdapter: GeographyAdapter
     private val TAG = "selectorActivity"
 
@@ -76,8 +70,6 @@ class LocationSelectorActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         btnLogout = findViewById(R.id.btnLogout)
 
-        districtsBox = ObjectBox.boxStore.boxFor(District::class.java)
-        municipalitiesBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
         wardsBox= ObjectBox.boxStore.boxFor(Ward::class.java)
 
         mLayoutManager = LinearLayoutManager(this)
@@ -95,53 +87,18 @@ class LocationSelectorActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun listAddressess() {
-        Log.d(TAG, "listAddressess()")
-        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
-        val panelService = DjangoInterface.create(this)
-        val call = panelService.listAddresses()
-        call.enqueue(object : Callback<List<DistrictModel>> {
-            override fun onFailure(call: Call<List<DistrictModel>>, t: Throwable) {
-                Log.d(TAG, "onFailure()")
-                Log.d(TAG, t.toString())
-            }
-
-            override fun onResponse(call: Call<List<DistrictModel>>, response: Response<List<DistrictModel>>) {
-                Log.d(TAG, "onResponse()")
-                if (null != response.body()) {
-                    when (response.code()) {
-                        200 -> {
-                            allDistricts = response.body() as List<DistrictModel>
-
-                            for(district in allDistricts){
-                                districtsBox.put(District(0,district.name, null))
-
-                                for(municipality in district.municipalities){
-                                    val d = districtsBox.query().orderDesc(District_.id).build().findFirst()
-                                    val mun = Municipality(0,municipality.name, null, null)
-                                    mun.district?.target = d
-                                    municipalitiesBox.put(mun)
-
-                                    for(ward in municipality.wards){
-                                        val m = municipalitiesBox.query().orderDesc(Municipality_.id).build().findFirst()
-                                        val w = Ward(0,ward.ward)
-                                        w.municipality?.target = m
-                                        wardsBox.put(w)
-                                        allGeographies.add(Geography(ward.id,ward,municipality,district))
-                                    }
-                                }
-                            }
-                            setupAdapter()
-                        }
-                    }
-                }
-            }
-
-        })
-
+        val allWards = wardsBox.query().build().find()
+        for(ward in allWards){
+            val wardObj = com.example.dentalhub.models.Ward(ward.id.toInt(),ward.ward,"")
+            val municipalityObj = MunicipalityModel(0,"","", emptyList())
+            val districtObj = DistrictModel(0,"", emptyList())
+            val geography = Geography(ward.id.toInt(), wardObj, municipalityObj, districtObj)
+            allGeographies.add(geography)
+            setupAdapter()
+        }
     }
+
 
     private fun setupAdapter() {
 

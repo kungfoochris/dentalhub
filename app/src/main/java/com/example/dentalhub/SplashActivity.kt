@@ -26,17 +26,23 @@ class SplashActivity : Activity() {
             if (token.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
-                val selectedLocation = DentalApp.readIntFromPreference(context, Constants.PREF_SELECTED_LOCATION).toString()
-                val selectedActivity = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
-                val remarks = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
-                if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty()){
-                    startActivity(Intent(this, LocationSelectorActivity::class.java))
+                val setupComplete = DentalApp.readFromPreference(context, Constants.PREF_SETUP_COMPLETE,"false")
+                if(setupComplete.equals("true")){
+                    val selectedLocation = DentalApp.readIntFromPreference(context, Constants.PREF_SELECTED_LOCATION).toString()
+                    val selectedActivity = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
+                    val remarks = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
+                    if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty()){
+                        startActivity(Intent(this, LocationSelectorActivity::class.java))
+                    }else{
+                        DentalApp.geography = selectedLocation
+                        DentalApp.activity = selectedActivity
+                        DentalApp.activityRemarks = remarks
+                        startActivity(Intent(this, MainActivity::class.java))
+                    }
                 }else{
-                    DentalApp.geography = selectedLocation
-                    DentalApp.activity = selectedActivity
-                    DentalApp.activityRemarks = remarks
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, SetupActivity::class.java))
                 }
+
             }
 
         }, 3000)
