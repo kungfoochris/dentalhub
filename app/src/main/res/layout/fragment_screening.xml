@@ -23,11 +23,11 @@
             <Spinner
                     android:id="@+id/spinnerRisk"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="35dp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_marginTop="4dp"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -39,11 +39,12 @@
                     android:id="@+id/spinnerNoOfDecayedPrimaryTeeth"
                     android:layout_width="100dp"
                     android:dropDownWidth="75dp"
-                    android:layout_height="wrap_content"/>
+                    android:scrollbarSize="20dp"
+                    android:layout_height="30dp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_marginTop="4dp"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -55,10 +56,11 @@
                     android:id="@+id/spinnerNoOfDecayedPermanentTeeth"
                     android:layout_width="100dp"
                     android:dropDownWidth="75dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="30dp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -75,6 +77,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -91,6 +94,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -107,6 +111,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -123,6 +128,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -139,6 +145,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -155,6 +162,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView

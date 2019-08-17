@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         setupUI()
 
-        listPatients()
+//        listPatients()
     }
 
     @AddTrace(name = "setupUIMainActivity", enabled = true /* optional */)
@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
             R.id.search -> {
                 Log.d("PARAS", "do the search stuff")
                 //displaySearchDialog()
-                startActivity(Intent(context, SearchActivity::class.java))
+                startActivity(Intent(context, SearchPatientActivity::class.java))
             }
             R.id.sync -> {
                 Log.d(TAG, "startSync")

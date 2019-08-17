@@ -12,7 +12,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <LinearLayout
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                    android:layout_margin="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxBloodDisorderOrBleedingProblem"
                         android:scaleY="1.5"
@@ -27,7 +29,9 @@
 
             </LinearLayout>
             <LinearLayout
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                    android:layout_margin="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxDiabetes"
                         android:scaleY="1.5"
@@ -43,7 +47,9 @@
 
             </LinearLayout>
             <LinearLayout
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                    android:layout_margin="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxLiverProblem"
                         android:scaleY="1.5"
@@ -59,7 +65,9 @@
 
             </LinearLayout>
             <LinearLayout
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                    android:layout_margin="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxRheumaticFever"
                         android:scaleY="1.5"
@@ -75,6 +83,7 @@
 
             </LinearLayout>
             <LinearLayout
+                    android:layout_margin="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <CheckBox
@@ -92,6 +101,7 @@
 
             </LinearLayout>
             <LinearLayout
+                    android:layout_margin="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <CheckBox
@@ -109,6 +119,7 @@
 
             </LinearLayout>
             <LinearLayout
+                    android:layout_margin="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <CheckBox
@@ -125,11 +136,13 @@
 
             </LinearLayout>
             <LinearLayout
+                    android:layout_margin="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
                         android:id="@+id/tvOther"
                         android:text="@string/other"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <EditText
@@ -139,7 +152,9 @@
                         android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                    android:layout_margin="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <CheckBox
                         android:id="@+id/checkBoxNoUnderlyingMedicalCondition"
                         android:scaleY="1.5"
@@ -175,6 +190,7 @@
                 <TextView
                         android:id="@+id/tvMedications"
                         android:text="@string/medications"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <EditText
@@ -204,6 +220,7 @@
                 <TextView
                         android:id="@+id/tvAllergies"
                         android:text="@string/allergies"
+                        android:textSize="@dimen/default_font_size"
                         android:labelFor="@+id/tvAllergies"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"/>
                 <EditText
