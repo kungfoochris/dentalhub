@@ -9,9 +9,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-class Municipality(
-    @Id var id: Long,
-    var name: String,
-    var district: ToOne<District>? = null,
-    var wards: ToMany<Ward>?
-) : Parcelable
+class Municipality: Parcelable{
+    @Id var id: Long = 0
+    var name: String = ""
+    var district: ToOne<District>? = null
+    var wards: ToMany<Ward>? = null
+}
