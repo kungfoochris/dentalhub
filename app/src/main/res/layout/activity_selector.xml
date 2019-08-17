@@ -28,13 +28,9 @@
                 android:padding="16dp"
                 android:orientation="vertical"
                 android:layout_width="420dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_height="wrap_content">
-            <View
-                    android:background="@color/grey_300"
-                    android:layout_height="1dp"
-                    android:layout_width="match_parent"
-                    android:layout_marginBottom="8dp"
-            />
             <LinearLayout
                     android:id="@+id/header"
                     android:orientation="horizontal"

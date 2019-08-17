@@ -216,9 +216,9 @@ class AddPatientActivity : AppCompatActivity() {
     private fun createPatient(): Patient {
         Log.d(TAG, "createPatient()")
 
-        val dbDistrict = allDistricts.get(spinnerDistrict.selectedItemPosition)
-        val dbMunicipality = allMunicipalities.get(spinnerMunicipality.selectedItemPosition)
-        val dbWard = allWards.get(spinnerWard.selectedItemPosition)
+        val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
+        val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
+        val dbWard = allWards[spinnerWard.selectedItemPosition]
 
         val id: Long = 0
         val firstName = etFirstName.text.toString()
@@ -228,9 +228,9 @@ class AddPatientActivity : AppCompatActivity() {
         val dob = etDOB.text.toString()
         val phone = etPhone.text.toString()
         val education = spinnerEducationLevel.selectedItem.toString()
-        val ward = spinnerWard.selectedItemPosition
-        val municipality = dbMunicipality!!.id.toInt()
-        val district = dbDistrict!!.id.toInt()
+        val ward = dbWard.id.toInt()
+        val municipality = dbMunicipality.id.toInt()
+        val district = dbDistrict.id.toInt()
         val geography = DentalApp.geography
         val activity = DentalApp.activity
         val latitude = DentalApp.location.latitude
