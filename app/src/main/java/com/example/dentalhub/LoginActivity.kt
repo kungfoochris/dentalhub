@@ -96,11 +96,14 @@ class LoginActivity : AppCompatActivity() {
                     }
                     loading.visibility = View.GONE
                 } else {
-                    val gson = Gson()
-                    val errorResponse = gson.fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-                    tvErrorMessage.text = errorResponse.non_field_errors[0]
-                    tvErrorMessage.visibility = View.VISIBLE
+                    Log.d("response CODE", response.code().toString())
+                    Log.d("response BODY", response.errorBody().toString())
                     loading.visibility = View.GONE
+//                    val gson = Gson()
+//                    val errorResponse = gson.fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
+//                    tvErrorMessage.text = errorResponse.non_field_errors[0]
+//                    tvErrorMessage.visibility = View.VISIBLE
+
                 }
             }
 
@@ -121,12 +124,12 @@ class LoginActivity : AppCompatActivity() {
         var status = false
         if (etEmail.text.isBlank()) {
             status = false
-            tvErrorMessage.text = getString(R.string.email_is_required)
+            tvErrorMessage.text = getString(R.string.username_is_required)
             tvErrorMessage.visibility = View.VISIBLE
-        } else if (!EmailValidator.isEmailValid(etEmail.text.toString())) {
-            status = false
-            tvErrorMessage.text = getString(R.string.invalid_email)
-            tvErrorMessage.visibility = View.VISIBLE
+//        } else if (!EmailValidator.isEmailValid(etEmail.text.toString())) {
+//            status = false
+//            tvErrorMessage.text = getString(R.string.invalid_email)
+//            tvErrorMessage.visibility = View.VISIBLE
         } else if (etPassword.text.isBlank()) {
             status = false
             tvErrorMessage.text = getString(R.string.password_is_required)
