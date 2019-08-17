@@ -169,7 +169,7 @@ class AddPatientActivity : AppCompatActivity() {
         allMunicipalities = municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
         val municipalitiesList = mutableListOf<String>()
         for(municipality in allMunicipalities){
-            municipalitiesList.add(municipality.name.toUpperCase())
+            municipalitiesList.add(municipality.name.capitalize())
         }
         spinnerMunicipality.adapter = AdapterHelper.createAdapter(context, municipalitiesList.toList())
         setupWards()
@@ -179,7 +179,7 @@ class AddPatientActivity : AppCompatActivity() {
         allDistricts =districtsBox.query().build().find()
         val districtsList = mutableListOf<String>()
         for(district in allDistricts){
-            districtsList.add(district.name.toUpperCase())
+            districtsList.add(district.name.capitalize())
         }
         spinnerDistrict.adapter = AdapterHelper.createAdapter(context,districtsList.toList())
         setupMunicipalities()

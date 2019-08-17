@@ -90,7 +90,7 @@ class LocationSelectorActivity : AppCompatActivity() {
     private fun listAddressess() {
         val allWards = wardsBox.query().build().find()
         for(ward in allWards){
-            val geography = Geography(ward.id.toInt(),ward.name)
+            val geography = Geography(ward.id.toInt(),ward.name.split(' ').joinToString { it.capitalize()  })
             allGeographies.add(geography)
             setupAdapter()
         }
