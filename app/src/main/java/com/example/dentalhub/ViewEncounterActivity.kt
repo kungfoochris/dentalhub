@@ -251,12 +251,20 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideBoolean(history.no_underlying_medical_condition, tvNoUnderlyingMedicalConditionTitle, tvNoUnderlyingMedicalCondition)
 
         // left to history.medicine Edit Text ------------
-        hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
+
+        if (history.not_taking_any_medications) {
+            tvNotTakingAnyMedicationsTitle.visibility = View.GONE
+            tvNotTakingAnyMedications.visibility = View.GONE
+        } else {
+            tvNotTakingAnyMedications.setText(history.medications)
+        }
+//        hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
         // since alleragies is little different i.e. if no_allergies is True show allergies(String) else don't show both no_allergies(Int) and allergies(String)
         if (history.no_allergies) {
-            hideBoolean(false, tvAllergiesTitle, tvAllergies)
+            tvAllergiesTitle.visibility = View.GONE
+            tvAllergies.visibility = View.GONE
         } else {
-            tvAllergies.text = history.allergies
+            tvAllergies.setText(history.allergies)
         }
 
         // screening
