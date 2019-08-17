@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         setupUI()
 
-//        listPatients()
+        listPatients()
     }
 
     @AddTrace(name = "setupUIMainActivity", enabled = true /* optional */)
