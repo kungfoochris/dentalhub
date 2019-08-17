@@ -51,7 +51,7 @@ class GeographyAdapter(
 
 
         fun bindEncounter(geography: Geography) {
-            tvLocation.text = geography.address()
+            tvLocation.text = geography.name
         }
 
 

@@ -77,6 +77,7 @@ class SetupActivity : AppCompatActivity() {
                                             val dbMunicipality = municipalitiesBox.query().orderDesc(Municipality_.id).build().findFirst()
                                             val newWard = Ward()
                                             newWard.ward = ward.ward
+                                            newWard.name = dbMunicipality!!.name+"-"+ward.ward.toString()+", "+dbDistrict!!.name
                                             newWard.municipality?.target = dbMunicipality
                                             wardsBox.put(newWard)
                                         }

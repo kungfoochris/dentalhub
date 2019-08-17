@@ -90,10 +90,7 @@ class LocationSelectorActivity : AppCompatActivity() {
     private fun listAddressess() {
         val allWards = wardsBox.query().build().find()
         for(ward in allWards){
-            val wardObj = com.example.dentalhub.models.Ward(ward.id.toInt(),ward.ward,"")
-            val municipalityObj = MunicipalityModel(0,"","", emptyList())
-            val districtObj = DistrictModel(0,"", emptyList())
-            val geography = Geography(ward.id.toInt(), wardObj, municipalityObj, districtObj)
+            val geography = Geography(ward.id.toInt(),ward.name)
             allGeographies.add(geography)
             setupAdapter()
         }
