@@ -69,6 +69,8 @@
                     android:id="@+id/btnBack"
                     android:layout_weight="0.5"
                     android:text="@string/back"
+                    android:layout_marginEnd="2.5dp"
+                    android:background="@drawable/default_button_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
             />
@@ -76,6 +78,8 @@
                     android:id="@+id/btnNext"
                     android:layout_weight="0.5"
                     android:text="@string/save"
+                    android:layout_marginStart="2.5dp"
+                    android:background="@drawable/default_button_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
             />
