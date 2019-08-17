@@ -215,6 +215,7 @@
                     android:textColor="@android:color/holo_red_dark"
             />
             <Button
+                    android:layout_marginTop="5dp"
                     android:id="@+id/btnAddPatient"
                     android:text="@string/save_patient"
                     android:background="@drawable/default_button_background"

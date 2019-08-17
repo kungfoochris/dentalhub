@@ -3,6 +3,7 @@ package com.example.dentalhub
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -79,7 +80,13 @@ class SearchPatientActivity : AppCompatActivity() {
                 searchItem.collapseActionView()
                 Toast.makeText(this@SearchPatientActivity, "Looing for the $query", Toast.LENGTH_SHORT).show()
 
-                patientsearchlist = patientsBox.query().equal(Patient_.first_name, query).build().find()
+                patientsearchlist = patientsBox.query()
+                    .contains(Patient_.first_name, query)
+                    .or()
+                    .contains(Patient_.last_name, query)
+                    .or()
+                    .contains(Patient_.last_name, query)
+                    .build().find()
 
                 println("Query resutl is $patientsearchlist")
 
@@ -91,7 +98,9 @@ class SearchPatientActivity : AppCompatActivity() {
                     }
 
                     override fun onCallPatientClick(patient: Patient) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        val call = Intent(Intent.ACTION_DIAL)
+                        call.data = Uri.parse("tel:" + patient.phone)
+                        startActivity(call)
                     }
 
                     override fun onDelayPatientClick(patient: Patient) {
