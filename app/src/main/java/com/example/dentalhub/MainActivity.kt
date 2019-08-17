@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -96,7 +97,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCallPatientClick(patient: Patient) {
-                // do the calling
+                val call = Intent(Intent.ACTION_DIAL)
+                call.data = Uri.parse("tel:" + patient.phone)
+                startActivity(call)
             }
 
             override fun onViewPatientDetailClick(patient: Patient) {
@@ -137,10 +140,10 @@ class MainActivity : AppCompatActivity() {
                 //displaySearchDialog()
                 startActivity(Intent(context, SearchPatientActivity::class.java))
             }
-//            R.id.sync -> {
-//                Log.d(TAG, "startSync")
-//                startService(Intent(this, SyncService::class.java))
-//            }
+            R.id.sync -> {
+                Log.d(TAG, "startSync")
+                startService(Intent(this, SyncService::class.java))
+            }
             R.id.logout -> {
                 DentalApp.clearAuthDetails(context)
                 startActivity(Intent(this, LoginActivity::class.java))

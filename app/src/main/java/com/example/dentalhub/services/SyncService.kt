@@ -82,6 +82,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
     private fun displayNotification() {
         allPatients = patientsBox.query().build().find()
+        println("Display notification $allPatients")
         for (patient in allPatients) {
             DentalApp.displayNotification(
                 applicationContext,
@@ -90,59 +91,61 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                 patient.fullName(),
                 "Uploading patient detail"
             )
+            println("Patient remote id is : ${patient.remote_id}, : ${patient.first_name}")
             if(!patient.uploaded){
                 savePatientToServer(patient)
             }
             // TODO: read the patient from db again so that you can get remote_id
             val updatedLocalPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
-            val remoteId = updatedLocalPatient!!.remote_id
-            allEncounters = encountersBox.query().equal(Encounter_.patientId,patient.id).equal(Encounter_.uploaded, false).build().find()
-            for(tempEncounter in allEncounters){
-                DentalApp.displayNotification(
-                    applicationContext,
-                    1001,
-                    "Syncing...",
-                    patient.fullName(),
-                    "Uploading encounter details"
-                )
+            println("Patient remote id is : ${updatedLocalPatient?.remote_id}, : ${updatedLocalPatient?.first_name}")
+//            val remoteId = updatedLocalPatient!!.remote_id
+//            allEncounters = encountersBox.query().equal(Encounter_.patientId,patient.id).equal(Encounter_.uploaded, false).build().find()
+//            for(tempEncounter in allEncounters){
+//                DentalApp.displayNotification(
+//                    applicationContext,
+//                    1001,
+//                    "Syncing...",
+//                    patient.fullName(),
+//                    "Uploading encounter details"
+//                )
                 // TODO: set the patient id here also
-                saveEncounterToServer(remoteId, tempEncounter)
+//                saveEncounterToServer(remoteId, tempEncounter)
                 // TODO: read the encounter again from local db so that you can have remote Id
 
                 // TODO: save the history using the remoteId of encoutner
-                DentalApp.displayNotification(
-                    applicationContext,
-                    1001,
-                    "Syncing...",
-                    patient.fullName(),
-                    "Uploading history details"
-                )
+//                DentalApp.displayNotification(
+//                    applicationContext,
+//                    1001,
+//                    "Syncing...",
+//                    patient.fullName(),
+//                    "Uploading history details"
+//                )
                 // TODO: save the treatment using the remoteId of encoutner
-                DentalApp.displayNotification(
-                    applicationContext,
-                    1001,
-                    "Syncing...",
-                    patient.fullName(),
-                    "Uploading treatment details"
-                )
+//                DentalApp.displayNotification(
+//                    applicationContext,
+//                    1001,
+//                    "Syncing...",
+//                    patient.fullName(),
+//                    "Uploading treatment details"
+//                )
                 // TODO: save the screening using the remoteId of encoutner
-                DentalApp.displayNotification(
-                    applicationContext,
-                    1001,
-                    "Syncing...",
-                    patient.fullName(),
-                    "Uploading screening details"
-                )
+//                DentalApp.displayNotification(
+//                    applicationContext,
+//                    1001,
+//                    "Syncing...",
+//                    patient.fullName(),
+//                    "Uploading screening details"
+//                )
                 // TODO: save the referral using the remoteId of encoutner
-                DentalApp.displayNotification(
-                    applicationContext,
-                    1001,
-                    "Syncing...",
-                    patient.fullName(),
-                    "Uploading referral details"
-                )
+//                DentalApp.displayNotification(
+//                    applicationContext,
+//                    1001,
+//                    "Syncing...",
+//                    patient.fullName(),
+//                    "Uploading referral details"
+//                )
                 // TODO: save the recall using the remoteId of encoutner
-            }
+//            }
         }
         DentalApp.cancelNotification(applicationContext, 1001)
 
@@ -229,10 +232,10 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         call.enqueue(object : Callback<PatientModel> {
             override fun onFailure(call: Call<PatientModel>, t: Throwable) {
                 Log.d("onFailure", t.toString())
-
             }
 
             override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
+                println("Response is $response")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
@@ -240,6 +243,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                             val dbPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
                             dbPatient!!.remote_id = tempPatient.id
                             dbPatient.uploaded = true
+                            println("Uploaded patient id : ${tempPatient.id} : remote_id : ${tempPatient.id}, Name is : ${dbPatient.fullName()}")
                             patientsBox.put(dbPatient)
                             Log.d("savePatientToServer", tempPatient.fullName() + " saved.")
                         }
@@ -254,6 +258,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                         }
                     }
                 } else {
+                    println("Else part executed.")
                     Log.d("savePatientToServer", response.code().toString())
                     Log.d("savePatientToServer", Gson().toJson(response.body()).toString())
                     //tvErrorMessage.text = response.message()
