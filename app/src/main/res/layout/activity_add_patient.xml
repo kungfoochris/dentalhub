@@ -132,7 +132,6 @@
                         android:layout_height="wrap_content"
                 />
             </LinearLayout>
-
             <LinearLayout
                     android:weightSum="1"
                     android:orientation="horizontal"
@@ -140,16 +139,14 @@
                     android:layout_height="wrap_content">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
-                        android:text="@string/ward"
+                        android:text="@string/district"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <EditText
-                        android:id="@+id/etWard"
-                        android:inputType="number"
-                        android:hint="@string/ward"
-                        android:layout_weight="@dimen/form_col_1_weight"
+                <Spinner
+                        android:id="@+id/spinnerDistrict"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="@dimen/form_col_2_weight"
                 />
             </LinearLayout>
             <LinearLayout
@@ -162,13 +159,11 @@
                         android:text="@string/municipality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <EditText
-                        android:id="@+id/etMunicipality"
-                        android:layout_weight="@dimen/form_col_1_weight"
-                        android:hint="@string/municipality"
-                        android:inputType="number"
+                <Spinner
+                        android:id="@+id/spinnerMunicipality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="@dimen/form_col_2_weight"
                 />
             </LinearLayout>
             <LinearLayout
@@ -178,18 +173,17 @@
                     android:layout_height="wrap_content">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
-                        android:text="@string/district"
+                        android:text="@string/ward"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <EditText
-                        android:id="@+id/etDistrict"
-                        android:layout_weight="@dimen/form_col_1_weight"
-                        android:hint="@string/district"
-                        android:inputType="number"
+                <Spinner
+                        android:id="@+id/spinnerWard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="@dimen/form_col_2_weight"
                 />
             </LinearLayout>
+
             <LinearLayout
                     android:weightSum="1"
                     android:orientation="horizontal"

@@ -8,7 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dentalhub.entities.Patient
+import com.example.dentalhub.entities.*
 import com.example.dentalhub.utils.AdapterHelper
 import com.example.dentalhub.utils.DateHelper
 import com.example.dentalhub.utils.DateValidator
@@ -27,9 +27,9 @@ class AddPatientActivity : AppCompatActivity() {
     private lateinit var etLastName: EditText
     private lateinit var etDOB: EditText
     private lateinit var etPhone: EditText
-    private lateinit var etWard: EditText
-    private lateinit var etMunicipality: EditText
-    private lateinit var etDistrict: EditText
+    private lateinit var spinnerWard: Spinner
+    private lateinit var spinnerMunicipality: Spinner
+    private lateinit var spinnerDistrict: Spinner
 
     private lateinit var loading: ProgressBar
     private lateinit var tvErrorMessage: TextView
@@ -39,7 +39,14 @@ class AddPatientActivity : AppCompatActivity() {
     private val TAG = "AddPatientActivity"
     private var action = "new"
 
+    private var allWards = mutableListOf<Ward>()
+    private var allMunicipalities = mutableListOf<Municipality>()
+    private var allDistricts = mutableListOf<District>()
+
     private lateinit var patientsBox: Box<Patient>
+    private lateinit var districtsBox: Box<com.example.dentalhub.entities.District>
+    private lateinit var municipalitiesBox: Box<Municipality>
+    private lateinit var wardsBox: Box<Ward>
 
     @AddTrace(name = "onCreateAddPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +62,10 @@ class AddPatientActivity : AppCompatActivity() {
 
     @AddTrace(name = "initUIAddPatientActivity", enabled = true /* optional */)
     private fun initUI() {
+        districtsBox = ObjectBox.boxStore.boxFor(com.example.dentalhub.entities.District::class.java)
+        municipalitiesBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
+        wardsBox= ObjectBox.boxStore.boxFor(Ward::class.java)
+
         loading = findViewById(R.id.loading)
         tvErrorMessage = findViewById(R.id.tvErrorMessage)
 
@@ -62,9 +73,9 @@ class AddPatientActivity : AppCompatActivity() {
         etMiddleName = findViewById(R.id.etMiddleName)
         etLastName = findViewById(R.id.etLastName)
 
-        etWard = findViewById(R.id.etWard)
-        etMunicipality = findViewById(R.id.etMunicipality)
-        etDistrict = findViewById(R.id.etDistrict)
+        spinnerWard = findViewById(R.id.spinnerWard)
+        spinnerMunicipality = findViewById(R.id.spinnerMunicipality)
+        spinnerDistrict = findViewById(R.id.spinnerDistrict)
 
 
         etPhone = findViewById(R.id.etPhone)
@@ -98,6 +109,7 @@ class AddPatientActivity : AppCompatActivity() {
                 datePickerDialog.show()
             }
         }
+        setupDistricts()
         spinnerGender.adapter =
             AdapterHelper.createAdapter(context, resources.getStringArray(R.array.gender_list).toList())
 
@@ -107,11 +119,70 @@ class AddPatientActivity : AppCompatActivity() {
         updateUI()
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
 
+        spinnerDistrict.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                setupMunicipalities()
+            }
+        }
+        spinnerMunicipality.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                setupWards()
+            }
+
+        }
         btnAddPatient.setOnClickListener {
             if (isFormValid()) {
                 savePatient()
             }
         }
+    }
+    private fun setupWards() {
+        Log.d("Selected Municipality: ", spinnerMunicipality.selectedItem.toString())
+        Log.d("Municipality Position: ", spinnerMunicipality.selectedItemPosition.toString())
+        if(allMunicipalities.size>0){
+            val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
+            val dbWards = wardsBox.query().equal(Ward_.municipalityId, dbMunicipality.id).build().find()
+            val wards = mutableListOf<String>()
+            allWards = dbWards
+            for(ward in dbWards){
+                wards.add(ward.ward.toString())
+            }
+            spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
+        }else{
+            Toast.makeText(context,"Municipality not found.",Toast.LENGTH_LONG).show()
+        }
+
+    }
+
+    private fun setupMunicipalities() {
+        Log.d("Selected District",spinnerDistrict.selectedItem.toString())
+        Log.d("District Position",spinnerDistrict.selectedItemPosition.toString())
+        val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
+        allMunicipalities = municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
+        val municipalitiesList = mutableListOf<String>()
+        for(municipality in allMunicipalities){
+            municipalitiesList.add(municipality.name.toUpperCase())
+        }
+        spinnerMunicipality.adapter = AdapterHelper.createAdapter(context, municipalitiesList.toList())
+        setupWards()
+    }
+
+    private fun setupDistricts() {
+        allDistricts =districtsBox.query().build().find()
+        val districtsList = mutableListOf<String>()
+        for(district in allDistricts){
+            districtsList.add(district.name.toUpperCase())
+        }
+        spinnerDistrict.adapter = AdapterHelper.createAdapter(context,districtsList.toList())
+        setupMunicipalities()
     }
 
     private fun updateUI() {
@@ -122,7 +193,6 @@ class AddPatientActivity : AppCompatActivity() {
             etLastName.setText(patient!!.last_name)
             etDOB.setText(patient!!.dob)
             etPhone.setText(patient!!.phone)
-            etWard.setText(patient!!.ward.toString())
 //            etStreetAddress.setText(patient!!.street_address)
 //            etCity.setText(patient!!.city)
 //            etState.setText(patient!!.state)
@@ -145,6 +215,11 @@ class AddPatientActivity : AppCompatActivity() {
     @AddTrace(name = "createPatientAddPatientActivity", enabled = true /* optional */)
     private fun createPatient(): Patient {
         Log.d(TAG, "createPatient()")
+
+        val dbDistrict = allDistricts.get(spinnerDistrict.selectedItemPosition)
+        val dbMunicipality = allMunicipalities.get(spinnerMunicipality.selectedItemPosition)
+        val dbWard = allWards.get(spinnerWard.selectedItemPosition)
+
         val id: Long = 0
         val firstName = etFirstName.text.toString()
         val middleName = etMiddleName.text.toString()
@@ -153,9 +228,9 @@ class AddPatientActivity : AppCompatActivity() {
         val dob = etDOB.text.toString()
         val phone = etPhone.text.toString()
         val education = spinnerEducationLevel.selectedItem.toString()
-        val ward = etWard.text.toString().toInt()
-        val municipality = etMunicipality.text.toString().toInt()
-        val district = etDistrict.text.toString().toInt()
+        val ward = spinnerWard.selectedItemPosition
+        val municipality = dbMunicipality!!.id.toInt()
+        val district = dbDistrict!!.id.toInt()
         val geography = DentalApp.geography
         val activity = DentalApp.activity
         val latitude = DentalApp.location.latitude
@@ -229,9 +304,7 @@ class AddPatientActivity : AppCompatActivity() {
         val lastName = etLastName.text.toString()
         val phone = etPhone.text.toString()
         val dob = etDOB.text.toString()
-        val ward = etWard.text.toString()
-        val municipality = etMunicipality.text.toString()
-        val district = etDistrict.text.toString()
+
 
         if (firstName.isBlank() || firstName.isEmpty() || firstName.length < 2) {
             tvErrorMessage.text = resources.getString(R.string.first_name_is_required)
@@ -255,21 +328,6 @@ class AddPatientActivity : AppCompatActivity() {
         }
         if (!DateValidator.isValid(dob)) {
             tvErrorMessage.text = resources.getString(R.string.valid_date_is_required)
-            tvErrorMessage.visibility = View.VISIBLE
-            return false
-        }
-        if (ward.isEmpty() || ward.isBlank()) {
-            tvErrorMessage.text = resources.getString(R.string.ward_is_required)
-            tvErrorMessage.visibility = View.VISIBLE
-            return false
-        }
-        if (municipality.isEmpty() || municipality.isBlank()) {
-            tvErrorMessage.text = resources.getString(R.string.municipality_is_required)
-            tvErrorMessage.visibility = View.VISIBLE
-            return false
-        }
-        if (district.isEmpty() || district.isBlank()) {
-            tvErrorMessage.text = resources.getString(R.string.district_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
