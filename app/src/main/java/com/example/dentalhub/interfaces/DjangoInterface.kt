@@ -20,7 +20,7 @@ interface DjangoInterface {
 
     @FormUrlEncoded
     @POST("token/obtain")
-    fun login(@Field("email") email: String, @Field("password") password: String): Call<LoginResponse>
+    fun login(@Field("username") username: String, @Field("password") password: String): Call<LoginResponse>
 
     @FormUrlEncoded
     @POST("patients")
