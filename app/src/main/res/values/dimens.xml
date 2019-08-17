@@ -6,4 +6,5 @@
     <dimen name="form_col_2_weight">0.4</dimen>
     <dimen name="default_font_size">18sp</dimen>
     <dimen name="default_checkbox_scaleX">1.5</dimen>
+    <dimen name="spinner_default_height">30dp</dimen>
 </resources>
