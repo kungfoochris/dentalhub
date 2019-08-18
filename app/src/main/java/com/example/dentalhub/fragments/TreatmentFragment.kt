@@ -42,6 +42,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private  lateinit var btnSMART: Button
 
 
+    private lateinit var checkBoxSDFWholeMouth: CheckBox
     private lateinit var checkBoxFVApplied: CheckBox
     private lateinit var checkBoxTreatmentPlanComplete: CheckBox
     private lateinit var etNotes: EditText
@@ -130,6 +131,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnOnSelectTextColor = ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null)
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
+        checkBoxSDFWholeMouth = view.findViewById(R.id.checkBoxSDFWholeMouth)
         checkBoxFVApplied = view.findViewById(R.id.checkBoxFVApplied)
         checkBoxTreatmentPlanComplete = view.findViewById(R.id.checkBoxTreatmentPlanComplete)
         etNotes = view.findViewById(R.id.etNotes)
@@ -285,6 +287,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
         btnNext.setOnClickListener {
             val notes = etNotes.text.toString()
+            val sdfWholeMouth = checkBoxSDFWholeMouth.isChecked
             val fvApplied = checkBoxFVApplied.isChecked
             val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
 
@@ -293,11 +296,12 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             Log.d("fvApplied", fvApplied.toString())
             Log.d("teeth", teeth.toString())
 
-            treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete, teeth)
+            treatmentFormCommunicator.updateTreatment(notes, sdfWholeMouth, fvApplied, treatmentPlanComplete, teeth)
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {
             val notes = etNotes.text.toString()
+            val sdfWholeMouth = checkBoxSDFWholeMouth.isChecked
             val fvApplied = checkBoxFVApplied.isChecked
             val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
 
@@ -306,7 +310,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             Log.d("fvApplied", fvApplied.toString())
             Log.d("teeth", teeth.toString())
 
-            treatmentFormCommunicator.updateTreatment(notes, fvApplied, treatmentPlanComplete, teeth)
+            treatmentFormCommunicator.updateTreatment(notes, sdfWholeMouth, fvApplied, treatmentPlanComplete, teeth)
             fragmentCommunicator.goBack()
         }
     }

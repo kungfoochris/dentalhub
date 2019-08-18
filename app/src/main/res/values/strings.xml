@@ -177,4 +177,5 @@
     <string name="search_hint">Search</string>
     <string name="username_is_required">Username is required.</string>
     <string name="prompt_username">Username</string>
+    <string name="sdf_whole_mouth">SDF Whole Mouth</string>
 </resources>

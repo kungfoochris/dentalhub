@@ -161,6 +161,57 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.view_patient_info, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.viewPatient -> {
+                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
+                val inflate : LayoutInflater = layoutInflater
+                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
+
+                // to get all id of the textView
+                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
+                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
+                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
+                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
+                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
+                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
+                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
+                val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
+                val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
+                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
+                val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
+
+                // to set the details of the patient on Alert Dialog i.e. View Patient
+                tvFirstNameView.text = patient.first_name
+                tvMiddleNameView.text = patient.middle_name
+                tvLastNameView.text = patient.last_name
+                tvGenderpopupView.text = patient.gender
+                tvDateofBirthView.text = patient.dob
+                tvPhonepopupView.text = patient.phone
+                tvWardView.text = patient.ward.toString()
+                tvMunicipalityView.text = patient.municipality.toString()
+                tvDistrictView.text = patient.district.toString()
+                tvEducationLevelView.text = patient.education
+
+
+                builder.setView(view)
+                val dialog : Dialog = builder.create()
+                dialog.show()
+
+                btnCloseDialog.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun updateHistory(
         bloodDisorders: Boolean, diabetes: Boolean, liverProblem: Boolean,
         rheumaticFever: Boolean, seizuresOrEpilepsy: Boolean, hepatitisBOrC: Boolean,
@@ -228,59 +279,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         screeningBox.put(screening)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.view_patient_info, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.viewPatient -> {
-                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
-                val inflate : LayoutInflater = layoutInflater
-                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
-
-                // to get all id of the textView
-                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
-                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
-                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
-                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
-                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
-                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
-                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
-                val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
-                val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
-                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
-                val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
-
-                // to set the details of the patient on Alert Dialog i.e. View Patient
-                tvFirstNameView.text = patient.first_name
-                tvMiddleNameView.text = patient.middle_name
-                tvLastNameView.text = patient.last_name
-                tvGenderpopupView.text = patient.gender
-                tvDateofBirthView.text = patient.dob
-                tvPhonepopupView.text = patient.phone
-                tvWardView.text = patient.ward.toString()
-                tvMunicipalityView.text = patient.municipality.toString()
-                tvDistrictView.text = patient.district.toString()
-                tvEducationLevelView.text = patient.education
-
-
-                builder.setView(view)
-                val dialog : Dialog = builder.create()
-                dialog.show()
-
-                btnCloseDialog.setOnClickListener {
-                    dialog.dismiss()
-                }
-
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun updateTreatment(
         notes: String,
+        sdfWholeMouth: Boolean,
         fvApplied: Boolean,
         treatmentPlanComplete: Boolean,
         teeth: Array<String>
@@ -290,6 +291,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             encounter.id
         ).orderDesc(Treatment_.id).build().findFirst()!!
 
+        treatment.sdf_whole_mouth = sdfWholeMouth
         treatment.fv_applied = fvApplied
         treatment.notes = notes
         treatment.treatment_plan_complete = treatmentPlanComplete
