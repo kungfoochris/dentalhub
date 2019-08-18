@@ -85,11 +85,13 @@ class ViewEncounterActivity : AppCompatActivity() {
     // treatment
 
     // Treatment Title TextView
+    private lateinit var tvSDFWholeMouthTitle: TextView
     private lateinit var tvFVAppliedTitle: TextView
     private lateinit var tvTreatmentPlanCompleteTitle: TextView
     private lateinit var tvNotesTitle: TextView
 
     // Treatment Data TextView
+    private lateinit var tvSDFWholeMouth: TextView
     private lateinit var tvFVApplied: TextView
     private lateinit var tvTreatmentPlanComplete: TextView
     private lateinit var tvNotes: TextView
@@ -308,16 +310,19 @@ class ViewEncounterActivity : AppCompatActivity() {
         // treatment
 
         // Treatment Title TextView
+        tvSDFWholeMouthTitle = findViewById(R.id.tvSDFWholeMouthTitle)
         tvFVAppliedTitle = findViewById(R.id.tvFVAppliedTitle)
         tvNotesTitle = findViewById(R.id.tvNotesTitle)
         tvTreatmentPlanCompleteTitle = findViewById(R.id.tvTreatmentPlanCompleteTitle)
 
         // Treatment Data TextView
+        tvSDFWholeMouth = findViewById(R.id.tvSDFWholeMouth)
         tvFVApplied = findViewById(R.id.tvFVApplied)
         tvNotes = findViewById(R.id.tvNotes)
         tvTreatmentPlanComplete = findViewById(R.id.tvTreatmentPlanComplete)
 
         buttonInit()
+        hideBoolean(treatment.sdf_whole_mouth, tvSDFWholeMouthTitle, tvSDFWholeMouth)
         hideBoolean(treatment.fv_applied, tvFVAppliedTitle, tvFVApplied)
         hideBoolean(treatment.treatment_plan_complete, tvTreatmentPlanCompleteTitle, tvTreatmentPlanComplete)
         hideString(treatment.notes, tvNotesTitle, tvNotes)

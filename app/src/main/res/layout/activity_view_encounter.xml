@@ -775,6 +775,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/tvSDFWholeMouthTitle"
+                    android:layout_marginEnd="16dp"
+                    android:textStyle="bold"
+                    android:text="@string/sdf_whole_mouth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+            />
+            <TextView
+                    android:id="@+id/tvSDFWholeMouth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+            />
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
                     android:id="@+id/tvFVAppliedTitle"
                     android:layout_marginEnd="16dp"
                     android:textStyle="bold"
