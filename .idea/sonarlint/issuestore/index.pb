@@ -120,3 +120,11 @@ t
 Dapp/src/main/java/com/example/dentalhub/adapters/GeographyAdapter.kt,6/7/67041812602f190f32b2785d3c32ba82f127c40c
 i
 9app/src/main/java/com/example/dentalhub/SearchActivity.kt,b/3/b3bc50de7483a3e8a7e1a95dcaee71e6577cd97b
+l
+<app/src/main/java/com/example/dentalhub/entities/District.kt,3/4/3438378e0c7e590c666cf74240df1e2c02b3dcd4
+p
+@app/src/main/java/com/example/dentalhub/entities/Municipality.kt,8/7/878920bc85dd8112795817e127c3136cf2fbdfa0
+k
+;app/src/main/java/com/example/dentalhub/models/Geography.kt,c/c/cc82064f1f7ec7dcbd54a5973e7c3de16328b8d1
+i
+9app/src/main/java/com/example/dentalhub/models/Patient.kt,d/5/d5835b57f9e6aa8646bfd1221d16c076f9bfb36c

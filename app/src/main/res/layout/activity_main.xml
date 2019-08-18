@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/mainActivityLayout"
         android:orientation="vertical"
         tools:context=".MainActivity"
@@ -17,7 +17,20 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:focusable="true"
-
+            android:layout_marginBottom="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+    />
+    <Button
+            android:id="@+id/btnAddNewPatient"
+            android:text="@string/add_new_patient"
+            android:background="@drawable/default_button_background"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="6dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
     />
     <ProgressBar
             android:id="@+id/loading"
@@ -25,6 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-    />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

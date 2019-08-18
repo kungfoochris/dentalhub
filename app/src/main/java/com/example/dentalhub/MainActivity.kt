@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,7 @@ import io.objectbox.query.Query
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var loading: ProgressBar
+    private lateinit var btnAddPatient: Button
 
     private lateinit var context: Context
     private lateinit var patientAdapter: PatientAdapter
@@ -54,8 +56,6 @@ class MainActivity : AppCompatActivity() {
 
         startService(Intent(this, LocationTrackerService::class.java))
 
-
-
         setupUI()
 
         listPatients()
@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupUI() {
         loading = findViewById(R.id.loading)
         recyclerView = findViewById(R.id.recyclerView)
+        btnAddPatient = findViewById(R.id.btnAddNewPatient)
 
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         patientsQuery = patientsBox.query().build()
@@ -74,6 +75,12 @@ class MainActivity : AppCompatActivity() {
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         val divider = RecyclerViewItemSeparator(20)
         recyclerView.addItemDecoration(divider)
+
+        btnAddPatient.setOnClickListener {
+            addNewPatient()
+        }
+
+
     }
 
 
@@ -128,9 +135,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.addPatient -> {
-                val addPatientActivityIntent = Intent(this, AddPatientActivity::class.java)
-                addPatientActivityIntent.putExtra("ACTION", "new")
-                startActivity(addPatientActivityIntent)
+                addNewPatient()
             }
             R.id.refresh -> {
                 listPatients()
@@ -151,6 +156,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun addNewPatient() {
+        val addPatientActivityIntent = Intent(this, AddPatientActivity::class.java)
+        addPatientActivityIntent.putExtra("ACTION", "new")
+        startActivity(addPatientActivityIntent)
     }
 
     private fun displayDelayDialog(patient: Patient) {
