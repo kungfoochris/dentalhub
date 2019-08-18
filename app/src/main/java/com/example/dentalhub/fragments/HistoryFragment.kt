@@ -49,7 +49,7 @@ class HistoryFragment : Fragment() {
     private lateinit var etAllergies: EditText
 
     private lateinit var btnNext: Button
-    private lateinit var btnBack: Button
+    private lateinit var btnSave: Button
 
 
 
@@ -78,7 +78,7 @@ class HistoryFragment : Fragment() {
         etMedications = view.findViewById(R.id.etMedications)
         etAllergies = view.findViewById(R.id.etAllergies)
 
-        btnBack = view.findViewById(R.id.btnBack)
+        btnSave = view.findViewById(R.id.btnSave)
         btnNext = view.findViewById(R.id.btnNext)
         return view
     }
@@ -138,40 +138,46 @@ class HistoryFragment : Fragment() {
         }
 
         btnNext.setOnClickListener {
-            val bloodDisorders = checkBoxBloodDisorderOrBleedingProblem.isChecked
-            val diabetes = checkBoxDiabetes.isChecked
-            val liverProblem = checkBoxLiverProblem.isChecked
-            val rheumaticFever = checkBoxRheumaticFever.isChecked
-            val seizuresOrEpilepsy = checkBoxSeizuresOrEpilepsy.isChecked
-            val hepatitisBOrC = checkBoxHepatitisBOrC.isChecked
-            val hiv = checkBoxHIV.isChecked
-            val other = etOther.text.toString()
-            val noUnderlyingMedicalCondition = checkBoxNoUnderlyingMedicalCondition.isChecked
-            val medications = etMedications.text.toString()
-            val notTakingAnyMedications = checkBoxNotTakingAnyMedications.isChecked
-            val noAllergies = checkBoxNoAllergies.isChecked
-            val allergies = etAllergies.text.toString()
-
-            historyFormCommunicator.updateHistory(
-                bloodDisorders,
-                diabetes,
-                liverProblem,
-                rheumaticFever,
-                seizuresOrEpilepsy,
-                hepatitisBOrC,
-                hiv,
-                other,
-                noUnderlyingMedicalCondition,
-                medications,
-                notTakingAnyMedications,
-                noAllergies,
-                allergies
-            )
+            saveHistoryData()
             fragmentCommunicator.goForward()
         }
-        btnBack.setOnClickListener {
+        btnSave.setOnClickListener {
+            saveHistoryData()
             fragmentCommunicator.goBack()
         }
+    }
+
+    private fun saveHistoryData() {
+
+        val bloodDisorders = checkBoxBloodDisorderOrBleedingProblem.isChecked
+        val diabetes = checkBoxDiabetes.isChecked
+        val liverProblem = checkBoxLiverProblem.isChecked
+        val rheumaticFever = checkBoxRheumaticFever.isChecked
+        val seizuresOrEpilepsy = checkBoxSeizuresOrEpilepsy.isChecked
+        val hepatitisBOrC = checkBoxHepatitisBOrC.isChecked
+        val hiv = checkBoxHIV.isChecked
+        val other = etOther.text.toString()
+        val noUnderlyingMedicalCondition = checkBoxNoUnderlyingMedicalCondition.isChecked
+        val medications = etMedications.text.toString()
+        val notTakingAnyMedications = checkBoxNotTakingAnyMedications.isChecked
+        val noAllergies = checkBoxNoAllergies.isChecked
+        val allergies = etAllergies.text.toString()
+
+        historyFormCommunicator.updateHistory(
+            bloodDisorders,
+            diabetes,
+            liverProblem,
+            rheumaticFever,
+            seizuresOrEpilepsy,
+            hepatitisBOrC,
+            hiv,
+            other,
+            noUnderlyingMedicalCondition,
+            medications,
+            notTakingAnyMedications,
+            noAllergies,
+            allergies
+        )
     }
 
     private fun uncheckNoUnderlyingMedicalCon(checkbox: CheckBox) {

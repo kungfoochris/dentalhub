@@ -237,9 +237,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <Button
-                        android:id="@+id/btnBack"
+                        android:id="@+id/btnSave"
                         android:layout_weight="0.5"
-                        android:text="@string/back"
+                        android:text="@string/save"
                         android:layout_marginEnd="2.5dp"
                         android:background="@drawable/default_button_background"
                         android:layout_width="match_parent"

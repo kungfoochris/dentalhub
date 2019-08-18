@@ -79,8 +79,6 @@ class MainActivity : AppCompatActivity() {
         btnAddPatient.setOnClickListener {
             addNewPatient()
         }
-
-
     }
 
 
@@ -158,6 +156,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    // Goes to intent AddPatientActivity to Add New Patient
     private fun addNewPatient() {
         val addPatientActivityIntent = Intent(this, AddPatientActivity::class.java)
         addPatientActivityIntent.putExtra("ACTION", "new")
