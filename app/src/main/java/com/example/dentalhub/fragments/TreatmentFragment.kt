@@ -390,6 +390,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             if (treatment.tooth85 != "NONE") setColorForButton(btnId85, treatment.tooth85, 46)
 
 
+            if (treatment.sdf_whole_mouth) checkBoxSDFWholeMouth.isChecked = true
             if (treatment.fv_applied) checkBoxFVApplied.isChecked = true
             if (treatment.treatment_plan_complete) checkBoxTreatmentPlanComplete.isChecked = true
             if (!treatment.notes.isNullOrEmpty()) etNotes.setText(treatment.notes)

@@ -128,3 +128,9 @@ k
 ;app/src/main/java/com/example/dentalhub/models/Geography.kt,c/c/cc82064f1f7ec7dcbd54a5973e7c3de16328b8d1
 i
 9app/src/main/java/com/example/dentalhub/models/Patient.kt,d/5/d5835b57f9e6aa8646bfd1221d16c076f9bfb36c
+j
+:app/src/main/java/com/example/dentalhub/models/District.kt,d/9/d91107a21675f8e3acab177357bc59408cecbd56
+o
+?app/src/main/java/com/example/dentalhub/models/ErrorResponse.kt,a/e/ae9856f6fe465482098c4aa6d8bed8d3ba048d39
+k
+;app/src/main/java/com/example/dentalhub/models/Encounter.kt,3/d/3d5e860fad3384c41f70423b40278ef86e9b45cd
