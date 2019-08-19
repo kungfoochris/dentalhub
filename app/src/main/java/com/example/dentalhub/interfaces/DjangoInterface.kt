@@ -10,6 +10,7 @@ import com.example.dentalhub.models.Geography
 import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.LoginResponse
 import com.example.dentalhub.models.Patient as PatientModel
+import com.example.dentalhub.models.Activity as ActivityModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -43,6 +44,14 @@ interface DjangoInterface {
         @Field("activityarea_id") activity_area_id: String,
         @Field("geography_id") geography_id: String
     ): Call<PatientModel>
+
+    @FormUrlEncoded
+    @POST("activities")
+    fun addActivity(
+        @Header("Authorization") token: String,
+        @Field("area") area: String,
+        @Field("name") name: String
+    ): Call<ActivityModel>
 
     @FormUrlEncoded
     @POST("patient/{user}/encounters")

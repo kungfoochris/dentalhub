@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         btnAddPatient.setOnClickListener {
             addNewPatient()
         }
+        Toast.makeText(this, "Activity selected is ${DentalApp.activity}", Toast.LENGTH_LONG).show()
     }
 
 
