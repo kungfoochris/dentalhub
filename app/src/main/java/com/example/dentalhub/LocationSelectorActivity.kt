@@ -14,12 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dentalhub.adapters.GeographyAdapter
 import com.example.dentalhub.entities.*
+import com.example.dentalhub.interfaces.DjangoInterface
+import com.example.dentalhub.models.Encounter
 import com.example.dentalhub.models.Geography
 import com.example.dentalhub.models.District as DistrictModel
 import com.example.dentalhub.models.Municipality as MunicipalityModel
 import com.example.dentalhub.models.Ward as WardModel
 import com.example.dentalhub.utils.RecyclerViewItemSeparator
 import io.objectbox.Box
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 
 class LocationSelectorActivity : AppCompatActivity() {
@@ -36,7 +41,8 @@ class LocationSelectorActivity : AppCompatActivity() {
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var dividerItemDecoration: DividerItemDecoration
     private lateinit var context: Context
-    var allGeographies = mutableListOf<Geography>()
+//    var allGeographies = mutableListOf<Geography>()
+    var allAPIGeographies = listOf<Geography>()
 
     private lateinit var geographyAdapter: GeographyAdapter
     private val TAG = "selectorActivity"
@@ -56,6 +62,7 @@ class LocationSelectorActivity : AppCompatActivity() {
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
         permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        permissions.add(Manifest.permission.CALL_PHONE)
         permissionsToRequest = permissionsToRequest(permissions)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissionsToRequest!!.size > 0) {
@@ -79,6 +86,7 @@ class LocationSelectorActivity : AppCompatActivity() {
         recyclerView.addItemDecoration(divider)
 
         listAddressess()
+        loadGeographyAPI()
 
         btnLogout.setOnClickListener {
             DentalApp.clearAuthDetails(context)
@@ -87,19 +95,48 @@ class LocationSelectorActivity : AppCompatActivity() {
         }
     }
 
+    private fun loadGeographyAPI() {
+        Log.d(TAG, "loadGeographyAPI()")
+        val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
+        val panelService = DjangoInterface.create(context)
+        val call = panelService.listGeographies("JWT $token")
+        call.enqueue(object: retrofit2.Callback<List<Geography>> {
+            override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
+                Log.d(TAG, "onFaliure()")
+            }
+
+            override fun onResponse(call: Call<List<Geography>>, response: Response<List<Geography>>) {
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
+                            allAPIGeographies = response.body() as List<Geography>
+                            setupAdapter()
+                        }
+                        else -> {
+                            Log.d(TAG, "Unhandle exception.")
+                        }
+                    }
+                }
+            }
+
+        })
+    }
+
     private fun listAddressess() {
-        val allWards = wardsBox.query().build().find()
-        for(ward in allWards){
-            val geography = Geography(ward.id.toInt(),ward.name.split(' ').joinToString { it.capitalize()  })
-            allGeographies.add(geography)
-            setupAdapter()
-        }
+//        val allWards = wardsBox.query().build().find()
+//        for(ward in allWards){
+//            val geography = Geography(ward.id.toInt(),ward.name.split(' ').joinToString { it.capitalize()  })
+//            allGeographies.add(geography)
+//            setupAdapter()
+//        }
+
+
     }
 
 
     private fun setupAdapter() {
 
-        geographyAdapter = GeographyAdapter(context, allGeographies, object : GeographyAdapter.GeographyClickListener {
+        geographyAdapter = GeographyAdapter(context, allAPIGeographies, object : GeographyAdapter.GeographyClickListener {
             override fun onGeographyClick(geography: Geography) {
                 DentalApp.saveIntToPreference(context, Constants.PREF_SELECTED_LOCATION, geography.id)
                 startActivity(Intent(context, ActivitySelectorActivity::class.java))

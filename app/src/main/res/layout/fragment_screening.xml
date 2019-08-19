@@ -13,6 +13,7 @@
 
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -24,11 +25,11 @@
             <Spinner
                     android:id="@+id/spinnerRisk"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"/>
+                    android:layout_height="@dimen/spinner_default_height"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
+                android:layout_margin="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -46,7 +47,7 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
+                android:layout_margin="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -59,7 +60,7 @@
                     android:id="@+id/spinnerNoOfDecayedPermanentTeeth"
                     android:layout_width="100dp"
                     android:dropDownWidth="75dp"
-                    android:layout_height="30dp"/>
+                    android:layout_height="@dimen/spinner_default_height"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"

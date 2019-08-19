@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dentalhub.DentalApp
 import com.example.dentalhub.R
 
 class GeographyAdapter(
@@ -37,6 +38,8 @@ class GeographyAdapter(
 
         holder.itemView.setOnClickListener {
             Log.d("EncounterAdapter", "itemView clicked")
+            println("Item clicked is ${selectedGeography.location}")
+            DentalApp.geography = selectedGeography.id.toString()
             geographyClickListener.onGeographyClick(selectedGeography)
         }
         holder.bindEncounter(selectedGeography)
@@ -51,7 +54,8 @@ class GeographyAdapter(
 
 
         fun bindEncounter(geography: Geography) {
-            tvLocation.text = geography.name
+//            tvLocation.text = geography.name
+            tvLocation.text = geography.location
         }
 
 
