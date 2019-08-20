@@ -3,21 +3,21 @@ package com.example.dentalhub.interfaces
 import android.content.Context
 import com.example.dentalhub.R
 import com.example.dentalhub.entities.Activity
-import com.example.dentalhub.models.District
-import com.example.dentalhub.entities.Encounter
-import com.example.dentalhub.models.Encounter as EncounterModel
-import com.example.dentalhub.models.Geography
 import com.example.dentalhub.entities.Patient
+import com.example.dentalhub.models.District
+import com.example.dentalhub.models.Geography
 import com.example.dentalhub.models.LoginResponse
-import com.example.dentalhub.models.Patient as PatientModel
-import com.example.dentalhub.models.Activity as ActivityModel
-import com.example.dentalhub.models.History as HistoryModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import com.example.dentalhub.models.Activity as ActivityModel
+import com.example.dentalhub.models.Encounter as EncounterModel
+import com.example.dentalhub.models.Patient as PatientModel
+import com.example.dentalhub.models.History as HistoryModel
+import com.example.dentalhub.models.Screening as ScreeningModel
 
 interface DjangoInterface {
 
@@ -86,25 +86,35 @@ interface DjangoInterface {
     ): Call<HistoryModel>
 
     @FormUrlEncoded
-    @POST("encounter/{encounterid}/screening")
+    @POST("encounter/{remoteId}/screening")
     fun addScreening(
         @Header("Authorization") token: String,
-        @Path("encounter") encounter: String
-        )
+        @Path("remoteId") encounterRemoteId: String,
+        @Field("caries_risk") carries_risk: String,
+        @Field("primary_teeth") decayed_pimary_teeth: Int,
+        @Field("permanent_teeth") decayed_permanent_teeth: Int,
+        @Field("anterior_teeth") cavity_permanent_anterior: Boolean,
+        @Field("postiror_teeth") cavity_permanent_tooth: Boolean,
+        @Field("reversible_pulpitis") active_infection: Boolean,
+        @Field("art") need_art_filling: Boolean,
+        @Field("need_sealant") need_sealant: Boolean,
+        @Field("need_sdf") need_sdf: Boolean,
+        @Field("extraction") need_extraction: Boolean
+    ): Call<ScreeningModel>
 
     @FormUrlEncoded
-    @POST("encounter/{encounterid}/treatment")
+    @POST("encounter/{remoteId}/treatment")
     fun addTreatment(
         @Header("Authorization") token: String,
-        @Path("encounter") encounter: String
-        )
+        @Path("remoteId") encounterRemoteId: String
+    )
 
     @FormUrlEncoded
-    @POST("encounter/{encounterid}/refer")
+    @POST("encounter/{remoteId}/refer")
     fun addReferral(
         @Header("Authorization") token: String,
-        @Path("encounter") encounter: String
-        )
+        @Path("remoteId") encounterRemoteId: String
+    )
 
     @GET("patients")
     fun searchPatient(@Query("s") s: String): Call<List<Patient>>

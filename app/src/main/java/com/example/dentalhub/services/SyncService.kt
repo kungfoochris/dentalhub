@@ -19,6 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.dentalhub.models.Encounter as EncounterModel
 import com.example.dentalhub.models.History as HistoryModel
+import com.example.dentalhub.models.Screening as ScreeningModel
 import com.example.dentalhub.models.Patient as PatientModel
 
 class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener {
@@ -54,6 +55,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
 
         historyBox = ObjectBox.boxStore.boxFor(History::class.java)
+        screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -150,23 +152,61 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             history.no_allergies,
             history.allergies
         )
-        println("Before enque.")
         call.enqueue(object: Callback<HistoryModel> {
-            override fun onFailure(call: Call<com.example.dentalhub.models.History>, t: Throwable) {
-                println("Fail response History.")
+            override fun onFailure(call: Call<HistoryModel>, t: Throwable) {
+                Log.d("History onFailure", t.toString())
 
             }
-
-            override fun onResponse(
-                call: Call<com.example.dentalhub.models.History>,
-                response: Response<com.example.dentalhub.models.History>
-            ) {
-                println("On Response enqeue History.")
-
+            override fun onResponse(call: Call<HistoryModel>, response: Response<HistoryModel>) {
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
+                            println("Successfully added the history.")
+                        }
+                    }
+                }
             }
 
         })
 
+    }
+
+    private fun saveScreeningToServer(remoteId: String, screening: Screening) {
+        Log.d("SyncService", "saveScreeningToServer()")
+        Log.d("saveScreeningToServer", screening.toString())
+        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        val panelService = DjangoInterface.create(this)
+        val call = panelService.addScreening(
+            "JWT $token",
+            remoteId,
+            screening.carries_risk,
+            screening.decayed_pimary_teeth,
+            screening.decayed_permanent_teeth,
+            screening.cavity_permanent_anterior,
+            screening.cavity_permanent_tooth,
+            screening.active_infection,
+            screening.need_art_filling,
+            screening.need_sealant,
+            screening.need_sdf,
+            screening.need_extraction
+        )
+        println("Before enqueue.")
+        call.enqueue(object: Callback<ScreeningModel> {
+            override fun onFailure(call: Call<ScreeningModel>, t: Throwable) {
+                println("Fail response Screening.")
+                Log.d("Screening onFailure", t.toString())
+            }
+            override fun onResponse(call: Call<ScreeningModel>, response: Response<ScreeningModel>) {
+                println("On Response enqueue Screening.")
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
+                            println("Successfully added the Screening.")
+                        }
+                    }
+                }
+            }
+        })
     }
 
     @AddTrace(name = "syncService_savePatientToServer", enabled = true /* optional */)
@@ -299,6 +339,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     private fun saveAllFragmentsToServer(encounter: Encounter) {
 //         read the encounter again from local db so that you can have remote Id
         val tempHistory = historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
+        val tempScreening = screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
         DentalApp.displayNotification(
             applicationContext,
             1001,
@@ -308,6 +349,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         )
         println("Till the History Master")
         saveHistoryToServer(encounter.remote_id, tempHistory)
+        saveScreeningToServer(encounter.remote_id, tempScreening)
         // TODO: save the treatment using the remoteId of encoutner
 //                DentalApp.displayNotification(
 //                    applicationContext,
