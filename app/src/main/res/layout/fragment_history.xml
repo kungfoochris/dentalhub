@@ -169,6 +169,19 @@
                         android:layout_height="wrap_content"/>
 
             </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tvMedications"
+                        android:text="@string/medications"
+                        android:textSize="@dimen/default_font_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/etMedications"
+                        android:labelFor="@+id/tvMedications"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
             <LinearLayout
                     android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
@@ -188,14 +201,15 @@
             </LinearLayout>
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
-                        android:id="@+id/tvMedications"
-                        android:text="@string/medications"
+                        android:id="@+id/tvAllergies"
+                        android:text="@string/allergies"
                         android:textSize="@dimen/default_font_size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:labelFor="@+id/tvAllergies"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
                 <EditText
-                        android:id="@+id/etMedications"
-                        android:labelFor="@+id/tvMedications"
+                        android:id="@+id/etAllergies"
+                        android:labelFor="@+id/tvAllergies"
+                        android:textSize="@dimen/default_font_size"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -212,22 +226,6 @@
                         android:text="@string/no_allergies"
                         android:textSize="@dimen/default_font_size"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                <TextView
-                        android:id="@+id/tvAllergies"
-                        android:text="@string/allergies"
-                        android:textSize="@dimen/default_font_size"
-                        android:labelFor="@+id/tvAllergies"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <EditText
-                        android:id="@+id/etAllergies"
-                        android:labelFor="@+id/tvAllergies"
-                        android:textSize="@dimen/default_font_size"
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
