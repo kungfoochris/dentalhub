@@ -15,8 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
 import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
-import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
+import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
 
@@ -107,12 +107,78 @@ interface DjangoInterface {
     @POST("encounter/{remoteId}/treatment")
     fun addTreatment(
         @Header("Authorization") token: String,
-        @Path("remoteId") encounterRemoteId: String
-    ): Call<TreatmentModel>
+        @Path("remoteId") encounterRemoteId: String,
+        @Field("id") id: String,
+
+        @Field("tooth18") tooth18: String,
+        @Field("tooth17") tooth17: String,
+        @Field("tooth16") tooth16: String,
+        @Field("tooth15") tooth15: String,
+        @Field("tooth14") tooth14: String,
+        @Field("tooth13") tooth13: String,
+        @Field("tooth12") tooth12: String,
+        @Field("tooth11") tooth11: String,
+
+        @Field("tooth21") tooth21: String,
+        @Field("tooth22") tooth22: String,
+        @Field("tooth23") tooth23: String,
+        @Field("tooth24") tooth24: String,
+        @Field("tooth25") tooth25: String,
+        @Field("tooth26") tooth26: String,
+        @Field("tooth27") tooth27: String,
+        @Field("tooth28") tooth28: String,
+
+        @Field("tooth48") tooth48: String,
+        @Field("tooth47") tooth47: String,
+        @Field("tooth46") tooth46: String,
+        @Field("tooth45") tooth45: String,
+        @Field("tooth44") tooth44: String,
+        @Field("tooth43") tooth43: String,
+        @Field("tooth42") tooth42: String,
+        @Field("tooth41") tooth41: String,
+
+        @Field("tooth31") tooth31: String,
+        @Field("tooth32") tooth32: String,
+        @Field("tooth33") tooth33: String,
+        @Field("tooth34") tooth34: String,
+        @Field("tooth35") tooth35: String,
+        @Field("tooth36") tooth36: String,
+        @Field("tooth37") tooth37: String,
+        @Field("tooth38") tooth38: String,
+
+        @Field("tooth55") tooth55: String,
+        @Field("tooth54") tooth54: String,
+        @Field("tooth53") tooth53: String,
+        @Field("tooth52") tooth52: String,
+        @Field("tooth51") tooth51: String,
+
+        @Field("tooth61") tooth61: String,
+        @Field("tooth62") tooth62: String,
+        @Field("tooth63") tooth63: String,
+        @Field("tooth64") tooth64: String,
+        @Field("tooth65") tooth65: String,
+
+        @Field("tooth85") tooth85: String,
+        @Field("tooth84") tooth84: String,
+        @Field("tooth83") tooth83: String,
+        @Field("tooth82") tooth82: String,
+        @Field("tooth81") tooth81: String,
+
+        @Field("tooth71") tooth71: String,
+        @Field("tooth72") tooth72: String,
+        @Field("tooth73") tooth73: String,
+        @Field("tooth74") tooth74: String,
+        @Field("tooth75") tooth75: String,
+
+        @Field("whole_mouth") sdf_whole_mouth: Boolean,
+        @Field("fluoride_varnish") fv_applied: Boolean,
+        @Field("treatment_complete") treatment_plan_complete: Boolean,
+        @Field("note") notes: String
+    )
 
     @FormUrlEncoded
     @POST("encounter/{remoteId}/refer")
-    fun addReferral(
+    fun addRefer(
         @Header("Authorization") token: String,
         @Path("remoteId") encounterRemoteId: String
     )
