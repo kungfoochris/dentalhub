@@ -19,6 +19,7 @@ import com.abhiyantrik.dentalhub.models.History as HistoryModel
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
+import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 
 interface DjangoInterface {
 
@@ -178,10 +179,19 @@ interface DjangoInterface {
 
     @FormUrlEncoded
     @POST("encounter/{remoteId}/refer")
-    fun addRefer(
+    fun addReferral(
         @Header("Authorization") token: String,
-        @Path("remoteId") encounterRemoteId: String
-    )
+        @Path("remoteId") encounterRemoteId: String,
+        @Field("id") id: Long = 0,
+        @Field("no_referal") no_referral: Boolean,
+        @Field("health_post") health_post: Boolean,
+        @Field("hygienist") hygienist: Boolean,
+        @Field("dentist") dentist: Boolean,
+        @Field("physician") general_physician: Boolean,
+        @Field("other") other_details: String
+/*        @Field("date") date: String,
+        @Field("time") time: String*/
+    ): Call<ReferralModel>
 
     @GET("patients")
     fun searchPatient(@Query("s") s: String): Call<List<Patient>>

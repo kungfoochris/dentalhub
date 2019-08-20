@@ -17,9 +17,9 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
+import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
 import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
@@ -33,6 +33,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
+    private lateinit var recallBox: Box<Referral>
 
     private lateinit var networkStateReceiver: NetworkStateReceiver
     private lateinit var allPatients: List<Patient>
@@ -59,6 +60,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         historyBox = ObjectBox.boxStore.boxFor(History::class.java)
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
+        referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -155,11 +157,12 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             history.no_allergies,
             history.allergies
         )
-        call.enqueue(object: Callback<HistoryModel> {
+        call.enqueue(object : Callback<HistoryModel> {
             override fun onFailure(call: Call<HistoryModel>, t: Throwable) {
                 Log.d("History onFailure", t.toString())
 
             }
+
             override fun onResponse(call: Call<HistoryModel>, response: Response<HistoryModel>) {
                 if (null != response.body()) {
                     when (response.code()) {
@@ -195,17 +198,57 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             screening.need_extraction
         )
         println("Before enqueue.")
-        call.enqueue(object: Callback<ScreeningModel> {
+        call.enqueue(object : Callback<ScreeningModel> {
             override fun onFailure(call: Call<ScreeningModel>, t: Throwable) {
                 println("Fail response Screening.")
                 Log.d("Screening onFailure", t.toString())
             }
+
             override fun onResponse(call: Call<ScreeningModel>, response: Response<ScreeningModel>) {
                 println("On Response enqueue Screening.")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
                             println("Successfully added the Screening.")
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+
+    private fun saveReferralToServer(remoteId: String, referral: Referral) {
+        Log.d("SyncService", "saveReferralToServer()")
+        Log.d("saveReferralToServer", referral.toString())
+        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        val panelService = DjangoInterface.create(this)
+        val call = panelService.addReferral(
+            "JWT $token",
+            remoteId,
+            referral.id,
+            referral.no_referral,
+            referral.health_post,
+            referral.hygienist,
+            referral.dentist,
+            referral.general_physician,
+            referral.other_details
+//            referral.date,
+//            referral.time
+        )
+
+        call.enqueue(object : Callback<ReferralModel> {
+            override fun onFailure(call: Call<ReferralModel>, t: Throwable) {
+                println("Fail response Referral.")
+                Log.d("Referral onFailure", t.toString())
+            }
+
+            override fun onResponse(call: Call<ReferralModel>, response: Response<ReferralModel>) {
+                println("On Response enqueue Referral.")
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
+                            println("Successfully added the Referral.")
                         }
                     }
                 }
@@ -288,10 +331,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             treatment.treatment_plan_complete,
             treatment.notes
         )
-        call.enqueue(object: Callback<TreatmentModel> {
+        call.enqueue(object : Callback<TreatmentModel> {
             override fun onFailure(call: Call<TreatmentModel>, t: Throwable) {
                 Log.d("Treatment onFailure", t.toString())
             }
+
             override fun onResponse(call: Call<TreatmentModel>, response: Response<TreatmentModel>) {
                 if (null != response.body()) {
                     when (response.code()) {
@@ -329,12 +373,15 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             patient.activityarea_id,
             patient.geography_id
         )
+        print("Response before")
         call.enqueue(object : Callback<PatientModel> {
             override fun onFailure(call: Call<PatientModel>, t: Throwable) {
+                print("Response in patient is fail®")
                 Log.d("onFailure", t.toString())
             }
 
             override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
+                print("Response in patient is ${response.body()} and ${response.code()}")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
@@ -437,6 +484,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         val tempHistory = historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
         val tempScreening = screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
         val tempTreatment = treatmentBox.query().equal(Treatment_.encounterId, encounter.id).build().findFirst()!!
+        val tempReferral = referralBox.query().equal(Referral_.encounterId, encounter.id).build().findFirst()!!
         DentalApp.displayNotification(
             applicationContext,
             1001,
@@ -448,6 +496,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         saveHistoryToServer(encounter.remote_id, tempHistory)
         saveScreeningToServer(encounter.remote_id, tempScreening)
         saveTreatmentToServer(encounter.remote_id, tempTreatment)
+        saveReferralToServer(encounter.remote_id, tempReferral)
         // TODO: save the treatment using the remoteId of encoutner
 //                DentalApp.displayNotification(
 //                    applicationContext,
