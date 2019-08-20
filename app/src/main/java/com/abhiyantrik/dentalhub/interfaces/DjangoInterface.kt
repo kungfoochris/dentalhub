@@ -188,9 +188,9 @@ interface DjangoInterface {
         @Field("hygienist") hygienist: Boolean,
         @Field("dentist") dentist: Boolean,
         @Field("physician") general_physician: Boolean,
-        @Field("other") other_details: String
-/*        @Field("date") date: String,
-        @Field("time") time: String*/
+        @Field("other") other_details: String,
+        @Field("date") date: String,
+        @Field("time") time: String
     ): Call<ReferralModel>
 
     @GET("patients")

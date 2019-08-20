@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
                             DentalApp.saveToPreference(context, Constants.PREF_AUTH_TOKEN, loginResponse.token)
                             DentalApp.saveToPreference(context, Constants.PREF_AUTH_EMAIL, email)
                             DentalApp.saveToPreference(context, Constants.PREF_AUTH_PASSWORD, password)
-                            startActivity(Intent(context, LocationSelectorActivity::class.java))
+                            startActivity(Intent(context, SetupActivity::class.java))
                         }
                         400 -> {
                             tvErrorMessage.text = getString(R.string.error_http_400)

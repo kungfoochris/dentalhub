@@ -33,7 +33,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
-    private lateinit var recallBox: Box<Referral>
+    private lateinit var recallBox: Box<Recall>
 
     private lateinit var networkStateReceiver: NetworkStateReceiver
     private lateinit var allPatients: List<Patient>
@@ -61,6 +61,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
+        recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -218,7 +219,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
 
-    private fun saveReferralToServer(remoteId: String, referral: Referral) {
+    private fun saveReferralToServer(remoteId: String, referral: Referral, recall: Recall) {
         Log.d("SyncService", "saveReferralToServer()")
         Log.d("saveReferralToServer", referral.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -232,9 +233,9 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             referral.hygienist,
             referral.dentist,
             referral.general_physician,
-            referral.other_details
-//            referral.date,
-//            referral.time
+            referral.other_details,
+            recall.date,
+            recall.time
         )
 
         call.enqueue(object : Callback<ReferralModel> {
@@ -485,6 +486,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         val tempScreening = screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
         val tempTreatment = treatmentBox.query().equal(Treatment_.encounterId, encounter.id).build().findFirst()!!
         val tempReferral = referralBox.query().equal(Referral_.encounterId, encounter.id).build().findFirst()!!
+        val tempRecall = recallBox.query().equal(Recall_.encounterId, encounter.id).build().findFirst()!!
         DentalApp.displayNotification(
             applicationContext,
             1001,
@@ -496,7 +498,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         saveHistoryToServer(encounter.remote_id, tempHistory)
         saveScreeningToServer(encounter.remote_id, tempScreening)
         saveTreatmentToServer(encounter.remote_id, tempTreatment)
-        saveReferralToServer(encounter.remote_id, tempReferral)
+        saveReferralToServer(encounter.remote_id, tempReferral, tempRecall)
         // TODO: save the treatment using the remoteId of encoutner
 //                DentalApp.displayNotification(
 //                    applicationContext,
