@@ -11,6 +11,7 @@ import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.LoginResponse
 import com.example.dentalhub.models.Patient as PatientModel
 import com.example.dentalhub.models.Activity as ActivityModel
+import com.example.dentalhub.models.History as HistoryModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -54,12 +55,56 @@ interface DjangoInterface {
     ): Call<ActivityModel>
 
     @FormUrlEncoded
-    @POST("patient/{user}/encounters")
+    @POST("patients/{user}/encounters")
     fun addEncounter(
         @Header("Authorization") token: String,
-        @Path("user") user: Int,
+        @Path("user") user: String,
+        @Field("geography_id") geographyId: String,
+        @Field("activityarea_id") activityareaId: String,
         @Field("encounter_type") encounterType: String
     ): Call<EncounterModel>
+
+    @FormUrlEncoded
+    @POST("encounter/{remoteId}/history")
+    fun addHistory(
+        @Header("Authorization") token: String,
+        @Path("remoteId") remoteId: String,
+        @Field("id") id: Long,
+        @Field("bleeding") bleeding: Boolean,
+        @Field("diabetes") diabetes: Boolean,
+        @Field("liver") liver: Boolean,
+        @Field("fever") fever: Boolean,
+        @Field("seizures") seizures: Boolean,
+        @Field("hepatitis") hepatitis: Boolean,
+        @Field("hiv") hiv: Boolean,
+        @Field("other") other: String,
+        @Field("underlyingmedical") underlying_medical: Boolean,
+        @Field("no_medication") no_taking_medication: Boolean,
+        @Field("medication") medication: String,
+        @Field("noallergic") no_allergic: Boolean,
+        @Field("allergic") allergic: String
+    ): Call<HistoryModel>
+
+    @FormUrlEncoded
+    @POST("encounter/{encounterid}/screening")
+    fun addScreening(
+        @Header("Authorization") token: String,
+        @Path("encounter") encounter: String
+        )
+
+    @FormUrlEncoded
+    @POST("encounter/{encounterid}/treatment")
+    fun addTreatment(
+        @Header("Authorization") token: String,
+        @Path("encounter") encounter: String
+        )
+
+    @FormUrlEncoded
+    @POST("encounter/{encounterid}/refer")
+    fun addReferral(
+        @Header("Authorization") token: String,
+        @Path("encounter") encounter: String
+        )
 
     @GET("patients")
     fun searchPatient(@Query("s") s: String): Call<List<Patient>>

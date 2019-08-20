@@ -10,8 +10,6 @@ import com.example.dentalhub.DentalApp
 import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.broadcastreceivers.NetworkStateReceiver
 import com.example.dentalhub.entities.*
-import com.example.dentalhub.models.Encounter as EncounterModel
-import com.example.dentalhub.models.Patient as PatientModel
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
@@ -19,6 +17,9 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.example.dentalhub.models.Encounter as EncounterModel
+import com.example.dentalhub.models.History as HistoryModel
+import com.example.dentalhub.models.Patient as PatientModel
 
 class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener {
 
@@ -51,6 +52,8 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+
+        historyBox = ObjectBox.boxStore.boxFor(History::class.java)
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -88,7 +91,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     private fun displayNotification() {
-        allPatients = patientsBox.query().build().find()
+        allPatients = patientsBox.query().equal(Patient_.remote_id, "").build().find()
         println("Display notification $allPatients")
         for (patient in allPatients) {
             DentalApp.displayNotification(
@@ -98,67 +101,10 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                 patient.fullName(),
                 "Uploading patient detail"
             )
-            println("Patient remote id is : ${patient.remote_id}, : ${patient.first_name}")
-            if(!patient.uploaded){
-                savePatientToServer(patient)
-            }
-            val updatedLocalPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
-            println("Uploaded patient name is ${updatedLocalPatient?.fullName()}")
-            val remoteId = updatedLocalPatient!!.remote_id
-            allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).equal(Encounter_.uploaded, false).build().find()
-            for(tempEncounter in allEncounters){
-                DentalApp.displayNotification(
-                    applicationContext,
-                    1001,
-                    "Syncing...",
-                    patient.fullName(),
-                    "Uploading encounter details"
-                )
-                // TODO: set the patient id here also
-                saveEncounterToServer(remoteId, tempEncounter)
-                val updatedLocalEncounter = encountersBox.query().equal(Encounter_.id, tempEncounter.id).build().findFirst()
-                // TODO: read the encounter again from local db so that you can have remote Id
-                val encounterRemoteId = updatedLocalEncounter!!.remote_id
-                println("Uploaded remote id of ${updatedLocalPatient?.fullName()} is : $encounterRemoteId")
-                val tempHistory = historyBox.query().equal(History_.encounterId, updatedLocalEncounter.id).build().findFirst()
-
-                // TODO: save the history using the remoteId of encoutner
-//                DentalApp.displayNotification(
-//                    applicationContext,
-//                    1001,
-//                    "Syncing...",
-//                    patient.fullName(),
-//                    "Uploading history details"
-//                )
-                // TODO: save the treatment using the remoteId of encoutner
-//                DentalApp.displayNotification(
-//                    applicationContext,
-//                    1001,
-//                    "Syncing...",
-//                    patient.fullName(),
-//                    "Uploading treatment details"
-//                )
-                // TODO: save the screening using the remoteId of encoutner
-//                DentalApp.displayNotification(
-//                    applicationContext,
-//                    1001,
-//                    "Syncing...",
-//                    patient.fullName(),
-//                    "Uploading screening details"
-//                )
-                // TODO: save the referral using the remoteId of encoutner
-//                DentalApp.displayNotification(
-//                    applicationContext,
-//                    1001,
-//                    "Syncing...",
-//                    patient.fullName(),
-//                    "Uploading referral details"
-//                )
-                // TODO: save the recall using the remoteId of encoutner
-            }
+            println("Processing patient : ${patient.fullName()}")
+            savePatientToServer(patient)
         }
         DentalApp.cancelNotification(applicationContext, 1001)
-
         stopSelf()
 
 //        var i = 0
@@ -178,6 +124,48 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 //            }
 //        }
 
+
+    }
+
+    private fun saveHistoryToServer(remoteId: String, history: History) {
+        Log.d("SyncService", "saveHistoryToServer()")
+        Log.d("saveHistoryToServer", history.toString())
+        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        val panelService = DjangoInterface.create(this)
+        val call = panelService.addHistory(
+            "JWT $token",
+            remoteId,
+            history.id,
+            history.blood_disorder,
+            history.diabetes,
+            history.liver_problem,
+            history.rheumatic_fever,
+            history.seizuers_or_epilepsy,
+            history.hepatitis_b_or_c,
+            history.hiv,
+            history.other,
+            history.no_underlying_medical_condition,
+            history.not_taking_any_medications,
+            history.medications,
+            history.no_allergies,
+            history.allergies
+        )
+        println("Before enque.")
+        call.enqueue(object: Callback<HistoryModel> {
+            override fun onFailure(call: Call<com.example.dentalhub.models.History>, t: Throwable) {
+                println("Fail response History.")
+
+            }
+
+            override fun onResponse(
+                call: Call<com.example.dentalhub.models.History>,
+                response: Response<com.example.dentalhub.models.History>
+            ) {
+                println("On Response enqeue History.")
+
+            }
+
+        })
 
     }
 
@@ -211,17 +199,17 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             }
 
             override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
-                println("Response is $response")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
                             val tempPatient = response.body() as PatientModel
                             val dbPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
-                            dbPatient!!.remote_id = tempPatient.id
+                            dbPatient!!.remote_id = tempPatient.uid
                             dbPatient.uploaded = true
-                            println("Uploaded patient id : ${tempPatient.id} : remote_id : ${tempPatient.id}, Name is : ${dbPatient.fullName()}")
+                            println("Patient uid is ${tempPatient.uid}")
                             patientsBox.put(dbPatient)
                             Log.d("savePatientToServer", tempPatient.fullName() + " saved.")
+                            checkAllEncounter(dbPatient)
                         }
                         400 -> {
                             Log.d("savePatientToServer", "400 bad request")
@@ -234,7 +222,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                         }
                     }
                 } else {
-                    println("Else part executed.")
                     Log.d("savePatientToServer", response.code().toString())
                     Log.d("savePatientToServer", Gson().toJson(response.body()).toString())
                     //tvErrorMessage.text = response.message()
@@ -246,15 +233,40 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         })
     }
 
+    private fun checkAllEncounter(patient: Patient) {
+        allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
+        for (eachEncounter in allEncounters) {
+            DentalApp.displayNotification(
+                applicationContext,
+                1001,
+                "Syncing...",
+                patient.fullName(),
+                "Uploading encounter details"
+            )
+            saveEncounterToServer(patient.remote_id, patient.geography_id, patient.activityarea_id, eachEncounter)
+        }
+    }
+
 
     @AddTrace(name = "syncService_saveEncounterToServer", enabled = true /* optional */)
-    private fun saveEncounterToServer(patientId: Int,tempEncounter: Encounter) {
+    private fun saveEncounterToServer(
+        patientId: String,
+        patientGoegraphy: String,
+        patientActivityId: String,
+        tempEncounter: Encounter
+    ) {
         Log.d("SyncService", "saveEncounterToServer()")
         Log.d("saveEncounterToServer", tempEncounter.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
-        val call = panelService.addEncounter("JWT $token", patientId, tempEncounter.encounter_type)
-        call.enqueue(object: Callback<EncounterModel>{
+        val call = panelService.addEncounter(
+            "JWT $token",
+            patientId,
+            patientGoegraphy,
+            patientActivityId,
+            tempEncounter.encounter_type
+        )
+        call.enqueue(object : Callback<EncounterModel> {
             override fun onFailure(call: Call<EncounterModel>, t: Throwable) {
                 Log.d("onFailure", t.toString())
             }
@@ -264,13 +276,16 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                     when (response.code()) {
                         200 -> {
                             val serverEncounter = response.body() as EncounterModel
-                            val dbEncounter = encountersBox.query().equal(Encounter_.id, tempEncounter.id).build().findFirst()
-                            dbEncounter!!.remote_id = serverEncounter.id
+                            val dbEncounter =
+                                encountersBox.query().equal(Encounter_.id, tempEncounter.id).build().findFirst()
+                            dbEncounter!!.remote_id = serverEncounter.uid
+                            println("Encounter uid is : ${serverEncounter.uid}")
                             dbEncounter.uploaded = true
                             encountersBox.put(dbEncounter)
+                            saveAllFragmentsToServer(dbEncounter)
                         }
                     }
-                }else {
+                } else {
                     Log.d("saveEncounterToServer", response.code().toString())
                     Log.d("saveEncounterToServer", Gson().toJson(response.body()).toString())
                     //tvErrorMessage.text = response.message()
@@ -279,6 +294,45 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             }
 
         })
+    }
+
+    private fun saveAllFragmentsToServer(encounter: Encounter) {
+//         read the encounter again from local db so that you can have remote Id
+        val tempHistory = historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
+        DentalApp.displayNotification(
+            applicationContext,
+            1001,
+            "Syncing...",
+            encounter.encounter_type,
+            "Uploading history details"
+        )
+        println("Till the History Master")
+        saveHistoryToServer(encounter.remote_id, tempHistory)
+        // TODO: save the treatment using the remoteId of encoutner
+//                DentalApp.displayNotification(
+//                    applicationContext,
+//                    1001,
+//                    "Syncing...",
+//                    patient.fullName(),
+//                    "Uploading treatment details"
+//                )
+        // TODO: save the screening using the remoteId of encoutner
+//                DentalApp.displayNotification(
+//                    applicationContext,
+//                    1001,
+//                    "Syncing...",
+//                    patient.fullName(),
+//                    "Uploading screening details"
+//                )
+        // TODO: save the referral using the remoteId of encoutner
+//                DentalApp.displayNotification(
+//                    applicationContext,
+//                    1001,
+//                    "Syncing...",
+//                    patient.fullName(),
+//                    "Uploading referral details"
+//                )
+        // TODO: save the recall using the remoteId of encoutner
     }
 
 

@@ -14,7 +14,7 @@ import java.util.*
 @Parcelize
 class Patient(
     @Id var id: Long,
-    var remote_id: Int = 0,
+    var remote_id: String,
     var first_name: String,
     var middle_name: String,
     var last_name: String,

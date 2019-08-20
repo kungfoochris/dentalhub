@@ -7,6 +7,7 @@ import java.util.*
 @Parcelize
 class Patient(
     var id: Int,
+    var uid: String,
     var first_name: String,
     var middle_name: String,
     var last_name: String,
