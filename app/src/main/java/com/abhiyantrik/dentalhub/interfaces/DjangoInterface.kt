@@ -18,6 +18,7 @@ import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
+import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
 
 interface DjangoInterface {
 
@@ -81,8 +82,8 @@ interface DjangoInterface {
         @Field("underlyingmedical") underlying_medical: Boolean,
         @Field("no_medication") no_taking_medication: Boolean,
         @Field("medication") medication: String,
-        @Field("noallergic") no_allergic: Boolean,
-        @Field("allergic") allergic: String
+        @Field("no_allergies") no_allergic: Boolean,
+        @Field("allergies") allergic: String
     ): Call<HistoryModel>
 
     @FormUrlEncoded
@@ -107,7 +108,7 @@ interface DjangoInterface {
     fun addTreatment(
         @Header("Authorization") token: String,
         @Path("remoteId") encounterRemoteId: String
-    )
+    ): Call<TreatmentModel>
 
     @FormUrlEncoded
     @POST("encounter/{remoteId}/refer")
