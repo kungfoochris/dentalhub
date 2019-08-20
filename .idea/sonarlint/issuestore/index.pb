@@ -142,3 +142,7 @@ h
 8app/src/main/java/com/example/dentalhub/SetupActivity.kt,1/e/1e886a830415e944a9cc3ad96c6d46d0f28f696a
 j
 :app/src/main/java/com/example/dentalhub/models/Activity.kt,a/d/ad59bf46295cfaf7f173c89e888653f11aa9c912
+i
+9app/src/main/java/com/example/dentalhub/models/History.kt,b/6/b6cf8706bef521741d7510bd42ca80ced22bf273
+k
+;app/src/main/java/com/example/dentalhub/models/Screening.kt,b/f/bfba62fc5ced0109595c529f197034cb6c5a60c8
