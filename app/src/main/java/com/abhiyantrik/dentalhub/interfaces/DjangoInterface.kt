@@ -79,8 +79,8 @@ interface DjangoInterface {
         @Field("hepatitis") hepatitis: Boolean,
         @Field("hiv") hiv: Boolean,
         @Field("other") other: String,
-        @Field("underlyingmedical") underlying_medical: Boolean,
-        @Field("no_medication") no_taking_medication: Boolean,
+        @Field("no_underlying_medical") underlying_medical: Boolean,
+        @Field("not_taking_medication") no_taking_medication: Boolean,
         @Field("medication") medication: String,
         @Field("no_allergies") no_allergic: Boolean,
         @Field("allergies") allergic: String
@@ -108,7 +108,7 @@ interface DjangoInterface {
     fun addTreatment(
         @Header("Authorization") token: String,
         @Path("remoteId") encounterRemoteId: String,
-        @Field("id") id: String,
+        @Field("id") id: Long,
 
         @Field("tooth18") tooth18: String,
         @Field("tooth17") tooth17: String,
@@ -174,7 +174,7 @@ interface DjangoInterface {
         @Field("fluoride_varnish") fv_applied: Boolean,
         @Field("treatment_complete") treatment_plan_complete: Boolean,
         @Field("note") notes: String
-    )
+    ): Call<TreatmentModel>
 
     @FormUrlEncoded
     @POST("encounter/{remoteId}/refer")
