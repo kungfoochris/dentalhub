@@ -9,12 +9,9 @@ import com.example.dentalhub.Constants
 import com.example.dentalhub.DentalApp
 import com.example.dentalhub.ObjectBox
 import com.example.dentalhub.broadcastreceivers.NetworkStateReceiver
-import com.example.dentalhub.entities.Encounter
+import com.example.dentalhub.entities.*
 import com.example.dentalhub.models.Encounter as EncounterModel
-import com.example.dentalhub.entities.Encounter_
-import com.example.dentalhub.entities.Patient
 import com.example.dentalhub.models.Patient as PatientModel
-import com.example.dentalhub.entities.Patient_
 import com.example.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
@@ -28,9 +25,19 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<Encounter>
+    private lateinit var historyBox: Box<History>
+    private lateinit var screeningBox: Box<Screening>
+    private lateinit var treatmentBox: Box<Treatment>
+    private lateinit var referralBox: Box<Referral>
+
     private lateinit var networkStateReceiver: NetworkStateReceiver
     private lateinit var allPatients: List<Patient>
     private lateinit var allEncounters: List<Encounter>
+    private lateinit var encounterHistory: List<History>
+    private lateinit var encounterscreening: List<Screening>
+    private lateinit var encountertreatment: List<Treatment>
+    private lateinit var encounterReferral: List<Referral>
+
 
     var totalTasks = 0
     var failedTasks = 0
@@ -95,22 +102,25 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             if(!patient.uploaded){
                 savePatientToServer(patient)
             }
-            // TODO: read the patient from db again so that you can get remote_id
             val updatedLocalPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
-            println("Patient remote id is : ${updatedLocalPatient?.remote_id}, : ${updatedLocalPatient?.first_name}")
-//            val remoteId = updatedLocalPatient!!.remote_id
-//            allEncounters = encountersBox.query().equal(Encounter_.patientId,patient.id).equal(Encounter_.uploaded, false).build().find()
-//            for(tempEncounter in allEncounters){
-//                DentalApp.displayNotification(
-//                    applicationContext,
-//                    1001,
-//                    "Syncing...",
-//                    patient.fullName(),
-//                    "Uploading encounter details"
-//                )
+            println("Uploaded patient name is ${updatedLocalPatient?.fullName()}")
+            val remoteId = updatedLocalPatient!!.remote_id
+            allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).equal(Encounter_.uploaded, false).build().find()
+            for(tempEncounter in allEncounters){
+                DentalApp.displayNotification(
+                    applicationContext,
+                    1001,
+                    "Syncing...",
+                    patient.fullName(),
+                    "Uploading encounter details"
+                )
                 // TODO: set the patient id here also
-//                saveEncounterToServer(remoteId, tempEncounter)
+                saveEncounterToServer(remoteId, tempEncounter)
+                val updatedLocalEncounter = encountersBox.query().equal(Encounter_.id, tempEncounter.id).build().findFirst()
                 // TODO: read the encounter again from local db so that you can have remote Id
+                val encounterRemoteId = updatedLocalEncounter!!.remote_id
+                println("Uploaded remote id of ${updatedLocalPatient?.fullName()} is : $encounterRemoteId")
+                val tempHistory = historyBox.query().equal(History_.encounterId, updatedLocalEncounter.id).build().findFirst()
 
                 // TODO: save the history using the remoteId of encoutner
 //                DentalApp.displayNotification(
@@ -145,7 +155,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 //                    "Uploading referral details"
 //                )
                 // TODO: save the recall using the remoteId of encoutner
-//            }
+            }
         }
         DentalApp.cancelNotification(applicationContext, 1001)
 
@@ -169,40 +179,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 //        }
 
 
-    }
-
-    @AddTrace(name = "syncService_saveEncounterToServer", enabled = true /* optional */)
-    private fun saveEncounterToServer(patientId: Int,tempEncounter: Encounter) {
-        Log.d("SyncService", "saveEncounterToServer()")
-        Log.d("saveEncounterToServer", tempEncounter.toString())
-        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
-        val panelService = DjangoInterface.create(this)
-        val call = panelService.addEncounter("JWT $token", patientId, tempEncounter.encounter_type)
-        call.enqueue(object: Callback<EncounterModel>{
-            override fun onFailure(call: Call<EncounterModel>, t: Throwable) {
-                Log.d("onFailure", t.toString())
-            }
-
-            override fun onResponse(call: Call<EncounterModel>, response: Response<EncounterModel>) {
-                if (null != response.body()) {
-                    when (response.code()) {
-                        200 -> {
-                            val serverEncounter = response.body() as EncounterModel
-                            val dbEncounter = encountersBox.query().equal(Encounter_.id, tempEncounter.id).build().findFirst()
-                            dbEncounter!!.remote_id = serverEncounter.id
-                            dbEncounter.uploaded = true
-                            encountersBox.put(dbEncounter)
-                        }
-                    }
-                }else {
-                    Log.d("saveEncounterToServer", response.code().toString())
-                    Log.d("saveEncounterToServer", Gson().toJson(response.body()).toString())
-                    //tvErrorMessage.text = response.message()
-                    Log.d("saveEncounterToServer", response.message())
-                }
-            }
-
-        })
     }
 
     @AddTrace(name = "syncService_savePatientToServer", enabled = true /* optional */)
@@ -265,6 +241,41 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                     Log.d("savePatientToServer", response.message())
                 }
 
+            }
+
+        })
+    }
+
+
+    @AddTrace(name = "syncService_saveEncounterToServer", enabled = true /* optional */)
+    private fun saveEncounterToServer(patientId: Int,tempEncounter: Encounter) {
+        Log.d("SyncService", "saveEncounterToServer()")
+        Log.d("saveEncounterToServer", tempEncounter.toString())
+        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        val panelService = DjangoInterface.create(this)
+        val call = panelService.addEncounter("JWT $token", patientId, tempEncounter.encounter_type)
+        call.enqueue(object: Callback<EncounterModel>{
+            override fun onFailure(call: Call<EncounterModel>, t: Throwable) {
+                Log.d("onFailure", t.toString())
+            }
+
+            override fun onResponse(call: Call<EncounterModel>, response: Response<EncounterModel>) {
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
+                            val serverEncounter = response.body() as EncounterModel
+                            val dbEncounter = encountersBox.query().equal(Encounter_.id, tempEncounter.id).build().findFirst()
+                            dbEncounter!!.remote_id = serverEncounter.id
+                            dbEncounter.uploaded = true
+                            encountersBox.put(dbEncounter)
+                        }
+                    }
+                }else {
+                    Log.d("saveEncounterToServer", response.code().toString())
+                    Log.d("saveEncounterToServer", Gson().toJson(response.body()).toString())
+                    //tvErrorMessage.text = response.message()
+                    Log.d("saveEncounterToServer", response.message())
+                }
             }
 
         })

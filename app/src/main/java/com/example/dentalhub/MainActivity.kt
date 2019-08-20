@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @AddTrace(name = "setupAdapterMainActivity", enabled = true /* optional */)
     private fun setupAdapter() {
         patientAdapter = PatientAdapter(context, allPatients, object : PatientAdapter.PatientClickListener {
             override fun onDelayPatientClick(patient: Patient) {
