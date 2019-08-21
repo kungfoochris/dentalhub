@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.abhiyantrik.dentalhub.DentalApp
@@ -41,6 +42,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
 
     private lateinit var checkBoxSDFWholeMouth: CheckBox
+    private lateinit var tvSDFWholeMouth: TextView
     private lateinit var checkBoxFVApplied: CheckBox
     private lateinit var checkBoxTreatmentPlanComplete: CheckBox
     private lateinit var etNotes: EditText
@@ -130,6 +132,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
         checkBoxSDFWholeMouth = view.findViewById(R.id.checkBoxSDFWholeMouth)
+        tvSDFWholeMouth = view.findViewById(R.id.tvSDFWholeMouthTreatment)
         checkBoxFVApplied = view.findViewById(R.id.checkBoxFVApplied)
         checkBoxTreatmentPlanComplete = view.findViewById(R.id.checkBoxTreatmentPlanComplete)
         etNotes = view.findViewById(R.id.etNotes)
@@ -402,37 +405,31 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf_applied, null)
                 teeth[buttonNumber] = "SDF"
                 button.setTextColor(btnOnSelectTextColor)
-                checkBoxSDFWholeMouth.visibility = View.VISIBLE
             }
             "SEAL" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal_applied, null)
                 teeth[buttonNumber] = "SEAL"
                 button.setTextColor(btnOnSelectTextColor)
-                checkBoxSDFWholeMouth.visibility = View.GONE
             }
             "ART" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art_applied, null)
                 teeth[buttonNumber] = "ART"
                 button.setTextColor(btnOnSelectTextColor)
-                checkBoxSDFWholeMouth.visibility = View.GONE
             }
             "EXO" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo_applied, null)
                 teeth[buttonNumber] = "EXO"
                 button.setTextColor(btnOnSelectTextColor)
-                checkBoxSDFWholeMouth.visibility = View.GONE
             }
             "UNTR" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr_applied, null)
                 teeth[buttonNumber] = "UNTR"
                 button.setTextColor(btnOnSelectTextColor)
-                checkBoxSDFWholeMouth.visibility = View.GONE
             }
             "SMART" -> {
                 button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_applied, null)
                 teeth[buttonNumber] = "SMART"
                 button.setTextColor(btnOnSelectTextColor)
-                checkBoxSDFWholeMouth.visibility = View.GONE
             }
         }
 
@@ -466,6 +463,8 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     treatmentTypeBackgroundColor()
                     btnSDF.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnSDF.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf, null)
+                    checkBoxSDFWholeMouth.visibility = View.VISIBLE
+                    tvSDFWholeMouth.visibility = View.VISIBLE
                 }
 
                 R.id.btnSEAL -> {
@@ -474,6 +473,8 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     treatmentTypeBackgroundColor()
                     btnSEAL.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnSEAL.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal, null)
+                    checkBoxSDFWholeMouth.visibility = View.GONE
+                    tvSDFWholeMouth.visibility = View.GONE
                 }
 
                 R.id.btnART -> {
@@ -482,6 +483,8 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     treatmentTypeBackgroundColor()
                     btnART.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnART.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art, null)
+                    checkBoxSDFWholeMouth.visibility = View.GONE
+                    tvSDFWholeMouth.visibility = View.GONE
                 }
 
                 R.id.btnEXO -> {
@@ -490,6 +493,8 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     treatmentTypeBackgroundColor()
                     btnEXO.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnEXO.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo, null)
+                    checkBoxSDFWholeMouth.visibility = View.GONE
+                    tvSDFWholeMouth.visibility = View.GONE
                 }
 
                 R.id.btnUNTR -> {
@@ -498,6 +503,8 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     treatmentTypeBackgroundColor()
                     btnUNTR.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnUNTR.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr, null)
+                    checkBoxSDFWholeMouth.visibility = View.GONE
+                    tvSDFWholeMouth.visibility = View.GONE
                 }
 
                 R.id.btnSMART -> {
@@ -506,6 +513,8 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                     treatmentTypeBackgroundColor()
                     btnSMART.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
                     btnSMART.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+                    checkBoxSDFWholeMouth.visibility = View.GONE
+                    tvSDFWholeMouth.visibility = View.GONE
                 }
             }
         }

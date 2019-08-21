@@ -30,6 +30,11 @@ android {
     }
 }
 
+configurations {
+    cleanedAnnotations
+    compile.exclude group: 'org.jetbrains' , module:'annotations'
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -67,7 +72,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 //    for the Nepali date time picker
-    implementation 'com.github.keyrunHORNET:date_picker_converter:v2.0'
+    implementation 'com.github.keyrunHORNET:date_picker_converter:3.0-beta'
 }
 
 apply plugin: 'com.google.gms.google-services'

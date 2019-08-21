@@ -116,6 +116,29 @@
                 />
             </LinearLayout>
             <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:text="@string/date_of_birth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <com.hornet.dateconverter.CalendarView.Calendar
+                        android:id="@+id/calendar"
+                        android:layout_width="800dp"
+                        android:layout_height="300dp"
+                        android:layout_weight="0.8" />
+
+<!--                <EditText-->
+<!--                        android:id="@+id/etDOBNepali"-->
+<!--                        android:inputType="date"-->
+<!--                        android:hint="@string/date_of_birth"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                />-->
+            </LinearLayout>
+            <LinearLayout
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
