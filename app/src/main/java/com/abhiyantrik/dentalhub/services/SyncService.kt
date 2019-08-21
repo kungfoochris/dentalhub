@@ -196,7 +196,8 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             screening.need_art_filling,
             screening.need_sealant,
             screening.need_sdf,
-            screening.need_extraction
+            screening.need_extraction,
+            screening.active_infection
         )
         call.enqueue(object : Callback<ScreeningModel> {
             override fun onFailure(call: Call<ScreeningModel>, t: Throwable) {

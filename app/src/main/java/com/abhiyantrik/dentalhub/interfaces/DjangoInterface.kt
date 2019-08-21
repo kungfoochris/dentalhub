@@ -101,8 +101,8 @@ interface DjangoInterface {
         @Field("art") need_art_filling: Boolean,
         @Field("need_sealant") need_sealant: Boolean,
         @Field("need_sdf") need_sdf: Boolean,
-        @Field("extraction") need_extraction: Boolean
-//        @Field("active_infection") active_infection: Boolean
+        @Field("extraction") need_extraction: Boolean,
+        @Field("active_infection") active_infection: Boolean
         ): Call<ScreeningModel>
 
     @FormUrlEncoded

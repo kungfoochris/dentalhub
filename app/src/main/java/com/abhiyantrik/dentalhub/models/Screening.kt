@@ -11,9 +11,10 @@ class Screening : Parcelable {
     var decayed_permanent_teeth: Int = 0
     var cavity_permanent_anterior: Boolean = false
     var cavity_permanent_tooth: Boolean = false
-    var active_infection: Boolean = false
+    var reversible_pulpitis: Boolean = false
     var need_art_filling: Boolean = false
     var need_sealant: Boolean = false
     var need_sdf: Boolean = false
     var need_extraction: Boolean = false
+    var active_infection: Boolean = false
 }

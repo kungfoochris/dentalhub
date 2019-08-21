@@ -62,11 +62,12 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvNoOfDecayedPermanentTeethTitle: TextView
     private lateinit var tvCavityPermanentToothTitle: TextView
     private lateinit var tvCavityPermanentAnteriorTitle: TextView
-    private lateinit var tvActiveInfectionTitle: TextView
+    private lateinit var tvReversiblePulpitisTitle: TextView
     private lateinit var tvNeedARTFillingTitle: TextView
     private lateinit var tvNeedSealantTitle: TextView
     private lateinit var tvNeedSDFTitle: TextView
     private lateinit var tvNeedExtractionTitle: TextView
+    private lateinit var tvActiveInfectionTitle: TextView
 
     // Screening Data TextView
     private lateinit var tvCarriesRisk: TextView
@@ -74,11 +75,12 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvNoOfDecayedPermanentTeeth: TextView
     private lateinit var tvCavityPermanentTooth: TextView
     private lateinit var tvCavityPermanentAnterior: TextView
-    private lateinit var tvActiveInfection: TextView
+    private lateinit var tvReversiblePulpitis: TextView
     private lateinit var tvNeedARTFilling: TextView
     private lateinit var tvNeedSealant: TextView
     private lateinit var tvNeedSDF: TextView
     private lateinit var tvNeedExtraction: TextView
+    private lateinit var tvActiveInfection: TextView
 
     // treatment
 
@@ -275,11 +277,12 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNoOfDecayedPermanentTeethTitle = findViewById(R.id.tvNoOfDecayedPermanentTeethTitle)
         tvCavityPermanentToothTitle = findViewById(R.id.tvCavityPermanentToothTitle)
         tvCavityPermanentAnteriorTitle = findViewById(R.id.tvCavityPermanentAnteriorTitle)
-        tvActiveInfectionTitle = findViewById(R.id.tvActiveInfectionTitle)
+        tvReversiblePulpitisTitle = findViewById(R.id.tvReversiblePulpitisTitle)
         tvNeedARTFillingTitle = findViewById(R.id.tvNeedARTFillingTitle)
         tvNeedSealantTitle = findViewById(R.id.tvNeedSealantTitle)
         tvNeedSDFTitle = findViewById(R.id.tvNeedSDFTitle)
         tvNeedExtractionTitle = findViewById(R.id.tvNeedExtractionTitle)
+        tvActiveInfectionTitle = findViewById(R.id.tvActiveInfectionTitle)
 
         // Screening Data TextView
         tvCarriesRisk = findViewById(R.id.tvCarriesRisk)
@@ -287,11 +290,12 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNoOfDecayedPermanentTeeth = findViewById(R.id.tvNoOfDecayedPermanentTeeth)
         tvCavityPermanentTooth = findViewById(R.id.tvCavityPermanentTooth)
         tvCavityPermanentAnterior = findViewById(R.id.tvCavityPermanentAnterior)
-        tvActiveInfection = findViewById(R.id.tvActiveInfection)
+        tvReversiblePulpitis = findViewById(R.id.tvReversiblePulpitis)
         tvNeedARTFilling = findViewById(R.id.tvNeedARTFilling)
         tvNeedSealant = findViewById(R.id.tvNeedSealant)
         tvNeedSDF = findViewById(R.id.tvNeedSDF)
         tvNeedExtraction = findViewById(R.id.tvNeedExtraction)
+        tvActiveInfection = findViewById(R.id.tvActiveInfection)
 
         // to hide if screening items are unchecked while adding encounter
         hideString(screening.carries_risk, tvCarriesRiskTitle, tvCarriesRisk)
@@ -299,11 +303,12 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideInt(screening.decayed_permanent_teeth, tvNoOfDecayedPermanentTeethTitle, tvNoOfDecayedPermanentTeeth)
         hideBoolean(screening.cavity_permanent_tooth, tvCavityPermanentToothTitle, tvCavityPermanentTooth)
         hideBoolean(screening.cavity_permanent_anterior, tvCavityPermanentAnteriorTitle, tvCavityPermanentAnterior)
-        hideBoolean(screening.active_infection, tvActiveInfectionTitle, tvActiveInfection)
+        hideBoolean(screening.reversible_pulpitis, tvReversiblePulpitisTitle, tvReversiblePulpitis)
         hideBoolean(screening.need_art_filling, tvNeedARTFillingTitle, tvNeedARTFilling)
         hideBoolean(screening.need_sealant, tvNeedSealantTitle, tvNeedSealant)
         hideBoolean(screening.need_sdf, tvNeedSDFTitle, tvNeedSDF)
         hideBoolean(screening.need_extraction, tvNeedExtractionTitle, tvNeedExtraction)
+        hideBoolean(screening.active_infection, tvActiveInfectionTitle, tvActiveInfection)
 
         // treatment
 

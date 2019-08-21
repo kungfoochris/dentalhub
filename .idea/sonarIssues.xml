@@ -83,6 +83,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/ViewEncounterActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/entities/Patient.kt">
           <value>
             <set />
@@ -124,6 +129,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/models/Referral.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/models/Screening.kt">
           <value>
             <set />
           </value>
