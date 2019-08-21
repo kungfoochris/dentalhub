@@ -198,19 +198,17 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             screening.need_sdf,
             screening.need_extraction
         )
-        println("Before enqueue.")
         call.enqueue(object : Callback<ScreeningModel> {
             override fun onFailure(call: Call<ScreeningModel>, t: Throwable) {
-                println("Fail response Screening.")
                 Log.d("Screening onFailure", t.toString())
             }
 
             override fun onResponse(call: Call<ScreeningModel>, response: Response<ScreeningModel>) {
-                println("On Response enqueue Screening.")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
                             println("Successfully added the Screening.")
+                            Log.d("saveScreeningToServer", "Screening uploaded $remoteId")
                         }
                     }
                 }
@@ -240,7 +238,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
         call.enqueue(object : Callback<ReferralModel> {
             override fun onFailure(call: Call<ReferralModel>, t: Throwable) {
-                println("Fail response Referral.")
                 Log.d("Referral onFailure", t.toString())
             }
 
@@ -250,6 +247,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                     when (response.code()) {
                         200 -> {
                             println("Successfully added the Referral.")
+                            Log.d("saveReferralToServer", "Referral Uploaded. $remoteId")
                         }
                     }
                 }
