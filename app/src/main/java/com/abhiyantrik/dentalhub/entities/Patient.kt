@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.entities
 
 import android.os.Parcelable
+import com.hornet.dateconverter.DateConverter
 import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id

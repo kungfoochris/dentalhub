@@ -95,9 +95,8 @@
     <string name="fv_applied">FV Applied</string>
     <string name="treatment_plan_complete">Treatment plan complete</string>
     <string name="notes">Notes</string>
-    <string name="cavity_permanent_tooth">Cavity Permanent Tooth</string>
+    <string name="cavity_permanent_molar">Cavity Permanent Molar</string>
     <string name="cavity_permanent_anterior">Cavity Permanent Anterior</string>
-    <string name="active_infection">Active Infection</string>
     <string name="need_art_filling">Need ART Filling</string>
     <string name="need_sealant">Need Sealant</string>
     <string name="need_sdf">Need SDF</string>
@@ -178,4 +177,6 @@
     <string name="username_is_required">Username is required.</string>
     <string name="prompt_username">Username</string>
     <string name="sdf_whole_mouth">SDF Whole Mouth</string>
+    <string name="pain_due_to_reversible_pulpitis">Pain due to Reversible Pulpitis</string>
+    <string name="active_infection">Active Infection</string>
 </resources>

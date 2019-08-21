@@ -242,12 +242,13 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         decayedPermanentTeeth: String,
         cavityPermanentTooth: Boolean,
         cavityPermanentAnterior: Boolean,
-        activeInfection: Boolean,
+        reversible_pulpitis: Boolean,
         needARTFilling: Boolean,
         needSealant: Boolean,
         needSDF: Boolean,
-        needExtraction: Boolean
-    ) {
+        needExtraction: Boolean,
+        activeInfection: Boolean
+        ) {
 
         screening = screeningBox.query().equal(
             Screening_.encounterId,

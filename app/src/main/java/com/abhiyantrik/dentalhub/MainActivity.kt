@@ -91,9 +91,8 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
         Log.d(TAG, "listPatientsFromLocalDB()")
-        allPatients = patientsBox.query().equal(Patient_.geography_id, DentalApp.geography).equal(Patient_.activityarea_id, DentalApp.activity).build().find()
+        allPatients = patientsBox.query().equal(Patient_.geography_id, DentalApp.geography).build().find()
         setupAdapter()
-
     }
 
     @AddTrace(name = "setupAdapterMainActivity", enabled = true /* optional */)

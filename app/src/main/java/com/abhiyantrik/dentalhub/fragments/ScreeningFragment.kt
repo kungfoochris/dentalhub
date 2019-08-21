@@ -34,11 +34,12 @@ class ScreeningFragment : Fragment() {
 
     private lateinit var checkBoxCavityPermanentTooth: CheckBox
     private lateinit var checkBoxCavityPermanentAnterior: CheckBox
-    private lateinit var checkBoxActiveInfection: CheckBox
+    private lateinit var checkBoxReversiblePulpitis: CheckBox
     private lateinit var checkBoxNeedARTFilling: CheckBox
     private lateinit var checkBoxNeedSealant: CheckBox
     private lateinit var checkBoxNeedSDF: CheckBox
     private lateinit var checkBoxNeedExtraction: CheckBox
+    private lateinit var checkBoxActiveInfection: CheckBox
 
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
@@ -58,11 +59,12 @@ class ScreeningFragment : Fragment() {
         spinnerNoOfDecayedPermanentTeeth = view.findViewById(R.id.spinnerNoOfDecayedPermanentTeeth)
         checkBoxCavityPermanentTooth = view.findViewById(R.id.checkBoxCavityPermanentTooth)
         checkBoxCavityPermanentAnterior = view.findViewById(R.id.checkBoxCavityPermanentAnterior)
-        checkBoxActiveInfection = view.findViewById(R.id.checkBoxActiveInfection)
+        checkBoxReversiblePulpitis = view.findViewById(R.id.checkBoxReversiblePulpitis)
         checkBoxNeedARTFilling = view.findViewById(R.id.checkBoxNeedARTFilling)
         checkBoxNeedSealant = view.findViewById(R.id.checkBoxNeedSealant)
         checkBoxNeedSDF = view.findViewById(R.id.checkBoxNeedSDF)
         checkBoxNeedExtraction = view.findViewById(R.id.checkBoxNeedExtraction)
+        checkBoxActiveInfection = view.findViewById(R.id.checkBoxActiveInfection)
 
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
@@ -92,16 +94,17 @@ class ScreeningFragment : Fragment() {
             val noOfdecayedPermanentTeeth = spinnerNoOfDecayedPermanentTeeth.selectedItem.toString()
             val cavityPermanentTooth = checkBoxCavityPermanentTooth.isChecked
             val cavityPermanentAnterior = checkBoxCavityPermanentAnterior.isChecked
-            val activeInfection = checkBoxActiveInfection.isChecked
+            val reversiblePulpitis = checkBoxReversiblePulpitis.isChecked
             val needARTFilling = checkBoxNeedARTFilling.isChecked
             val needSealant = checkBoxNeedSealant.isChecked
             val needSDF = checkBoxNeedSDF.isChecked
             val needExtraction = checkBoxNeedSDF.isChecked
+            val activeInfection = checkBoxActiveInfection.isChecked
 
             screeningFormCommunicator.updateScreening(
                 carriesRisk, noOfdecayedPrimaryTeeth, noOfdecayedPermanentTeeth,
-                cavityPermanentTooth, cavityPermanentAnterior, activeInfection, needARTFilling, needSealant, needSDF,
-                needExtraction
+                cavityPermanentTooth, cavityPermanentAnterior, reversiblePulpitis, needARTFilling, needSealant, needSDF,
+                needExtraction, activeInfection
             )
             fragmentCommunicator.goForward()
         }
@@ -139,11 +142,12 @@ class ScreeningFragment : Fragment() {
 
             if (screening.cavity_permanent_anterior) checkBoxCavityPermanentAnterior.isChecked = true
             if (screening.cavity_permanent_tooth) checkBoxCavityPermanentTooth.isChecked = true
-            if (screening.active_infection) checkBoxActiveInfection.isChecked = true
+            if (screening.reversible_pulpitis) checkBoxReversiblePulpitis.isChecked = true
             if (screening.need_art_filling) checkBoxNeedARTFilling.isChecked = true
             if (screening.need_sealant) checkBoxNeedSealant.isChecked = true
             if (screening.need_sdf) checkBoxNeedSDF.isChecked = true
             if (screening.need_extraction) checkBoxNeedExtraction.isChecked = true
+            if (screening.active_infection) checkBoxActiveInfection.isChecked = true
         }
     }
 

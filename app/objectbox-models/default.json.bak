@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:8623945972200860446",
-      "lastPropertyId": "57:7663923539987047275",
+      "lastPropertyId": "58:236166849881126967",
       "name": "Treatment",
       "properties": [
         {
@@ -236,6 +236,10 @@
           "id": "57:7663923539987047275",
           "indexId": "1:6108534000196334176",
           "name": "encounterId"
+        },
+        {
+          "id": "58:236166849881126967",
+          "name": "sdf_whole_mouth"
         }
       ],
       "relations": []

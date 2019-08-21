@@ -7,10 +7,11 @@ interface ScreeningFormCommunicator {
         decayedPermanentTeeth: String,
         cavityPermanentTooth: Boolean,
         cavityPermanentAnterior: Boolean,
-        activeInfection: Boolean,
+        reversiblePulpitis: Boolean,
         needARTFilling: Boolean,
         needSealant: Boolean,
         needSDF: Boolean,
-        needExtraction: Boolean
+        needExtraction: Boolean,
+        activeInfection: Boolean
     )
 }

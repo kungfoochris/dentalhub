@@ -192,7 +192,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             screening.decayed_permanent_teeth,
             screening.cavity_permanent_anterior,
             screening.cavity_permanent_tooth,
-            screening.active_infection,
+            screening.reversible_pulpitis,
             screening.need_art_filling,
             screening.need_sealant,
             screening.need_sdf,

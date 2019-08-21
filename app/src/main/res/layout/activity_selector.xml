@@ -74,6 +74,13 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
+                <Spinner
+                        android:id="@+id/spinnerSchoolSeminar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        />
                 <RadioButton android:id="@+id/radioCommunityOutreach"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
@@ -81,6 +88,13 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
+                <Spinner
+                        android:id="@+id/spinnerCommunityOutreach"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        />
                 <RadioButton android:id="@+id/radioTraining"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
@@ -88,6 +102,13 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
+                <Spinner
+                        android:id="@+id/spinnerTranning"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        />
             </RadioGroup>
             <EditText
                     app:layout_constraintTop_toBottomOf="@+id/rgActivities"

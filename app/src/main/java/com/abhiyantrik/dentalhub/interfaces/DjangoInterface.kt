@@ -97,12 +97,13 @@ interface DjangoInterface {
         @Field("permanent_teeth") decayed_permanent_teeth: Int,
         @Field("anterior_teeth") cavity_permanent_anterior: Boolean,
         @Field("postiror_teeth") cavity_permanent_tooth: Boolean,
-        @Field("reversible_pulpitis") active_infection: Boolean,
+        @Field("reversible_pulpitis") reversible_pulpitis: Boolean,
         @Field("art") need_art_filling: Boolean,
         @Field("need_sealant") need_sealant: Boolean,
         @Field("need_sdf") need_sdf: Boolean,
         @Field("extraction") need_extraction: Boolean
-    ): Call<ScreeningModel>
+//        @Field("active_infection") active_infection: Boolean
+        ): Call<ScreeningModel>
 
     @FormUrlEncoded
     @POST("encounter/{remoteId}/treatment")

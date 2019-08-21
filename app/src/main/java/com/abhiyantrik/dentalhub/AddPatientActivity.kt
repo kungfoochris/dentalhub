@@ -8,12 +8,15 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.utils.AdapterHelper
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.DateValidator
 import com.google.firebase.perf.metrics.AddTrace
+import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
+import kotlinx.android.synthetic.main.activity_add_patient.*
 import java.text.DecimalFormat
 import java.util.*
 
@@ -86,29 +89,20 @@ class AddPatientActivity : AppCompatActivity() {
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
 
         etDOB.setOnFocusChangeListener { _, b ->
-            if (b) {
-                val c = Calendar.getInstance()
-                val mYear = c.get(Calendar.YEAR)
-                val mMonth = c.get(Calendar.MONTH)
-                val mDay = c.get(Calendar.DAY_OF_MONTH)
 
-                val datePickerDialog = DatePickerDialog(
-                    context,
-                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                        etDOB.setText(
-                            year.toString() + "-" + DecimalFormat(
-                                "00"
-                            ).format(monthOfYear + 1).toString() + "-" + DecimalFormat("00").format(dayOfMonth).toString()
-                        )
-                    },
-                    mYear,
-                    mMonth,
-                    mDay
-                )
-                datePickerDialog.datePicker.maxDate = Date().time
-                datePickerDialog.show()
+            if (b) {
+                val nepaliDateConverter = DateConverter()
+
+                val dpd = com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
+                    val month = DecimalFormat("00").format(monthOfYear).toString()
+                    val day = DecimalFormat("00").format(dayOfMonth).toString()
+                    etDOB.setText("$year-$month-$day")
+                }
+                dpd.setMaxDate(nepaliDateConverter.todayNepaliDate)
+                dpd.show(supportFragmentManager, "String")
             }
         }
+
         setupDistricts()
         spinnerGender.adapter =
             AdapterHelper.createAdapter(context, resources.getStringArray(R.array.gender_list).toList())
@@ -278,7 +272,6 @@ class AddPatientActivity : AppCompatActivity() {
                 false
             )
         }
-
     }
 
     @AddTrace(name = "saveToLocalDBAddPatientActivity", enabled = true /* optional */)
@@ -292,8 +285,6 @@ class AddPatientActivity : AppCompatActivity() {
         } else {
             finish()
         }
-
-
     }
 
     @AddTrace(name = "isFormValidAddPatientActivity", enabled = true /* optional */)

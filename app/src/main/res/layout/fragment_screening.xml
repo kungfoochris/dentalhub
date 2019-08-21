@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
-                    android:text="@string/cavity_permanent_tooth"
+                    android:text="@string/cavity_permanent_molar"
                     android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -105,12 +105,12 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
-                    android:text="Reversible Pulpitis"
+                    android:text="@string/pain_due_to_reversible_pulpitis"
                     android:textSize="@dimen/default_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <CheckBox
-                    android:id="@+id/checkBoxActiveInfection"
+                    android:id="@+id/checkBoxReversiblePulpitis"
                     android:scaleY="1.5"
                     android:scaleX="1.5"
                     android:layout_width="wrap_content"
@@ -183,6 +183,24 @@
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedExtraction"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_margin="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:layout_weight="1"
+                    android:text="@string/active_infection"
+                    android:textSize="@dimen/default_font_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <CheckBox
+                    android:id="@+id/checkBoxActiveInfection"
                     android:scaleY="1.5"
                     android:scaleX="1.5"
                     android:layout_width="wrap_content"
