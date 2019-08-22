@@ -87,6 +87,15 @@ class ReferralFragment : Fragment() {
             } else {
                 etOtherDetails.visibility = View.GONE
             }
+            if (i == R.id.radioNoReferral) {
+                etRecallDate.setText("")
+                etRecallDate.visibility = View.GONE
+                etRecallTime.setText("")
+                etRecallTime.visibility = View.GONE
+            } else {
+                etRecallDate.visibility = View.VISIBLE
+                etRecallTime.visibility = View.VISIBLE
+            }
         }
 
         etRecallDate.setOnFocusChangeListener { _, b ->
