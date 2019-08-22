@@ -94,7 +94,7 @@ class AddPatientActivity : AppCompatActivity() {
                 val nepaliDateConverter = DateConverter()
 
                 val dpd = com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
-                    val month = DecimalFormat("00").format(monthOfYear).toString()
+                    val month = DecimalFormat("00").format(monthOfYear + 1).toString()
                     val day = DecimalFormat("00").format(dayOfMonth).toString()
                     etDOB.setText("$year-$month-$day")
                 }

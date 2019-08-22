@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.entities
 
 import android.os.Parcelable
+import com.abhiyantrik.dentalhub.ObjectBox
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
@@ -40,7 +41,13 @@ class Patient(
     var encounters: ToMany<Encounter>? = null
 
     fun address(): String {
-        return "$municipality $ward, $district"
+        val municipalityBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Municipality::class.java)
+        val municipality_name = municipalityBox.query().equal(Municipality_.id, municipality.toLong()).build().findFirst()!!
+
+        val districtBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
+        val district_name = districtBox.query().equal(District_.id, district.toLong()).build().findFirst()!!
+
+        return "${municipality_name.name} $ward, ${district_name.name}"
     }
 
     fun fullName(): String {

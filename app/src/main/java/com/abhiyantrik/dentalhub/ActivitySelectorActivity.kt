@@ -48,7 +48,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private fun initUI() {
         rgActivities = findViewById(R.id.rgActivities)
-        etOtherDetails = findViewById(R.id.etOtherDetailsActivity)
+//        etOtherDetails = findViewById(R.id.etOtherDetailsActivity)
         btnGo = findViewById(R.id.btnGo)
         btnLogout = findViewById(R.id.btnLogout)
         progressBar = findViewById(R.id.progressbarActivitySelector)
@@ -100,10 +100,14 @@ class ActivitySelectorActivity : AppCompatActivity() {
                     etOtherDetails.text.toString()
                 )
                 DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
-                if (selectedActivity == "Health Post") {
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent)
-                }
+                DentalApp.activity_id = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
+                DentalApp.activity_name = selectedActivity
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+//                if (selectedActivity == "Health Post") {
+//                    val intent = Intent(context, MainActivity::class.java)
+//                    startActivity(intent)
+//                }
 //                } else {
 //                    if (!etOtherDetails.text.isNullOrEmpty()) saveToServerNewActivity()
 //                    else Toast.makeText(

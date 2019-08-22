@@ -80,11 +80,8 @@ class MainActivity : AppCompatActivity() {
             addNewPatient()
         }
 
-        var activity_id = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
-        var activity_name = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
-
-        Toast.makeText(this, "Activity id selected is $activity_id", Toast.LENGTH_LONG).show()
-        Toast.makeText(this, "Activity name selected is $activity_name", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "Activity id selected is ${DentalApp.activity_id}", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "Activity name selected is ${DentalApp.activity_name}", Toast.LENGTH_LONG).show()
     }
 
 

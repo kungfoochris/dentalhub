@@ -119,6 +119,7 @@ class ViewPatientActivity : AppCompatActivity() {
         tvGender.text = patient.gender
         tvPhone.text = patient.phone
         tvEducation.text = patient.education
+//        val municipality =
         tvAddress.text = patient.address()
     }
 
