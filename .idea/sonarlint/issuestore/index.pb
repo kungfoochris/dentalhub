@@ -80,3 +80,11 @@ s
 Capp/src/main/java/com/abhiyantrik/dentalhub/AddEncounterActivity.kt,3/4/3447b926d20bb8597fa26eb189394dcc28f8a8b5
 z
 Japp/src/main/java/com/abhiyantrik/dentalhub/fragments/ScreeningFragment.kt,f/f/ffbcd9c6628d42bf3957c7073319eca751aabd38
+t
+Dapp/src/main/java/com/abhiyantrik/dentalhub/ViewEncounterActivity.kt,2/2/22b2ac741df302ed241f21423e3a734d91ad27b9
+v
+Fapp/src/main/java/com/abhiyantrik/dentalhub/adapters/PatientAdapter.kt,4/c/4cd60ea1f0568e3953c166a2a708600b6d88f768
+r
+Bapp/src/main/java/com/abhiyantrik/dentalhub/ViewPatientActivity.kt,f/2/f2f47352693ede84bcc7b2415562ee0df30dcf38
+t
+Dapp/src/main/java/com/abhiyantrik/dentalhub/SearchPatientActivity.kt,4/3/4331ca93eb41c8d632783d7a2a29479ac0406580

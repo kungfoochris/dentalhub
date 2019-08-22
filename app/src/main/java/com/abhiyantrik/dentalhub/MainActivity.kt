@@ -79,7 +79,12 @@ class MainActivity : AppCompatActivity() {
         btnAddPatient.setOnClickListener {
             addNewPatient()
         }
-        Toast.makeText(this, "Activity selected is ${DentalApp.activity}", Toast.LENGTH_LONG).show()
+
+        var activity_id = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
+        var activity_name = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
+
+        Toast.makeText(this, "Activity id selected is $activity_id", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Activity name selected is $activity_name", Toast.LENGTH_LONG).show()
     }
 
 
@@ -91,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
         Log.d(TAG, "listPatientsFromLocalDB()")
-        allPatients = patientsBox.query().equal(Patient_.geography_id, DentalApp.geography).build().find()
+        allPatients = patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
         setupAdapter()
     }
 

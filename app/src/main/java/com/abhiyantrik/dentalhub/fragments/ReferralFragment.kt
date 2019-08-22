@@ -172,8 +172,8 @@ class ReferralFragment : Fragment() {
 
                 val recallDate = etRecallDate.text.toString()
                 val recallTime = etRecallTime.text.toString()
-                val selectedGeography = DentalApp.geography
-                val selectedActivity = DentalApp.activity
+                val selectedGeography = DentalApp.geography_id
+                val selectedActivity = DentalApp.activity_id
                 referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
 
                 fragmentCommunicator.goForward()
@@ -226,8 +226,15 @@ class ReferralFragment : Fragment() {
 
         // For checking if any radio button is clicked or not
         if (rgReferrals.checkedRadioButtonId == -1) {
-//            Toast.makeText(activity, "Radio button is not selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Radio button is not selected", Toast.LENGTH_SHORT).show()
             status = false
+        }
+
+        if (radioHealthPost.isChecked) {
+            if (etRecallDate.text.isNullOrBlank() || etRecallTime.text.isNullOrBlank()) {
+                Toast.makeText(activity, "Recall Date and Time should be specified.", Toast.LENGTH_SHORT).show()
+                status = false
+            }
         }
         return status
     }

@@ -23,7 +23,11 @@ class Constants {
         val PREF_SETUP_COMPLETE = "SETUP_COMPLETE"
 
         @JvmStatic
-        val PREF_SELECTED_LOCATION = "SELECTED_LOCATION"
+        val PREF_SELECTED_LOCATION_NAME = "SELECTED_LOCATION_NAME"
+        @JvmStatic
+        val PREF_SELECTED_LOCATION_ID = "SELECTED_LOCATION_ID"
+        @JvmStatic
+        val PREF_ACTIVITY_ID = "ACTIVITY_ID"
         @JvmStatic
         val PREF_ACTIVITY_NAME = "ACTIVITY_NAME"
         @JvmStatic

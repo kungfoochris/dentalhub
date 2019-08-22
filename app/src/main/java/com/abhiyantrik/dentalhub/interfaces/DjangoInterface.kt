@@ -209,6 +209,10 @@ interface DjangoInterface {
     @GET("activities")
     fun listActivities(): Call<List<Activity>>
 
+    // to get all activity list
+    @GET("events")
+    fun listActivityEvents(@Header("Authorization") token: String): Call<List<ActivityModel>>
+
     companion object Factory {
         fun create(context: Context): DjangoInterface {
             val gson: Gson = GsonBuilder().create()

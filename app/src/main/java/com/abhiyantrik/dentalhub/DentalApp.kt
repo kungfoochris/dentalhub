@@ -45,8 +45,10 @@ class DentalApp : MultiDexApplication() {
         private const val PREF_FILE_NAME = "dentalhub"
         var location: Location = Location("0", "0")
 
-        var geography: String = ""
-        var activity: String = ""
+        var geography_id: String = ""
+        var geography_name: String = ""
+        var activity_id : String = ""
+        var activity_name: String = ""
         var activityRemarks: String = ""
 
         var defaultChannelId: String = ""

@@ -225,8 +225,8 @@ class AddPatientActivity : AppCompatActivity() {
         val ward = dbWard.id.toInt()
         val municipality = dbMunicipality.id.toInt()
         val district = dbDistrict.id.toInt()
-        val geography = DentalApp.geography
-        val activity = DentalApp.activity
+        val geography = DentalApp.geography_id
+        val activity = DentalApp.activity_id
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentDate()
@@ -244,8 +244,8 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.district = district
             patient!!.latitude = latitude
             patient!!.longitude = longitude
-            patient!!.geography_id = DentalApp.geography
-            patient!!.activityarea_id = DentalApp.activity
+            patient!!.geography_id = DentalApp.geography_id
+            patient!!.activityarea_id = DentalApp.activity_id
             patient!!.created_at = date
             patient!!.updated_at = date
             return patient!!

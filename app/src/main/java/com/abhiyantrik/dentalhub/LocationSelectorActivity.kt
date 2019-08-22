@@ -101,6 +101,7 @@ class LocationSelectorActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<List<Geography>>, response: Response<List<Geography>>) {
+                println("Print geography ${response.body()} and code ${response.code()}")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
@@ -133,8 +134,10 @@ class LocationSelectorActivity : AppCompatActivity() {
 
         geographyAdapter = GeographyAdapter(context, allAPIGeographies, object : GeographyAdapter.GeographyClickListener {
             override fun onGeographyClick(geography: Geography) {
-                DentalApp.saveIntToPreference(context, Constants.PREF_SELECTED_LOCATION, geography.id)
-                DentalApp.geography = geography.id.toString()
+                DentalApp.saveToPreference(context, Constants.PREF_SELECTED_LOCATION_ID, geography.id)
+                DentalApp.saveToPreference(context, Constants.PREF_SELECTED_LOCATION_NAME, geography.tole)
+                DentalApp.geography_id = geography.id
+                DentalApp.geography_name = geography.tole
                 startActivity(Intent(context, ActivitySelectorActivity::class.java))
                 finish()
             }

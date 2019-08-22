@@ -78,7 +78,7 @@ class SearchPatientActivity : AppCompatActivity() {
                 searchView.clearFocus()
                 searchView.setQuery("", false)
                 searchItem.collapseActionView()
-                Toast.makeText(this@SearchPatientActivity, "Looing for the $query", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Looking for the $query", Toast.LENGTH_SHORT).show()
 
                 patientsearchlist = patientsBox.query()
                     .contains(Patient_.first_name, query)
@@ -88,7 +88,7 @@ class SearchPatientActivity : AppCompatActivity() {
                     .contains(Patient_.last_name, query)
                     .build().find()
 
-                println("Query resutl is $patientsearchlist")
+                println("Query result is $patientsearchlist")
 
                 val recyclerAdapter = PatientAdapter(context, patientsearchlist, object : PatientAdapter.PatientClickListener{
                     override fun onViewPatientDetailClick(patient: Patient) {
