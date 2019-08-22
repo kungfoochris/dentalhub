@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub.entities
 import android.os.Parcelable
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.hornet.dateconverter.DateConverter
+import com.hornet.dateconverter.Model
 import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -78,7 +79,16 @@ class Patient(
         val dob = Calendar.getInstance()
         val today = Calendar.getInstance()
 
+        var nepaliCalander = DateConverter()
+
+        var todayNepali = nepaliCalander.todayNepaliDate
+
+        var yearToday = todayNepali.year
+        var monthToday = todayNepali.month + 1
+        var dayToday = todayNepali.day
+
         dob.set(year, month, day)
+        today.set(yearToday, monthToday, dayToday)
 
         var age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
 
