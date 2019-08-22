@@ -166,8 +166,8 @@ class ViewPatientActivity : AppCompatActivity() {
                 tvDateofBirthView.text = patient.dob
                 tvPhonepopupView.text = patient.phone
                 tvWardView.text = patient.ward.toString()
-                tvMunicipalityView.text = patient.municipality.toString()
-                tvDistrictView.text = patient.district.toString()
+                tvMunicipalityView.text = patient.minicipalityName()
+                tvDistrictView.text = patient.districtName()
                 tvEducationLevelView.text = patient.education
 
 

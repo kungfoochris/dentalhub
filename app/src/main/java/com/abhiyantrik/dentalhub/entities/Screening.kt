@@ -12,7 +12,7 @@ class Screening : Parcelable {
     @Id
     var id: Long = 0
     var encounter: ToOne<Encounter>? = null
-    var carries_risk: String = ""
+    var carries_risk: String = "Low"
     var decayed_pimary_teeth: Int = 0
     var decayed_permanent_teeth: Int = 0
     var cavity_permanent_anterior: Boolean = false

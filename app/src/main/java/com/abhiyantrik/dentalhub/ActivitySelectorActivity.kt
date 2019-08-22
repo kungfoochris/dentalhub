@@ -28,7 +28,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
 
-    private lateinit var etOtherDetails: EditText
+//    private lateinit var etOtherDetails: EditText
     var selectedActivity = ""
     var activityOtherDetail = ""
     var healthpost_id = ""
@@ -94,11 +94,11 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         btnGo.setOnClickListener {
             if (isFormValid()) {
-                DentalApp.saveToPreference(
-                    context,
-                    Constants.PREF_ACTIVITY_REMARKS,
-                    etOtherDetails.text.toString()
-                )
+//                DentalApp.saveToPreference(
+//                    context,
+//                    Constants.PREF_ACTIVITY_REMARKS,
+//                    etOtherDetails.text.toString()
+//                )
                 DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
                 DentalApp.activity_id = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
                 DentalApp.activity_name = selectedActivity
@@ -151,6 +151,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
                             }
                         }
                         println("Community $communityoutreach_id health $healthpost_id school $school_seminar_id train $training_id")
+                        progressBar.visibility = View.GONE
                     }
                     400 -> {
                         Log.d("loadActivityId()", "400 error found.")
@@ -174,7 +175,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         val token = DentalApp.readFromPreference(this, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call =
-            panelService.addActivity("JWT $token", selectedActivity, etOtherDetails.text.toString())
+            panelService.addActivity("JWT $token", selectedActivity, "")
         call.enqueue(object : Callback<ActivityModel> {
             override fun onFailure(call: Call<ActivityModel>, t: Throwable) {
                 Log.d("onFailure", t.toString())

@@ -133,6 +133,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/entities/Recall.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/entities/Screening.kt">
           <value>
             <set />
@@ -704,6 +709,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_treatment.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/popup_add_encounter_selector.xml">
           <value>
             <set />
           </value>

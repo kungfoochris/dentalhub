@@ -88,3 +88,13 @@ r
 Bapp/src/main/java/com/abhiyantrik/dentalhub/ViewPatientActivity.kt,f/2/f2f47352693ede84bcc7b2415562ee0df30dcf38
 t
 Dapp/src/main/java/com/abhiyantrik/dentalhub/SearchPatientActivity.kt,4/3/4331ca93eb41c8d632783d7a2a29479ac0406580
+x
+Happ/src/main/java/com/abhiyantrik/dentalhub/adapters/GeographyAdapter.kt,e/8/e884934022ee57f67b13a8bff8ae7ca22b8b63c6
+h
+8app/src/main/java/com/abhiyantrik/dentalhub/Constants.kt,e/0/e0838e9906e20f1bd0e35dbc72c0145b4318beae
+y
+Iapp/src/main/java/com/abhiyantrik/dentalhub/fragments/ReferralFragment.kt,4/e/4ebb3ec04ae6a336ff384207a1bd82c38994b954
+q
+Aapp/src/main/java/com/abhiyantrik/dentalhub/entities/Encounter.kt,1/5/15d0887adf7e0cdb14590c3bca7a8732ddadaeee
+p
+@app/src/main/java/com/abhiyantrik/dentalhub/entities/District.kt,7/9/79095ef49a9edc0c73a5fcbfe0f99c445d54edbd

@@ -41,17 +41,34 @@ class Patient(
     var encounters: ToMany<Encounter>? = null
 
     fun address(): String {
-        val municipalityBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Municipality::class.java)
-        val municipality_name = municipalityBox.query().equal(Municipality_.id, municipality.toLong()).build().findFirst()!!
+//        val municipalityBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Municipality::class.java)
+//        val municipality_name = municipalityBox.query().equal(Municipality_.id, municipality.toLong()).build().findFirst()!!
+//
+//        val districtBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
+//        val district_name = districtBox.query().equal(District_.id, district.toLong()).build().findFirst()!!
 
-        val districtBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
-        val district_name = districtBox.query().equal(District_.id, district.toLong()).build().findFirst()!!
+        val municipality_name = minicipalityName()
+        val district_name = districtName()
 
-        return "${municipality_name.name} $ward, ${district_name.name}"
+        return "$municipality_name-$ward, $district_name"
     }
 
     fun fullName(): String {
         return "$first_name $middle_name $last_name"
+    }
+
+    fun minicipalityName(): String {
+        val municipalityBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Municipality::class.java)
+        val municipality_name = municipalityBox.query().equal(Municipality_.id, municipality.toLong()).build().findFirst()!!
+
+        return "${municipality_name.name}"
+    }
+
+    fun districtName(): String {
+        val districtBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
+        val district_name = districtBox.query().equal(District_.id, district.toLong()).build().findFirst()!!
+
+        return "${district_name.name}"
     }
 
     fun age(): String {
