@@ -114,10 +114,9 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                 patient.fullName(),
                 "Uploading patient detail"
             )
-            if (!patient.uploaded) {
+            if (!patient.uploaded /*|| patient.updated*/) {
                 println("Processing patient : ${patient.fullName()}")
                 savePatientToServer(patient)
-                totalTasks += 1
             } else {
                 println("Patient already uploaded. ${patient.fullName()}")
                 checkAllEncounter(patient)
@@ -125,14 +124,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         }
         DentalApp.cancelNotification(applicationContext, 1001)
 
-//        while (totalTasks != totalRetrofitProcessed) {
-//        }
-
-        if (totalTasks == totalRetrofitProcessed) {
-            println("uploading totalTask $totalTasks retrofit $totalRetrofitProcessed")
-        } else {
-            println("incomplete uploading totalTask $totalTasks retrofit $totalRetrofitProcessed")
-        }
 //        for downloading the data
 
 
@@ -447,6 +438,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                                     .findFirst()
                             dbPatient!!.remote_id = tempPatient.uid
                             dbPatient.uploaded = true
+                            dbPatient.updated = false
                             println("Patient uid is ${tempPatient.uid}")
                             patientsBox.put(dbPatient)
                             Log.d("savePatientToServer", tempPatient.fullName() + " saved.")
@@ -486,9 +478,14 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 //                "Uploading encounter details"
 //            )
             if (eachEncounter.uploaded) {
+//                updateEncounterToServer(
+//                    patient.remote_id,
+//                    patient.geography_id,
+//                    patient.activityarea_id,
+//                    eachEncounter
+//                )
                 println("Encounter already uploaded ${eachEncounter.remote_id}")
             } else {
-                totalTasks += 1
                 println("New encounter found ${eachEncounter.id}")
                 saveEncounterToServer(
                     patient.remote_id,
@@ -515,9 +512,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         val call = panelService.addEncounter(
             "JWT $token",
             patientId,
+            tempEncounter.id.toString(),
             patientGoegraphy,
             patientActivityId,
-            tempEncounter.encounter_type
+            tempEncounter.encounter_type,
+            ""
         )
         call.enqueue(object : Callback<EncounterModel> {
             override fun onFailure(call: Call<EncounterModel>, t: Throwable) {

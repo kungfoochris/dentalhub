@@ -1,6 +1,5 @@
 package com.abhiyantrik.dentalhub
 
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.utils.AdapterHelper
 import com.abhiyantrik.dentalhub.utils.DateHelper
@@ -16,9 +14,7 @@ import com.abhiyantrik.dentalhub.utils.DateValidator
 import com.google.firebase.perf.metrics.AddTrace
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
-import kotlinx.android.synthetic.main.activity_add_patient.*
 import java.text.DecimalFormat
-import java.util.*
 
 class AddPatientActivity : AppCompatActivity() {
 
@@ -65,9 +61,10 @@ class AddPatientActivity : AppCompatActivity() {
 
     @AddTrace(name = "initUIAddPatientActivity", enabled = true /* optional */)
     private fun initUI() {
-        districtsBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
+        districtsBox =
+            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
         municipalitiesBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
-        wardsBox= ObjectBox.boxStore.boxFor(Ward::class.java)
+        wardsBox = ObjectBox.boxStore.boxFor(Ward::class.java)
 
         loading = findViewById(R.id.loading)
         tvErrorMessage = findViewById(R.id.tvErrorMessage)
@@ -93,11 +90,12 @@ class AddPatientActivity : AppCompatActivity() {
             if (b) {
                 val nepaliDateConverter = DateConverter()
 
-                val dpd = com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
-                    val month = DecimalFormat("00").format(monthOfYear + 1).toString()
-                    val day = DecimalFormat("00").format(dayOfMonth).toString()
-                    etDOB.setText("$year-$month-$day")
-                }
+                val dpd =
+                    com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
+                        val month = DecimalFormat("00").format(monthOfYear + 1).toString()
+                        val day = DecimalFormat("00").format(dayOfMonth).toString()
+                        etDOB.setText("$year-$month-$day")
+                    }
                 dpd.setMaxDate(nepaliDateConverter.todayNepaliDate)
                 dpd.show(supportFragmentManager, "String")
             }
@@ -105,29 +103,45 @@ class AddPatientActivity : AppCompatActivity() {
 
         setupDistricts()
         spinnerGender.adapter =
-            AdapterHelper.createAdapter(context, resources.getStringArray(R.array.gender_list).toList())
+            AdapterHelper.createAdapter(
+                context,
+                resources.getStringArray(R.array.gender_list).toList()
+            )
 
         spinnerEducationLevel.adapter =
-            AdapterHelper.createAdapter(context, resources.getStringArray(R.array.education_level_list).toList())
+            AdapterHelper.createAdapter(
+                context,
+                resources.getStringArray(R.array.education_level_list).toList()
+            )
 
         updateUI()
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
 
-        spinnerDistrict.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+        spinnerDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 setupMunicipalities()
             }
         }
-        spinnerMunicipality.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+        spinnerMunicipality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 setupWards()
             }
 
@@ -138,44 +152,47 @@ class AddPatientActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun setupWards() {
-        Log.d("Selected Municipality: ", spinnerMunicipality.selectedItem.toString())
-        Log.d("Municipality Position: ", spinnerMunicipality.selectedItemPosition.toString())
-        if(allMunicipalities.size>0){
+        if (allMunicipalities.size > 0) {
             val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
-            val dbWards = wardsBox.query().equal(Ward_.municipalityId, dbMunicipality.id).build().find()
+            Log.d("Selected Municipality: ", spinnerMunicipality.selectedItem.toString())
+            Log.d("Municipality Position: ", spinnerMunicipality.selectedItemPosition.toString())
+            val dbWards =
+                wardsBox.query().equal(Ward_.municipalityId, dbMunicipality.id).build().find()
             val wards = mutableListOf<String>()
             allWards = dbWards
-            for(ward in dbWards){
+            for (ward in dbWards) {
                 wards.add(ward.ward.toString())
             }
             spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
-        }else{
-            Toast.makeText(context,"Municipality not found.",Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(context, "Municipality not found.", Toast.LENGTH_LONG).show()
         }
-
     }
 
     private fun setupMunicipalities() {
-        Log.d("Selected District",spinnerDistrict.selectedItem.toString())
-        Log.d("District Position",spinnerDistrict.selectedItemPosition.toString())
+        Log.d("Selected District", spinnerDistrict.selectedItem.toString())
+        Log.d("District Position", spinnerDistrict.selectedItemPosition.toString())
         val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
-        allMunicipalities = municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
+        allMunicipalities =
+            municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
         val municipalitiesList = mutableListOf<String>()
-        for(municipality in allMunicipalities){
+        for (municipality in allMunicipalities) {
             municipalitiesList.add(municipality.name.capitalize())
         }
-        spinnerMunicipality.adapter = AdapterHelper.createAdapter(context, municipalitiesList.toList())
+        spinnerMunicipality.adapter =
+            AdapterHelper.createAdapter(context, municipalitiesList.toList())
         setupWards()
     }
 
     private fun setupDistricts() {
-        allDistricts =districtsBox.query().build().find()
+        allDistricts = districtsBox.query().build().find()
         val districtsList = mutableListOf<String>()
-        for(district in allDistricts){
+        for (district in allDistricts) {
             districtsList.add(district.name.capitalize())
         }
-        spinnerDistrict.adapter = AdapterHelper.createAdapter(context,districtsList.toList())
+        spinnerDistrict.adapter = AdapterHelper.createAdapter(context, districtsList.toList())
         setupMunicipalities()
     }
 
@@ -192,7 +209,11 @@ class AddPatientActivity : AppCompatActivity() {
 //            etState.setText(patient!!.state)
 //            etCountry.setText(patient!!.country)
             spinnerGender.setSelection(resources.getStringArray(R.array.gender_list).indexOf(patient!!.gender))
-            spinnerEducationLevel.setSelection(resources.getStringArray(R.array.education_level_list).indexOf(patient!!.education))
+            spinnerEducationLevel.setSelection(
+                resources.getStringArray(R.array.education_level_list).indexOf(
+                    patient!!.education
+                )
+            )
         }
     }
 
@@ -248,6 +269,7 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.activityarea_id = DentalApp.activity_id
             patient!!.created_at = date
             patient!!.updated_at = date
+            patient!!.updated = true
             return patient!!
         } else {
             return Patient(
@@ -269,7 +291,8 @@ class AddPatientActivity : AppCompatActivity() {
                 activity,
                 date,
                 date,
-                false
+                false,
+                true
             )
         }
     }
@@ -296,6 +319,22 @@ class AddPatientActivity : AppCompatActivity() {
         val phone = etPhone.text.toString()
         val dob = etDOB.text.toString()
 
+        if(spinnerDistrict.selectedItem == null) {
+            tvErrorMessage.text = "District is not selected."
+            tvErrorMessage.visibility = View.VISIBLE
+        }
+
+        if(spinnerMunicipality.selectedItem == null) {
+            tvErrorMessage.text = "Municipality is not selected."
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
+
+        if(spinnerWard.selectedItem == null) {
+            tvErrorMessage.text = "Ward is not selected."
+            tvErrorMessage.visibility = View.VISIBLE
+            return false
+        }
 
         if (firstName.isBlank() || firstName.isEmpty() || firstName.length < 2) {
             tvErrorMessage.text = resources.getString(R.string.first_name_is_required)
@@ -322,6 +361,8 @@ class AddPatientActivity : AppCompatActivity() {
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
+        val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
+        val dbWard = allWards[spinnerWard.selectedItemPosition]
         return true
     }
 

@@ -34,7 +34,8 @@ class Patient(
     var activityarea_id: String,
     var created_at: String,
     var updated_at: String,
-    var uploaded: Boolean
+    var uploaded: Boolean,
+    var updated: Boolean
 ) : Parcelable {
 
     @IgnoredOnParcel

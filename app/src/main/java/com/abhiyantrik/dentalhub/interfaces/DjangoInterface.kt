@@ -61,9 +61,11 @@ interface DjangoInterface {
     fun addEncounter(
         @Header("Authorization") token: String,
         @Path("user") user: String,
+        @Field("id") id: String,
         @Field("geography_id") geographyId: String,
         @Field("activityarea_id") activityareaId: String,
-        @Field("encounter_type") encounterType: String
+        @Field("encounter_type") encounterType: String,
+        @Field("other_detail") otherDetail: String
     ): Call<EncounterModel>
 
     @FormUrlEncoded
