@@ -86,6 +86,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             referral.encounter?.target = encounter
             referralBox.put(referral)
 
+            recall.patient?.target = patient
             recall.encounter?.target = encounter
             recallBox.put(recall)
 

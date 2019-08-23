@@ -47,6 +47,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     var totalTasks = 0
     var failedTasks = 0
     var successTasks = 0
+    var totalRetrofitProcessed = 0
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -116,6 +117,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             if (!patient.uploaded) {
                 println("Processing patient : ${patient.fullName()}")
                 savePatientToServer(patient)
+                totalTasks += 1
             } else {
                 println("Patient already uploaded. ${patient.fullName()}")
                 checkAllEncounter(patient)
@@ -123,7 +125,16 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         }
         DentalApp.cancelNotification(applicationContext, 1001)
 
+//        while (totalTasks != totalRetrofitProcessed) {
+//        }
+
+        if (totalTasks == totalRetrofitProcessed) {
+            println("uploading totalTask $totalTasks retrofit $totalRetrofitProcessed")
+        } else {
+            println("incomplete uploading totalTask $totalTasks retrofit $totalRetrofitProcessed")
+        }
 //        for downloading the data
+
 
         stopSelf()
 
@@ -147,7 +158,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
     }
 
-    private fun saveHistoryToServer(remoteId: String, history: History) {
+    private fun saveHistoryToServer(remoteId: String, history: History, encounterId: Long) {
         Log.d("SyncService", "saveHistoryToServer()")
         Log.d("saveHistoryToServer", history.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -181,6 +192,12 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                     when (response.code()) {
                         200 -> {
                             println("Successfully added the history.")
+                            val tempScreening =
+                                screeningBox.query().equal(
+                                    Screening_.encounterId,
+                                    encounterId
+                                ).build().findFirst()!!
+                            saveScreeningToServer(remoteId, tempScreening, encounterId)
                         }
                     }
                 }
@@ -191,7 +208,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     //    @AddTrace(name = "syncService_saveScreeningToServer()", enabled = true /* optional */)
-    private fun saveScreeningToServer(remoteId: String, screening: Screening) {
+    private fun saveScreeningToServer(remoteId: String, screening: Screening, encounterId: Long) {
         Log.d("SyncService", "saveScreeningToServer()")
         Log.d("saveScreeningToServer", screening.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -226,6 +243,12 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                         200 -> {
                             println("Successfully added the Screening.")
                             Log.d("saveScreeningToServer", "Screening uploaded $remoteId")
+                            val tempTreatment =
+                                treatmentBox.query().equal(
+                                    Treatment_.encounterId,
+                                    encounterId
+                                ).build().findFirst()!!
+                            saveTreatmentToServer(remoteId, tempTreatment, encounterId)
                         }
                     }
                 } else {
@@ -255,6 +278,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             recall.time
         )
 
+        totalRetrofitProcessed += 1
         call.enqueue(object : Callback<ReferralModel> {
             override fun onFailure(call: Call<ReferralModel>, t: Throwable) {
                 Log.d("Referral onFailure", t.toString())
@@ -266,6 +290,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                         200 -> {
                             println("Successfully added the Referral.")
                             Log.d("saveReferralToServer", "Referral Uploaded. $remoteId")
+                            successTasks += 1
                         }
                     }
                 }
@@ -274,7 +299,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
 
-    private fun saveTreatmentToServer(remoteId: String, treatment: Treatment) {
+    private fun saveTreatmentToServer(remoteId: String, treatment: Treatment, encounterId: Long) {
         Log.d("SyncService", "saveTreatmentToServer()")
         Log.d("saveTreatmentToServer", treatment.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -362,6 +387,17 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                         200 -> {
                             Log.d("saveTreatmentToServer()", response.message())
                             println("Successfully added the Treatment.")
+                            val tempReferral =
+                                referralBox.query().equal(
+                                    Referral_.encounterId,
+                                    encounterId
+                                ).build().findFirst()!!
+                            val tempRecall =
+                                recallBox.query().equal(
+                                    Recall_.encounterId,
+                                    encounterId
+                                ).build().findFirst()!!
+                            saveReferralToServer(remoteId, tempReferral, tempRecall)
                         }
                     }
                 }
@@ -442,16 +478,17 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
         println("already uploaded patient encounter $allEncounters")
         for (eachEncounter in allEncounters) {
-            DentalApp.displayNotification(
-                applicationContext,
-                1001,
-                "Syncing...",
-                patient.fullName(),
-                "Uploading encounter details"
-            )
+//            DentalApp.displayNotification(
+//                applicationContext,
+//                1001,
+//                "Syncing...",
+//                patient.fullName(),
+//                "Uploading encounter details"
+//            )
             if (eachEncounter.uploaded) {
                 println("Encounter already uploaded ${eachEncounter.remote_id}")
             } else {
+                totalTasks += 1
                 println("New encounter found ${eachEncounter.id}")
                 saveEncounterToServer(
                     patient.remote_id,
@@ -520,26 +557,16 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 //         read the encounter again from local db so that you can have remote Id
         val tempHistory =
             historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
-        val tempScreening =
-            screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
-        val tempTreatment =
-            treatmentBox.query().equal(Treatment_.encounterId, encounter.id).build().findFirst()!!
-        val tempReferral =
-            referralBox.query().equal(Referral_.encounterId, encounter.id).build().findFirst()!!
-        val tempRecall =
-            recallBox.query().equal(Recall_.encounterId, encounter.id).build().findFirst()!!
-        DentalApp.displayNotification(
-            applicationContext,
-            1001,
-            "Syncing...",
-            encounter.encounter_type,
-            "Uploading history, Screening, Treatment details"
-        )
+//        DentalApp.displayNotification(
+//            applicationContext,
+//            1001,
+//            "Syncing...",
+//            encounter.encounter_type,
+//            "Uploading history, Screening, Treatment details"
+//        )
         println("Till the History Master")
-        saveHistoryToServer(encounter.remote_id, tempHistory)
-        saveScreeningToServer(encounter.remote_id, tempScreening)
-        saveTreatmentToServer(encounter.remote_id, tempTreatment)
-        saveReferralToServer(encounter.remote_id, tempReferral, tempRecall)
+        saveHistoryToServer(encounter.remote_id, tempHistory, encounter.id)
+
         // TODO: save the treatment using the remoteId of encoutner
 //                DentalApp.displayNotification(
 //                    applicationContext,

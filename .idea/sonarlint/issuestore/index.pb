@@ -98,3 +98,5 @@ q
 Aapp/src/main/java/com/abhiyantrik/dentalhub/entities/Encounter.kt,1/5/15d0887adf7e0cdb14590c3bca7a8732ddadaeee
 p
 @app/src/main/java/com/abhiyantrik/dentalhub/entities/District.kt,7/9/79095ef49a9edc0c73a5fcbfe0f99c445d54edbd
+u
+Eapp/src/main/java/com/abhiyantrik/dentalhub/popup/ViewPatientPopUp.kt,c/6/c66a1b2b3b037628a3c8a091bd78733e35d76919

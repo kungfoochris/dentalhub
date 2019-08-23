@@ -86,6 +86,7 @@ class SetupActivity : AppCompatActivity() {
                             tvMessage.text = tvMessage.text.toString() + "Loading address complete"
                             DentalApp.saveToPreference(context,Constants.PREF_SETUP_COMPLETE,"true")
                             startActivity(Intent(context, LocationSelectorActivity::class.java))
+                            finish()
                         }
                     }
                 }else{

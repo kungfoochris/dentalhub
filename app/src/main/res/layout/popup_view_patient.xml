@@ -170,18 +170,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvWard"
+                android:id="@+id/tvDistrict"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
-                android:text="@string/ward_"
+                android:text="@string/district_"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         <TextView
-                android:id="@+id/tvWardView"
+                android:id="@+id/tvDistrictView"
                 android:layout_weight="0.35"
                 android:textSize="18sp"
-                android:text="@string/ward"
+                android:text="@string/district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -211,18 +211,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvDistrict"
+                android:id="@+id/tvWard"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
-                android:text="@string/district_"
+                android:text="@string/ward_"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         <TextView
-                android:id="@+id/tvDistrictView"
+                android:id="@+id/tvWardView"
                 android:layout_weight="0.35"
                 android:textSize="18sp"
-                android:text="@string/district"
+                android:text="@string/ward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
     </LinearLayout>

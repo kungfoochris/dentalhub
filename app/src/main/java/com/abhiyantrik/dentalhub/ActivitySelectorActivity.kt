@@ -28,8 +28,9 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
 
-//    private lateinit var etOtherDetails: EditText
+    private lateinit var etOtherDetails: EditText
     var selectedActivity = ""
+    var selectedActivityId = ""
     var activityOtherDetail = ""
     var healthpost_id = ""
     var school_seminar_id = ""
@@ -48,7 +49,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private fun initUI() {
         rgActivities = findViewById(R.id.rgActivities)
-//        etOtherDetails = findViewById(R.id.etOtherDetailsActivity)
+        etOtherDetails = findViewById(R.id.etOtherDetailsActivity)
         btnGo = findViewById(R.id.btnGo)
         btnLogout = findViewById(R.id.btnLogout)
         progressBar = findViewById(R.id.progressbarActivitySelector)
@@ -62,31 +63,31 @@ class ActivitySelectorActivity : AppCompatActivity() {
         loadActivityId()
 
         rgActivities.setOnCheckedChangeListener { radioGroup, i ->
-//            if (i == R.id.radioHealthPostActivity) {
-//                etOtherDetails.setText("")
-//                etOtherDetails.visibility = View.GONE
-//            } else {
-//                etOtherDetails.visibility = View.VISIBLE
-//            }
+            if (i == R.id.radioHealthPostActivity) {
+                etOtherDetails.setText("")
+                etOtherDetails.visibility = View.GONE
+            } else {
+                etOtherDetails.visibility = View.VISIBLE
+            }
             when (i) {
                 R.id.radioHealthPostActivity -> {
                     selectedActivity = "Health Post"
-                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, healthpost_id)
+                    selectedActivityId = healthpost_id
                     println("Selected Activity is $selectedActivity")
                 }
                 R.id.radioSchoolSeminar -> {
                     selectedActivity = "School Seminar"
-                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, school_seminar_id)
+                    selectedActivityId = school_seminar_id
                     println("Selected Activity is $selectedActivity")
                 }
                 R.id.radioCommunityOutreach -> {
                     selectedActivity = "Community Outreach"
-                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, communityoutreach_id)
+                    selectedActivityId = communityoutreach_id
                     println("Selected Activity is $selectedActivity")
                 }
                 R.id.radioTraining -> {
                     selectedActivity = "Training"
-                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, training_id)
+                    selectedActivityId = training_id
                     println("Selected Activity is $selectedActivity")
                 }
             }
@@ -99,23 +100,26 @@ class ActivitySelectorActivity : AppCompatActivity() {
 //                    Constants.PREF_ACTIVITY_REMARKS,
 //                    etOtherDetails.text.toString()
 //                )
-                DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
-                DentalApp.activity_id = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
+
                 DentalApp.activity_name = selectedActivity
-                val intent = Intent(context, MainActivity::class.java)
-                startActivity(intent)
-//                if (selectedActivity == "Health Post") {
-//                    val intent = Intent(context, MainActivity::class.java)
-//                    startActivity(intent)
-//                }
-//                } else {
-//                    if (!etOtherDetails.text.isNullOrEmpty()) saveToServerNewActivity()
-//                    else Toast.makeText(
-//                        context,
-//                        "Please fill other details.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
+                if (selectedActivity == "Health Post") {
+                    DentalApp.activity_id = selectedActivityId
+                    DentalApp.activity_name = selectedActivity
+                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, selectedActivityId)
+                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    if (!etOtherDetails.text.isNullOrEmpty()) saveToServerNewActivity()
+                    else {
+                        Toast.makeText(
+                            context,
+                            "Please fill other details.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             } else {
                 Toast.makeText(context, "Please select a activity.", Toast.LENGTH_SHORT).show()
             }
@@ -137,7 +141,10 @@ class ActivitySelectorActivity : AppCompatActivity() {
                 Log.d("loadActivityId()", "onFailure")
             }
 
-            override fun onResponse(call: Call<List<ActivityModel>>, response: Response<List<ActivityModel>>) {
+            override fun onResponse(
+                call: Call<List<ActivityModel>>,
+                response: Response<List<ActivityModel>>
+            ) {
                 when (response.code()) {
                     200 -> {
                         println("Activity list is ${response.body()}")
@@ -175,7 +182,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         val token = DentalApp.readFromPreference(this, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call =
-            panelService.addActivity("JWT $token", selectedActivity, "")
+            panelService.addActivity("JWT $token", selectedActivityId, etOtherDetails.text.toString())
         call.enqueue(object : Callback<ActivityModel> {
             override fun onFailure(call: Call<ActivityModel>, t: Throwable) {
                 Log.d("onFailure", t.toString())
@@ -185,7 +192,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
                 call: Call<ActivityModel>,
                 response: Response<ActivityModel>
             ) {
-                println("Response code is ${response.code()}")
+                println("Response code is ${response.code()} and body is ${response.body()}")
                 when (response.code()) {
                     200 -> {
                         val serverActivity = response.body() as ActivityModel
@@ -194,7 +201,10 @@ class ActivitySelectorActivity : AppCompatActivity() {
                             Constants.PREF_ACTIVITY_NAME,
                             serverActivity.id
                         )
-                        DentalApp.activity_id = serverActivity.id
+                        DentalApp.activity_id = selectedActivityId
+                        DentalApp.activity_name = selectedActivity
+                        DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, selectedActivityId)
+                        DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
                         println("Got the post method. ${serverActivity.id}")
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)

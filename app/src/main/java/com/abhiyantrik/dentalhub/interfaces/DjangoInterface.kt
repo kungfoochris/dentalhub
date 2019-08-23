@@ -52,8 +52,8 @@ interface DjangoInterface {
     @POST("activities")
     fun addActivity(
         @Header("Authorization") token: String,
-        @Field("area") area: String,
-        @Field("name") name: String
+        @Field("activity_id") area: String,
+        @Field("area") name: String
     ): Call<ActivityModel>
 
     @FormUrlEncoded

@@ -11,7 +11,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.abhiyantrik.dentalhub.entities.Geography
-import com.abhiyantrik.dentalhub.entities.Geography_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.LoginResponse
 import com.google.firebase.perf.metrics.AddTrace
@@ -50,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
         tvErrorMessage = findViewById(R.id.tvErrorMessage)
 
         btnLogin.setOnClickListener {
+            tvErrorMessage.visibility = View.GONE
             if (formIsValid()) {
                 processLogin()
             }
@@ -73,9 +73,17 @@ class LoginActivity : AppCompatActivity() {
                     when (response.code()) {
                         200 -> {
                             val loginResponse = response.body() as LoginResponse
-                            DentalApp.saveToPreference(context, Constants.PREF_AUTH_TOKEN, loginResponse.token)
+                            DentalApp.saveToPreference(
+                                context,
+                                Constants.PREF_AUTH_TOKEN,
+                                loginResponse.token
+                            )
                             DentalApp.saveToPreference(context, Constants.PREF_AUTH_EMAIL, email)
-                            DentalApp.saveToPreference(context, Constants.PREF_AUTH_PASSWORD, password)
+                            DentalApp.saveToPreference(
+                                context,
+                                Constants.PREF_AUTH_PASSWORD,
+                                password
+                            )
                             startActivity(Intent(context, SetupActivity::class.java))
                         }
                         400 -> {
@@ -93,9 +101,13 @@ class LoginActivity : AppCompatActivity() {
                     }
                     loading.visibility = View.GONE
                 } else {
+                    if (response.code() == 400) {
+                        tvErrorMessage.text = getString(R.string.username_password_dont_matched)
+                        tvErrorMessage.visibility = View.VISIBLE
+                    }
                     Log.d("response CODE", response.code().toString())
                     Log.d("response BODY", response.errorBody().toString())
-                    loading.visibility = View.GONE
+//                    loading.visibility = View.GONE
 //                    val gson = Gson()
 //                    val errorResponse = gson.fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
 //                    tvErrorMessage.text = errorResponse.non_field_errors[0]
