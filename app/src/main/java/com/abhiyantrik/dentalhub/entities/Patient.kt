@@ -35,7 +35,9 @@ class Patient(
     var created_at: String,
     var updated_at: String,
     var uploaded: Boolean,
-    var updated: Boolean
+    var updated: Boolean,
+    @Backlink(to = "patient")
+    var recall: ToMany<Recall>? = null
 ) : Parcelable {
 
     @IgnoredOnParcel

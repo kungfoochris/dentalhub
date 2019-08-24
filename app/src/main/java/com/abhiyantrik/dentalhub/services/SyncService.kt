@@ -78,6 +78,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     override fun onDestroy() {
+        DentalApp.cancelNotification(applicationContext, 1001)
         super.onDestroy()
         networkStateReceiver.removeListener(this)
         this.unregisterReceiver(networkStateReceiver)
@@ -122,7 +123,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                 checkAllEncounter(patient)
             }
         }
-        DentalApp.cancelNotification(applicationContext, 1001)
 
 //        for downloading the data
 
@@ -470,13 +470,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
         println("already uploaded patient encounter $allEncounters")
         for (eachEncounter in allEncounters) {
-//            DentalApp.displayNotification(
-//                applicationContext,
-//                1001,
-//                "Syncing...",
-//                patient.fullName(),
-//                "Uploading encounter details"
-//            )
             if (eachEncounter.uploaded) {
 //                updateEncounterToServer(
 //                    patient.remote_id,
@@ -556,41 +549,8 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 //         read the encounter again from local db so that you can have remote Id
         val tempHistory =
             historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
-//        DentalApp.displayNotification(
-//            applicationContext,
-//            1001,
-//            "Syncing...",
-//            encounter.encounter_type,
-//            "Uploading history, Screening, Treatment details"
-//        )
         println("Till the History Master")
         saveHistoryToServer(encounter.remote_id, tempHistory, encounter.id)
-
-        // TODO: save the treatment using the remoteId of encoutner
-//                DentalApp.displayNotification(
-//                    applicationContext,
-//                    1001,
-//                    "Syncing...",
-//                    patient.fullName(),
-//                    "Uploading treatment details"
-//                )
-        // TODO: save the screening using the remoteId of encoutner
-//                DentalApp.displayNotification(
-//                    applicationContext,
-//                    1001,
-//                    "Syncing...",
-//                    patient.fullName(),
-//                    "Uploading screening details"
-//                )
-        // TODO: save the referral using the remoteId of encoutner
-//                DentalApp.displayNotification(
-//                    applicationContext,
-//                    1001,
-//                    "Syncing...",
-//                    patient.fullName(),
-//                    "Uploading referral details"
-//                )
-        // TODO: save the recall using the remoteId of encoutner
     }
 
 

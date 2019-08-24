@@ -292,7 +292,8 @@ class AddPatientActivity : AppCompatActivity() {
                 date,
                 date,
                 false,
-                true
+                true,
+                null
             )
         }
     }

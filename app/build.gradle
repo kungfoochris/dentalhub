@@ -73,6 +73,9 @@ dependencies {
 
 //    for the Nepali date time picker
     implementation 'com.github.keyrunHORNET:date_picker_converter:3.0-beta'
+
+//    for recyclerView
+//    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,12 +22,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
+import com.abhiyantrik.dentalhub.entities.Recall
+import com.abhiyantrik.dentalhub.entities.Recall_
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
 import com.abhiyantrik.dentalhub.services.SyncService
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.query.Query
+import java.time.LocalDate
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +46,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var patientsQuery: Query<Patient>
+    private lateinit var recallBox: Box<Recall>
+//    private lateinit var recallQuery: Query<Recall>
+
+    private lateinit var allPatientRecall: MutableList<Patient>
 
     private val TAG = "MainActivity"
 
@@ -58,7 +66,38 @@ class MainActivity : AppCompatActivity() {
 
         setupUI()
 
-        listPatients()
+    }
+
+    private fun listRecallPatients() {
+        println("called once.")
+        val currentDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDate.now()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+        // get all Address objects
+        val builder = patientsBox.query()
+//       ...which are linked from a Recall date "today"
+        builder.link(Patient_.recall).equal(Recall_.date, currentDate.toString())
+        var sesameStreetsWithElmo = builder.build().find()
+        allPatientRecall = sesameStreetsWithElmo
+
+        for (eachDay in 1..10) {
+            val days = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                LocalDate.now().plusDays(eachDay.toLong())
+            } else {
+                TODO("VERSION.SDK_INT < O")
+            }
+            val builder = patientsBox.query()
+            builder.link(Patient_.recall).equal(Recall_.date, days.toString())
+            sesameStreetsWithElmo = builder.build().find()
+            allPatientRecall.addAll(sesameStreetsWithElmo)
+        }
+
+        for (eachrecall in allPatientRecall) {
+            println("Recall patient name is ${eachrecall.fullName()}")
+        }
+        setupAdapter(allPatientRecall)
     }
 
     @AddTrace(name = "setupUIMainActivity", enabled = true /* optional */)
@@ -70,6 +109,8 @@ class MainActivity : AppCompatActivity() {
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         patientsQuery = patientsBox.query().build()
 
+        recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
+
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
@@ -79,6 +120,7 @@ class MainActivity : AppCompatActivity() {
         btnAddPatient.setOnClickListener {
             addNewPatient()
         }
+
 
 //        Toast.makeText(this, "Activity id selected is ${DentalApp.activity_id}", Toast.LENGTH_LONG).show()
 //        Toast.makeText(this, "Activity name selected is ${DentalApp.activity_name}", Toast.LENGTH_LONG).show()
@@ -93,30 +135,32 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
         Log.d(TAG, "listPatientsFromLocalDB()")
-        allPatients = patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
-        setupAdapter()
+        allPatients =
+            patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
+        setupAdapter(allPatients)
     }
 
     @AddTrace(name = "setupAdapterMainActivity", enabled = true /* optional */)
-    private fun setupAdapter() {
-        patientAdapter = PatientAdapter(context, allPatients, object : PatientAdapter.PatientClickListener {
-            override fun onDelayPatientClick(patient: Patient) {
-                displayDelayDialog(patient)
-            }
+    private fun setupAdapter(patientList: List<Patient>) {
+        patientAdapter =
+            PatientAdapter(context, patientList, object : PatientAdapter.PatientClickListener {
+                override fun onDelayPatientClick(patient: Patient) {
+                    displayDelayDialog(patient)
+                }
 
-            override fun onCallPatientClick(patient: Patient) {
-                val call = Intent(Intent.ACTION_DIAL)
-                call.data = Uri.parse("tel:" + patient.phone)
-                startActivity(call)
-            }
+                override fun onCallPatientClick(patient: Patient) {
+                    val call = Intent(Intent.ACTION_DIAL)
+                    call.data = Uri.parse("tel:" + patient.phone)
+                    startActivity(call)
+                }
 
-            override fun onViewPatientDetailClick(patient: Patient) {
-                val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-                viewPatientIntent.putExtra("patient", patient)
-                startActivity(viewPatientIntent)
-            }
+                override fun onViewPatientDetailClick(patient: Patient) {
+                    val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
+                    viewPatientIntent.putExtra("patient", patient)
+                    startActivity(viewPatientIntent)
+                }
 
-        })
+            })
         recyclerView.adapter = patientAdapter
         patientAdapter.notifyDataSetChanged()
     }
@@ -129,8 +173,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        listPatients()
-
+        if (DentalApp.activity_name == "Health Post") {
+            listRecallPatients()
+        } else {
+            listPatients()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -178,12 +225,15 @@ class MainActivity : AppCompatActivity() {
         )
         val delayChooser = androidx.appcompat.app.AlertDialog.Builder(this)
         delayChooser.setTitle(getString(R.string.delay))
-        delayChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
-            loading.visibility = View.VISIBLE
-            Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show()
-            dialog.dismiss()// dismiss the alert box after chose option
-        })
+        delayChooser.setSingleChoiceItems(
+            grpName,
+            -1,
+            DialogInterface.OnClickListener { dialog, item ->
+                loading.visibility = View.VISIBLE
+                Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
+                Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()// dismiss the alert box after chose option
+            })
         val alert = delayChooser.create()
         alert.show()
     }
@@ -192,7 +242,8 @@ class MainActivity : AppCompatActivity() {
     private fun displaySearchDialog() {
         Log.d("TAG", "displaySearchDialog()")
         val searchDialogView = LayoutInflater.from(this).inflate(R.layout.search_dialog, null)
-        val mBuilder = AlertDialog.Builder(this).setView(searchDialogView).setTitle(getString(R.string.search))
+        val mBuilder =
+            AlertDialog.Builder(this).setView(searchDialogView).setTitle(getString(R.string.search))
 
         mBuilder.show()
     }
