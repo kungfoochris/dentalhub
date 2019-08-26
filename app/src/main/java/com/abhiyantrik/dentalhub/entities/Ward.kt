@@ -11,6 +11,7 @@ import kotlinx.android.parcel.Parcelize
 class Ward: Parcelable{
 
     @Id var id: Long = 0
+    var remote_id: Int = 0
     var ward: Int = 0
     var name: String = ""
     var municipality: ToOne<Municipality>? = null

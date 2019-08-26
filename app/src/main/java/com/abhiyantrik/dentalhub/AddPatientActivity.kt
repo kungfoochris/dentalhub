@@ -243,9 +243,9 @@ class AddPatientActivity : AppCompatActivity() {
         val dob = etDOB.text.toString()
         val phone = etPhone.text.toString()
         val education = spinnerEducationLevel.selectedItem.toString()
-        val ward = dbWard.id.toInt()
-        val municipality = dbMunicipality.id.toInt()
-        val district = dbDistrict.id.toInt()
+        val ward = dbWard.remote_id
+        val municipality = dbMunicipality.remote_id
+        val district = dbDistrict.remote_id
         val geography = DentalApp.geography_id
         val activity = DentalApp.activity_id
         val latitude = DentalApp.location.latitude

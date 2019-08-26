@@ -60,6 +60,7 @@ class SetupActivity : AppCompatActivity() {
                             for(district in allDistricts){
                                 if(districtsBox.query().equal(District_.name,district.name).build().count() == 0.toLong()){
                                     val newDistrict = com.abhiyantrik.dentalhub.entities.District()
+                                    newDistrict.remote_id = district.id
                                     newDistrict.name = district.name
                                     districtsBox.put(newDistrict)
                                 }
@@ -69,12 +70,14 @@ class SetupActivity : AppCompatActivity() {
                                     val dbDistrict = districtsBox.query().orderDesc(District_.id).build().findFirst()
                                     if(municipalitiesBox.query().equal(Municipality_.name,municipality.name).build().count() == 0.toLong()) {
                                         val newMunicipality = Municipality()
+                                        newMunicipality.remote_id = municipality.id
                                         newMunicipality.name = municipality.name
                                         newMunicipality.district?.target = dbDistrict
                                         municipalitiesBox.put(newMunicipality)
                                         for(ward in municipality.wards){
                                             val dbMunicipality = municipalitiesBox.query().orderDesc(Municipality_.id).build().findFirst()
                                             val newWard = Ward()
+                                            newWard.remote_id = ward.id
                                             newWard.ward = ward.ward
                                             newWard.name = dbMunicipality!!.name+"-"+ward.ward.toString()+", "+dbDistrict!!.name
                                             newWard.municipality?.target = dbMunicipality

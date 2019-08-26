@@ -246,7 +246,7 @@
     },
     {
       "id": "2:1916389530154912984",
-      "lastPropertyId": "8:948629889420617613",
+      "lastPropertyId": "9:6936992249195593675",
       "name": "Recall",
       "properties": [
         {
@@ -275,8 +275,9 @@
           "name": "encounterId"
         },
         {
-          "id": "8:948629889420617613",
-          "name": "patient"
+          "id": "9:6936992249195593675",
+          "indexId": "10:6441160148017254583",
+          "name": "patientId"
         }
       ],
       "relations": []
@@ -719,7 +720,7 @@
     }
   ],
   "lastEntityId": "13:3411229424671924617",
-  "lastIndexId": "9:8356652818685349364",
+  "lastIndexId": "10:6441160148017254583",
   "lastRelationId": "2:5331836077123179430",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
@@ -730,7 +731,8 @@
   ],
   "retiredPropertyUids": [
     5299329281423898360,
-    1911530764915936424
+    1911530764915936424,
+    948629889420617613
   ],
   "retiredRelationUids": [],
   "version": 1

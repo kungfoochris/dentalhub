@@ -173,7 +173,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/entities/District.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/entities/Encounter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/entities/Municipality.kt">
           <value>
             <set />
           </value>
@@ -189,6 +199,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/entities/Screening.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/entities/Ward.kt">
           <value>
             <set />
           </value>

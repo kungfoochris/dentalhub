@@ -27,6 +27,7 @@ import com.abhiyantrik.dentalhub.entities.Recall_
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
 import com.abhiyantrik.dentalhub.services.SyncService
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.query.Query
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var loading: ProgressBar
     private lateinit var btnAddPatient: Button
+    private lateinit var fabBtnAddPatient: FloatingActionButton
+    private lateinit var fabBtnSync: FloatingActionButton
 
     private lateinit var context: Context
     private lateinit var patientAdapter: PatientAdapter
@@ -105,6 +108,8 @@ class MainActivity : AppCompatActivity() {
         loading = findViewById(R.id.loading)
         recyclerView = findViewById(R.id.recyclerView)
         btnAddPatient = findViewById(R.id.btnAddNewPatient)
+        fabBtnAddPatient = findViewById(R.id.fabAddPatient)
+        fabBtnSync = findViewById(R.id.fabSync)
 
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         patientsQuery = patientsBox.query().build()
@@ -119,6 +124,13 @@ class MainActivity : AppCompatActivity() {
 
         btnAddPatient.setOnClickListener {
             addNewPatient()
+        }
+        fabBtnAddPatient.setOnClickListener {
+            addNewPatient()
+        }
+        fabBtnSync.setOnClickListener {
+            Log.d(TAG, "startSync")
+            startService(Intent(this, SyncService::class.java))
         }
 
 
@@ -185,18 +197,12 @@ class MainActivity : AppCompatActivity() {
             R.id.addPatient -> {
                 addNewPatient()
             }
-            R.id.refresh -> {
-                listPatients()
-            }
             R.id.search -> {
                 Log.d("PARAS", "do the search stuff")
                 //displaySearchDialog()
                 startActivity(Intent(context, SearchPatientActivity::class.java))
             }
-            R.id.sync -> {
-                Log.d(TAG, "startSync")
-                startService(Intent(this, SyncService::class.java))
-            }
+
             R.id.logout -> {
                 DentalApp.clearAuthDetails(context)
                 startActivity(Intent(this, LoginActivity::class.java))

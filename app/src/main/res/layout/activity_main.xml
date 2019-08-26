@@ -17,12 +17,36 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:focusable="true"
-            android:layout_marginBottom="48dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
     />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddPatient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_icon"
+            android:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/add_new_patient"
+            android:layout_margin="16dp"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_popup_sync"
+            android:backgroundTint="@color/colorART"
+            app:borderWidth="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/fabAddPatient"
+            android:contentDescription="@string/add_new_patient"
+            android:layout_margin="16dp"
+            />
+
     <Button
             android:id="@+id/btnAddNewPatient"
             android:text="@string/add_new_patient"
@@ -30,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_marginBottom="6dp"
             android:layout_height="50dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
     />
     <ProgressBar

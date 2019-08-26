@@ -57,14 +57,14 @@ class Patient(
 
     fun municipalityName(): String {
         val municipalityBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Municipality::class.java)
-        val municipality_name = municipalityBox.query().equal(Municipality_.id, municipality.toLong()).build().findFirst()!!
+        val municipality_name = municipalityBox.query().equal(Municipality_.remote_id, municipality.toLong()).build().findFirst()!!
 
         return "${municipality_name.name}"
     }
 
     fun districtName(): String {
         val districtBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
-        val district_name = districtBox.query().equal(District_.id, district.toLong()).build().findFirst()!!
+        val district_name = districtBox.query().equal(District_.remote_id, district.toLong()).build().findFirst()!!
 
         return "${district_name.name}"
     }
