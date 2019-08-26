@@ -25,6 +25,7 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import io.objectbox.exception.DbException
 
 
 class ViewPatientActivity : AppCompatActivity() {
@@ -222,8 +223,14 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun getUpdatedPatient() {
-        patient = patientBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
-        updateInfo()
+        try{
+            patient = patientBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
+            updateInfo()
+        }catch (e: DbException){
+            Log.d("DBEXception", e.printStackTrace().toString())
+        }
+
+
     }
 
     private fun openAddEncounter(encounterType: String) {
