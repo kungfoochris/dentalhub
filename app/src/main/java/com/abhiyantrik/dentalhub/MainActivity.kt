@@ -133,9 +133,6 @@ class MainActivity : AppCompatActivity() {
             startService(Intent(this, SyncService::class.java))
         }
 
-
-//        Toast.makeText(this, "Activity id selected is ${DentalApp.activity_id}", Toast.LENGTH_LONG).show()
-//        Toast.makeText(this, "Activity name selected is ${DentalApp.activity_name}", Toast.LENGTH_LONG).show()
     }
 
 
@@ -194,12 +191,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.addPatient -> {
-                addNewPatient()
-            }
             R.id.search -> {
-                Log.d("PARAS", "do the search stuff")
-                //displaySearchDialog()
                 startActivity(Intent(context, SearchPatientActivity::class.java))
             }
 
@@ -244,15 +236,15 @@ class MainActivity : AppCompatActivity() {
         alert.show()
     }
 
-    @AddTrace(name = "displaySearchDialogMainActivity", enabled = true /* optional */)
-    private fun displaySearchDialog() {
-        Log.d("TAG", "displaySearchDialog()")
-        val searchDialogView = LayoutInflater.from(this).inflate(R.layout.search_dialog, null)
-        val mBuilder =
-            AlertDialog.Builder(this).setView(searchDialogView).setTitle(getString(R.string.search))
-
-        mBuilder.show()
-    }
+//    @AddTrace(name = "displaySearchDialogMainActivity", enabled = true /* optional */)
+//    private fun displaySearchDialog() {
+//        Log.d("TAG", "displaySearchDialog()")
+//        val searchDialogView = LayoutInflater.from(this).inflate(R.layout.search_dialog, null)
+//        val mBuilder =
+//            AlertDialog.Builder(this).setView(searchDialogView).setTitle(getString(R.string.search))
+//
+//        mBuilder.show()
+//    }
 
 
 }

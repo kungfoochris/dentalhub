@@ -189,13 +189,13 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                 tvFirstNameView.text = patient.first_name
                 tvMiddleNameView.text = patient.middle_name
                 tvLastNameView.text = patient.last_name
-                tvGenderpopupView.text = patient.gender
+                tvGenderpopupView.text = patient.gender.capitalize()
                 tvDateofBirthView.text = patient.dob
                 tvPhonepopupView.text = patient.phone
-                tvWardView.text = patient.ward.toString()
+                tvWardView.text = patient.wardNumber()
                 tvMunicipalityView.text = patient.municipalityName()
                 tvDistrictView.text = patient.districtName()
-                tvEducationLevelView.text = patient.education
+                tvEducationLevelView.text = patient.education.capitalize()
 
 
                 builder.setView(view)

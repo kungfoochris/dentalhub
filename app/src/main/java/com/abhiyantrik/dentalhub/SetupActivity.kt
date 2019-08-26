@@ -40,13 +40,13 @@ class SetupActivity : AppCompatActivity() {
     private fun loadData() {
 
         Log.d(TAG, "listAddressess()")
-        tvMessage.text = tvMessage.text.toString() + "Loading addresses..."
+        tvMessage.text = tvMessage.text.toString() + "Loading addresses...\n"
         val panelService = DjangoInterface.create(this)
         val call = panelService.listAddresses()
         call.enqueue(object : Callback<List<District>> {
             override fun onFailure(call: Call<List<District>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                tvMessage.text = tvMessage.text.toString() + "Failed to load adresses"
+                tvMessage.text = tvMessage.text.toString() + "Failed to load adresses\n"
                 Log.d(TAG, t.toString())
             }
 
@@ -86,7 +86,7 @@ class SetupActivity : AppCompatActivity() {
                                     }
                                 }
                             }
-                            tvMessage.text = tvMessage.text.toString() + "Loading address complete"
+                            tvMessage.text = tvMessage.text.toString() + "Loading address complete\n"
                             DentalApp.saveToPreference(context,Constants.PREF_SETUP_COMPLETE,"true")
                             startActivity(Intent(context, LocationSelectorActivity::class.java))
                             finish()

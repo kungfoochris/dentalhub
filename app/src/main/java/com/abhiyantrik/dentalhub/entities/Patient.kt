@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.entities
 
 import android.os.Parcelable
+import android.util.Log
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.hornet.dateconverter.DateConverter
 import com.hornet.dateconverter.Model
@@ -45,28 +46,35 @@ class Patient(
     var encounters: ToMany<Encounter>? = null
 
     fun address(): String {
-        val municipality_name = municipalityName()
-        val district_name = districtName()
+        val municipalityName = municipalityName()
+        val districtName = districtName()
+        val wardNumber = wardNumber()
 
-        return "$municipality_name-$ward, $district_name"
+        return "$municipalityName-$wardNumber, $districtName"
     }
 
     fun fullName(): String {
         return "$first_name $middle_name $last_name"
     }
 
-    fun municipalityName(): String {
-        val municipalityBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Municipality::class.java)
-        val municipality_name = municipalityBox.query().equal(Municipality_.remote_id, municipality.toLong()).build().findFirst()!!
+    fun wardNumber(): String{
+        val wardBox = ObjectBox.boxStore.boxFor(Ward::class.java)
+        val ward = wardBox.query().equal(Ward_.remote_id, ward.toLong()).build().findFirst()
+        return "${ward?.ward}"
+    }
 
-        return "${municipality_name.name}"
+    fun municipalityName(): String {
+        val municipalityBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
+        val municipalityName = municipalityBox.query().equal(Municipality_.remote_id, municipality.toLong()).build().findFirst()!!
+
+        return municipalityName.name
     }
 
     fun districtName(): String {
-        val districtBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
-        val district_name = districtBox.query().equal(District_.remote_id, district.toLong()).build().findFirst()!!
+        val districtBox = ObjectBox.boxStore.boxFor(District::class.java)
+        val districtName = districtBox.query().equal(District_.remote_id, district.toLong()).build().findFirst()!!
 
-        return "${district_name.name}"
+        return districtName.name
     }
 
     fun age(): String {
@@ -76,13 +84,13 @@ class Patient(
         val dob = Calendar.getInstance()
         val today = Calendar.getInstance()
 
-        var nepaliCalander = DateConverter()
+        val nepaliCalender = DateConverter()
 
-        var todayNepali = nepaliCalander.todayNepaliDate
+        val todayNepali = nepaliCalender.todayNepaliDate
 
-        var yearToday = todayNepali.year
-        var monthToday = todayNepali.month + 1
-        var dayToday = todayNepali.day
+        val yearToday = todayNepali.year
+        val monthToday = todayNepali.month + 1
+        val dayToday = todayNepali.day
 
         dob.set(year, month, day)
         today.set(yearToday, monthToday, dayToday)
@@ -92,12 +100,13 @@ class Patient(
         if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
             age--
         }
-        if (age < 0) {
-            age = 0
+        Log.d("AGE ", age.toString())
+        Log.d("Month", ((today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR))/30).toString())
+        return if (age <= 0) {
+            val months = (today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR))/30
+            "$months months"
+        }else{
+            "$age years"
         }
-
-        val ageInt = age
-
-        return ageInt.toString()
     }
 }
