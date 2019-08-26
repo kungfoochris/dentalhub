@@ -31,6 +31,7 @@ import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import io.objectbox.exception.DbException
 import io.objectbox.query.Query
 import java.time.LocalDate
 
@@ -159,9 +160,14 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
         Log.d(TAG, "listPatientsFromLocalDB()")
-        allPatients =
-            patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
-        setupAdapter(allPatients)
+        try{
+            allPatients =
+                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
+            setupAdapter(allPatients)
+        }catch(e: DbException){
+            Log.d("DBException", e.printStackTrace().toString())
+        }
+
     }
 
     @AddTrace(name = "setupAdapterMainActivity", enabled = true /* optional */)

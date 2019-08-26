@@ -18,6 +18,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import io.objectbox.exception.DbException
 import io.objectbox.query.Query
 
 class SearchPatientActivity : AppCompatActivity() {
@@ -81,9 +82,14 @@ class SearchPatientActivity : AppCompatActivity() {
     }
 
     private fun listPatients() {
-        patientsearchlist =
-            patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
-        setupAdapter()
+        try{
+            patientsearchlist =
+                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
+            setupAdapter()
+        }catch(e: DbException){
+            Log.d("DBException", e.printStackTrace().toString())
+        }
+
     }
 
     private fun setupAdapter() {
@@ -127,14 +133,17 @@ class SearchPatientActivity : AppCompatActivity() {
                     Toast.makeText(context, "Looking for the $query", Toast.LENGTH_SHORT).show()
                 }
 
-                patientsearchlist = patientsBox.query()
-                    .contains(Patient_.first_name, query)
-                    .or()
-                    .contains(Patient_.last_name, query)
-                    .or()
-                    .contains(Patient_.last_name, query)
-                    .build().find()
-
+                try {
+                    patientsearchlist = patientsBox.query()
+                        .contains(Patient_.first_name, query)
+                        .or()
+                        .contains(Patient_.last_name, query)
+                        .or()
+                        .contains(Patient_.last_name, query)
+                        .build().find()
+                }catch (e: DbException){
+                    Log.d("DBException", e.printStackTrace().toString())
+                }
                 println("Query result is $patientsearchlist")
 
                 setupAdapter()
