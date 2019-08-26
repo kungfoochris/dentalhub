@@ -193,7 +193,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                 tvDateofBirthView.text = patient.dob
                 tvPhonepopupView.text = patient.phone
                 tvWardView.text = patient.ward.toString()
-                tvMunicipalityView.text = patient.minicipalityName()
+                tvMunicipalityView.text = patient.municipalityName()
                 tvDistrictView.text = patient.districtName()
                 tvEducationLevelView.text = patient.education
 

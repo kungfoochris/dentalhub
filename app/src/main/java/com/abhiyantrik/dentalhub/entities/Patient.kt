@@ -45,7 +45,7 @@ class Patient(
     var encounters: ToMany<Encounter>? = null
 
     fun address(): String {
-        val municipality_name = minicipalityName()
+        val municipality_name = municipalityName()
         val district_name = districtName()
 
         return "$municipality_name-$ward, $district_name"
@@ -55,7 +55,7 @@ class Patient(
         return "$first_name $middle_name $last_name"
     }
 
-    fun minicipalityName(): String {
+    fun municipalityName(): String {
         val municipalityBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Municipality::class.java)
         val municipality_name = municipalityBox.query().equal(Municipality_.id, municipality.toLong()).build().findFirst()!!
 
