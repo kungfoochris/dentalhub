@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         val currentDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate.now()
         } else {
-            TODO("VERSION.SDK_INT < O")
+            // do something here
         }
         // get all Address objects
         val builder = patientsBox.query()
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             val days = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 LocalDate.now().plusDays(eachDay.toLong())
             } else {
-                TODO("VERSION.SDK_INT < O")
+                // do something here
             }
             val builder = patientsBox.query()
             builder.link(Patient_.recall).equal(Recall_.date, days.toString())
