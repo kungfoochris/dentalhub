@@ -93,7 +93,7 @@ class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks,
 
 
     override fun onDestroy() {
-        googleApiClient.disconnect()
+//        googleApiClient.disconnect()
         super.onDestroy()
     }
 }

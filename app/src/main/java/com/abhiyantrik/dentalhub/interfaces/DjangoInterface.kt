@@ -7,6 +7,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.models.District
 import com.abhiyantrik.dentalhub.models.Geography
 import com.abhiyantrik.dentalhub.models.LoginResponse
+import com.abhiyantrik.dentalhub.models.Profile
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -210,6 +211,9 @@ interface DjangoInterface {
 
     @GET("activities")
     fun listActivities(): Call<List<Activity>>
+
+    @GET("profile")
+    fun fetchProfile(): Call<Profile>
 
     // to get all activity list
     @GET("events")

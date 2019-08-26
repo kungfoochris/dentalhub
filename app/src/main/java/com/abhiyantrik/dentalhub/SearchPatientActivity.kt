@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Debug
 import android.util.Log
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
@@ -29,6 +30,9 @@ class SearchPatientActivity : AppCompatActivity() {
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var patientQuery: Query<Patient>
+    private lateinit var recyclerAdapter: PatientAdapter
+    private lateinit var manager: SearchManager
+    private lateinit var searchView: SearchView
 
     private val TAG = "SearchPatientActivity"
 
@@ -39,6 +43,11 @@ class SearchPatientActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search_patient)
 
         context = this
+        title = getString(R.string.search_label)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
         setupUI()
 
@@ -64,12 +73,47 @@ class SearchPatientActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        listPatients()
+        //manager.startSearch(null, false, componentName, null, false)
+//        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+    }
+
+    private fun listPatients() {
+        patientsearchlist =
+            patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
+        setupAdapter()
+    }
+
+    private fun setupAdapter() {
+        recyclerAdapter = PatientAdapter(context, patientsearchlist, object : PatientAdapter.PatientClickListener{
+            override fun onViewPatientDetailClick(patient: Patient) {
+                val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
+                viewPatientIntent.putExtra("patient", patient)
+                startActivity(viewPatientIntent)
+            }
+
+            override fun onCallPatientClick(patient: Patient) {
+                val call = Intent(Intent.ACTION_DIAL)
+                call.data = Uri.parse("tel:" + patient.phone)
+                startActivity(call)
+            }
+
+            override fun onDelayPatientClick(patient: Patient) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })
+        recyclerView.adapter = recyclerAdapter
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_patient_menu, menu)
 
-        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
         val searchItem = menu?.findItem(R.id.searchPatient)
-        val searchView = searchItem?.actionView as SearchView
+        searchView = searchItem?.actionView as SearchView
 
         searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
 
@@ -78,7 +122,10 @@ class SearchPatientActivity : AppCompatActivity() {
                 searchView.clearFocus()
                 searchView.setQuery("", false)
                 searchItem.collapseActionView()
-                Toast.makeText(context, "Looking for the $query", Toast.LENGTH_SHORT).show()
+
+                if(BuildConfig.DEBUG){
+                    Toast.makeText(context, "Looking for the $query", Toast.LENGTH_SHORT).show()
+                }
 
                 patientsearchlist = patientsBox.query()
                     .contains(Patient_.first_name, query)
@@ -90,25 +137,7 @@ class SearchPatientActivity : AppCompatActivity() {
 
                 println("Query result is $patientsearchlist")
 
-                val recyclerAdapter = PatientAdapter(context, patientsearchlist, object : PatientAdapter.PatientClickListener{
-                    override fun onViewPatientDetailClick(patient: Patient) {
-                        val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-                        viewPatientIntent.putExtra("patient", patient)
-                        startActivity(viewPatientIntent)
-                    }
-
-                    override fun onCallPatientClick(patient: Patient) {
-                        val call = Intent(Intent.ACTION_DIAL)
-                        call.data = Uri.parse("tel:" + patient.phone)
-                        startActivity(call)
-                    }
-
-                    override fun onDelayPatientClick(patient: Patient) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
-
-                })
-                recyclerView.adapter = recyclerAdapter
+                setupAdapter()
                 return true
             }
 
@@ -119,5 +148,14 @@ class SearchPatientActivity : AppCompatActivity() {
         })
         return true
 
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }
