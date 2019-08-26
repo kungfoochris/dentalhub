@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnAddPatient: Button
     private lateinit var fabBtnAddPatient: FloatingActionButton
     private lateinit var fabBtnSync: FloatingActionButton
+
+    private lateinit var tvLocation: TextView
+    private lateinit var tvName: TextView
+    private lateinit var tvActivity: TextView
 
     private lateinit var context: Context
     private lateinit var patientAdapter: PatientAdapter
@@ -110,6 +115,16 @@ class MainActivity : AppCompatActivity() {
         btnAddPatient = findViewById(R.id.btnAddNewPatient)
         fabBtnAddPatient = findViewById(R.id.fabAddPatient)
         fabBtnSync = findViewById(R.id.fabSync)
+
+        tvLocation = findViewById(R.id.tvLocation)
+        tvActivity = findViewById(R.id.tvActivity)
+        tvName = findViewById(R.id.tvFullName)
+
+        title = getString(R.string.dashboard)
+        Log.d("PROFILE NAME", DentalApp.fullName)
+        tvName.text = DentalApp.fullName
+        tvLocation.text = DentalApp.geography_name
+        tvActivity.text = DentalApp.activity_name
 
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         patientsQuery = patientsBox.query().build()

@@ -12,6 +12,7 @@ import com.abhiyantrik.dentalhub.entities.Municipality_
 import com.abhiyantrik.dentalhub.entities.Ward
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.District
+import com.abhiyantrik.dentalhub.models.Profile
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,7 +35,37 @@ class SetupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setup)
         context = this
         initUI()
+        loadProfile()
         loadData()
+    }
+
+    private fun loadProfile() {
+        val panelService = DjangoInterface.create(this)
+        val call = panelService.fetchProfile()
+        call.enqueue(object: Callback<Profile>{
+            override fun onFailure(call: Call<Profile>, t: Throwable) {
+                Log.d(TAG, "onFailure()")
+                tvMessage.text = tvMessage.text.toString() + "Failed to load addresses\n"
+                Log.d(TAG, t.toString())
+            }
+
+            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                if(null!=response.body()){
+                    when(response.code()){
+                        200->{
+                            val p = response.body() as Profile
+                            DentalApp.saveToPreference(context,Constants.PREF_PROFILE_FULL_NAME, p.fullName())
+                            DentalApp.saveToPreference(context,Constants.PREF_PROFILE_FIRST_NAME, p.first_name)
+                            DentalApp.saveToPreference(context, Constants.PREF_PROFILE_MIDDLE_NAME, p.middle_name)
+                            DentalApp.saveToPreference(context, Constants.PREF_PROFILE_LAST_NAME, p.last_name)
+                            DentalApp.saveToPreference(context, Constants.PREF_PROFILE_ID, p.id)
+                            DentalApp.saveToPreference(context, Constants.PREF_PROFILE_IMAGE, p.image)
+                        }
+                    }
+                }
+            }
+
+        })
     }
 
     private fun loadData() {

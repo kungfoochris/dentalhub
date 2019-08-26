@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity;
 import com.abhiyantrik.dentalhub.entities.Geography
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.LoginResponse
@@ -19,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : Activity() {
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var tvErrorMessage: TextView

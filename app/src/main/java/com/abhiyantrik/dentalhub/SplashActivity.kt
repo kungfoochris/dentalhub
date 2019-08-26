@@ -27,22 +27,25 @@ class SplashActivity : Activity() {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
                 val setupComplete = DentalApp.readFromPreference(context, Constants.PREF_SETUP_COMPLETE,"false")
-                if(setupComplete.equals("true")) {
-                    val selectedLocation_id = DentalApp.readFromPreference(context, Constants.PREF_SELECTED_LOCATION_ID, "")
-                    val selectedLocation_name = DentalApp.readFromPreference(context, Constants.PREF_SELECTED_LOCATION_NAME, "")
-                    val selectedActivity_name = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
-                    val selectedActivity_id = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
+                if(setupComplete == "true") {
+                    val selectedLocationId = DentalApp.readFromPreference(context, Constants.PREF_SELECTED_LOCATION_ID, "")
+                    val selectedLocationName = DentalApp.readFromPreference(context, Constants.PREF_SELECTED_LOCATION_NAME, "")
+                    val selectedActivityName = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
+                    val selectedActivityId = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
                     val remarks = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
+
+                    DentalApp.fullName = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME,"")
+
 //                    if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty()){
 //                        startActivity(Intent(this, LocationSelectorActivity::class.java))
 //                    }
-                    if(selectedLocation_id.isNullOrEmpty() || selectedActivity_id.isNullOrEmpty()){
+                    if(selectedLocationId.isNullOrEmpty() || selectedActivityId.isNullOrEmpty()){
                         startActivity(Intent(this, LocationSelectorActivity::class.java))
                     } else {
-                        DentalApp.geography_id = selectedLocation_id
-                        DentalApp.geography_name = selectedLocation_name
-                        DentalApp.activity_id = selectedActivity_id
-                        DentalApp.activity_name = selectedActivity_name
+                        DentalApp.geography_id = selectedLocationId
+                        DentalApp.geography_name = selectedLocationName
+                        DentalApp.activity_id = selectedActivityId
+                        DentalApp.activity_name = selectedActivityName
                         DentalApp.activityRemarks = remarks
                         startActivity(Intent(this, MainActivity::class.java))
                     }

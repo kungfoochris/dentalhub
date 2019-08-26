@@ -12,17 +12,66 @@
         android:paddingEnd="8dp"
         android:background="@color/grey_50"
 >
+    <androidx.cardview.widget.CardView
+            android:id="@+id/profileView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            >
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:id="@+id/ivProfileImage"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/profile"
+                    android:layout_marginEnd="8dp"
+                    />
+            <LinearLayout
+                android:orientation="vertical"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tvFullName"
+                        android:text="@string/app_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                <TextView
+                        android:id="@+id/tvLocation"
+                        android:text="@string/app_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                <TextView
+                        android:id="@+id/tvActivity"
+                        android:text="@string/app_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_height="wrap_content"
             android:focusable="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
     />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddPatient"

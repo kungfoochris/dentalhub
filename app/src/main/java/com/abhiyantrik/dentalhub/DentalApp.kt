@@ -6,6 +6,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.multidex.MultiDexApplication
 import com.abhiyantrik.dentalhub.models.Location
+import com.abhiyantrik.dentalhub.models.Profile
 import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper
 
@@ -54,6 +55,7 @@ class DentalApp : MultiDexApplication() {
         var defaultChannelId: String = ""
         var syncChannelId: String = ""
         var editableDuration: Long = 86400
+        var fullName = ""
 
 
         fun saveToPreference(context: Context, preferenceName: String, preferenceValue: String) {

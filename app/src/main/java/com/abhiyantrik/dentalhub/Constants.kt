@@ -34,6 +34,19 @@ class Constants {
         val PREF_ACTIVITY_REMARKS = "ACTIVITY_REMARKS"
 
         @JvmStatic
+        val PREF_PROFILE_FULL_NAME = "USER_FULL_NAME"
+        @JvmStatic
+        val PREF_PROFILE_FIRST_NAME = "USER_FIRST_NAME"
+        @JvmStatic
+        val PREF_PROFILE_MIDDLE_NAME = "USER_MIDDLE_NAME"
+        @JvmStatic
+        val PREF_PROFILE_LAST_NAME = "USER_LAST_NAME"
+        @JvmStatic
+        val PREF_PROFILE_IMAGE = "USER_IMAGE"
+        @JvmStatic
+        val PREF_PROFILE_ID = "USER_ID"
+
+        @JvmStatic
         val LOCATION_REQUEST = 1011
         @JvmStatic
         val GPS_REQUEST = 1012
