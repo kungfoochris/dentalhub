@@ -51,6 +51,7 @@ class ViewPatientActivity : AppCompatActivity() {
 
     private lateinit var encounterBox: Box<Encounter>
     private lateinit var patientBox: Box<Patient>
+    var patientId:Long = 0
 
     val TAG = "ViewPatientActivity"
 
@@ -60,12 +61,13 @@ class ViewPatientActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_patient)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        patient = intent.getParcelableExtra("patient")
+        patientId = intent.getLongExtra("patientId", 0)
+
         context = this
 
         supportActionBar?.setHomeButtonEnabled(true)
 
-        title = patient.fullName()
+
         initUI()
     }
 
@@ -82,18 +84,19 @@ class ViewPatientActivity : AppCompatActivity() {
         tvEducation = findViewById(R.id.tvEducation)
         loading = findViewById(R.id.loading)
 
-//        btnAddNewEncounter = findViewById(R.id.btnAddNewEncounter)
         fabAddNewEncounter = findViewById(R.id.fabAddNewEncounter)
         fabEditPatient = findViewById(R.id.fabEditPatient)
 
         mLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = mLayoutManager
+        recyclerView.layoutManager = mLayoutManager as RecyclerView.LayoutManager?
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         val divider = RecyclerViewItemSeparator(20)
         recyclerView.addItemDecoration(divider)
 
-        updateInfo()
 
+
+        getUpdatedPatient()
+        title = patient.fullName()
         listEncounters()
 
         fabAddNewEncounter.setOnClickListener {
@@ -136,60 +139,6 @@ class ViewPatientActivity : AppCompatActivity() {
         tvAddress.text = patient.address()
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.view_patient, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.home -> {
-//                Log.d(TAG, "Display Detail")
-//                println("Name is selected")
-//            }
-//            R.id.viewPatient -> {
-//                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
-//                val inflate : LayoutInflater = layoutInflater
-//                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
-//
-//                // to get all id of the textView
-//                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
-//                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
-//                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
-//                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
-//                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
-//                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
-//                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
-//                val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
-//                val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
-//                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
-//                val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
-//
-//                // to set the details of the patient on Alert Dialog i.e. View Patient
-//                tvFirstNameView.text = patient.first_name
-//                tvMiddleNameView.text = patient.middle_name
-//                tvLastNameView.text = patient.last_name
-//                tvGenderpopupView.text = patient.gender.capitalize()
-//                tvDateofBirthView.text = patient.dob
-//                tvPhonepopupView.text = patient.phone
-//                tvWardView.text = patient.wardNumber()
-//                tvMunicipalityView.text = patient.municipalityName()
-//                tvDistrictView.text = patient.districtName()
-//                tvEducationLevelView.text = patient.education.capitalize()
-//
-//
-//                builder.setView(view)
-//                val dialog : Dialog = builder.create()
-//                dialog.show()
-//
-//                btnCloseDialog.setOnClickListener {
-//                    dialog.dismiss()
-//                }
-//
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -223,17 +172,17 @@ class ViewPatientActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        getUpdatedPatient()
+        //getUpdatedPatient()
         listEncounters()
         loading.visibility = View.GONE
     }
 
     private fun getUpdatedPatient() {
         try{
-            patient = patientBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
+            patient = patientBox.query().equal(Patient_.id, patientId.toLong()).build().findFirst()!!
             updateInfo()
         }catch (e: DbException){
-            Log.d("DBEXception", e.printStackTrace().toString())
+            Log.d("DBException", e.printStackTrace().toString())
         }
 
 
@@ -251,7 +200,7 @@ class ViewPatientActivity : AppCompatActivity() {
         encounterBox.put(encounter)
 
         val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
-        addEncounterIntent.putExtra("patient", patient)
+        addEncounterIntent.putExtra("patientId", patientId)
         addEncounterIntent.putExtra("ENCOUNTER_ID", "0".toLong())
         startActivity(addEncounterIntent)
     }

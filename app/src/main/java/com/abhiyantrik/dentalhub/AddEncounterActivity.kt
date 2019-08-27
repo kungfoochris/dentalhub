@@ -32,6 +32,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private lateinit var tabLayout: TabLayout
     private lateinit var patient: Patient
 
+    private lateinit var patientBox: Box<Patient>
     private lateinit var encounterBox: Box<Encounter>
     private lateinit var historyBox: Box<History>
     private lateinit var screeningBox: Box<Screening>
@@ -48,6 +49,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private var recall = Recall()
     private var encounter = Encounter()
     var encounterId: Long = 0
+    var patientId: Long = 0
 
 
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
@@ -55,6 +57,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_encounter)
 
+        patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         historyBox = ObjectBox.boxStore.boxFor(History::class.java)
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
@@ -64,7 +67,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        patient = intent.getParcelableExtra("patient")
+        patientId = intent.getLongExtra("patientId", 0.toLong())
+        patient = patientBox.query().equal(Patient_.id, patientId.toLong()).build().findFirst()!!
         title = patient.fullName()
 
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())

@@ -16,9 +16,7 @@ import java.util.*
 
 @Entity
 @Parcelize
-class Patient(
-
-) : Parcelable {
+class Patient: Parcelable {
     @Id var id: Long=0
     var remote_id: String = ""
     var first_name: String = ""
@@ -47,6 +45,7 @@ class Patient(
     @Backlink(to = "patient")
     var encounters: ToMany<Encounter>? = null
 
+
     fun address(): String {
         val municipalityName = municipalityName()
         val districtName = districtName()
@@ -60,55 +59,81 @@ class Patient(
     }
 
     fun wardNumber(): String{
-        val wardBox = ObjectBox.boxStore.boxFor(Ward::class.java)
-        val ward = wardBox.query().equal(Ward_.remote_id, ward.toLong()).build().findFirst()
-        return "${ward?.ward}"
+        var wardNumberString = "-"
+        try{
+            val wardBox = ObjectBox.boxStore.boxFor(Ward::class.java)
+            val ward = wardBox.query().equal(Ward_.remote_id, ward.toLong()).build().findFirst()
+            wardNumberString =  "${ward?.ward}"
+        }catch (e: KotlinNullPointerException){
+            Log.d("Patient", e.printStackTrace().toString())
+        }
+        return wardNumberString
+
     }
 
     fun municipalityName(): String {
-        val municipalityBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
-        val municipalityName = municipalityBox.query().equal(Municipality_.remote_id, municipality.toLong()).build().findFirst()!!
+        var municipalityNameString = "-"
+        try{
+            val municipalityBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
+            val municipalityName = municipalityBox.query().equal(Municipality_.remote_id, municipality.toLong()).build().findFirst()!!
 
-        return municipalityName.name
+            municipalityNameString = municipalityName.name
+        }catch (e: KotlinNullPointerException){
+            Log.d("Patient",e.printStackTrace().toString())
+        }
+        return municipalityNameString
+
     }
 
     fun districtName(): String {
-        val districtBox = ObjectBox.boxStore.boxFor(District::class.java)
-        val districtName = districtBox.query().equal(District_.remote_id, district.toLong()).build().findFirst()!!
-
-        return districtName.name
+        var districtNameString = "-"
+        try {
+            val districtBox = ObjectBox.boxStore.boxFor(District::class.java)
+            val districtName = districtBox.query().equal(District_.remote_id, district.toLong()).build().findFirst()!!
+            districtNameString = districtName.name
+        }catch (e: KotlinNullPointerException){
+            Log.d("Patient", e.printStackTrace().toString())
+        }
+        return districtNameString
     }
 
     fun age(): String {
-        val year: Int = dob.substring(0, 4).toInt()
-        val month: Int = dob.substring(5, 7).toInt()
-        val day: Int = dob.substring(8, 10).toInt()
-        val dob = Calendar.getInstance()
-        val today = Calendar.getInstance()
+        Log.d("dob", dob)
+        try {
+            val year: Int = dob.substring(0, 4).toInt()
+            val month: Int = dob.substring(5, 7).toInt()
+            val day: Int = dob.substring(8, 10).toInt()
+            val dob = Calendar.getInstance()
+            val today = Calendar.getInstance()
 
-        val nepaliCalender = DateConverter()
+            val nepaliCalender = DateConverter()
 
-        val todayNepali = nepaliCalender.todayNepaliDate
+            val todayNepali = nepaliCalender.todayNepaliDate
 
-        val yearToday = todayNepali.year
-        val monthToday = todayNepali.month + 1
-        val dayToday = todayNepali.day
+            val yearToday = todayNepali.year
+            val monthToday = todayNepali.month + 1
+            val dayToday = todayNepali.day
 
-        dob.set(year, month, day)
-        today.set(yearToday, monthToday, dayToday)
+            dob.set(year, month, day)
+            today.set(yearToday, monthToday, dayToday)
 
-        var age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
+            var age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
 
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
-            age--
+            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+                age--
+            }
+            Log.d("AGE ", age.toString())
+            Log.d("Month", ((today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR))/30).toString())
+            return if (age <= 0) {
+                val months = (today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR))/30
+                "$months months"
+            }else{
+                "$age years"
+            }
+        }catch (e: StringIndexOutOfBoundsException){
+            Log.d("Patient", "Could not calculate date")
+            return "-"
         }
-        Log.d("AGE ", age.toString())
-        Log.d("Month", ((today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR))/30).toString())
-        return if (age <= 0) {
-            val months = (today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR))/30
-            "$months months"
-        }else{
-            "$age years"
-        }
+
     }
 }
