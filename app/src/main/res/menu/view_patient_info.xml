@@ -5,7 +5,7 @@
     <item
             android:id="@+id/viewPatient"
             android:title="@string/view_patient_info"
-            android:icon="@android:drawable/ic_menu_view"
+            android:icon="@drawable/view"
             app:showAsAction="always"
     />
 
