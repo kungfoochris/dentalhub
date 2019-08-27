@@ -1,14 +1,10 @@
 package com.abhiyantrik.dentalhub
 
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -61,14 +57,19 @@ class ViewPatientActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_patient)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        patientId = intent.getLongExtra("patientId", 0)
-
+        patientId = intent.getLongExtra("PATIENT_ID", 0)
         context = this
+
+        if(patientId==0.toLong()) {
+            Toast.makeText(context, "Invalid patient id", Toast.LENGTH_LONG).show()
+            finish()
+        }
 
         supportActionBar?.setHomeButtonEnabled(true)
 
 
         initUI()
+        listEncounters()
     }
 
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
@@ -93,26 +94,29 @@ class ViewPatientActivity : AppCompatActivity() {
         val divider = RecyclerViewItemSeparator(20)
         recyclerView.addItemDecoration(divider)
 
-
-
         getUpdatedPatient()
-        title = patient.fullName()
-        listEncounters()
 
         fabAddNewEncounter.setOnClickListener {
             displayEncounterTypeSelector()
         }
         fabEditPatient.setOnClickListener {
             val addPatientIntent = Intent(this, AddPatientActivity::class.java)
-            addPatientIntent.putExtra("patient", patient)
+            addPatientIntent.putExtra("PATIENT_ID", patientId)
             addPatientIntent.putExtra("ACTION", "edit")
             startActivity(addPatientIntent)
         }
     }
 
     private fun listEncounters() {
+        if(patientId==0.toLong()){
+            Toast.makeText(context, "Invalid patient id", Toast.LENGTH_LONG).show()
+            finish()
+        }
         val allEnCounters =
-            encounterBox.query().equal(Encounter_.patientId, patient.id).orderDesc(Encounter_.id).build().find()
+            encounterBox.query().equal(Encounter_.patientId, patientId).orderDesc(Encounter_.id).build().find()
+
+        patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
+
         encounterAdapter =
             EncounterAdapter(context, patient, allEnCounters, object : EncounterAdapter.EncounterClickListener {
                 override fun onEncounterClick(encounter: Encounter) {
@@ -120,7 +124,7 @@ class ViewPatientActivity : AppCompatActivity() {
                     Log.d("View PatientActivity", "show encounter detail")
                     val encounterDetailIntent = Intent(context, ViewEncounterActivity::class.java)
                     encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id)
-                    encounterDetailIntent.putExtra("PATIENT_ID", patient.id)
+                    encounterDetailIntent.putExtra("PATIENT_ID", patientId)
                     startActivity(encounterDetailIntent)
                 }
 
@@ -178,13 +182,15 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun getUpdatedPatient() {
-        try{
-            patient = patientBox.query().equal(Patient_.id, patientId.toLong()).build().findFirst()!!
-            updateInfo()
-        }catch (e: DbException){
-            Log.d("DBException", e.printStackTrace().toString())
+        Log.d("Patient ID", patientId.toString())
+        if(patientId!=0.toLong()){
+            try{
+                patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
+                updateInfo()
+            }catch (e: DbException){
+                Log.d("DBException", e.printStackTrace().toString())
+            }
         }
-
 
     }
 
@@ -200,7 +206,7 @@ class ViewPatientActivity : AppCompatActivity() {
         encounterBox.put(encounter)
 
         val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
-        addEncounterIntent.putExtra("patientId", patientId)
+        addEncounterIntent.putExtra("PATIENT_ID", patientId)
         addEncounterIntent.putExtra("ENCOUNTER_ID", "0".toLong())
         startActivity(addEncounterIntent)
     }

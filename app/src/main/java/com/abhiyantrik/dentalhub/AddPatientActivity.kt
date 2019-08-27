@@ -41,21 +41,27 @@ class AddPatientActivity : AppCompatActivity() {
     private var patient: Patient? = null
     private val TAG = "AddPatientActivity"
     private var action = "new"
+    private var patientId:Long = 0
 
     private var allWards = mutableListOf<Ward>()
     private var allMunicipalities = mutableListOf<Municipality>()
     private var allDistricts = mutableListOf<District>()
 
     private lateinit var patientsBox: Box<Patient>
-    private lateinit var districtsBox: Box<com.abhiyantrik.dentalhub.entities.District>
+    private lateinit var districtsBox: Box<District>
     private lateinit var municipalitiesBox: Box<Municipality>
     private lateinit var wardsBox: Box<Ward>
+    private lateinit var patientBox: Box<Patient>
 
     @AddTrace(name = "onCreateAddPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_patient)
-        patient = intent.getParcelableExtra("patient")
+        patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
+        patientId = intent.getLongExtra("PATIENT_ID",0)
+        if(patientId!=0.toLong()){
+            patient = patientBox.query().equal(Patient_.id,patientId).build().findFirst()
+        }
         action = intent.getStringExtra("ACTION")
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -66,7 +72,7 @@ class AddPatientActivity : AppCompatActivity() {
     @AddTrace(name = "initUIAddPatientActivity", enabled = true /* optional */)
     private fun initUI() {
         districtsBox =
-            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
+            ObjectBox.boxStore.boxFor(District::class.java)
         municipalitiesBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
         wardsBox = ObjectBox.boxStore.boxFor(Ward::class.java)
 
@@ -251,8 +257,8 @@ class AddPatientActivity : AppCompatActivity() {
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentDate()
-        if (patient != null) {
-            patient = patientsBox.get(patient!!.id)
+        if (action=="edit") {
+            patient = patientsBox.get(patientId)
             patient!!.first_name = firstName
             patient!!.middle_name = middleName
             patient!!.last_name = lastName
@@ -272,7 +278,7 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.updated = true
             return patient!!
         } else {
-            val tempPatient = Patient();
+            val tempPatient = Patient()
             tempPatient.id = id
             tempPatient.remote_id = ""
             tempPatient.first_name = firstName
@@ -311,8 +317,9 @@ class AddPatientActivity : AppCompatActivity() {
         Log.d(TAG, "saveToLocalDB")
         patientsBox.put(patient)
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-        viewPatientIntent.putExtra("patient", patient)
-        if (action.equals("new")) {
+        if (action == "new") {
+            val pt = patientBox.query().build().findFirst()!!
+            viewPatientIntent.putExtra("PATIENT_ID", pt.id)
             startActivity(viewPatientIntent)
         } else {
             finish()

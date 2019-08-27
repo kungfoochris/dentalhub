@@ -197,7 +197,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onViewPatientDetailClick(patient: Patient) {
                     val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-                    viewPatientIntent.putExtra("patientId", patient.id)
+                    viewPatientIntent.putExtra("PATIENT_ID", patient.id)
                     startActivity(viewPatientIntent)
                 }
 

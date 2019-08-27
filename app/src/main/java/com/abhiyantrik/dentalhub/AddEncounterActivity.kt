@@ -67,8 +67,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        patientId = intent.getLongExtra("patientId", 0.toLong())
-        patient = patientBox.query().equal(Patient_.id, patientId.toLong()).build().findFirst()!!
+        patientId = intent.getLongExtra("PATIENT_ID", 0.toLong())
+        patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
         title = patient.fullName()
 
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())

@@ -32,5 +32,6 @@
             android:background="@android:color/transparent"
             android:src="@drawable/edit"
             android:layout_width="100dp"
+            android:scaleType="fitCenter"
             android:layout_height="wrap_content"/>
 </RelativeLayout>
