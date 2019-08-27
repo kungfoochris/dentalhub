@@ -10,6 +10,7 @@
         tools:context=".MainActivity"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
         android:background="@color/grey_50"
 >
     <androidx.cardview.widget.CardView

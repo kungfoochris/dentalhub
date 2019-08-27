@@ -318,7 +318,7 @@ class AddPatientActivity : AppCompatActivity() {
         patientsBox.put(patient)
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
         if (action == "new") {
-            val pt = patientBox.query().build().findFirst()!!
+            val pt = patientBox.query().orderDesc(Patient_.id).build().findFirst()!!
             viewPatientIntent.putExtra("PATIENT_ID", pt.id)
             startActivity(viewPatientIntent)
         } else {

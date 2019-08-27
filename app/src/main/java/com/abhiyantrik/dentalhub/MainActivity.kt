@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "listPatientsFromLocalDB()")
         try{
             allPatients =
-                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
+                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).orderDesc(Patient_.id).build().find()
             setupAdapter(allPatients)
         }catch(e: DbException){
             Log.d("DBException", e.printStackTrace().toString())
