@@ -114,3 +114,11 @@ Napp/src/main/java/com/abhiyantrik/dentalhub/services/LocationTrackerService.kt
 Lapp/src/main/java/com/abhiyantrik/dentalhub/adapters/RecallPatientAdapter.kt,d/b/dbc3477d6fdd04a4ba2a043f5502590f220c0647
 ~
 Napp/src/main/java/com/abhiyantrik/dentalhub/utils/RecyclerViewItemSeparator.kt,a/3/a3dbdfbe9d9ffe277cc352a37b93b2d23dfe7929
+t
+Dapp/src/main/java/com/abhiyantrik/dentalhub/entities/Municipality.kt,6/3/630513a4bf4815aeb845103fe1a3f85b01092ede
+l
+<app/src/main/java/com/abhiyantrik/dentalhub/entities/Ward.kt,b/b/bbcd0060213b0a519157b7ff4985fe774834a085
+m
+=app/src/main/java/com/abhiyantrik/dentalhub/SearchActivity.kt,0/a/0a8f71d1c93fdbce8d34fbe174e303f3d687fc73
+m
+=app/src/main/java/com/abhiyantrik/dentalhub/models/Profile.kt,7/5/75f2e211501feaf3fb669386e6ea80fea42cd921

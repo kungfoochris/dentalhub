@@ -44,18 +44,38 @@
                 <TextView
                         android:id="@+id/tvFullName"
                         android:text="@string/app_name"
+                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-                <TextView
-                        android:id="@+id/tvLocation"
-                        android:text="@string/app_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                <TextView
-                        android:id="@+id/tvActivity"
-                        android:text="@string/app_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                        android:text="@string/location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    <TextView
+                            android:id="@+id/tvLocation"
+                            android:text="@string/app_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:text="@string/activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    <TextView
+                            android:id="@+id/tvActivity"
+                            android:text="@string/app_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>
+
 
             </LinearLayout>
         </LinearLayout>

@@ -104,17 +104,27 @@
                     android:layout_height="wrap_content">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
-                        android:text="@string/date_of_birth"
+                        android:text="@string/date_of_birth_with_format"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <EditText
-                        android:id="@+id/etDOB"
-                        android:inputType="date"
+                <LinearLayout
                         android:layout_weight="@dimen/form_col_2_weight"
-                        android:hint="@string/date_of_birth"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                />
+                        android:layout_height="wrap_content">
+                    <Spinner
+                            android:id="@+id/spinnerDobDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    <Spinner
+                            android:id="@+id/spinnerDobMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    <Spinner
+                            android:id="@+id/spinnerDobYear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                     android:weightSum="1"

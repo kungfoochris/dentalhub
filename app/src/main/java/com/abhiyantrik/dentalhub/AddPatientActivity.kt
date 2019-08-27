@@ -24,11 +24,15 @@ class AddPatientActivity : AppCompatActivity() {
     private lateinit var etFirstName: EditText
     private lateinit var etMiddleName: EditText
     private lateinit var etLastName: EditText
-    private lateinit var etDOB: EditText
     private lateinit var etPhone: EditText
     private lateinit var spinnerWard: Spinner
     private lateinit var spinnerMunicipality: Spinner
     private lateinit var spinnerDistrict: Spinner
+
+    private lateinit var spinnerDobDay: Spinner
+    private lateinit var spinnerDobMonth: Spinner
+    private lateinit var spinnerDobYear: Spinner
+
 
     private lateinit var loading: ProgressBar
     private lateinit var tvErrorMessage: TextView
@@ -77,29 +81,16 @@ class AddPatientActivity : AppCompatActivity() {
         spinnerMunicipality = findViewById(R.id.spinnerMunicipality)
         spinnerDistrict = findViewById(R.id.spinnerDistrict)
 
+        spinnerDobDay = findViewById(R.id.spinnerDobDay)
+        spinnerDobMonth = findViewById(R.id.spinnerDobMonth)
+        spinnerDobYear = findViewById(R.id.spinnerDobYear)
+
 
         etPhone = findViewById(R.id.etPhone)
-        etDOB = findViewById(R.id.etDOB)
 
         btnAddPatient = findViewById(R.id.btnAddPatient)
         spinnerGender = findViewById(R.id.spinnerGender)
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
-
-        etDOB.setOnFocusChangeListener { _, b ->
-
-            if (b) {
-                val nepaliDateConverter = DateConverter()
-
-                val dpd =
-                    com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
-                        val month = DecimalFormat("00").format(monthOfYear + 1).toString()
-                        val day = DecimalFormat("00").format(dayOfMonth).toString()
-                        etDOB.setText("$year-$month-$day")
-                    }
-                dpd.setMaxDate(nepaliDateConverter.todayNepaliDate)
-                dpd.show(supportFragmentManager, "String")
-            }
-        }
 
         setupDistricts()
         spinnerGender.adapter =
@@ -113,6 +104,14 @@ class AddPatientActivity : AppCompatActivity() {
                 context,
                 resources.getStringArray(R.array.education_level_list).toList()
             )
+
+        val nepaliDateToday = DateConverter().todayNepaliDate
+        val currentYear = nepaliDateToday.year
+        val startYear = currentYear - 120
+
+        spinnerDobDay.adapter = AdapterHelper.createAdapterWithInts(context, (1..32).toList())
+        spinnerDobMonth.adapter = AdapterHelper.createAdapterWithInts(context, (1..12).toList())
+        spinnerDobYear.adapter = AdapterHelper.createAdapterWithInts(context, (startYear..currentYear).toList())
 
         updateUI()
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
@@ -202,7 +201,6 @@ class AddPatientActivity : AppCompatActivity() {
             etFirstName.setText(patient!!.first_name)
             etMiddleName.setText(patient!!.middle_name)
             etLastName.setText(patient!!.last_name)
-            etDOB.setText(patient!!.dob)
             etPhone.setText(patient!!.phone)
 //            etStreetAddress.setText(patient!!.street_address)
 //            etCity.setText(patient!!.city)
@@ -235,12 +233,14 @@ class AddPatientActivity : AppCompatActivity() {
         val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
         val dbWard = allWards[spinnerWard.selectedItemPosition]
 
+
+
         val id: Long = 0
         val firstName = etFirstName.text.toString()
         val middleName = etMiddleName.text.toString()
         val lastName = etLastName.text.toString()
         val gender = spinnerGender.selectedItem.toString()
-        val dob = etDOB.text.toString()
+        val dob = getFormattedDob()
         val phone = etPhone.text.toString()
         val education = spinnerEducationLevel.selectedItem.toString()
         val ward = dbWard.remote_id
@@ -298,6 +298,13 @@ class AddPatientActivity : AppCompatActivity() {
         }
     }
 
+    private fun getFormattedDob(): String {
+        val dobYear = spinnerDobYear.selectedItem.toString()
+        val dobMonth = DecimalFormat("00").format(spinnerDobMonth.selectedItem)
+        val dobDay = DecimalFormat("00").format(spinnerDobDay.selectedItem)
+        return "$dobYear-$dobMonth-$dobDay"
+    }
+
     @AddTrace(name = "saveToLocalDBAddPatientActivity", enabled = true /* optional */)
     private fun saveToLocalDB(patient: Patient) {
         Log.d(TAG, "saveToLocalDB")
@@ -318,7 +325,7 @@ class AddPatientActivity : AppCompatActivity() {
         val firstName = etFirstName.text.toString()
         val lastName = etLastName.text.toString()
         val phone = etPhone.text.toString()
-        val dob = etDOB.text.toString()
+        val dob = getFormattedDob()
 
         if(spinnerDistrict.selectedItem == null) {
             tvErrorMessage.text = "District is not selected."
@@ -362,8 +369,8 @@ class AddPatientActivity : AppCompatActivity() {
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
-        val dbWard = allWards[spinnerWard.selectedItemPosition]
+//        val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
+//        val dbWard = allWards[spinnerWard.selectedItemPosition]
         return true
     }
 
