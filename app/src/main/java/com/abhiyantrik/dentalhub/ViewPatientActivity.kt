@@ -23,6 +23,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
@@ -33,7 +34,9 @@ class ViewPatientActivity : AppCompatActivity() {
     private lateinit var context: Context
     private lateinit var patient: Patient
 
-    private lateinit var btnAddNewEncounter: Button
+//    private lateinit var btnAddNewEncounter: Button
+    private lateinit var fabAddNewEncounter: FloatingActionButton
+    private lateinit var fabEditPatient: FloatingActionButton
     private lateinit var encounterAdapter: EncounterAdapter
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var dividerItemDecoration: DividerItemDecoration
@@ -79,7 +82,9 @@ class ViewPatientActivity : AppCompatActivity() {
         tvEducation = findViewById(R.id.tvEducation)
         loading = findViewById(R.id.loading)
 
-        btnAddNewEncounter = findViewById(R.id.btnAddNewEncounter)
+//        btnAddNewEncounter = findViewById(R.id.btnAddNewEncounter)
+        fabAddNewEncounter = findViewById(R.id.fabAddNewEncounter)
+        fabEditPatient = findViewById(R.id.fabEditPatient)
 
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
@@ -91,8 +96,14 @@ class ViewPatientActivity : AppCompatActivity() {
 
         listEncounters()
 
-        btnAddNewEncounter.setOnClickListener {
+        fabAddNewEncounter.setOnClickListener {
             displayEncounterTypeSelector()
+        }
+        fabEditPatient.setOnClickListener {
+            val addPatientIntent = Intent(this, AddPatientActivity::class.java)
+            addPatientIntent.putExtra("patient", patient)
+            addPatientIntent.putExtra("ACTION", "edit")
+            startActivity(addPatientIntent)
         }
     }
 
@@ -104,8 +115,9 @@ class ViewPatientActivity : AppCompatActivity() {
                 override fun onEncounterClick(encounter: Encounter) {
                     // start the encounter view
                     Log.d("View PatientActivity", "show encounter detail")
-                    val encounterDetailIntent: Intent = Intent(context, ViewEncounterActivity::class.java)
+                    val encounterDetailIntent = Intent(context, ViewEncounterActivity::class.java)
                     encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id)
+                    encounterDetailIntent.putExtra("PATIENT_ID", patient.id)
                     startActivity(encounterDetailIntent)
                 }
 
@@ -124,66 +136,60 @@ class ViewPatientActivity : AppCompatActivity() {
         tvAddress.text = patient.address()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.view_patient, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.view_patient, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.home -> {
-                Log.d(TAG, "Display Detail")
-                println("Name is selected")
-            }
-            R.id.editPatient -> {
-                val addPatientIntent = Intent(this, AddPatientActivity::class.java)
-                addPatientIntent.putExtra("patient", patient)
-                addPatientIntent.putExtra("ACTION", "edit")
-                startActivity(addPatientIntent)
-            }
-            R.id.viewPatient -> {
-                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
-                val inflate : LayoutInflater = layoutInflater
-                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
-
-                // to get all id of the textView
-                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
-                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
-                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
-                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
-                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
-                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
-                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
-                val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
-                val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
-                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
-                val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
-
-                // to set the details of the patient on Alert Dialog i.e. View Patient
-                tvFirstNameView.text = patient.first_name
-                tvMiddleNameView.text = patient.middle_name
-                tvLastNameView.text = patient.last_name
-                tvGenderpopupView.text = patient.gender.capitalize()
-                tvDateofBirthView.text = patient.dob
-                tvPhonepopupView.text = patient.phone
-                tvWardView.text = patient.wardNumber()
-                tvMunicipalityView.text = patient.municipalityName()
-                tvDistrictView.text = patient.districtName()
-                tvEducationLevelView.text = patient.education.capitalize()
-
-
-                builder.setView(view)
-                val dialog : Dialog = builder.create()
-                dialog.show()
-
-                btnCloseDialog.setOnClickListener {
-                    dialog.dismiss()
-                }
-
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.home -> {
+//                Log.d(TAG, "Display Detail")
+//                println("Name is selected")
+//            }
+//            R.id.viewPatient -> {
+//                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
+//                val inflate : LayoutInflater = layoutInflater
+//                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
+//
+//                // to get all id of the textView
+//                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
+//                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
+//                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
+//                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
+//                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
+//                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
+//                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
+//                val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
+//                val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
+//                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
+//                val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
+//
+//                // to set the details of the patient on Alert Dialog i.e. View Patient
+//                tvFirstNameView.text = patient.first_name
+//                tvMiddleNameView.text = patient.middle_name
+//                tvLastNameView.text = patient.last_name
+//                tvGenderpopupView.text = patient.gender.capitalize()
+//                tvDateofBirthView.text = patient.dob
+//                tvPhonepopupView.text = patient.phone
+//                tvWardView.text = patient.wardNumber()
+//                tvMunicipalityView.text = patient.municipalityName()
+//                tvDistrictView.text = patient.districtName()
+//                tvEducationLevelView.text = patient.education.capitalize()
+//
+//
+//                builder.setView(view)
+//                val dialog : Dialog = builder.create()
+//                dialog.show()
+//
+//                btnCloseDialog.setOnClickListener {
+//                    dialog.dismiss()
+//                }
+//
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
