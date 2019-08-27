@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.app.Activity;
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import com.abhiyantrik.dentalhub.entities.Geography
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.LoginResponse
@@ -54,6 +56,19 @@ class LoginActivity : Activity() {
                 processLogin()
             }
         }
+        etPassword.setOnEditorActionListener(object: TextView.OnEditorActionListener{
+            override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
+                if(p1 == EditorInfo.IME_ACTION_GO){
+                    tvErrorMessage.visibility = View.GONE
+                    if (formIsValid()) {
+                        processLogin()
+                    }
+                    return true
+                }
+                return false
+            }
+
+        })
     }
 
     @AddTrace(name = "processLogin", enabled = true /* optional */)

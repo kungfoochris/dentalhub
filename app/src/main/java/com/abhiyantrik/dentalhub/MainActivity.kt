@@ -103,8 +103,8 @@ class MainActivity : AppCompatActivity() {
             allPatientRecall.addAll(sesameStreetsWithElmo)
         }
 
-        for (eachrecall in allPatientRecall) {
-            println("Recall patient name is ${eachrecall.fullName()}")
+        for (recall in allPatientRecall) {
+            println("Recall patient name is ${recall.fullName()}")
         }
         setupAdapter(allPatientRecall)
     }
@@ -123,6 +123,8 @@ class MainActivity : AppCompatActivity() {
 
         title = getString(R.string.dashboard)
         Log.d("PROFILE NAME", DentalApp.fullName)
+        Log.d("Location", DentalApp.geography_name)
+        Log.d("Activity", DentalApp.activity_name)
         tvName.text = DentalApp.fullName
         tvLocation.text = DentalApp.geography_name
         tvActivity.text = DentalApp.activity_name

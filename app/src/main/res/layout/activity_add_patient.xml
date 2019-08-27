@@ -30,11 +30,13 @@
                         android:layout_height="wrap_content"/>
                 <EditText
                         android:layout_weight="@dimen/form_col_2_weight"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:id="@+id/etFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_first_name"
+                        android:singleLine="true"
+                        android:nextFocusDown="@+id/etMiddleName"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
                 />
@@ -52,10 +54,13 @@
                 <EditText
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:id="@+id/etMiddleName"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_middle_name"
+                        android:singleLine="true"
+                        android:nextFocusUp="@+id/etFirstName"
+                        android:nextFocusDown="@+id/etLastName"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 />
             </LinearLayout>
@@ -72,10 +77,13 @@
                 <EditText
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:id="@+id/etLastName"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_last_name"
+                        android:singleLine="true"
+                        android:nextFocusUp="@+id/etMiddleName"
+                        android:nextFocusDown="@+id/spinnerGender"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         />
             </LinearLayout>
@@ -92,6 +100,8 @@
                 <Spinner
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:id="@+id/spinnerGender"
+                        android:nextFocusUp="@+id/etLastName"
+                        android:nextFocusDown="@+id/spinnerDobDay"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/spinner_default_height"/>
             </LinearLayout>
@@ -141,6 +151,9 @@
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:hint="@string/phone"
                         android:inputType="phone"
+                        android:singleLine="true"
+                        android:nextFocusUp="@+id/spinnerDobYear"
+                        android:nextFocusDown="@+id/spinnerDistrict"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                 />
