@@ -124,7 +124,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                     encounter.id
                 ).orderDesc(Referral_.id).build().findFirst()!!
 
-            recall = recallBox.query().equal(Recall_.id, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
+//            recall = recallBox.query().equal(Recall_.id, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
 
         }
 

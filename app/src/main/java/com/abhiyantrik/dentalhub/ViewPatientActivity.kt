@@ -176,7 +176,7 @@ class ViewPatientActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //getUpdatedPatient()
+        getUpdatedPatient()
         listEncounters()
         loading.visibility = View.GONE
     }
