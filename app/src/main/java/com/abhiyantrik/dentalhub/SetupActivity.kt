@@ -36,32 +36,35 @@ class SetupActivity : AppCompatActivity() {
         context = this
         initUI()
         loadProfile()
-        loadData()
+
     }
 
     private fun loadProfile() {
+        val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
-        val call = panelService.fetchProfile()
+        val call = panelService.fetchProfile("JWT $token")
         call.enqueue(object: Callback<Profile>{
             override fun onFailure(call: Call<Profile>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                tvMessage.text = tvMessage.text.toString() + "Failed to load addresses\n"
+                tvMessage.text = tvMessage.text.toString() + "Failed to load profile\n"
                 Log.d(TAG, t.toString())
             }
 
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                Log.d("SetupActivity", response.code().toString())
                 if(null!=response.body()){
                     when(response.code()){
                         200->{
                             val p = response.body() as Profile
+                            DentalApp.fullName = p.fullName()
                             DentalApp.saveToPreference(context,Constants.PREF_PROFILE_FULL_NAME, p.fullName())
-                            DentalApp.saveToPreference(context,Constants.PREF_PROFILE_FIRST_NAME, p.first_name)
-                            DentalApp.saveToPreference(context, Constants.PREF_PROFILE_MIDDLE_NAME, p.middle_name)
-                            DentalApp.saveToPreference(context, Constants.PREF_PROFILE_LAST_NAME, p.last_name)
                             DentalApp.saveToPreference(context, Constants.PREF_PROFILE_ID, p.id)
                             DentalApp.saveToPreference(context, Constants.PREF_PROFILE_IMAGE, p.image)
+                            loadData()
                         }
                     }
+                }else{
+                    Log.d("SetupActivity","response failed")
                 }
             }
 

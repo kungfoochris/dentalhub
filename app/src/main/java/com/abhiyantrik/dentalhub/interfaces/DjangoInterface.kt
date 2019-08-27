@@ -213,7 +213,7 @@ interface DjangoInterface {
     fun listActivities(): Call<List<Activity>>
 
     @GET("profile")
-    fun fetchProfile(): Call<Profile>
+    fun fetchProfile(@Header("Authorization") token: String): Call<Profile>
 
     // to get all activity list
     @GET("events")

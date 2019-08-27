@@ -17,7 +17,7 @@ class SplashActivity : Activity() {
         setContentView(R.layout.activity_splash)
         context = this
 
-        startService(Intent(this, BootstrapService::class.java))
+        //startService(Intent(this, BootstrapService::class.java))
 
         Handler().postDelayed({
             val token: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
@@ -34,7 +34,7 @@ class SplashActivity : Activity() {
                     val selectedActivityId = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
                     val remarks = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
 
-                    DentalApp.fullName = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME,"")
+
 
 //                    if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty()){
 //                        startActivity(Intent(this, LocationSelectorActivity::class.java))
@@ -42,6 +42,7 @@ class SplashActivity : Activity() {
                     if(selectedLocationId.isNullOrEmpty() || selectedActivityId.isNullOrEmpty()){
                         startActivity(Intent(this, LocationSelectorActivity::class.java))
                     } else {
+                        DentalApp.fullName = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME,"")
                         DentalApp.geography_id = selectedLocationId
                         DentalApp.geography_name = selectedLocationName
                         DentalApp.activity_id = selectedActivityId

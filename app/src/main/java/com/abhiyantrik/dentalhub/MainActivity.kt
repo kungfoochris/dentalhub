@@ -75,18 +75,26 @@ class MainActivity : AppCompatActivity() {
 
         setupUI()
 
+        Log.d("Location", DentalApp.geography_name)
+        Log.d("Proxy: ", DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME,"Some thing is fishy."))
+        Log.d("Activity", DentalApp.activity_name)
+        tvName.text = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME,"")
+        tvLocation.text = DentalApp.geography_name
+        tvActivity.text = DentalApp.activity_name
     }
 
     private fun listRecallPatients() {
         println("called once.")
         val currentDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate.now()
+
         } else {
             // do something here
         }
+        Log.d("LocalDate", currentDate.toString())
         // get all Address objects
         val builder = patientsBox.query()
-//       ...which are linked from a Recall date "today"
+        // ...which are linked from a Recall date "today"
         builder.link(Patient_.recall).equal(Recall_.date, currentDate.toString())
         var sesameStreetsWithElmo = builder.build().find()
         allPatientRecall = sesameStreetsWithElmo
@@ -122,12 +130,7 @@ class MainActivity : AppCompatActivity() {
         tvName = findViewById(R.id.tvFullName)
 
         title = getString(R.string.dashboard)
-        Log.d("PROFILE NAME", DentalApp.fullName)
-        Log.d("Location", DentalApp.geography_name)
-        Log.d("Activity", DentalApp.activity_name)
-        tvName.text = DentalApp.fullName
-        tvLocation.text = DentalApp.geography_name
-        tvActivity.text = DentalApp.activity_name
+
 
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         patientsQuery = patientsBox.query().build()

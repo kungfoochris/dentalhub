@@ -30,7 +30,7 @@
             android:visibility="visible"
             android:layout_alignParentEnd="true"
             android:background="@android:color/transparent"
-            android:src="@android:drawable/ic_menu_edit"
+            android:src="@drawable/edit"
             android:layout_width="100dp"
             android:layout_height="wrap_content"/>
 </RelativeLayout>

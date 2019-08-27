@@ -30,7 +30,7 @@ class BootstrapService : Service() {
         geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
 
         //listGeographies()
-        listActivities()
+        ///listActivities()
         return super.onStartCommand(intent, flags, startId)
     }
 
