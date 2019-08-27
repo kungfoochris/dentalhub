@@ -1,9 +1,15 @@
 package com.abhiyantrik.dentalhub
 
+import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.abhiyantrik.dentalhub.entities.*
@@ -15,9 +21,11 @@ class ViewEncounterActivity : AppCompatActivity() {
     private var screening = Screening()
     private var treatment = Treatment()
     private var referral = Referral()
-    private var encounter = Encounter()
+    private lateinit var encounter: Encounter
     private var recall = Recall()
+    private lateinit var patient: Patient
 
+    private lateinit var patientBox: Box<Patient>
     private lateinit var encounterBox: Box<Encounter>
     private lateinit var historyBox: Box<History>
     private lateinit var screeningBox: Box<Screening>
@@ -187,14 +195,17 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvRecallActivity: TextView
 
     var encounterId: Long = 0
+    var patientId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_encounter)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         encounterId = intent.getLongExtra("ENCOUNTER_ID", 0)
+        patientId = intent.getLongExtra("PATIENT_ID", 0)
 
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+        patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         historyBox = ObjectBox.boxStore.boxFor(History::class.java)
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
@@ -202,6 +213,9 @@ class ViewEncounterActivity : AppCompatActivity() {
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
+        patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
+
+        title = patient.fullName()
 
         history = historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
         screening = screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
@@ -260,7 +274,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         } else {
             tvNotTakingAnyMedications.setText(history.medications)
         }
-//        hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
+        // hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
         // since alleragies is little different i.e. if no_allergies is True show allergies(String) else don't show both no_allergies(Int) and allergies(String)
         if (history.no_allergies) {
             tvAllergiesTitle.visibility = View.GONE
@@ -558,8 +572,10 @@ class ViewEncounterActivity : AppCompatActivity() {
         }
     }
 
-    /* To show or hide the fields with Integer data in the
-    Fragements -> History, Screening, Treatment, Referral and Recall*/
+    /*
+        To show or hide the fields with Integer data in the
+        Fragments -> History, Screening, Treatment, Referral and Recall
+    */
     private fun hideInt(disease: Int, viewTitle: View, view: TextView) {
         if (disease != 0) {
             view.text = disease.toString()
@@ -577,6 +593,57 @@ class ViewEncounterActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.view_patient_info, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.viewPatient -> {
+                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
+                val inflate : LayoutInflater = layoutInflater
+                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
+
+                // to get all id of the textView
+                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
+                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
+                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
+                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
+                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
+                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
+                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
+                val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
+                val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
+                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
+                val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
+
+                // to set the details of the patient on Alert Dialog i.e. View Patient
+                tvFirstNameView.text = patient.first_name
+                tvMiddleNameView.text = patient.middle_name
+                tvLastNameView.text = patient.last_name
+                tvGenderpopupView.text = patient.gender.capitalize()
+                tvDateofBirthView.text = patient.dob
+                tvPhonepopupView.text = patient.phone
+                tvWardView.text = patient.wardNumber()
+                tvMunicipalityView.text = patient.municipalityName()
+                tvDistrictView.text = patient.districtName()
+                tvEducationLevelView.text = patient.education.capitalize()
+
+
+                builder.setView(view)
+                val dialog : Dialog = builder.create()
+                dialog.show()
+
+                btnCloseDialog.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
