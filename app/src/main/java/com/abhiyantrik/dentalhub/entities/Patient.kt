@@ -17,29 +17,31 @@ import java.util.*
 @Entity
 @Parcelize
 class Patient(
-    @Id var id: Long,
-    var remote_id: String,
-    var first_name: String,
-    var middle_name: String,
-    var last_name: String,
-    var gender: String,
-    var dob: String,
-    var phone: String,
-    var education: String,
-    var ward: Int,
-    var municipality: Int,
-    var district: Int,
-    var latitude: String,
-    var longitude: String,
-    var geography_id: String,
-    var activityarea_id: String,
-    var created_at: String,
-    var updated_at: String,
-    var uploaded: Boolean,
-    var updated: Boolean,
+
+) : Parcelable {
+    @Id var id: Long=0
+    var remote_id: String = ""
+    var first_name: String = ""
+    var middle_name: String = ""
+    var last_name: String = ""
+    var gender: String = ""
+    var dob: String = ""
+    var phone: String = ""
+    var education: String = ""
+    var ward: Int = 0
+    var municipality: Int =0
+    var district: Int = 0
+    var latitude: String = ""
+    var longitude: String = ""
+    var geography_id: String = ""
+    var activityarea_id: String = ""
+    var created_at: String = ""
+    var updated_at: String = ""
+    var uploaded: Boolean = false
+    var updated: Boolean = false
     @Backlink(to = "patient")
     var recall: ToMany<Recall>? = null
-) : Parcelable {
+
 
     @IgnoredOnParcel
     @Backlink(to = "patient")

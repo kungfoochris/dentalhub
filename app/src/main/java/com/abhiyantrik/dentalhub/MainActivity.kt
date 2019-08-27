@@ -33,7 +33,9 @@ import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
 import io.objectbox.query.Query
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -85,12 +87,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun listRecallPatients() {
         println("called once.")
-        val currentDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate.now()
+//        val currentDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            LocalDate.now()
+//        } else {
+//            // do something here
+//        }
+        var c = Calendar.getInstance().time
+        val df = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = df.format(c)
 
-        } else {
-            // do something here
-        }
         Log.d("LocalDate", currentDate.toString())
         // get all Address objects
         val builder = patientsBox.query()
@@ -100,11 +105,12 @@ class MainActivity : AppCompatActivity() {
         allPatientRecall = sesameStreetsWithElmo
 
         for (eachDay in 1..10) {
-            val days = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                LocalDate.now().plusDays(eachDay.toLong())
-            } else {
-                // do something here
-            }
+//            val days = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                LocalDate.now().plusDays(eachDay.toLong())
+//            } else {
+//                // do something here
+//            }
+            val days= 1;
             val builder = patientsBox.query()
             builder.link(Patient_.recall).equal(Recall_.date, days.toString())
             sesameStreetsWithElmo = builder.build().find()

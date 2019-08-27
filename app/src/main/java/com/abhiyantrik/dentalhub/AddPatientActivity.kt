@@ -111,7 +111,7 @@ class AddPatientActivity : AppCompatActivity() {
 
         spinnerDobDay.adapter = AdapterHelper.createAdapterWithInts(context, (1..32).toList())
         spinnerDobMonth.adapter = AdapterHelper.createAdapterWithInts(context, (1..12).toList())
-        spinnerDobYear.adapter = AdapterHelper.createAdapterWithInts(context, (startYear..currentYear).toList())
+        spinnerDobYear.adapter = AdapterHelper.createAdapterWithInts(context, (startYear..currentYear).reversed().toList())
 
         updateUI()
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
@@ -272,29 +272,30 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.updated = true
             return patient!!
         } else {
-            return Patient(
-                id,
-                "",
-                firstName,
-                middleName,
-                lastName,
-                gender,
-                dob,
-                phone,
-                education,
-                ward,
-                municipality,
-                district,
-                latitude,
-                longitude,
-                geography,
-                activity,
-                date,
-                date,
-                false,
-                true,
-                null
-            )
+            val tempPatient = Patient();
+            tempPatient.id = id
+            tempPatient.remote_id = ""
+            tempPatient.first_name = firstName
+            tempPatient.middle_name = middleName
+            tempPatient.last_name = lastName
+            tempPatient.gender = gender
+            tempPatient.dob = dob
+            tempPatient.phone = phone
+            tempPatient.education = education
+            tempPatient.ward = ward
+            tempPatient.municipality = municipality
+            tempPatient.district = district
+            tempPatient.latitude = latitude
+            tempPatient.longitude = longitude
+            tempPatient.geography_id = geography
+            tempPatient.activityarea_id = activity
+            tempPatient.created_at = date
+            tempPatient.updated_at = date
+            tempPatient.uploaded = false
+            tempPatient.updated = false
+            tempPatient.recall = null
+            return tempPatient
+
         }
     }
 
