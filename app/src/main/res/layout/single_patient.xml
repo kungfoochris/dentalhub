@@ -18,6 +18,7 @@
                 android:layout_height="wrap_content"
                 >
             <LinearLayout
+                    android:id="@+id/recallInfo"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,12 +121,19 @@
 
 
     </LinearLayout>
-
+        <View
+                android:id="@+id/border"
+                android:background="@color/grey_300"
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_alignParentBottom="true"
+                />
     </RelativeLayout>
     <LinearLayout
             android:id="@+id/patientHeader"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:visibility="gone"
             >
@@ -139,12 +147,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
     </LinearLayout>
-    <View
-            android:id="@+id/border"
-            android:background="@color/grey_300"
-            android:layout_height="1dp"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            />
+
 </LinearLayout>

@@ -48,6 +48,7 @@ class PatientAdapter(context: Context, private var data: List<Patient>, displayD
         private var btnDelay: ImageButton = itemView.findViewById(R.id.btnDelay)
         private var btnDelete: ImageButton = itemView.findViewById(R.id.btnRemove)
         private var border: View = itemView.findViewById(R.id.border)
+        private var recallInfo: View = itemView.findViewById(R.id.recallInfo)
         private var patientInfo: View = itemView.findViewById(R.id.patientInfo)
         private var patientHeader: View = itemView.findViewById(R.id.patientHeader)
         private var patientHeaderTitle: TextView = itemView.findViewById(R.id.patientHeaderTitle)
@@ -73,9 +74,11 @@ class PatientAdapter(context: Context, private var data: List<Patient>, displayD
                     patientClickListener.onRemovePatientClick(patient)
                 }
                 if(displayDelay){
+                    recallInfo.visibility = View.VISIBLE
                     btnDelay.visibility = View.VISIBLE
                     btnDelete.visibility = View.VISIBLE
                 }else{
+                    recallInfo.visibility = View.GONE
                     btnDelay.visibility = View.GONE
                     btnDelete.visibility = View.GONE
                 }
