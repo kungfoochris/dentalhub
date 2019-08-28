@@ -75,8 +75,8 @@
     <string name="need_sdf">Need SDF</string>
     <string name="need_extraction">Need Extraction</string>
     <string name="caries_risk">Caries Risk</string>
-    <string name="decayed_primary_teeth">No. of decayed primary teeth</string>
-    <string name="decayed_permanent_teeth">No. of decayed permanent teeth</string>
+    <string name="decayed_primary_teeth">No. of Decayed Primary Teeth</string>
+    <string name="decayed_permanent_teeth">No. of Decayed Permanent Teeth</string>
     <string name="save">Save</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
@@ -162,4 +162,7 @@
     <string name="one_month">1 month</string>
     <string name="six_months">6 months</string>
     <string name="one_year">1 year</string>
+    <string name="high_bp">High BP</string>
+    <string name="low_bp">Low BP</string>
+    <string name="thyroid_disorder">Thyroid Disorder</string>
 </resources>

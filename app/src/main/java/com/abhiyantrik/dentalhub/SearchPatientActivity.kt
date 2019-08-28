@@ -96,7 +96,7 @@ class SearchPatientActivity : AppCompatActivity() {
         recyclerAdapter = PatientAdapter(context, patientsearchlist, object : PatientAdapter.PatientClickListener{
             override fun onViewPatientDetailClick(patient: Patient) {
                 val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-                viewPatientIntent.putExtra("patient", patient)
+                viewPatientIntent.putExtra("PATIENT_ID", patient.id)
                 startActivity(viewPatientIntent)
             }
 

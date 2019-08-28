@@ -27,12 +27,14 @@ import com.abhiyantrik.dentalhub.entities.Recall
 import com.abhiyantrik.dentalhub.entities.Recall_
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
 import com.abhiyantrik.dentalhub.services.SyncService
+import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
 import io.objectbox.query.Query
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
@@ -87,40 +89,95 @@ class MainActivity : AppCompatActivity() {
 
     private fun listRecallPatients() {
         println("called once.")
-//        val currentDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            LocalDate.now()
-//        } else {
-//            // do something here
-//        }
         var c = Calendar.getInstance().time
         val df = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = df.format(c)
+//
+//        Log.d("LocalDate", currentDate.toString())
+//        // get all Address objects
+//        val builder = patientsBox.query()
+//        // ...which are linked from a Recall date "today"
+//        builder.link(Patient_.recall).equal(Recall_.date, currentDate.toString())
+//        var sesameStreetsWithElmo = builder.build().find()
+//        allPatientRecall = sesameStreetsWithElmo
+//
+//        for (eachDay in 1..10) {
+////            val days = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+////                LocalDate.now().plusDays(eachDay.toLong())
+////            } else {
+////                // do something here
+////            }
+//            val days= 1;
+//            val builder = patientsBox.query()
+//            builder.link(Patient_.recall).equal(Recall_.date, days.toString())
+//            sesameStreetsWithElmo = builder.build().find()
+//            allPatientRecall.addAll(sesameStreetsWithElmo)
+//        }
+//
+//        for (recall in allPatientRecall) {
+//            println("Recall patient name is ${recall.fullName()}")
+//        }
+        allPatientRecall = mutableListOf()
+        val today = DateHelper.getCurrentNepaliDate()
+        val todayPatient = patientsBox.query().equal(Patient_.recall_date, today).build().find()
 
-        Log.d("LocalDate", currentDate.toString())
-        // get all Address objects
-        val builder = patientsBox.query()
-        // ...which are linked from a Recall date "today"
-        builder.link(Patient_.recall).equal(Recall_.date, currentDate.toString())
-        var sesameStreetsWithElmo = builder.build().find()
-        allPatientRecall = sesameStreetsWithElmo
 
-        for (eachDay in 1..10) {
-//            val days = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                LocalDate.now().plusDays(eachDay.toLong())
-//            } else {
-//                // do something here
-//            }
-            val days= 1;
-            val builder = patientsBox.query()
-            builder.link(Patient_.recall).equal(Recall_.date, days.toString())
-            sesameStreetsWithElmo = builder.build().find()
-            allPatientRecall.addAll(sesameStreetsWithElmo)
-        }
+        val rowToday = Patient()
+        rowToday.first_name = "Recall Today : "+today
+        rowToday.content = "header"
+        allPatientRecall.add(rowToday)
+        allPatientRecall.addAll(todayPatient)
 
-        for (recall in allPatientRecall) {
-            println("Recall patient name is ${recall.fullName()}")
-        }
+//        val rowTomorrow = Patient()
+//        rowTomorrow.first_name = "Recall Tomorrow : " + tomorrow
+//        rowTomorrow.content = "header"
+//        allPatientRecall.add(rowTomorrow)
+//        allPatientRecall.addAll(tomorrowPatient)
+
+        val rowThisWeek = Patient()
+        rowThisWeek.first_name = "Recall Next Week"
+        rowThisWeek.content = "Header"
+        allPatientRecall.add(rowThisWeek)
+
+        val tomorrow = addOneDay(today)
+        val thirdDay = addOneDay(tomorrow)
+        val fourthDay = addOneDay(thirdDay)
+        val fifthDay = addOneDay(fourthDay)
+        val sixthDay = addOneDay(fifthDay)
+        val seventhDay = addOneDay(sixthDay)
+        val eightDay = addOneDay(seventhDay)
+        val thisWeekPatients = patientsBox.query()
+            .equal(Patient_.recall_date, tomorrow).or()
+            .equal(Patient_.recall_date, thirdDay).or()
+            .equal(Patient_.recall_date, fourthDay).or()
+            .equal(Patient_.recall_date, fifthDay).or()
+            .equal(Patient_.recall_date, sixthDay).or()
+            .equal(Patient_.recall_date, seventhDay).or()
+            .equal(Patient_.recall_date, eightDay).build().find()
+        allPatientRecall.addAll(thisWeekPatients)
+
+        val rowRecallNextMonth = Patient()
+        rowRecallNextMonth.first_name = "Recall Next Month"
+        rowRecallNextMonth.content = "header"
+        allPatientRecall.add(rowRecallNextMonth)
+
         setupAdapter(allPatientRecall)
+
+    }
+
+    private fun addOneDay(date: String): String{
+        Log.d("Add one day to : ", date)
+        var day = date.substring(8,10).toInt()
+        var month = date.substring(5,7).toInt()
+        var year = date.substring(0,4).toInt()
+        if(day>30){
+            if(month==12){
+                year+=1
+            }
+            month= (month+1)%12
+        }
+        day = (day+1)%30
+        return DecimalFormat("0000").format(year)+"-"+DecimalFormat("00").format(month)+"-"+DecimalFormat("00").format(day)
     }
 
     @AddTrace(name = "setupUIMainActivity", enabled = true /* optional */)
@@ -137,7 +194,6 @@ class MainActivity : AppCompatActivity() {
 
         title = getString(R.string.dashboard)
 
-
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         patientsQuery = patientsBox.query().build()
 
@@ -145,8 +201,8 @@ class MainActivity : AppCompatActivity() {
 
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
-        dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
-        val divider = RecyclerViewItemSeparator(20)
+        dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.HORIZONTAL)
+        val divider = RecyclerViewItemSeparator(0)
         recyclerView.addItemDecoration(divider)
 
         btnAddPatient.setOnClickListener {

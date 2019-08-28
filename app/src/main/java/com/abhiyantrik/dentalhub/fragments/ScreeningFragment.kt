@@ -17,6 +17,7 @@ import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.fragments.interfaces.ScreeningFormCommunicator
 import com.abhiyantrik.dentalhub.utils.AdapterHelper
 import io.objectbox.Box
+import kotlinx.android.synthetic.main.fragment_screening.*
 
 class ScreeningFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
@@ -40,6 +41,9 @@ class ScreeningFragment : Fragment() {
     private lateinit var checkBoxNeedSDF: CheckBox
     private lateinit var checkBoxNeedExtraction: CheckBox
     private lateinit var checkBoxActiveInfection: CheckBox
+    private lateinit var checkBoxLowBP: CheckBox
+    private lateinit var checkBoxHighBP: CheckBox
+    private lateinit var checkBoxThyroidDisorder: CheckBox
 
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
@@ -65,6 +69,9 @@ class ScreeningFragment : Fragment() {
         checkBoxNeedSDF = view.findViewById(R.id.checkBoxNeedSDF)
         checkBoxNeedExtraction = view.findViewById(R.id.checkBoxNeedExtraction)
         checkBoxActiveInfection = view.findViewById(R.id.checkBoxActiveInfection)
+        checkBoxLowBP = view.findViewById(R.id.checkBoxLowBP)
+        checkBoxHighBP = view.findViewById(R.id.checkBoxHighBP)
+        checkBoxThyroidDisorder = view.findViewById(R.id.checkBoxThyroidDisorder)
 
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
@@ -100,11 +107,14 @@ class ScreeningFragment : Fragment() {
             val needSDF = checkBoxNeedSDF.isChecked
             val needExtraction = checkBoxNeedSDF.isChecked
             val activeInfection = checkBoxActiveInfection.isChecked
+            val highBP = checkBoxHighBP.isChecked
+            val lowBP = checkBoxLowBP.isChecked
+            val thyroidDisorder = checkBoxThyroidDisorder.isChecked
 
             screeningFormCommunicator.updateScreening(
                 carriesRisk, noOfdecayedPrimaryTeeth, noOfdecayedPermanentTeeth,
                 cavityPermanentTooth, cavityPermanentAnterior, reversiblePulpitis, needARTFilling, needSealant, needSDF,
-                needExtraction, activeInfection
+                needExtraction, activeInfection,highBP, lowBP, thyroidDisorder
             )
             fragmentCommunicator.goForward()
         }
@@ -148,6 +158,9 @@ class ScreeningFragment : Fragment() {
             if (screening.need_sdf) checkBoxNeedSDF.isChecked = true
             if (screening.need_extraction) checkBoxNeedExtraction.isChecked = true
             if (screening.active_infection) checkBoxActiveInfection.isChecked = true
+            if(screening.low_blood_pressure) checkBoxLowBP.isChecked = true
+            if(screening.high_blood_pressure) checkBoxHighBP.isChecked = true
+            if(screening.thyroid_disorder) checkBoxThyroidDisorder.isChecked = true
         }
     }
 

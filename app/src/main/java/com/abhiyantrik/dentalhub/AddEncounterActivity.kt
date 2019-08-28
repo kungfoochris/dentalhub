@@ -29,6 +29,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     ScreeningFormCommunicator, TreatmentFormCommunicator, ReferralFormCommunicator {
 
 
+
     private lateinit var pager: ViewPager
     private lateinit var tabLayout: TabLayout
     private lateinit var patient: Patient
@@ -219,6 +220,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         return super.onOptionsItemSelected(item)
     }
 
+    override fun updateRecallDate(recallDate: String) {
+        patient.recall_date = recallDate
+        patientBox.put(patient)
+    }
+
     override fun updateHistory(
         bloodDisorders: Boolean, diabetes: Boolean, liverProblem: Boolean,
         rheumaticFever: Boolean, seizuresOrEpilepsy: Boolean, hepatitisBOrC: Boolean,
@@ -251,12 +257,15 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         decayedPermanentTeeth: String,
         cavityPermanentTooth: Boolean,
         cavityPermanentAnterior: Boolean,
-        reversible_pulpitis: Boolean,
+        reversiblePulpitis: Boolean,
         needARTFilling: Boolean,
         needSealant: Boolean,
         needSDF: Boolean,
         needExtraction: Boolean,
-        activeInfection: Boolean
+        activeInfection: Boolean,
+        highBloodPressure: Boolean,
+        lowBloodPressure: Boolean,
+        thyroidDisorder: Boolean
         ) {
 
         screening = screeningBox.query().equal(
@@ -282,7 +291,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         screening.need_art_filling = needARTFilling
         screening.need_sealant = needSealant
         screening.need_sdf = needSDF
+        screening.reversible_pulpitis = reversiblePulpitis
         screening.need_extraction = needExtraction
+        screening.high_blood_pressure = highBloodPressure
+        screening.low_blood_pressure = lowBloodPressure
+        screening.thyroid_disorder = thyroidDisorder
 
         screeningBox.put(screening)
     }
@@ -398,15 +411,15 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         selectedGeography: String,
         selectedActivity: String
     ) {
-        recall =
-            recallBox.query().equal(Recall_.encounterId, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
-
-        recall.date = recallDate
-        recall.time = recallTime
-        recall.geography = selectedGeography
-        recall.activity = selectedActivity
-
-        recallBox.put(recall)
+//        recall =
+//            recallBox.query().equal(Recall_.encounterId, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
+//
+//        recall.date = recallDate
+//        recall.time = recallTime
+//        recall.geography = selectedGeography
+//        recall.activity = selectedActivity
+//
+//        recallBox.put(recall)
     }
 
 

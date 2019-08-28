@@ -12,6 +12,9 @@ interface ScreeningFormCommunicator {
         needSealant: Boolean,
         needSDF: Boolean,
         needExtraction: Boolean,
-        activeInfection: Boolean
+        activeInfection: Boolean,
+        highBloodPressure: Boolean,
+        lowBloodPressure: Boolean,
+        thyroidPressure: Boolean
     )
 }

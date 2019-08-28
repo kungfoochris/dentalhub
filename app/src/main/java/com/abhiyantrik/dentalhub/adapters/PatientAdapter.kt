@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
@@ -37,28 +38,41 @@ class PatientAdapter(context: Context, private var data: List<Patient>, listener
         private var tvName: TextView = itemView.findViewById(R.id.tvName)
         private var tvAddress: TextView = itemView.findViewById(R.id.tvAddress)
         private var tvPhone: TextView = itemView.findViewById(R.id.tvPhone)
-        private var btnViewPatientDetail: Button = itemView.findViewById(R.id.btnViewPatientDetail)
-        private var btnCall: Button = itemView.findViewById(R.id.btnCall)
-        private var btnDelay: Button = itemView.findViewById(R.id.btnDelay)
+        private var btnViewPatientDetail: ImageButton = itemView.findViewById(R.id.btnViewPatientDetail)
+        private var btnCall: ImageButton = itemView.findViewById(R.id.btnCall)
+        private var btnDelay: ImageButton = itemView.findViewById(R.id.btnDelay)
         private var border: View = itemView.findViewById(R.id.border)
+        private var patientInfo: View = itemView.findViewById(R.id.patientInfo)
+        private var patientHeader: View = itemView.findViewById(R.id.patientHeader)
+        private var patientHeaderTitle: TextView = itemView.findViewById(R.id.patientHeaderTitle)
 
         init {
 
         }
 
         fun bindPatient(patient: Patient) {
-            tvName.text = patient.fullName()
-            tvAddress.text = ""
-            tvPhone.text = patient.phone
-            btnCall.setOnClickListener {
-                //patientClickListener.onAddEncounterButtonClick(patient)
-                patientClickListener.onCallPatientClick(patient)
-            }
-            btnDelay.setOnClickListener {
-                patientClickListener.onDelayPatientClick(patient)
-            }
-            btnViewPatientDetail.setOnClickListener {
-                patientClickListener.onViewPatientDetailClick(patient)
+            if(patient.content=="patient"){
+                tvName.text = patient.fullName()
+                tvAddress.text = ""
+                tvPhone.text = patient.phone
+                btnCall.setOnClickListener {
+                    //patientClickListener.onAddEncounterButtonClick(patient)
+                    patientClickListener.onCallPatientClick(patient)
+                }
+                btnDelay.setOnClickListener {
+                    patientClickListener.onDelayPatientClick(patient)
+                }
+                btnViewPatientDetail.setOnClickListener {
+                    patientClickListener.onViewPatientDetailClick(patient)
+                }
+                patientHeader.visibility = View.GONE
+                patientInfo.visibility = View.VISIBLE
+                border.visibility = View.VISIBLE
+            }else{
+                patientHeaderTitle.text = patient.first_name
+                patientHeader.visibility = View.VISIBLE
+                patientInfo.visibility = View.GONE
+                border.visibility = View.GONE
             }
         }
 

@@ -91,7 +91,7 @@ class ViewPatientActivity : AppCompatActivity() {
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager as RecyclerView.LayoutManager?
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
-        val divider = RecyclerViewItemSeparator(20)
+        val divider = RecyclerViewItemSeparator(0)
         recyclerView.addItemDecoration(divider)
 
         getUpdatedPatient()
@@ -109,6 +109,7 @@ class ViewPatientActivity : AppCompatActivity() {
 
     private fun listEncounters() {
         if(patientId==0.toLong()){
+            Log.d("PT ID ", patientId.toString())
             Toast.makeText(context, "Invalid patient id", Toast.LENGTH_LONG).show()
             finish()
         }

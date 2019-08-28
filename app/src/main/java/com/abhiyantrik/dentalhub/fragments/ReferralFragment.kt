@@ -210,6 +210,7 @@ class ReferralFragment : Fragment() {
                 val selectedGeography = DentalApp.geography_id
                 val selectedActivity = DentalApp.activity_id
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
+                referralFormCommunicator.updateRecallDate(recallDate)
 
                 fragmentCommunicator.goForward()
 

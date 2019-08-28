@@ -130,6 +130,7 @@
             android:src="@drawable/edit"
             android:backgroundTint="@color/colorART"
             app:borderWidth="0dp"
+            android:tint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/fabAddNewEncounter"
             android:contentDescription="@string/add_new_patient"

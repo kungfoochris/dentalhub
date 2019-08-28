@@ -38,6 +38,7 @@ class Patient: Parcelable {
     var updated_at: String = ""
     var uploaded: Boolean = false
     var updated: Boolean = false
+    var content: String = "patient"
     @Backlink(to = "patient")
     var recall: ToMany<Recall>? = null
 
