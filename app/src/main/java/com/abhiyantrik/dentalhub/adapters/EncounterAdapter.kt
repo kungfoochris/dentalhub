@@ -66,7 +66,7 @@ class EncounterAdapter(
 
         fun bindEncounter(encounter: Encounter) {
             tvEncounterName.text = encounter.encounter_type
-            tvEncounterDate.text = DateHelper.formatDate(encounter.created_at)
+            tvEncounterDate.text = DateHelper.formatNepaliDate(context, encounter.created_at)
             if (encounter.isEditable()) {
                 ibEdit.visibility = View.VISIBLE
             } else {
