@@ -47,19 +47,51 @@
                 android:layout_width="match_parent"
                 android:hint="@string/other"
         />
+            <TextView
+                android:text="@string/recall_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            <EditText
+                    android:id="@+id/etRecallDate"
+                    android:hint="@string/recall_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <RadioGroup
+                    android:id="@+id/rgRecalls"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <EditText
-                android:id="@+id/etRecallDate"
-                android:hint="@string/recall_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        />
-        <EditText
-                android:id="@+id/etRecallTime"
-                android:hint="@string/recall_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        />
+                <RadioButton android:id="@+id/radioOneWeek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="@string/one_week"/>
+
+                <RadioButton android:id="@+id/radioOneMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="@string/one_month"/>
+
+                <RadioButton android:id="@+id/radioSixMonths"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="@string/six_months"/>
+
+                <RadioButton android:id="@+id/radioOneYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="@string/one_year"/>
+            </RadioGroup>
+        </LinearLayout>
+
         <LinearLayout
                 android:weightSum="1"
                 android:layout_marginTop="5dp"

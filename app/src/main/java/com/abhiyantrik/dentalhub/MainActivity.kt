@@ -158,6 +158,7 @@ class MainActivity : AppCompatActivity() {
         fabBtnSync.setOnClickListener {
             Log.d(TAG, "startSync")
             startService(Intent(this, SyncService::class.java))
+            //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
         }
 
     }

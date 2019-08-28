@@ -33,6 +33,7 @@ class Patient: Parcelable {
     var longitude: String = ""
     var geography_id: String = ""
     var activityarea_id: String = ""
+    var recall_date: String = ""
     var created_at: String = ""
     var updated_at: String = ""
     var uploaded: Boolean = false

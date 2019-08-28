@@ -122,3 +122,13 @@ m
 =app/src/main/java/com/abhiyantrik/dentalhub/SearchActivity.kt,0/a/0a8f71d1c93fdbce8d34fbe174e303f3d687fc73
 m
 =app/src/main/java/com/abhiyantrik/dentalhub/models/Profile.kt,7/5/75f2e211501feaf3fb669386e6ea80fea42cd921
+x
+Happ/src/main/java/com/abhiyantrik/dentalhub/fragments/HistoryFragment.kt,7/b/7baa6e9e4a645d745e4276fc3eabf8673e2003bd
+r
+Bapp/src/main/java/com/abhiyantrik/dentalhub/utils/AdapterHelper.kt,b/f/bf9cadf15bed7275540182c0c70aaa7f9267edd7
+x
+Happ/src/main/java/com/abhiyantrik/dentalhub/services/BootstrapService.kt,9/0/909ab9155984218eddda6d366825e4afffb160c3
+x
+Happ/src/main/java/com/abhiyantrik/dentalhub/AddPatientDynamicActivity.kt,b/9/b90e61068fd6a1c219e604c93567c542387331ad
+x
+Happ/src/main/java/com/abhiyantrik/dentalhub/adapters/EncounterAdapter.kt,f/4/f40257e0a54ccd77b4c04ed2dc2906fceac49a95

@@ -141,6 +141,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         //pager.setOnTouchListener { _: View, _ -> true }
         pager.beginFakeDrag()
+        val touchableList = tabLayout?.touchables
+        touchableList?.forEach { it.isEnabled = false }
+
 
         val fragmentAdapter = FormPageAdapter(supportFragmentManager)
         pager.adapter = fragmentAdapter

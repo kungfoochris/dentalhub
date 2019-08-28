@@ -15,6 +15,7 @@ import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.TreatmentFragmentCommunicator
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.fragments.interfaces.ReferralFormCommunicator
+import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_referral.*
 import java.text.DecimalFormat
@@ -37,6 +38,7 @@ class ReferralFragment : Fragment() {
 //    private lateinit var radioButtonGeneralPhysician: RadioButton
 //    private lateinit var radioButtonOther: RadioButton
     private lateinit var rgReferrals : RadioGroup
+    private lateinit var rgRecalls: RadioGroup
     private lateinit var etOtherDetails: EditText
 
     private lateinit var etRecallDate: EditText
@@ -74,11 +76,12 @@ class ReferralFragment : Fragment() {
 //        radioButtonGeneralPhysician = view.findViewById(R.id.radioGeneralPhysician)
 //        radioButtonOther = view.findViewById(R.id.radioOther)
         rgReferrals = view.findViewById(R.id.rgReferrals)
+        rgRecalls = view.findViewById(R.id.rgRecalls)
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
 
 
         etRecallDate = view.findViewById(R.id.etRecallDate)
-        etRecallTime = view.findViewById(R.id.etRecallTime)
+        //etRecallTime = view.findViewById(R.id.etRecallTime)
 
         rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.radioOther) {
@@ -97,55 +100,78 @@ class ReferralFragment : Fragment() {
                 etRecallTime.visibility = View.VISIBLE
             }
         }
+        rgRecalls.setOnCheckedChangeListener { radioGroup, i ->
+            var recallDate = ""
+            val nepaliCalender = DateConverter()
+
+            val todayNepali = nepaliCalender.todayNepaliDate
+
+            val yearToday = todayNepali.year
+            val monthToday = todayNepali.month + 1
+            val dayToday = todayNepali.day
+
+            when(i){
+                R.id.radioOneWeek -> {
+                    recallDate = "$yearToday-$monthToday-${(dayToday+7)%30}"
+                }
+                R.id.radioOneMonth -> {
+                    if(monthToday==12){
+                        recallDate = "${yearToday+1}-${monthToday-11}-$dayToday"
+                    }else{
+                        recallDate = "${yearToday}-${monthToday+1}-$dayToday"
+                    }
+                }
+                R.id.radioSixMonths -> {
+                    if(monthToday>6){
+                        recallDate = "${yearToday+1}-${((monthToday+6)%12)}-$dayToday"
+                    }else{
+                        recallDate = "$yearToday-${monthToday+6}-$dayToday"
+                    }
+                }
+                R.id.radioOneYear -> {
+                    recallDate = "${yearToday+1}-$monthToday-$dayToday"
+                }
+            }
+            etRecallDate.setText(recallDate)
+        }
 
         etRecallDate.setOnFocusChangeListener { _, b ->
             if (b) {
-                val c = Calendar.getInstance()
-                val mYear = c.get(Calendar.YEAR)
-                val mMonth = c.get(Calendar.MONTH)
-                val mDay = c.get(Calendar.DAY_OF_MONTH)
+               val nepaliDateConverter = DateConverter()
+                val dpd = com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
+                    val month = DecimalFormat("00").format(monthOfYear+1).toString()
+                    val day = DecimalFormat("00").format(dayOfMonth).toString()
+                    etRecallDate.setText("$year-$month-$day")
+                }
+                dpd.setMinDate(nepaliDateConverter.todayNepaliDate)
+                dpd.show(fragmentManager,"RecallDate")
 
-                val datePickerDialog = DatePickerDialog(
-                    activity,
-                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                        etRecallDate.setText(
-                            year.toString() + "-" + DecimalFormat("00").format(monthOfYear + 1).toString() + "-" + DecimalFormat(
-                                "00"
-                            ).format(dayOfMonth).toString()
-                        )
-                    },
-                    mYear,
-                    mMonth,
-                    mDay
-                )
-                datePickerDialog.datePicker.minDate = Date().time
-                datePickerDialog.show()
             }
         }
-        etRecallTime.setOnFocusChangeListener { view, b ->
-            if (b) {
-                // Get Current Time
-                val c = Calendar.getInstance()
-                val mHour = c.get(Calendar.HOUR_OF_DAY)
-                val mMinute = c.get(Calendar.MINUTE)
-
-                // Launch Time Picker Dialog
-                val timePickerDialog = TimePickerDialog(
-                    activity,
-                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                        etRecallTime.setText(
-                            DecimalFormat("00").format(
-                                hourOfDay
-                            ) + ":" + DecimalFormat("00").format(minute)
-                        )
-                    },
-                    mHour,
-                    mMinute,
-                    false
-                )
-                timePickerDialog.show()
-            }
-        }
+//        etRecallTime.setOnFocusChangeListener { view, b ->
+//            if (b) {
+//                // Get Current Time
+//                val c = Calendar.getInstance()
+//                val mHour = c.get(Calendar.HOUR_OF_DAY)
+//                val mMinute = c.get(Calendar.MINUTE)
+//
+//                // Launch Time Picker Dialog
+//                val timePickerDialog = TimePickerDialog(
+//                    activity,
+//                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+//                        etRecallTime.setText(
+//                            DecimalFormat("00").format(
+//                                hourOfDay
+//                            ) + ":" + DecimalFormat("00").format(minute)
+//                        )
+//                    },
+//                    mHour,
+//                    mMinute,
+//                    false
+//                )
+//                timePickerDialog.show()
+//            }
+//        }
 
         btnBack = view.findViewById(R.id.btnBack)
         btnNext = view.findViewById(R.id.btnNext)
