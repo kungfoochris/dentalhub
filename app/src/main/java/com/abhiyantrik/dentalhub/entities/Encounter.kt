@@ -23,7 +23,7 @@ class Encounter : Parcelable {
 
     fun isEditable(): Boolean {
         val date1 = Date()
-        val date2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(created_at)
+        val date2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(created_at+" 00:01:00")
         val difference = date1.time - date2.time
         return difference < DentalApp.editableDuration * 100
     }
