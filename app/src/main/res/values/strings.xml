@@ -38,34 +38,7 @@
     <string name="view_patient_detail">View Patient Detail</string>
 
 
-    <string-array name="gender_list">
-        <item>male</item>
-        <item>female</item>
-        <item>other</item>
-    </string-array>
-    <string-array name="martial_status_list">
-        <item>single</item>
-        <item>married</item>
-        <item>divorced</item>
-    </string-array>
-    <string-array name="education_level_list">
-        <item>uneducated</item>
-        <item>literate</item>
-        <item>graduate</item>
-    </string-array>
 
-    <string-array name="carries_risk">
-        <item>Low</item>
-        <item>Medium</item>
-        <item>High</item>
-    </string-array>
-
-    <string-array name="encounter_reason">
-        <item>Checkup / Screening</item>
-        <item>Relief of Pain</item>
-        <item>Continuation of Treatment Plan</item>
-        <item>Other problem</item>
-    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
