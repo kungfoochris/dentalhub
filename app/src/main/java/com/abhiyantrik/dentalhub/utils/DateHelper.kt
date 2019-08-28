@@ -30,7 +30,7 @@ class DateHelper {
             var nepaliFormattedDate = ""
             try{
                 // write the formatting logic
-                nepaliFormattedDate = date.substring(0,4)+"-"+getNepaliMonthName(context, date.substring(5,7).toInt())+" "+date.substring(8,10)
+                nepaliFormattedDate = date.substring(0,4)+" "+getNepaliMonthName(context, date.substring(5,7).toInt())+" "+date.substring(8,10)
             }catch (e: IllegalArgumentException){
                 nepaliFormattedDate = "-"
                 Log.d("DateHelper", e.printStackTrace().toString())

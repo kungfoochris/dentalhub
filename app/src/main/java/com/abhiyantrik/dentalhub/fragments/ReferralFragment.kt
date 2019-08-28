@@ -42,7 +42,7 @@ class ReferralFragment : Fragment() {
     private lateinit var etOtherDetails: EditText
 
     private lateinit var etRecallDate: EditText
-    private lateinit var etRecallTime: EditText
+    //private lateinit var etRecallTime: EditText
 
     private lateinit var activitiesBox: Box<Activity>
     private lateinit var geographiesBox: Box<Geography>
@@ -93,11 +93,11 @@ class ReferralFragment : Fragment() {
             if (i == R.id.radioNoReferral) {
                 etRecallDate.setText("")
                 etRecallDate.visibility = View.GONE
-                etRecallTime.setText("")
-                etRecallTime.visibility = View.GONE
+//                etRecallTime.setText("")
+//                etRecallTime.visibility = View.GONE
             } else {
                 etRecallDate.visibility = View.VISIBLE
-                etRecallTime.visibility = View.VISIBLE
+                //etRecallTime.visibility = View.VISIBLE
             }
         }
         rgRecalls.setOnCheckedChangeListener { radioGroup, i ->
@@ -206,10 +206,10 @@ class ReferralFragment : Fragment() {
                 )
 
                 val recallDate = etRecallDate.text.toString()
-                val recallTime = etRecallTime.text.toString()
+                //val recallTime = etRecallTime.text.toString()
                 val selectedGeography = DentalApp.geography_id
                 val selectedActivity = DentalApp.activity_id
-                referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
+                //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
 
                 fragmentCommunicator.goForward()
 
@@ -266,7 +266,7 @@ class ReferralFragment : Fragment() {
         }
 
         if (radioHealthPost.isChecked) {
-            if (etRecallDate.text.isNullOrBlank() || etRecallTime.text.isNullOrBlank()) {
+            if (etRecallDate.text.isNullOrBlank()) { // || etRecallTime.text.isNullOrBlank()
                 Toast.makeText(activity, "Recall Date and Time should be specified.", Toast.LENGTH_SHORT).show()
                 status = false
             }
