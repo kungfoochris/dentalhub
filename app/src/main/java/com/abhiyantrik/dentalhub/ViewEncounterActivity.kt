@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.abhiyantrik.dentalhub.entities.*
+import com.abhiyantrik.dentalhub.utils.DateHelper
 import io.objectbox.Box
 
 class ViewEncounterActivity : AppCompatActivity() {
@@ -194,12 +196,15 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvRecallGeography: TextView
     private lateinit var tvRecallActivity: TextView
 
+    private lateinit var context: Context
+
     var encounterId: Long = 0
     var patientId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_encounter)
+        context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         encounterId = intent.getLongExtra("ENCOUNTER_ID", 0)
         patientId = intent.getLongExtra("PATIENT_ID", 0)
@@ -625,7 +630,7 @@ class ViewEncounterActivity : AppCompatActivity() {
                 tvMiddleNameView.text = patient.middle_name
                 tvLastNameView.text = patient.last_name
                 tvGenderpopupView.text = patient.gender.capitalize()
-                tvDateofBirthView.text = patient.dob
+                tvDateofBirthView.text = DateHelper.formatNepaliDate(context, patient.dob)
                 tvPhonepopupView.text = patient.phone
                 tvWardView.text = patient.wardNumber()
                 tvMunicipalityView.text = patient.municipalityName()
