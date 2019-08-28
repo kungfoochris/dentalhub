@@ -98,7 +98,14 @@ class SearchPatientActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
-        recyclerAdapter = PatientAdapter(context, patientsearchlist, object : PatientAdapter.PatientClickListener{
+        recyclerAdapter = PatientAdapter(context, patientsearchlist, false, object : PatientAdapter.PatientClickListener{
+            override fun onRemovePatientClick(patient: Patient) {
+                val tempPatient = patientsBox.query().equal(Patient_.id,patient.id).build().findFirst()!!
+                tempPatient.created_at = ""
+                patientsBox.put(tempPatient)
+                listPatients()
+            }
+
             override fun onViewPatientDetailClick(patient: Patient) {
                 val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
                 viewPatientIntent.putExtra("PATIENT_ID", patient.id)

@@ -141,14 +141,14 @@ class MainActivity : AppCompatActivity() {
         rowThisWeek.content = "Header"
         allPatientRecall.add(rowThisWeek)
 
-        val tomorrow = addOneDay(today)
-        val thirdDay = addOneDay(tomorrow)
-        val fourthDay = addOneDay(thirdDay)
-        val fifthDay = addOneDay(fourthDay)
-        val sixthDay = addOneDay(fifthDay)
-        val seventhDay = addOneDay(sixthDay)
-        val eightDay = addOneDay(seventhDay)
-        val ninthDay = addOneDay(eightDay)
+        val tomorrow = DateHelper.getNextDay(today)
+        val thirdDay = DateHelper.getNextDay(tomorrow)
+        val fourthDay = DateHelper.getNextDay(thirdDay)
+        val fifthDay = DateHelper.getNextDay(fourthDay)
+        val sixthDay = DateHelper.getNextDay(fifthDay)
+        val seventhDay = DateHelper.getNextDay(sixthDay)
+        val eightDay = DateHelper.getNextDay(seventhDay)
+        val ninthDay = DateHelper.getNextDay(eightDay)
         val thisWeekPatients = patientsBox.query()
             .equal(Patient_.recall_date, tomorrow).or()
             .equal(Patient_.recall_date, thirdDay).or()
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
             .equal(Patient_.recall_date, sixthDay).or()
             .equal(Patient_.recall_date, seventhDay).or()
             .equal(Patient_.recall_date, eightDay).or()
-            .equal(Patient_.recall_date, ninthDay).build().find()
+            .equal(Patient_.recall_date, ninthDay).order(Patient_.recall_date).build().find()
         allPatientRecall.addAll(thisWeekPatients)
 
         val rowRecallNextMonth = Patient()
@@ -169,20 +169,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun addOneDay(date: String): String{
-        Log.d("Add one day to : ", date)
-        var day = date.substring(8,10).toInt()
-        var month = date.substring(5,7).toInt()
-        var year = date.substring(0,4).toInt()
-        if(day>30){
-            if(month==12){
-                year+=1
-            }
-            month= (month+1)%12
-        }
-        day = (day+1)%30
-        return DecimalFormat("0000").format(year)+"-"+DecimalFormat("00").format(month)+"-"+DecimalFormat("00").format(day)
-    }
+
 
     @AddTrace(name = "setupUIMainActivity", enabled = true /* optional */)
     private fun setupUI() {
@@ -226,7 +213,12 @@ class MainActivity : AppCompatActivity() {
 
     @AddTrace(name = "listPatientsMainActivity", enabled = true /* optional */)
     private fun listPatients() {
-        listPatientsFromLocalDB()
+        if (DentalApp.activity_name == "Health Post") {
+            listRecallPatients()
+        } else {
+            listPatientsFromLocalDB()
+        }
+
     }
 
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
@@ -245,7 +237,14 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "setupAdapterMainActivity", enabled = true /* optional */)
     private fun setupAdapter(patientList: List<Patient>) {
         patientAdapter =
-            PatientAdapter(context, patientList, object : PatientAdapter.PatientClickListener {
+            PatientAdapter(context, patientList, true, object : PatientAdapter.PatientClickListener {
+                override fun onRemovePatientClick(patient: Patient) {
+                    val tempPatient = patientsBox.query().equal(Patient_.id,patient.id).build().findFirst()!!
+                    tempPatient.recall_date = ""
+                    patientsBox.put(tempPatient)
+                    listPatients()
+                }
+
                 override fun onDelayPatientClick(patient: Patient) {
                     displayDelayDialog(patient)
                 }
@@ -275,11 +274,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (DentalApp.activity_name == "Health Post") {
-            listRecallPatients()
-        } else {
-            listPatients()
-        }
+        listPatients()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

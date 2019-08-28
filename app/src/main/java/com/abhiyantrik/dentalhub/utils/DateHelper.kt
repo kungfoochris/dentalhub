@@ -25,12 +25,42 @@ class DateHelper {
 
             return "$yearToday-$monthToday-$dayToday"
         }
+        fun getNextDay(date: String): String{
+            Log.d("Add one day to : ", date)
+            var day = date.substring(8,10).toInt()
+            var month = date.substring(5,7).toInt()
+            var year = date.substring(0,4).toInt()
+            if(day>30){
+                if(month==12){
+                    year+=1
+                }
+                month= (month+1)%12
+            }
+            day = (day+1)%30
+            return DecimalFormat("0000").format(year)+"-"+DecimalFormat("00").format(month)+"-"+DecimalFormat("00").format(day)
+        }
+
+        fun getPreviousDay(date: String): String{
+            Log.d("Subtract one day to : ", date)
+            var day = date.substring(8,10).toInt()
+            var month = date.substring(5,7).toInt()
+            var year = date.substring(0,4).toInt()
+            if(day==1){
+                if(month==1){
+                    year-=1
+                }
+                day = 30
+            }else{
+                day -= 1
+            }
+            return DecimalFormat("0000").format(year)+"-"+DecimalFormat("00").format(month)+"-"+DecimalFormat("00").format(day)
+        }
 
         fun formatNepaliDate(context:Context, date: String): String{
             var nepaliFormattedDate = ""
             try{
                 // write the formatting logic
-                nepaliFormattedDate = date.substring(0,4)+" "+getNepaliMonthName(context, date.substring(5,7).toInt())+" "+date.substring(8,10)
+                nepaliFormattedDate = date.substring(0,4)+" "+ getNepaliMonthName(context, date.substring(5,7).toInt()) +" "+date.substring(8,10)
             }catch (e: IllegalArgumentException){
                 nepaliFormattedDate = "-"
                 Log.d("DateHelper", e.printStackTrace().toString())

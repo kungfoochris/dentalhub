@@ -4,7 +4,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="64dp">
 
     <TextView
             android:id="@+id/tvEncounterDate"
@@ -34,16 +34,16 @@
             android:layout_centerVertical="true"
             android:background="@android:color/transparent"
             android:src="@drawable/edit"
-            android:layout_width="42dp"
+            android:layout_width="48dp"
             android:scaleType="fitCenter"
-            android:layout_height="42dp"/>
+            android:layout_height="48dp"
+            android:padding="4dp"
+            />
     <View
             android:id="@+id/border"
             android:background="@color/grey_300"
             android:layout_alignParentBottom="true"
             android:layout_height="1dp"
             android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             />
 </RelativeLayout>
