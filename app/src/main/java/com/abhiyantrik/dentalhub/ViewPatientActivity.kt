@@ -195,7 +195,7 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun openAddEncounter(encounterType: String) {
-        val date = DateHelper.getCurrentDate()
+        val date = DateHelper.getCurrentNepaliDate()
 
         val encounter = Encounter()
         encounter.id = 0
