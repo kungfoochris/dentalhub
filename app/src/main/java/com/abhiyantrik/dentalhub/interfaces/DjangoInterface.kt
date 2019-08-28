@@ -105,7 +105,10 @@ interface DjangoInterface {
         @Field("need_sealant") need_sealant: Boolean,
         @Field("need_sdf") need_sdf: Boolean,
         @Field("extraction") need_extraction: Boolean,
-        @Field("active_infection") active_infection: Boolean
+        @Field("active_infection") active_infection: Boolean,
+        @Field("high_blood_pressure") high_blood_pressure: Boolean,
+        @Field("low_blood_pressure") low_blood_pressure: Boolean,
+        @Field("thyroid") thyroid: Boolean
         ): Call<ScreeningModel>
 
     @FormUrlEncoded

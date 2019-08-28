@@ -9,10 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.abhiyantrik.dentalhub.DentalApp
-import com.abhiyantrik.dentalhub.ObjectBox
-import com.abhiyantrik.dentalhub.R
-import com.abhiyantrik.dentalhub.TreatmentFragmentCommunicator
+import com.abhiyantrik.dentalhub.*
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.fragments.interfaces.ReferralFormCommunicator
 import com.hornet.dateconverter.DateConverter
@@ -46,10 +43,12 @@ class ReferralFragment : Fragment() {
 
     private lateinit var activitiesBox: Box<Activity>
     private lateinit var geographiesBox: Box<Geography>
+    private lateinit var patientBox: Box<Patient>
 //    private lateinit var activitiesQuery: Query<Activity>
 //    private lateinit var geographiesQuery: Query<Geography>
 
 
+    private lateinit var patient: Patient
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
 
@@ -62,7 +61,7 @@ class ReferralFragment : Fragment() {
 
         activitiesBox = ObjectBox.boxStore.boxFor(Activity::class.java)
         geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
-
+        patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
 
@@ -93,9 +92,11 @@ class ReferralFragment : Fragment() {
             if (i == R.id.radioNoReferral) {
                 etRecallDate.setText("")
                 etRecallDate.visibility = View.GONE
+                rgRecalls.visibility = View.GONE
 //                etRecallTime.setText("")
 //                etRecallTime.visibility = View.GONE
             } else {
+                rgRecalls.visibility = View.VISIBLE
                 etRecallDate.visibility = View.VISIBLE
                 //etRecallTime.visibility = View.VISIBLE
             }
@@ -232,10 +233,12 @@ class ReferralFragment : Fragment() {
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
 
-
+            patient = patientBox.query().equal(Patient_.id, DentalApp.readIntFromPreference(applicationContext, Constants.PREF_SELECTED_PATIENT).toLong()).build().findFirst()!!
             referral = referralBox.query()
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
+
+            etRecallDate.setText(patient.recall_date)
 
             val radioButtonMap = mapOf(radioNoReferral to referral.no_referral,
                 radioHealthPost to referral.health_post, radioHygienist to referral.hygienist,

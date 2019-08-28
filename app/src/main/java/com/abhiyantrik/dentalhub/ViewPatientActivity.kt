@@ -64,7 +64,7 @@ class ViewPatientActivity : AppCompatActivity() {
             Toast.makeText(context, "Invalid patient id", Toast.LENGTH_LONG).show()
             finish()
         }
-
+        DentalApp.saveIntToPreference(context, Constants.PREF_SELECTED_PATIENT, patientId.toInt())
         supportActionBar?.setHomeButtonEnabled(true)
 
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
@@ -112,11 +113,35 @@ class ScreeningFragment : Fragment() {
             val thyroidDisorder = checkBoxThyroidDisorder.isChecked
 
             screeningFormCommunicator.updateScreening(
-                carriesRisk, noOfdecayedPrimaryTeeth, noOfdecayedPermanentTeeth,
-                cavityPermanentTooth, cavityPermanentAnterior, reversiblePulpitis, needARTFilling, needSealant, needSDF,
-                needExtraction, activeInfection,highBP, lowBP, thyroidDisorder
+                carriesRisk,
+                noOfdecayedPrimaryTeeth,
+                noOfdecayedPermanentTeeth,
+                cavityPermanentTooth,
+                cavityPermanentAnterior,
+                reversiblePulpitis,
+                needARTFilling,
+                needSealant,
+                needSDF,
+                needExtraction,
+                activeInfection,
+                highBP,
+                lowBP,
+                thyroidDisorder
             )
             fragmentCommunicator.goForward()
+        }
+
+        checkBoxHighBP.setOnCheckedChangeListener { compoundButton, b ->
+            if(b && checkBoxLowBP.isChecked){
+                compoundButton.isChecked = false
+                Toast.makeText(context, resources.getString(R.string.low_bp_is_checked), Toast.LENGTH_LONG).show()
+            }
+        }
+        checkBoxLowBP.setOnCheckedChangeListener { compoundButton, b ->
+            if(b && checkBoxHighBP.isChecked){
+                compoundButton.isChecked = false
+                Toast.makeText(context, resources.getString(R.string.high_bp_is_checked), Toast.LENGTH_LONG).show()
+            }
         }
         btnBack.setOnClickListener {
             fragmentCommunicator.goBack()

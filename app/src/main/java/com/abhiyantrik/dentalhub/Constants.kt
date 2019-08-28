@@ -47,6 +47,9 @@ class Constants {
         val PREF_PROFILE_ID = "USER_ID"
 
         @JvmStatic
+        val PREF_SELECTED_PATIENT = "SELECTED_PATIENT"
+
+        @JvmStatic
         val LOCATION_REQUEST = 1011
         @JvmStatic
         val GPS_REQUEST = 1012

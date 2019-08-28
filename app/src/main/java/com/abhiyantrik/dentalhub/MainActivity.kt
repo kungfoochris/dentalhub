@@ -31,10 +31,12 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
+import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import io.objectbox.exception.DbException
 import io.objectbox.query.Query
 import java.text.DecimalFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
@@ -123,13 +125,13 @@ class MainActivity : AppCompatActivity() {
 
 
         val rowToday = Patient()
-        rowToday.first_name = "Recall Today : "+today
+        rowToday.first_name = "Recall Today"
         rowToday.content = "header"
         allPatientRecall.add(rowToday)
         allPatientRecall.addAll(todayPatient)
 
 //        val rowTomorrow = Patient()
-//        rowTomorrow.first_name = "Recall Tomorrow : " + tomorrow
+//        rowTomorrow.first_name = "Recall Tomorrow" + tomorrow
 //        rowTomorrow.content = "header"
 //        allPatientRecall.add(rowTomorrow)
 //        allPatientRecall.addAll(tomorrowPatient)
@@ -146,6 +148,7 @@ class MainActivity : AppCompatActivity() {
         val sixthDay = addOneDay(fifthDay)
         val seventhDay = addOneDay(sixthDay)
         val eightDay = addOneDay(seventhDay)
+        val ninthDay = addOneDay(eightDay)
         val thisWeekPatients = patientsBox.query()
             .equal(Patient_.recall_date, tomorrow).or()
             .equal(Patient_.recall_date, thirdDay).or()
@@ -153,7 +156,8 @@ class MainActivity : AppCompatActivity() {
             .equal(Patient_.recall_date, fifthDay).or()
             .equal(Patient_.recall_date, sixthDay).or()
             .equal(Patient_.recall_date, seventhDay).or()
-            .equal(Patient_.recall_date, eightDay).build().find()
+            .equal(Patient_.recall_date, eightDay).or()
+            .equal(Patient_.recall_date, ninthDay).build().find()
         allPatientRecall.addAll(thisWeekPatients)
 
         val rowRecallNextMonth = Patient()
@@ -318,7 +322,39 @@ class MainActivity : AppCompatActivity() {
             DialogInterface.OnClickListener { dialog, item ->
                 loading.visibility = View.VISIBLE
                 Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
-                Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show()
+                val tempPatient = patientsBox.query().equal(Patient_.id,patient.id).build().findFirst()!!
+                val calendar = Calendar.getInstance()
+                try{
+                    calendar.time = SimpleDateFormat("yyyy/MM/dd").parse(tempPatient.recall_date)
+                }catch (e: ParseException){
+                    Log.e("ParseException", e.printStackTrace().toString())
+                }
+                when(item){
+                    0 -> {
+                        calendar.add(Calendar.DAY_OF_MONTH,7)
+                    }
+                    1 -> {
+                        calendar.add(Calendar.DAY_OF_MONTH,14)
+                    }
+                    2 -> {
+                        calendar.add(Calendar.DAY_OF_MONTH,21)
+                    }
+                    3 -> {
+                        calendar.add(Calendar.DAY_OF_MONTH,28)
+
+                    }
+                    4 -> {
+                        calendar.add(Calendar.DAY_OF_MONTH,60)
+                    }
+                    5->{
+                        calendar.add(Calendar.DAY_OF_MONTH,90)
+                    }
+                }
+
+                val newDate = SimpleDateFormat("yyyy-mm-dd").format(calendar.time)
+                tempPatient.recall_date = newDate
+                patientsBox.put(tempPatient)
+                listPatients()
                 dialog.dismiss()// dismiss the alert box after chose option
             })
         val alert = delayChooser.create()

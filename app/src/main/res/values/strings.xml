@@ -165,4 +165,6 @@
     <string name="high_bp">High BP</string>
     <string name="low_bp">Low BP</string>
     <string name="thyroid_disorder">Thyroid Disorder</string>
+    <string name="low_bp_is_checked">Low BP is already checked.</string>
+    <string name="high_bp_is_checked">High BP is already checked.</string>
 </resources>

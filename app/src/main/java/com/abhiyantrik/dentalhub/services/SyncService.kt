@@ -217,7 +217,10 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             screening.need_sealant,
             screening.need_sdf,
             screening.need_extraction,
-            screening.active_infection
+            screening.active_infection,
+            screening.high_blood_pressure,
+            screening.low_blood_pressure,
+            screening.thyroid_disorder
         )
 
         call.enqueue(object : Callback<ScreeningModel> {
