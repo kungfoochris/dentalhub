@@ -116,7 +116,7 @@ class AddPatientActivity : AppCompatActivity() {
         val startYear = currentYear - 120
 
         spinnerDobDay.adapter = AdapterHelper.createAdapterWithInts(context, (1..32).toList())
-        spinnerDobMonth.adapter = AdapterHelper.createAdapterWithInts(context, (1..12).toList())
+        spinnerDobMonth.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.months).toList())
         spinnerDobYear.adapter = AdapterHelper.createAdapterWithInts(context, (startYear..currentYear).reversed().toList())
 
         updateUI()
@@ -256,7 +256,7 @@ class AddPatientActivity : AppCompatActivity() {
         val activity = DentalApp.activity_id
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
-        val date = DateHelper.getCurrentDate()
+        val date = DateHelper.getCurrentNepaliDate()
         if (action=="edit") {
             patient = patientsBox.get(patientId)
             patient!!.first_name = firstName
@@ -307,7 +307,7 @@ class AddPatientActivity : AppCompatActivity() {
 
     private fun getFormattedDob(): String {
         val dobYear = spinnerDobYear.selectedItem.toString()
-        val dobMonth = DecimalFormat("00").format(spinnerDobMonth.selectedItem)
+        val dobMonth = DecimalFormat("00").format(spinnerDobMonth.selectedItemPosition+1)
         val dobDay = DecimalFormat("00").format(spinnerDobDay.selectedItem)
         return "$dobYear-$dobMonth-$dobDay"
     }
