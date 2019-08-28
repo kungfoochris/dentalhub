@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "120689180865",
+    "firebase_url": "https://dentalhub-91db3.firebaseio.com",
+    "project_id": "dentalhub-91db3",
+    "storage_bucket": "dentalhub-91db3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120689180865:android:fa3ae6b15a5627e6",
+        "android_client_info": {
+          "package_name": "com.example.dentalhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120689180865-4vjc1u137lmo12q5rcklknb4g3fltns2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWOyEvQVSF8rNUHZ052AbwF-K3NfoKZKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120689180865-4vjc1u137lmo12q5rcklknb4g3fltns2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "120689180865-omabdudakoau0tle50pgqu0eolp3vbpk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dentalhub"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

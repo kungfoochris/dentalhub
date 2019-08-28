@@ -22,6 +22,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import android.widget.ImageButton
+import com.abhiyantrik.dentalhub.utils.DateHelper
 
 
 class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator, HistoryFormCommunicator,
@@ -197,7 +198,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                 tvMiddleNameView.text = patient.middle_name
                 tvLastNameView.text = patient.last_name
                 tvGenderpopupView.text = patient.gender.capitalize()
-                tvDateofBirthView.text = patient.dob
+                tvDateofBirthView.text = DateHelper.formatNepaliDate(context, patient.dob)
                 tvPhonepopupView.text = patient.phone
                 tvWardView.text = patient.wardNumber()
                 tvMunicipalityView.text = patient.municipalityName()
