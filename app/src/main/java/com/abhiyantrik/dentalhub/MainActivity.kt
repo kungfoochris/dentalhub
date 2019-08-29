@@ -164,9 +164,13 @@ class MainActivity : AppCompatActivity() {
         rowRecallNextMonth.first_name = "Recall Next Month"
         rowRecallNextMonth.content = "header"
         allPatientRecall.add(rowRecallNextMonth)
-
+        var nextDay = DateHelper.getNextDay(ninthDay)
+        for(i in 1..24){
+            val thisMonthPatients = patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
+            allPatientRecall.addAll(thisMonthPatients)
+            nextDay = DateHelper.getNextDay(nextDay)
+        }
         setupAdapter(allPatientRecall)
-
     }
 
 
