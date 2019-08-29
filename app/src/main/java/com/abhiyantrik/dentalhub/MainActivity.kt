@@ -353,6 +353,7 @@ class MainActivity : AppCompatActivity() {
                 val newDate = SimpleDateFormat("yyyy-mm-dd").format(calendar.time)
                 tempPatient.recall_date = newDate
                 patientsBox.put(tempPatient)
+                loading.visibility = View.GONE
                 listPatients()
                 dialog.dismiss()// dismiss the alert box after chose option
             })

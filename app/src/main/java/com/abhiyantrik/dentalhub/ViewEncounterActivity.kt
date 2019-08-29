@@ -16,6 +16,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import io.objectbox.Box
+import kotlinx.android.synthetic.main.activity_view_encounter.*
 
 class ViewEncounterActivity : AppCompatActivity() {
 
@@ -78,6 +79,9 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvNeedSDFTitle: TextView
     private lateinit var tvNeedExtractionTitle: TextView
     private lateinit var tvActiveInfectionTitle: TextView
+    private lateinit var tvLowBPTitle: TextView
+    private lateinit var tvHighBPTitle: TextView
+    private lateinit var tvThyroidDisorderTitle: TextView
 
     // Screening Data TextView
     private lateinit var tvCarriesRisk: TextView
@@ -91,6 +95,10 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvNeedSDF: TextView
     private lateinit var tvNeedExtraction: TextView
     private lateinit var tvActiveInfection: TextView
+    private lateinit var tvHighBP: TextView
+    private lateinit var tvLowBP: TextView
+    private lateinit var tvThyroidDisorder: TextView
+
 
     // treatment
 
@@ -302,6 +310,9 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNeedSDFTitle = findViewById(R.id.tvNeedSDFTitle)
         tvNeedExtractionTitle = findViewById(R.id.tvNeedExtractionTitle)
         tvActiveInfectionTitle = findViewById(R.id.tvActiveInfectionTitle)
+        tvHighBPTitle = findViewById(R.id.tvHighBPTitle)
+        tvLowBPTitle = findViewById(R.id.tvLowBPTitle)
+        tvThyroidDisorderTitle = findViewById(R.id.tvThyroidDisorderTitle)
 
         // Screening Data TextView
         tvCarriesRisk = findViewById(R.id.tvCarriesRisk)
@@ -315,6 +326,9 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNeedSDF = findViewById(R.id.tvNeedSDF)
         tvNeedExtraction = findViewById(R.id.tvNeedExtraction)
         tvActiveInfection = findViewById(R.id.tvActiveInfection)
+        tvHighBP = findViewById(R.id.tvHighBP)
+        tvLowBP = findViewById(R.id.tvLowBP)
+        tvThyroidDisorder = findViewById(R.id.tvThyroidDisorder)
 
         // to hide if screening items are unchecked while adding encounter
         hideString(screening.carries_risk, tvCarriesRiskTitle, tvCarriesRisk)
@@ -328,6 +342,9 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideBoolean(screening.need_sdf, tvNeedSDFTitle, tvNeedSDF)
         hideBoolean(screening.need_extraction, tvNeedExtractionTitle, tvNeedExtraction)
         hideBoolean(screening.active_infection, tvActiveInfectionTitle, tvActiveInfection)
+        hideBoolean(screening.high_blood_pressure, tvHighBPTitle, tvHighBP)
+        hideBoolean(screening.low_blood_pressure, tvLowBPTitle, tvLowBP)
+        hideBoolean(screening.thyroid_disorder, tvThyroidDisorderTitle, tvThyroidDisorder)
 
         // treatment
 
