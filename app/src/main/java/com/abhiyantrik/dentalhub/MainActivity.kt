@@ -322,36 +322,49 @@ class MainActivity : AppCompatActivity() {
                 loading.visibility = View.VISIBLE
                 Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
                 val tempPatient = patientsBox.query().equal(Patient_.id,patient.id).build().findFirst()!!
-                val calendar = Calendar.getInstance()
-                try{
-                    calendar.time = SimpleDateFormat("yyyy/MM/dd").parse(tempPatient.recall_date)
-                }catch (e: ParseException){
-                    Log.e("ParseException", e.printStackTrace().toString())
-                }
+
+                var recallDate = tempPatient.recall_date
                 when(item){
                     0 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,7)
+                        //calendar.add(Calendar.DAY_OF_YEAR,7)
+                        for(i in 1..7){
+                            recallDate = DateHelper.getNextDay(recallDate)
+                        }
                     }
                     1 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,14)
+                        //calendar.add(Calendar.DAY_OF_YEAR,14)
+                        for(i in 1..14){
+                            recallDate = DateHelper.getNextDay(recallDate)
+                        }
                     }
                     2 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,21)
+                        //calendar.add(Calendar.DAY_OF_YEAR,21)
+                        for(i in 1..21){
+                            recallDate = DateHelper.getNextDay(recallDate)
+                        }
                     }
                     3 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,28)
-
+                        //calendar.add(Calendar.DAY_OF_YEAR,28)
+                        for(i in 1..28){
+                            recallDate = DateHelper.getNextDay(recallDate)
+                        }
                     }
                     4 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,60)
+                        //calendar.add(Calendar.DAY_OF_YEAR,60)
+                        for(i in 1..60){
+                            recallDate = DateHelper.getNextDay(recallDate)
+                        }
                     }
                     5->{
-                        calendar.add(Calendar.DAY_OF_MONTH,90)
+                        //calendar.add(Calendar.DAY_OF_YEAR,90)
+                        for(i in 1..90){
+                            recallDate = DateHelper.getNextDay(recallDate)
+                        }
                     }
                 }
 
-                val newDate = SimpleDateFormat("yyyy-mm-dd").format(calendar.time)
-                tempPatient.recall_date = newDate
+                //val newDate = SimpleDateFormat("yyyy-mm-dd").format(calendar.time)
+                tempPatient.recall_date = recallDate
                 patientsBox.put(tempPatient)
                 loading.visibility = View.GONE
                 listPatients()

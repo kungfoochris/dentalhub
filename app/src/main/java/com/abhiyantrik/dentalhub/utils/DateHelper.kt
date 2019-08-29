@@ -69,7 +69,12 @@ class DateHelper {
         }
 
         fun getNepaliMonthName(context: Context, month:Int):String{
-            return context.resources.getStringArray(R.array.months).get(month-1)
+            return if(month in 1..12){
+                context.resources.getStringArray(R.array.months)[month-1]
+            }else{
+                "-"
+            }
+
         }
 
 
