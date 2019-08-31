@@ -68,8 +68,8 @@
     <string name="fv_applied">FV Applied</string>
     <string name="treatment_plan_complete">Treatment plan complete</string>
     <string name="notes">Notes</string>
-    <string name="cavity_permanent_molar">Cavity Permanent Molar</string>
-    <string name="cavity_permanent_anterior">Cavity Permanent Anterior</string>
+    <string name="cavity_permanent_molar">Cavity Permanent Molar or Premolar</string>
+    <string name="cavity_permanent_anterior">Cavity Permanent Canine or Incisor</string>
     <string name="need_art_filling">Need ART Filling</string>
     <string name="need_sealant">Need Sealant</string>
     <string name="need_sdf">Need SDF</string>

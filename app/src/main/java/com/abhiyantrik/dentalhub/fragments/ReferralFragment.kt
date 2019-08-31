@@ -34,6 +34,7 @@ class ReferralFragment : Fragment() {
 //    private lateinit var radioButtonDentist: RadioButton
 //    private lateinit var radioButtonGeneralPhysician: RadioButton
 //    private lateinit var radioButtonOther: RadioButton
+    private lateinit var tvRecallDateReferral : TextView
     private lateinit var rgReferrals : RadioGroup
     private lateinit var rgRecalls: RadioGroup
     private lateinit var etOtherDetails: EditText
@@ -74,6 +75,7 @@ class ReferralFragment : Fragment() {
 //        radioButtonDentist = view.findViewById(R.id.radioDentist)
 //        radioButtonGeneralPhysician = view.findViewById(R.id.radioGeneralPhysician)
 //        radioButtonOther = view.findViewById(R.id.radioOther)
+        tvRecallDateReferral = view.findViewById(R.id.tvRecallDateReferral)
         rgReferrals = view.findViewById(R.id.rgReferrals)
         rgRecalls = view.findViewById(R.id.rgRecalls)
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
@@ -89,15 +91,17 @@ class ReferralFragment : Fragment() {
             } else {
                 etOtherDetails.visibility = View.GONE
             }
-            if (i == R.id.radioNoReferral) {
+            if (i == R.id.radioHealthPost) {
                 etRecallDate.setText("")
-                etRecallDate.visibility = View.GONE
-                rgRecalls.visibility = View.GONE
+                tvRecallDateReferral.visibility = View.VISIBLE
+                etRecallDate.visibility = View.VISIBLE
+                rgRecalls.visibility = View.VISIBLE
 //                etRecallTime.setText("")
 //                etRecallTime.visibility = View.GONE
             } else {
-                rgRecalls.visibility = View.VISIBLE
-                etRecallDate.visibility = View.VISIBLE
+                tvRecallDateReferral.visibility = View.GONE
+                rgRecalls.visibility = View.GONE
+                etRecallDate.visibility = View.GONE
                 //etRecallTime.visibility = View.VISIBLE
             }
         }
