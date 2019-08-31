@@ -34,6 +34,7 @@ class Patient: Parcelable {
     var geography_id: String = ""
     var activityarea_id: String = ""
     var recall_date: String = ""
+    var recall_time: String = "00:00:01"
     var created_at: String = ""
     var updated_at: String = ""
     var uploaded: Boolean = false
@@ -48,6 +49,9 @@ class Patient: Parcelable {
     var encounters: ToMany<Encounter>? = null
 
 
+    fun referall(): String{
+        return "$recall_date $recall_time"
+    }
     fun address(): String {
         val municipalityName = municipalityName()
         val districtName = districtName()

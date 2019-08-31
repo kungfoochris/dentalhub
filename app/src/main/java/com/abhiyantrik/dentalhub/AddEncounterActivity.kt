@@ -221,8 +221,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         return super.onOptionsItemSelected(item)
     }
 
-    override fun updateRecallDate(recallDate: String) {
+    override fun updateRecallDate(recallDate: String, etRecallTime: String) {
         patient.recall_date = recallDate
+        patient.recall_time = etRecallTime
         patientBox.put(patient)
     }
 

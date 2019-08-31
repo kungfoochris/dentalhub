@@ -18,6 +18,7 @@ interface ReferralFormCommunicator {
         selectedActivity: String
     )
     fun updateRecallDate(
-        recallDate: String
+        recallDate: String,
+        recallTime: String
     )
 }
