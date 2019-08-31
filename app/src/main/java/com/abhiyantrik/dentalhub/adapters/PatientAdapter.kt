@@ -58,7 +58,7 @@ class PatientAdapter(context: Context, private var data: List<Patient>, displayD
             if(patient.content=="patient"){
                 tvName.text = patient.fullName()
                 tvAddress.text = ""
-                tvRecallDate.text = DateHelper.formatNepaliDate(context, patient.recall_date+" 00:00:01")
+                tvRecallDate.text = DateHelper.formatNepaliDate(context, patient.referall())+ " "+patient.recall_time
                 tvPhone.text = patient.phone
                 btnCall.setOnClickListener {
                     //patientClickListener.onAddEncounterButtonClick(patient)
