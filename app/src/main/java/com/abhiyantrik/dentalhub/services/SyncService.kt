@@ -512,7 +512,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             patientGoegraphy,
             patientActivityId,
             tempEncounter.encounter_type,
-            ""
+            tempEncounter.other_problem
         )
         call.enqueue(object : Callback<EncounterModel> {
             override fun onFailure(call: Call<EncounterModel>, t: Throwable) {
