@@ -96,13 +96,12 @@ class ReferralFragment : Fragment() {
                 tvRecallDateReferral.visibility = View.VISIBLE
                 etRecallDate.visibility = View.VISIBLE
                 rgRecalls.visibility = View.VISIBLE
-                etRecallTime.setText("")
-                etRecallTime.visibility = View.GONE
+                etRecallTime.visibility = View.VISIBLE
             } else {
                 tvRecallDateReferral.visibility = View.GONE
                 rgRecalls.visibility = View.GONE
                 etRecallDate.visibility = View.GONE
-                etRecallTime.visibility = View.VISIBLE
+                etRecallTime.visibility = View.GONE
             }
         }
         rgRecalls.setOnCheckedChangeListener { radioGroup, i ->
@@ -117,24 +116,24 @@ class ReferralFragment : Fragment() {
 
             when(i){
                 R.id.radioOneWeek -> {
-                    recallDate = "$yearToday-$monthToday-${(dayToday+7)%30}"
+                    recallDate = "$yearToday-"+DecimalFormat("00").format(monthToday)+"-${(dayToday+7)%30}"
                 }
                 R.id.radioOneMonth -> {
                     if(monthToday==12){
-                        recallDate = "${yearToday+1}-${monthToday-11}-$dayToday"
+                        recallDate = "${yearToday+1}-"+DecimalFormat("00").format(monthToday-11)+"-"+DecimalFormat("00").format(dayToday)
                     }else{
-                        recallDate = "${yearToday}-${monthToday+1}-$dayToday"
+                        recallDate = "${yearToday}-"+DecimalFormat("00").format(monthToday+1)+"-"+DecimalFormat("00").format(dayToday)
                     }
                 }
                 R.id.radioSixMonths -> {
                     if(monthToday>6){
-                        recallDate = "${yearToday+1}-${((monthToday+6)%12)}-$dayToday"
+                        recallDate = "${yearToday+1}-"+DecimalFormat("00").format(((monthToday+6)%12))+"-"+DecimalFormat("00").format(dayToday)
                     }else{
-                        recallDate = "$yearToday-${monthToday+6}-$dayToday"
+                        recallDate = "$yearToday-"+DecimalFormat("00").format(monthToday+6)+"-"+DecimalFormat("00").format(dayToday)
                     }
                 }
                 R.id.radioOneYear -> {
-                    recallDate = "${yearToday+1}-$monthToday-$dayToday"
+                    recallDate = "${yearToday+1}-"+DecimalFormat("00").format(monthToday)+"-"+DecimalFormat("00").format(dayToday)
                 }
             }
             etRecallDate.setText(recallDate)

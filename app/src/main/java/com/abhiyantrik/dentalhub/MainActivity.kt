@@ -136,6 +136,7 @@ class MainActivity : AppCompatActivity() {
         allPatientRecall.add(rowThisWeek)
 
         var nextDay = DateHelper.getNextDay(today)
+        Log.d("NEXT WEEK","NEXT WEEK")
         for(i in 1..8){
             val thisWeekPatients = patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
             allPatientRecall.addAll(thisWeekPatients)
@@ -146,6 +147,7 @@ class MainActivity : AppCompatActivity() {
         rowRecallNextMonth.first_name = "Recall Next Month"
         rowRecallNextMonth.content = "header"
         allPatientRecall.add(rowRecallNextMonth)
+        Log.d("NEXT MONTH","NEXT MONTH")
         for(i in 1..24){
             val thisMonthPatients = patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
             allPatientRecall.addAll(thisMonthPatients)
