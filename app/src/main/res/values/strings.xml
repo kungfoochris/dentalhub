@@ -154,7 +154,7 @@
     <string name="active_infection">Active Infection</string>
     <string name="username_password_dont_matched">Username or password didn\'t matched.</string>
     <string name="dashboard">Dashboard</string>
-    <string name="date_of_birth_with_format">Date of birth (day/month/year)</string>
+    <string name="date_of_birth_with_format">Date of birth</string>
     <string name="location">Location</string>
     <string name="activity">Activity</string>
 

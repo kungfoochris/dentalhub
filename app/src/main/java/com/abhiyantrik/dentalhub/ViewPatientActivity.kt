@@ -1,10 +1,12 @@
 package com.abhiyantrik.dentalhub
 
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -97,7 +99,8 @@ class ViewPatientActivity : AppCompatActivity() {
         getUpdatedPatient()
 
         fabAddNewEncounter.setOnClickListener {
-            displayEncounterTypeSelector()
+//            displayEncounterTypeSelector()
+            displayEncounterTypeSelectorPopUp()
         }
         fabEditPatient.setOnClickListener {
             val addPatientIntent = Intent(this, AddPatientActivity::class.java)
@@ -173,6 +176,50 @@ class ViewPatientActivity : AppCompatActivity() {
         })
         val alert = encounterTypeChooser.create()
         alert.show()
+    }
+
+    private fun displayEncounterTypeSelectorPopUp() {
+        val builder : AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflate : LayoutInflater = layoutInflater
+        val view : View = inflate.inflate(R.layout.popup_add_encounter_selector, null)
+
+        // to get all id of the Button
+        val rgAddEncounter = view.findViewById<RadioGroup>(R.id.rgAddEncounter)
+        val rbCheckupScreening = view.findViewById<RadioButton>(R.id.rbCheckupScreening)
+        val rbReliefOfPain = view.findViewById<RadioButton>(R.id.rbReliefOfPain)
+        val rbContinuationOfTreatmentPlan = view.findViewById<RadioButton>(R.id.rbContinuationOfTreatmentPlan)
+        val rbOtherProblem = view.findViewById<RadioButton>(R.id.rbOtherProblem)
+        val etOtherProblem = view.findViewById<EditText>(R.id.etOtherProblemPopUp)
+        val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
+        val btnAddEncounter = view.findViewById<Button>(R.id.btnAddEncounter)
+
+        etOtherProblem.visibility = View.INVISIBLE
+
+        builder.setView(view)
+        val dialog : Dialog = builder.create()
+        dialog.show()
+
+        btnCloseDialog.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        rgAddEncounter.setOnCheckedChangeListener{ radioGroup, i ->
+            if ( i == R.id.rbOtherProblem) {
+                etOtherProblem.visibility = View.VISIBLE
+            } else {
+                etOtherProblem.visibility = View.INVISIBLE
+            }
+        }
+
+        btnAddEncounter.setOnClickListener {
+            if (rgAddEncounter.checkedRadioButtonId != -1) {
+                if (rbOtherProblem.isChecked && etOtherProblem.text.isNullOrEmpty()) {
+                    Toast.makeText(this, "Radio button other problem is selected but problem is empty", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Radio button is not selected", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onResume() {
