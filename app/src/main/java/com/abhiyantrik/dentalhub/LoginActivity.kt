@@ -133,7 +133,11 @@ class LoginActivity : Activity() {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                tvErrorMessage.text = t.message.toString()
+                if(BuildConfig.DEBUG){
+                    tvErrorMessage.text = t.message.toString()
+                }else{
+                    tvErrorMessage.text = getString(R.string.failure_message)
+                }
                 tvErrorMessage.visibility = View.VISIBLE
                 loading.visibility = View.GONE
             }

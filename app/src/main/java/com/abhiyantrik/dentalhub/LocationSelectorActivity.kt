@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -98,6 +99,11 @@ class LocationSelectorActivity : AppCompatActivity() {
         call.enqueue(object: retrofit2.Callback<List<Geography>> {
             override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
                 Log.d(TAG, "onFaliure()")
+                if(BuildConfig.DEBUG){
+                    Toast.makeText(context,t.message.toString(), Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(context, getString(R.string.could_not_load_locations), Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onResponse(call: Call<List<Geography>>, response: Response<List<Geography>>) {

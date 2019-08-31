@@ -167,4 +167,7 @@
     <string name="thyroid_disorder">Thyroid Disorder</string>
     <string name="low_bp_is_checked">Low BP is already checked.</string>
     <string name="high_bp_is_checked">High BP is already checked.</string>
+    <string name="failure_message">Can\'t reach to Dental Hub server at the moment. Please check your connection and try in a while.</string>
+    <string name="could_not_load_activity">Activities could not be loaded.</string>
+    <string name="could_not_load_locations">Locations could not be loaded.</string>
 </resources>

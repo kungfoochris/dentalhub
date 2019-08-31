@@ -139,6 +139,11 @@ class ActivitySelectorActivity : AppCompatActivity() {
         call.enqueue(object : Callback<List<ActivityModel>> {
             override fun onFailure(call: Call<List<ActivityModel>>, t: Throwable) {
                 Log.d("loadActivityId()", "onFailure")
+                if(BuildConfig.DEBUG){
+                    Toast.makeText(context,t.message.toString(),Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(context, getString(R.string.could_not_load_activity),Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onResponse(

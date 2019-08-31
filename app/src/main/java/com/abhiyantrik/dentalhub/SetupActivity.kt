@@ -46,8 +46,11 @@ class SetupActivity : AppCompatActivity() {
         call.enqueue(object: Callback<Profile>{
             override fun onFailure(call: Call<Profile>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                tvMessage.text = tvMessage.text.toString() + "Failed to load profile\n"
-                Log.d(TAG, t.toString())
+                if(BuildConfig.DEBUG){
+                    tvMessage.text = tvMessage.text.toString() + t.message.toString()
+                }else{
+                    tvMessage.text = tvMessage.text.toString() + "Failed to load profile\n"
+                }
             }
 
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
