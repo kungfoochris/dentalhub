@@ -219,8 +219,10 @@ class ViewPatientActivity : AppCompatActivity() {
                     Toast.makeText(this, "Radio button other problem is selected but problem is empty", Toast.LENGTH_SHORT).show()
                 } else {
                     val selectedBtn : RadioButton = view.findViewById(radioBtnID)
-                    Toast.makeText(this, "Selected is ${selectedBtn.text} ", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Selected is ${selectedBtn.text} ${etOtherProblem.text}", Toast.LENGTH_SHORT).show()
 
+                    openAddEncounter(selectedBtn.text.toString(), etOtherProblem.text.toString())
+                    dialog.dismiss()
                 }
             } else {
                 Toast.makeText(this, "Radio button is not selected", Toast.LENGTH_SHORT).show()
