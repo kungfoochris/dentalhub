@@ -304,7 +304,7 @@
     },
     {
       "id": "4:8273927813278974540",
-      "lastPropertyId": "13:2736698444794091087",
+      "lastPropertyId": "16:8263475291464200628",
       "name": "Screening",
       "properties": [
         {
@@ -359,6 +359,18 @@
         {
           "id": "13:2736698444794091087",
           "name": "reversible_pulpitis"
+        },
+        {
+          "id": "14:8255197325571922627",
+          "name": "high_blood_pressure"
+        },
+        {
+          "id": "15:4990351476697419349",
+          "name": "low_blood_pressure"
+        },
+        {
+          "id": "16:8263475291464200628",
+          "name": "thyroid_disorder"
         }
       ],
       "relations": []

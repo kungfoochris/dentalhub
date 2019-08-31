@@ -171,7 +171,7 @@ class ViewPatientActivity : AppCompatActivity() {
         encounterTypeChooser.setTitle(getString(R.string.primary_reason_for_encounter))
         encounterTypeChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
             loading.visibility = View.VISIBLE
-            openAddEncounter(grpName[item])
+            openAddEncounter(grpName[item], "")
             dialog.dismiss()// dismiss the alert box after chose option
         })
         val alert = encounterTypeChooser.create()
@@ -207,14 +207,20 @@ class ViewPatientActivity : AppCompatActivity() {
             if ( i == R.id.rbOtherProblem) {
                 etOtherProblem.visibility = View.VISIBLE
             } else {
+                etOtherProblem.setText("")
                 etOtherProblem.visibility = View.INVISIBLE
             }
         }
 
         btnAddEncounter.setOnClickListener {
-            if (rgAddEncounter.checkedRadioButtonId != -1) {
+            val radioBtnID = rgAddEncounter.checkedRadioButtonId
+            if (radioBtnID != -1) {
                 if (rbOtherProblem.isChecked && etOtherProblem.text.isNullOrEmpty()) {
                     Toast.makeText(this, "Radio button other problem is selected but problem is empty", Toast.LENGTH_SHORT).show()
+                } else {
+                    val selectedBtn : RadioButton = view.findViewById(radioBtnID)
+                    Toast.makeText(this, "Selected is ${selectedBtn.text} ", Toast.LENGTH_SHORT).show()
+
                 }
             } else {
                 Toast.makeText(this, "Radio button is not selected", Toast.LENGTH_SHORT).show()
@@ -242,12 +248,13 @@ class ViewPatientActivity : AppCompatActivity() {
 
     }
 
-    private fun openAddEncounter(encounterType: String) {
+    private fun openAddEncounter(encounterType: String, otherProblem: String) {
         val date = DateHelper.getCurrentNepaliDate()
 
         val encounter = Encounter()
         encounter.id = 0
         encounter.encounter_type = encounterType
+        encounter.other_problem = otherProblem
         encounter.created_at = date
         encounter.updated_at = date
         encounter.patient?.target = patient
