@@ -30,13 +30,17 @@ class DateHelper {
             var day = date.substring(8,10).toInt()
             var month = date.substring(5,7).toInt()
             var year = date.substring(0,4).toInt()
-            if(day>30){
-                if(month==12){
-                    year+=1
-                }
-                month= (month+1)%12
+            if(day==30 && month == 12){
+                year+=1
+                month = 1
+                day = 1
+            }else if(day == 30){
+                month+=1
+                day = 1
+            }else{
+                day += 1
             }
-            day = (day+1)%30
+
             return DecimalFormat("0000").format(year)+"-"+DecimalFormat("00").format(month)+"-"+DecimalFormat("00").format(day)
         }
 

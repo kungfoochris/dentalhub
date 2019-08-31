@@ -130,41 +130,24 @@ class MainActivity : AppCompatActivity() {
         allPatientRecall.add(rowToday)
         allPatientRecall.addAll(todayPatient)
 
-//        val rowTomorrow = Patient()
-//        rowTomorrow.first_name = "Recall Tomorrow" + tomorrow
-//        rowTomorrow.content = "header"
-//        allPatientRecall.add(rowTomorrow)
-//        allPatientRecall.addAll(tomorrowPatient)
-
         val rowThisWeek = Patient()
         rowThisWeek.first_name = "Recall Next Week"
         rowThisWeek.content = "Header"
         allPatientRecall.add(rowThisWeek)
 
-        val tomorrow = DateHelper.getNextDay(today)
-        val thirdDay = DateHelper.getNextDay(tomorrow)
-        val fourthDay = DateHelper.getNextDay(thirdDay)
-        val fifthDay = DateHelper.getNextDay(fourthDay)
-        val sixthDay = DateHelper.getNextDay(fifthDay)
-        val seventhDay = DateHelper.getNextDay(sixthDay)
-        val eightDay = DateHelper.getNextDay(seventhDay)
-        val ninthDay = DateHelper.getNextDay(eightDay)
-        val thisWeekPatients = patientsBox.query()
-            .equal(Patient_.recall_date, tomorrow).or()
-            .equal(Patient_.recall_date, thirdDay).or()
-            .equal(Patient_.recall_date, fourthDay).or()
-            .equal(Patient_.recall_date, fifthDay).or()
-            .equal(Patient_.recall_date, sixthDay).or()
-            .equal(Patient_.recall_date, seventhDay).or()
-            .equal(Patient_.recall_date, eightDay).or()
-            .equal(Patient_.recall_date, ninthDay).order(Patient_.recall_date).build().find()
-        allPatientRecall.addAll(thisWeekPatients)
+        var nextDay = DateHelper.getNextDay(today)
+        Log.d("NEXT WEEK","NEXT WEEK")
+        for(i in 1..8){
+            val thisWeekPatients = patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
+            allPatientRecall.addAll(thisWeekPatients)
+            nextDay = DateHelper.getNextDay(nextDay)
+        }
 
         val rowRecallNextMonth = Patient()
         rowRecallNextMonth.first_name = "Recall Next Month"
         rowRecallNextMonth.content = "header"
         allPatientRecall.add(rowRecallNextMonth)
-        var nextDay = DateHelper.getNextDay(ninthDay)
+        Log.d("NEXT MONTH","NEXT MONTH")
         for(i in 1..24){
             val thisMonthPatients = patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
             allPatientRecall.addAll(thisMonthPatients)

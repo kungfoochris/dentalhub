@@ -532,7 +532,7 @@
     },
     {
       "id": "9:9009914417035523937",
-      "lastPropertyId": "7:46319459149809981",
+      "lastPropertyId": "8:6432234146239689619",
       "name": "Encounter",
       "properties": [
         {
@@ -563,6 +563,10 @@
           "id": "7:46319459149809981",
           "indexId": "8:7351160817281978120",
           "name": "patientId"
+        },
+        {
+          "id": "8:6432234146239689619",
+          "name": "other_problem"
         }
       ],
       "relations": []
