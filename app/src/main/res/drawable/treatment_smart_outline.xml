@@ -13,6 +13,7 @@
             <stroke android:width="2dp" android:color="@color/colorSDF" />
             <corners android:topLeftRadius="8dp" android:bottomLeftRadius="8dp"/>
             <solid android:color="@color/white" />
+            <size android:width="40dp" />
         </shape>
     </item>
     <item
