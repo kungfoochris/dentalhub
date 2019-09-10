@@ -98,7 +98,6 @@ class AddPatientActivity : AppCompatActivity() {
         spinnerGender = findViewById(R.id.spinnerGender)
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
 
-        setupDistricts()
         spinnerGender.adapter =
             AdapterHelper.createAdapter(
                 context,
@@ -133,12 +132,18 @@ class AddPatientActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                setupMunicipalities()
+                if(patient!=null){
+                    setupMunicipalities(patient!!.municipality)
+                }else{
+                    setupMunicipalities(0)
+                }
+
             }
         }
         spinnerMunicipality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                // no thing to do yet
+                Log.d("TAG", "nothing selected")
             }
 
             override fun onItemSelected(
@@ -147,7 +152,12 @@ class AddPatientActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                setupWards()
+                if(patient!=null){
+                    setupWards(patient!!.ward)
+                }else{
+                    setupWards(0)
+                }
+
             }
 
         }
@@ -158,47 +168,72 @@ class AddPatientActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupWards() {
+    private fun setupWards(selectedWard: Int) {
         if (allMunicipalities.size > 0) {
             val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
             Log.d("Selected Municipality: ", spinnerMunicipality.selectedItem.toString())
             Log.d("Municipality Position: ", spinnerMunicipality.selectedItemPosition.toString())
+            var selectedWardIndex = 0
             val dbWards =
                 wardsBox.query().equal(Ward_.municipalityId, dbMunicipality.id).build().find()
             val wards = mutableListOf<String>()
             allWards = dbWards
-            for (ward in dbWards) {
+            for ((count, ward) in dbWards.withIndex()) {
+                if(selectedWard == ward.remote_id){
+                    selectedWardIndex = count
+                }
                 wards.add(ward.ward.toString())
             }
             spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
+            spinnerWard.setSelection(selectedWardIndex)
         } else {
             Toast.makeText(context, "Municipality not found.", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun setupMunicipalities() {
+    private fun setupMunicipalities(selectedMunicipality: Int) {
         Log.d("Selected District", spinnerDistrict.selectedItem.toString())
         Log.d("District Position", spinnerDistrict.selectedItemPosition.toString())
+        var selectedMunicipalityIndex = 0
         val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
         allMunicipalities =
             municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
         val municipalitiesList = mutableListOf<String>()
-        for (municipality in allMunicipalities) {
+        for ((count, municipality) in allMunicipalities.withIndex()) {
+            if(selectedMunicipality == municipality.remote_id){
+                selectedMunicipalityIndex = count
+            }
             municipalitiesList.add(municipality.name.capitalize())
         }
         spinnerMunicipality.adapter =
             AdapterHelper.createAdapter(context, municipalitiesList.toList())
-        setupWards()
+        spinnerMunicipality.setSelection(selectedMunicipalityIndex)
+        if(patient!=null){
+            setupWards(patient!!.ward)
+        }else{
+            setupWards(0)
+        }
+
     }
 
-    private fun setupDistricts() {
+    private fun setupDistricts(selectedDistrict: Int) {
         allDistricts = districtsBox.query().build().find()
         val districtsList = mutableListOf<String>()
-        for (district in allDistricts) {
+        var selectedDistrictIndex = 0
+        for ((count, district) in allDistricts.withIndex()) {
+            if(selectedDistrict==district.remote_id){
+                selectedDistrictIndex = count
+            }
             districtsList.add(district.name.capitalize())
         }
         spinnerDistrict.adapter = AdapterHelper.createAdapter(context, districtsList.toList())
-        setupMunicipalities()
+        spinnerDistrict.setSelection(selectedDistrictIndex)
+        if(patient!=null){
+            setupMunicipalities(patient!!.municipality)
+        }else{
+            setupMunicipalities(0)
+        }
+
     }
 
     private fun updateUI() {
@@ -208,6 +243,7 @@ class AddPatientActivity : AppCompatActivity() {
             etMiddleName.setText(patient!!.middle_name)
             etLastName.setText(patient!!.last_name)
             etPhone.setText(patient!!.phone)
+            setupDistricts(patient!!.district)
 //            etStreetAddress.setText(patient!!.street_address)
 //            etCity.setText(patient!!.city)
 //            etState.setText(patient!!.state)
