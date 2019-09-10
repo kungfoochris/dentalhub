@@ -254,6 +254,8 @@ class AddPatientActivity : AppCompatActivity() {
                     patient!!.education
                 )
             )
+        }else{
+            setupDistricts(0)
         }
     }
 
