@@ -100,6 +100,7 @@ class LoginActivity : Activity() {
                                 password
                             )
                             startActivity(Intent(context, SetupActivity::class.java))
+                            finish()
                         }
                         400 -> {
                             tvErrorMessage.text = getString(R.string.error_http_400)
@@ -168,8 +169,4 @@ class LoginActivity : Activity() {
         return status
     }
 
-    override fun onPause() {
-        super.onPause()
-        finish()
-    }
 }

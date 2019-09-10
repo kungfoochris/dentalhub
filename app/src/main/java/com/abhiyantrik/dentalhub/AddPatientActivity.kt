@@ -321,6 +321,7 @@ class AddPatientActivity : AppCompatActivity() {
             val pt = patientBox.query().orderDesc(Patient_.id).build().findFirst()!!
             viewPatientIntent.putExtra("PATIENT_ID", pt.id)
             startActivity(viewPatientIntent)
+            finish()
         } else {
             finish()
         }
@@ -393,8 +394,4 @@ class AddPatientActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    override fun onPause() {
-        finish()
-        super.onPause()
-    }
 }
