@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:hint="@string/other"
+                android:inputType="text"
                 android:layout_marginTop="@dimen/fieldTopMargin"
                 android:layout_marginBottom="@dimen/fieldBottomMargin"
         />
@@ -63,6 +64,7 @@
             <EditText
                     android:id="@+id/etRecallDate"
                     android:hint="@string/recall_date"
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/fieldTopMargin"
