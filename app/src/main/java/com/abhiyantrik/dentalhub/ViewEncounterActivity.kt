@@ -16,7 +16,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import io.objectbox.Box
-import kotlinx.android.synthetic.main.activity_view_encounter.*
 
 class ViewEncounterActivity : AppCompatActivity() {
 
@@ -231,9 +230,12 @@ class ViewEncounterActivity : AppCompatActivity() {
         title = patient.fullName()
 
         history = historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
-        screening = screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
-        treatment = treatmentBox.query().equal(Treatment_.encounterId, encounter.id).build().findFirst()!!
-        referral = referralBox.query().equal(Referral_.encounterId, encounter.id).build().findFirst()!!
+        screening =
+            screeningBox.query().equal(Screening_.encounterId, encounter.id).build().findFirst()!!
+        treatment =
+            treatmentBox.query().equal(Treatment_.encounterId, encounter.id).build().findFirst()!!
+        referral =
+            referralBox.query().equal(Referral_.encounterId, encounter.id).build().findFirst()!!
         recall = recallBox.query().equal(Recall_.encounterId, encounter.id).build().findFirst()!!
 
 
@@ -244,7 +246,8 @@ class ViewEncounterActivity : AppCompatActivity() {
         // history
 
         // History Title TextView
-        tvBloodDisorderOrBleedingProblemTitle = findViewById(R.id.tvBloodDisorderOrBleedingProblemTitle)
+        tvBloodDisorderOrBleedingProblemTitle =
+            findViewById(R.id.tvBloodDisorderOrBleedingProblemTitle)
         tvDiabetesTitle = findViewById(R.id.tvDiabetesTitle)
         tvLiverProblemTitle = findViewById(R.id.tvLiverProblemTitle)
         tvRheumaticFeverTitle = findViewById(R.id.tvRheumaticFeverTitle)
@@ -269,7 +272,11 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNotTakingAnyMedications = findViewById(R.id.tvNotTakingAnyMedications)
         tvAllergies = findViewById(R.id.tvAllergies)
 
-        hideBoolean(history.blood_disorder, tvBloodDisorderOrBleedingProblemTitle, tvBloodDisorderOrBleedingProblem)
+        hideBoolean(
+            history.blood_disorder,
+            tvBloodDisorderOrBleedingProblemTitle,
+            tvBloodDisorderOrBleedingProblem
+        )
         hideBoolean(history.diabetes, tvDiabetesTitle, tvDiabetes)
         hideBoolean(history.liver_problem, tvLiverProblemTitle, tvLiverProblem)
         hideBoolean(history.rheumatic_fever, tvRheumaticFeverTitle, tvRheumaticFever)
@@ -277,7 +284,11 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideBoolean(history.hepatitis_b_or_c, tvHepatitisBOrCTitle, tvHepatitisBOrC)
         hideBoolean(history.hiv, tvHIVTitle, tvHIV)
         hideString(history.other, tvOtherTitle, tvOther)
-        hideBoolean(history.no_underlying_medical_condition, tvNoUnderlyingMedicalConditionTitle, tvNoUnderlyingMedicalCondition)
+        hideBoolean(
+            history.no_underlying_medical_condition,
+            tvNoUnderlyingMedicalConditionTitle,
+            tvNoUnderlyingMedicalCondition
+        )
 
         // left to history.medicine Edit Text ------------
 
@@ -332,10 +343,26 @@ class ViewEncounterActivity : AppCompatActivity() {
 
         // to hide if screening items are unchecked while adding encounter
         hideString(screening.carries_risk, tvCarriesRiskTitle, tvCarriesRisk)
-        hideInt(screening.decayed_pimary_teeth, tvNoOfDecayedPrimaryTeethTitle, tvNoOfDecayedPrimaryTeeth)
-        hideInt(screening.decayed_permanent_teeth, tvNoOfDecayedPermanentTeethTitle, tvNoOfDecayedPermanentTeeth)
-        hideBoolean(screening.cavity_permanent_tooth, tvCavityPermanentToothTitle, tvCavityPermanentTooth)
-        hideBoolean(screening.cavity_permanent_anterior, tvCavityPermanentAnteriorTitle, tvCavityPermanentAnterior)
+        hideInt(
+            screening.decayed_pimary_teeth,
+            tvNoOfDecayedPrimaryTeethTitle,
+            tvNoOfDecayedPrimaryTeeth
+        )
+        hideInt(
+            screening.decayed_permanent_teeth,
+            tvNoOfDecayedPermanentTeethTitle,
+            tvNoOfDecayedPermanentTeeth
+        )
+        hideBoolean(
+            screening.cavity_permanent_tooth,
+            tvCavityPermanentToothTitle,
+            tvCavityPermanentTooth
+        )
+        hideBoolean(
+            screening.cavity_permanent_anterior,
+            tvCavityPermanentAnteriorTitle,
+            tvCavityPermanentAnterior
+        )
         hideBoolean(screening.reversible_pulpitis, tvReversiblePulpitisTitle, tvReversiblePulpitis)
         hideBoolean(screening.need_art_filling, tvNeedARTFillingTitle, tvNeedARTFilling)
         hideBoolean(screening.need_sealant, tvNeedSealantTitle, tvNeedSealant)
@@ -363,7 +390,11 @@ class ViewEncounterActivity : AppCompatActivity() {
         buttonInit()
         hideBoolean(treatment.sdf_whole_mouth, tvSDFWholeMouthTitle, tvSDFWholeMouth)
         hideBoolean(treatment.fv_applied, tvFVAppliedTitle, tvFVApplied)
-        hideBoolean(treatment.treatment_plan_complete, tvTreatmentPlanCompleteTitle, tvTreatmentPlanComplete)
+        hideBoolean(
+            treatment.treatment_plan_complete,
+            tvTreatmentPlanCompleteTitle,
+            tvTreatmentPlanComplete
+        )
         hideString(treatment.notes, tvNotesTitle, tvNotes)
 
         // referral
@@ -546,35 +577,77 @@ class ViewEncounterActivity : AppCompatActivity() {
     private fun setButtonColor(button: Button, treatmentType: String) {
         when (treatmentType) {
             "SDF" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf_applied, null)
-                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+                button.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf_applied, null)
+                button.setTextColor(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.treatment_button_onselect_text,
+                        null
+                    )
+                )
             }
             "SEAL" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal_applied, null)
-                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+                button.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal_applied, null)
+                button.setTextColor(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.treatment_button_onselect_text,
+                        null
+                    )
+                )
             }
             "ART" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_art_applied, null)
-                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+                button.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.treatment_art_applied, null)
+                button.setTextColor(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.treatment_button_onselect_text,
+                        null
+                    )
+                )
             }
             "EXO" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo_applied, null)
-                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+                button.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo_applied, null)
+                button.setTextColor(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.treatment_button_onselect_text,
+                        null
+                    )
+                )
             }
             "UNTR" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr_applied, null)
-                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+                button.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr_applied, null)
+                button.setTextColor(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.treatment_button_onselect_text,
+                        null
+                    )
+                )
             }
             "SMART" -> {
-                button.background = ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_applied, null)
-                button.setTextColor(ResourcesCompat.getColor(resources, R.color.treatment_button_onselect_text, null))
+                button.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_applied, null)
+                button.setTextColor(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.treatment_button_onselect_text,
+                        null
+                    )
+                )
             }
         }
     }
-    
+
     /* To show or hide the fields with Boolean data in the
     Fragements -> History, Screening, Treatment, Referral and Recall */
-    private fun hideBoolean(disease : Boolean, viewTitle : View, view : TextView) {
+    private fun hideBoolean(disease: Boolean, viewTitle: View, view: TextView) {
         if (disease) {
             view.text = "Yes"
         } else {
@@ -625,9 +698,9 @@ class ViewEncounterActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.viewPatient -> {
-                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
-                val inflate : LayoutInflater = layoutInflater
-                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                val inflate: LayoutInflater = layoutInflater
+                val view: View = inflate.inflate(R.layout.popup_view_patient, null)
 
                 // to get all id of the textView
                 val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
@@ -656,7 +729,7 @@ class ViewEncounterActivity : AppCompatActivity() {
 
 
                 builder.setView(view)
-                val dialog : Dialog = builder.create()
+                val dialog: Dialog = builder.create()
                 dialog.show()
 
                 btnCloseDialog.setOnClickListener {

@@ -6,13 +6,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Debug
 import android.util.Log
 import android.view.Menu
-import android.view.View
-import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
@@ -76,7 +74,6 @@ class SearchPatientActivity : AppCompatActivity() {
 //        val recyclerAdapter = PatientAdapter()
 
 
-
     }
 
     override fun onResume() {
@@ -87,44 +84,51 @@ class SearchPatientActivity : AppCompatActivity() {
     }
 
     private fun listPatients() {
-        try{
+        try {
             patientsearchlist =
-                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build().find()
+                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).build()
+                    .find()
             setupAdapter()
-        }catch(e: DbException){
+        } catch (e: DbException) {
             Log.d("DBException", e.printStackTrace().toString())
         }
 
     }
 
     private fun setupAdapter() {
-        recyclerAdapter = PatientAdapter(context, patientsearchlist, false, object : PatientAdapter.PatientClickListener{
-            override fun onRemovePatientClick(patient: Patient) {
-                val tempPatient = patientsBox.query().equal(Patient_.id,patient.id).build().findFirst()!!
-                tempPatient.created_at = ""
-                patientsBox.put(tempPatient)
-                listPatients()
-            }
+        recyclerAdapter = PatientAdapter(
+            context,
+            patientsearchlist,
+            false,
+            object : PatientAdapter.PatientClickListener {
+                override fun onRemovePatientClick(patient: Patient) {
+                    val tempPatient =
+                        patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
+                    tempPatient.created_at = ""
+                    patientsBox.put(tempPatient)
+                    listPatients()
+                }
 
-            override fun onViewPatientDetailClick(patient: Patient) {
-                val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-                viewPatientIntent.putExtra("PATIENT_ID", patient.id)
-                startActivity(viewPatientIntent)
-            }
+                override fun onViewPatientDetailClick(patient: Patient) {
+                    val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
+                    viewPatientIntent.putExtra("PATIENT_ID", patient.id)
+                    startActivity(viewPatientIntent)
+                }
 
-            override fun onCallPatientClick(patient: Patient) {
-                val call = Intent(Intent.ACTION_DIAL)
-                call.data = Uri.parse("tel:" + patient.phone)
-                startActivity(call)
-            }
+                override fun onCallPatientClick(patient: Patient) {
+                    val call = Intent(Intent.ACTION_DIAL)
+                    call.data = Uri.parse("tel:" + patient.phone)
+                    startActivity(call)
+                }
 
-            override fun onDelayPatientClick(patient: Patient) {
-                displayDelayDialog(patient)
-            }
+                override fun onDelayPatientClick(patient: Patient) {
+                    displayDelayDialog(patient)
+                }
 
-        })
+            })
         recyclerView.adapter = recyclerAdapter
     }
+
     private fun displayDelayDialog(patient: Patient) {
         // delay recall of patient
         val grpName = arrayOf(
@@ -144,32 +148,33 @@ class SearchPatientActivity : AppCompatActivity() {
                 Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
                 Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show()
 
-                val tempPatient = patientsBox.query().equal(Patient_.id,patient.id).build().findFirst()!!
+                val tempPatient =
+                    patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
                 val calendar = Calendar.getInstance()
-                try{
+                try {
                     calendar.time = SimpleDateFormat("yyyy/MM/dd").parse(tempPatient.recall_date)
-                }catch (e: ParseException){
+                } catch (e: ParseException) {
                     Log.e("ParseException", e.printStackTrace().toString())
                 }
-                when(item){
+                when (item) {
                     0 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,7)
+                        calendar.add(Calendar.DAY_OF_MONTH, 7)
                     }
                     1 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,14)
+                        calendar.add(Calendar.DAY_OF_MONTH, 14)
                     }
                     2 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,21)
+                        calendar.add(Calendar.DAY_OF_MONTH, 21)
                     }
                     3 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,28)
+                        calendar.add(Calendar.DAY_OF_MONTH, 28)
 
                     }
                     4 -> {
-                        calendar.add(Calendar.DAY_OF_MONTH,60)
+                        calendar.add(Calendar.DAY_OF_MONTH, 60)
                     }
-                    5->{
-                        calendar.add(Calendar.DAY_OF_MONTH,90)
+                    5 -> {
+                        calendar.add(Calendar.DAY_OF_MONTH, 90)
                     }
                 }
 
@@ -182,6 +187,7 @@ class SearchPatientActivity : AppCompatActivity() {
         val alert = delayChooser.create()
         alert.show()
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_patient_menu, menu)
 
@@ -197,7 +203,7 @@ class SearchPatientActivity : AppCompatActivity() {
                 searchView.setQuery("", false)
                 searchItem.collapseActionView()
 
-                if(BuildConfig.DEBUG){
+                if (BuildConfig.DEBUG) {
                     Toast.makeText(context, "Looking for the $query", Toast.LENGTH_SHORT).show()
                 }
 
@@ -209,7 +215,7 @@ class SearchPatientActivity : AppCompatActivity() {
                         .or()
                         .contains(Patient_.last_name, query)
                         .build().find()
-                }catch (e: DbException){
+                } catch (e: DbException) {
                     Log.d("DBException", e.printStackTrace().toString())
                 }
                 println("Query result is $patientsearchlist")
@@ -226,6 +232,7 @@ class SearchPatientActivity : AppCompatActivity() {
         return true
 
     }
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()

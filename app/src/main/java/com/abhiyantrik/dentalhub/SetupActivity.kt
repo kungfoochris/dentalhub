@@ -2,10 +2,10 @@ package com.abhiyantrik.dentalhub
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.abhiyantrik.dentalhub.entities.District_
 import com.abhiyantrik.dentalhub.entities.Municipality
 import com.abhiyantrik.dentalhub.entities.Municipality_
@@ -43,31 +43,39 @@ class SetupActivity : AppCompatActivity() {
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.fetchProfile("JWT $token")
-        call.enqueue(object: Callback<Profile>{
+        call.enqueue(object : Callback<Profile> {
             override fun onFailure(call: Call<Profile>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                if(BuildConfig.DEBUG){
+                if (BuildConfig.DEBUG) {
                     tvMessage.text = tvMessage.text.toString() + t.message.toString()
-                }else{
+                } else {
                     tvMessage.text = tvMessage.text.toString() + "Failed to load profile\n"
                 }
             }
 
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 Log.d("SetupActivity", response.code().toString())
-                if(null!=response.body()){
-                    when(response.code()){
-                        200->{
+                if (null != response.body()) {
+                    when (response.code()) {
+                        200 -> {
                             val p = response.body() as Profile
                             DentalApp.fullName = p.fullName()
-                            DentalApp.saveToPreference(context,Constants.PREF_PROFILE_FULL_NAME, p.fullName())
+                            DentalApp.saveToPreference(
+                                context,
+                                Constants.PREF_PROFILE_FULL_NAME,
+                                p.fullName()
+                            )
                             DentalApp.saveToPreference(context, Constants.PREF_PROFILE_ID, p.id)
-                            DentalApp.saveToPreference(context, Constants.PREF_PROFILE_IMAGE, p.image)
+                            DentalApp.saveToPreference(
+                                context,
+                                Constants.PREF_PROFILE_IMAGE,
+                                p.image
+                            )
                             loadData()
                         }
                     }
-                }else{
-                    Log.d("SetupActivity","response failed")
+                } else {
+                    Log.d("SetupActivity", "response failed")
                 }
             }
 
@@ -87,15 +95,22 @@ class SetupActivity : AppCompatActivity() {
                 Log.d(TAG, t.toString())
             }
 
-            override fun onResponse(call: Call<List<District>>, response: Response<List<District>>) {
+            override fun onResponse(
+                call: Call<List<District>>,
+                response: Response<List<District>>
+            ) {
                 Log.d(TAG, "onResponse()")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
                             allDistricts = response.body() as List<District>
 
-                            for(district in allDistricts){
-                                if(districtsBox.query().equal(District_.name,district.name).build().count() == 0.toLong()){
+                            for (district in allDistricts) {
+                                if (districtsBox.query().equal(
+                                        District_.name,
+                                        district.name
+                                    ).build().count() == 0.toLong()
+                                ) {
                                     val newDistrict = com.abhiyantrik.dentalhub.entities.District()
                                     newDistrict.remote_id = district.id
                                     newDistrict.name = district.name
@@ -103,34 +118,47 @@ class SetupActivity : AppCompatActivity() {
                                 }
 
 
-                                for(municipality in district.municipalities){
-                                    val dbDistrict = districtsBox.query().orderDesc(District_.id).build().findFirst()
-                                    if(municipalitiesBox.query().equal(Municipality_.name,municipality.name).build().count() == 0.toLong()) {
+                                for (municipality in district.municipalities) {
+                                    val dbDistrict =
+                                        districtsBox.query().orderDesc(District_.id).build()
+                                            .findFirst()
+                                    if (municipalitiesBox.query().equal(
+                                            Municipality_.name,
+                                            municipality.name
+                                        ).build().count() == 0.toLong()
+                                    ) {
                                         val newMunicipality = Municipality()
                                         newMunicipality.remote_id = municipality.id
                                         newMunicipality.name = municipality.name
                                         newMunicipality.district?.target = dbDistrict
                                         municipalitiesBox.put(newMunicipality)
-                                        for(ward in municipality.wards){
-                                            val dbMunicipality = municipalitiesBox.query().orderDesc(Municipality_.id).build().findFirst()
+                                        for (ward in municipality.wards) {
+                                            val dbMunicipality = municipalitiesBox.query()
+                                                .orderDesc(Municipality_.id).build().findFirst()
                                             val newWard = Ward()
                                             newWard.remote_id = ward.id
                                             newWard.ward = ward.ward
-                                            newWard.name = dbMunicipality!!.name+"-"+ward.ward.toString()+", "+dbDistrict!!.name
+                                            newWard.name =
+                                                dbMunicipality!!.name + "-" + ward.ward.toString() + ", " + dbDistrict!!.name
                                             newWard.municipality?.target = dbMunicipality
                                             wardsBox.put(newWard)
                                         }
                                     }
                                 }
                             }
-                            tvMessage.text = tvMessage.text.toString() + "Loading address complete\n"
-                            DentalApp.saveToPreference(context,Constants.PREF_SETUP_COMPLETE,"true")
+                            tvMessage.text =
+                                tvMessage.text.toString() + "Loading address complete\n"
+                            DentalApp.saveToPreference(
+                                context,
+                                Constants.PREF_SETUP_COMPLETE,
+                                "true"
+                            )
                             startActivity(Intent(context, LocationSelectorActivity::class.java))
                             finish()
                         }
                     }
-                }else{
-                    Log.d(TAG,response.code().toString())
+                } else {
+                    Log.d(TAG, response.code().toString())
                 }
             }
 
@@ -141,9 +169,10 @@ class SetupActivity : AppCompatActivity() {
     private fun initUI() {
         tvMessage = findViewById(R.id.tvMessage)
 
-        districtsBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
+        districtsBox =
+            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.District::class.java)
         municipalitiesBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
-        wardsBox= ObjectBox.boxStore.boxFor(Ward::class.java)
+        wardsBox = ObjectBox.boxStore.boxFor(Ward::class.java)
 
     }
 }

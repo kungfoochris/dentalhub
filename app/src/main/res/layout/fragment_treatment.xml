@@ -15,7 +15,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
         <LinearLayout
-                android:id="@+id/treatmentSelector"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"

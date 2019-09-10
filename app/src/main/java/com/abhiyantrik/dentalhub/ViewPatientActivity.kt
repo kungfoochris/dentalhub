@@ -32,7 +32,7 @@ class ViewPatientActivity : AppCompatActivity() {
     private lateinit var context: Context
     private lateinit var patient: Patient
 
-//    private lateinit var btnAddNewEncounter: Button
+    //    private lateinit var btnAddNewEncounter: Button
     private lateinit var fabAddNewEncounter: FloatingActionButton
     private lateinit var fabEditPatient: FloatingActionButton
     private lateinit var encounterAdapter: EncounterAdapter
@@ -49,7 +49,7 @@ class ViewPatientActivity : AppCompatActivity() {
 
     private lateinit var encounterBox: Box<Encounter>
     private lateinit var patientBox: Box<Patient>
-    var patientId:Long = 0
+    var patientId: Long = 0
 
     val TAG = "ViewPatientActivity"
 
@@ -62,7 +62,7 @@ class ViewPatientActivity : AppCompatActivity() {
         patientId = intent.getLongExtra("PATIENT_ID", 0)
         context = this
 
-        if(patientId==0.toLong()) {
+        if (patientId == 0.toLong()) {
             Toast.makeText(context, "Invalid patient id", Toast.LENGTH_LONG).show()
             finish()
         }
@@ -99,7 +99,7 @@ class ViewPatientActivity : AppCompatActivity() {
         getUpdatedPatient()
 
         fabAddNewEncounter.setOnClickListener {
-//            displayEncounterTypeSelector()
+            //            displayEncounterTypeSelector()
             displayEncounterTypeSelectorPopUp()
         }
         fabEditPatient.setOnClickListener {
@@ -111,28 +111,34 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun listEncounters() {
-        if(patientId==0.toLong()){
+        if (patientId == 0.toLong()) {
             Log.d("PT ID ", patientId.toString())
             Toast.makeText(context, "Invalid patient id", Toast.LENGTH_LONG).show()
             finish()
         }
         val allEnCounters =
-            encounterBox.query().equal(Encounter_.patientId, patientId).orderDesc(Encounter_.id).build().find()
+            encounterBox.query().equal(Encounter_.patientId, patientId).orderDesc(Encounter_.id)
+                .build().find()
 
         patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
 
         encounterAdapter =
-            EncounterAdapter(context, patient, allEnCounters, object : EncounterAdapter.EncounterClickListener {
-                override fun onEncounterClick(encounter: Encounter) {
-                    // start the encounter view
-                    Log.d("View PatientActivity", "show encounter detail")
-                    val encounterDetailIntent = Intent(context, ViewEncounterActivity::class.java)
-                    encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id)
-                    encounterDetailIntent.putExtra("PATIENT_ID", patientId)
-                    startActivity(encounterDetailIntent)
-                }
+            EncounterAdapter(
+                context,
+                patient,
+                allEnCounters,
+                object : EncounterAdapter.EncounterClickListener {
+                    override fun onEncounterClick(encounter: Encounter) {
+                        // start the encounter view
+                        Log.d("View PatientActivity", "show encounter detail")
+                        val encounterDetailIntent =
+                            Intent(context, ViewEncounterActivity::class.java)
+                        encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id)
+                        encounterDetailIntent.putExtra("PATIENT_ID", patientId)
+                        startActivity(encounterDetailIntent)
+                    }
 
-            })
+                })
         recyclerView.adapter = encounterAdapter
         encounterAdapter.notifyDataSetChanged()
     }
@@ -169,25 +175,29 @@ class ViewPatientActivity : AppCompatActivity() {
         )
         val encounterTypeChooser = AlertDialog.Builder(this)
         encounterTypeChooser.setTitle(getString(R.string.primary_reason_for_encounter))
-        encounterTypeChooser.setSingleChoiceItems(grpName, -1, DialogInterface.OnClickListener { dialog, item ->
-            loading.visibility = View.VISIBLE
-            openAddEncounter(grpName[item], "")
-            dialog.dismiss()// dismiss the alert box after chose option
-        })
+        encounterTypeChooser.setSingleChoiceItems(
+            grpName,
+            -1,
+            DialogInterface.OnClickListener { dialog, item ->
+                loading.visibility = View.VISIBLE
+                openAddEncounter(grpName[item], "")
+                dialog.dismiss()// dismiss the alert box after chose option
+            })
         val alert = encounterTypeChooser.create()
         alert.show()
     }
 
     private fun displayEncounterTypeSelectorPopUp() {
-        val builder : AlertDialog.Builder = AlertDialog.Builder(this)
-        val inflate : LayoutInflater = layoutInflater
-        val view : View = inflate.inflate(R.layout.popup_add_encounter_selector, null)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflate: LayoutInflater = layoutInflater
+        val view: View = inflate.inflate(R.layout.popup_add_encounter_selector, null)
 
         // to get all id of the Button
         val rgAddEncounter = view.findViewById<RadioGroup>(R.id.rgAddEncounter)
         val rbCheckupScreening = view.findViewById<RadioButton>(R.id.rbCheckupScreening)
         val rbReliefOfPain = view.findViewById<RadioButton>(R.id.rbReliefOfPain)
-        val rbContinuationOfTreatmentPlan = view.findViewById<RadioButton>(R.id.rbContinuationOfTreatmentPlan)
+        val rbContinuationOfTreatmentPlan =
+            view.findViewById<RadioButton>(R.id.rbContinuationOfTreatmentPlan)
         val rbOtherProblem = view.findViewById<RadioButton>(R.id.rbOtherProblem)
         val etOtherProblem = view.findViewById<EditText>(R.id.etOtherProblemPopUp)
         val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
@@ -196,15 +206,15 @@ class ViewPatientActivity : AppCompatActivity() {
         etOtherProblem.visibility = View.INVISIBLE
 
         builder.setView(view)
-        val dialog : Dialog = builder.create()
+        val dialog: Dialog = builder.create()
         dialog.show()
 
         btnCloseDialog.setOnClickListener {
             dialog.dismiss()
         }
 
-        rgAddEncounter.setOnCheckedChangeListener{ radioGroup, i ->
-            if ( i == R.id.rbOtherProblem) {
+        rgAddEncounter.setOnCheckedChangeListener { radioGroup, i ->
+            if (i == R.id.rbOtherProblem) {
                 etOtherProblem.visibility = View.VISIBLE
             } else {
                 etOtherProblem.setText("")
@@ -216,9 +226,13 @@ class ViewPatientActivity : AppCompatActivity() {
             val radioBtnID = rgAddEncounter.checkedRadioButtonId
             if (radioBtnID != -1) {
                 if (rbOtherProblem.isChecked && etOtherProblem.text.isNullOrEmpty()) {
-                    Toast.makeText(this, "Radio button other problem is selected but problem is empty", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Radio button other problem is selected but problem is empty",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    val selectedBtn : RadioButton = view.findViewById(radioBtnID)
+                    val selectedBtn: RadioButton = view.findViewById(radioBtnID)
 //                    Toast.makeText(this, "Selected is ${selectedBtn.text} ${etOtherProblem.text}", Toast.LENGTH_SHORT).show()
 
                     openAddEncounter(selectedBtn.text.toString(), etOtherProblem.text.toString())
@@ -239,11 +253,11 @@ class ViewPatientActivity : AppCompatActivity() {
 
     private fun getUpdatedPatient() {
         Log.d("Patient ID", patientId.toString())
-        if(patientId!=0.toLong()){
-            try{
+        if (patientId != 0.toLong()) {
+            try {
                 patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
                 updateInfo()
-            }catch (e: DbException){
+            } catch (e: DbException) {
                 Log.d("DBException", e.printStackTrace().toString())
             }
         }

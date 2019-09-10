@@ -18,9 +18,9 @@ import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
 import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
+import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
-import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 
 interface DjangoInterface {
 
@@ -50,7 +50,7 @@ interface DjangoInterface {
     ): Call<PatientModel>
 
     @GET("/patients")
-    fun getPatients(@Header("Authorization") token: String):Call<List<PatientModel>>
+    fun getPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
 
 
     @FormUrlEncoded
@@ -113,7 +113,7 @@ interface DjangoInterface {
         @Field("high_blood_pressure") high_blood_pressure: Boolean,
         @Field("low_blood_pressure") low_blood_pressure: Boolean,
         @Field("thyroid") thyroid: Boolean
-        ): Call<ScreeningModel>
+    ): Call<ScreeningModel>
 
     @FormUrlEncoded
     @POST("encounter/{remoteId}/treatment")

@@ -105,8 +105,16 @@ class ActivitySelectorActivity : AppCompatActivity() {
                 if (selectedActivity == "Health Post") {
                     DentalApp.activity_id = selectedActivityId
                     DentalApp.activity_name = selectedActivity
-                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, selectedActivityId)
-                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
+                    DentalApp.saveToPreference(
+                        context,
+                        Constants.PREF_ACTIVITY_ID,
+                        selectedActivityId
+                    )
+                    DentalApp.saveToPreference(
+                        context,
+                        Constants.PREF_ACTIVITY_NAME,
+                        selectedActivity
+                    )
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -139,10 +147,14 @@ class ActivitySelectorActivity : AppCompatActivity() {
         call.enqueue(object : Callback<List<ActivityModel>> {
             override fun onFailure(call: Call<List<ActivityModel>>, t: Throwable) {
                 Log.d("loadActivityId()", "onFailure")
-                if(BuildConfig.DEBUG){
-                    Toast.makeText(context,t.message.toString(),Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(context, getString(R.string.could_not_load_activity),Toast.LENGTH_SHORT).show()
+                if (BuildConfig.DEBUG) {
+                    Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.could_not_load_activity),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -187,7 +199,11 @@ class ActivitySelectorActivity : AppCompatActivity() {
         val token = DentalApp.readFromPreference(this, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call =
-            panelService.addActivity("JWT $token", selectedActivityId, etOtherDetails.text.toString())
+            panelService.addActivity(
+                "JWT $token",
+                selectedActivityId,
+                etOtherDetails.text.toString()
+            )
         call.enqueue(object : Callback<ActivityModel> {
             override fun onFailure(call: Call<ActivityModel>, t: Throwable) {
                 Log.d("onFailure", t.toString())
@@ -208,8 +224,16 @@ class ActivitySelectorActivity : AppCompatActivity() {
                         )
                         DentalApp.activity_id = selectedActivityId
                         DentalApp.activity_name = selectedActivity
-                        DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, selectedActivityId)
-                        DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
+                        DentalApp.saveToPreference(
+                            context,
+                            Constants.PREF_ACTIVITY_ID,
+                            selectedActivityId
+                        )
+                        DentalApp.saveToPreference(
+                            context,
+                            Constants.PREF_ACTIVITY_NAME,
+                            selectedActivity
+                        )
                         println("Got the post method. ${serverActivity.id}")
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)

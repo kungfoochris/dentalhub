@@ -25,7 +25,7 @@ class Patient(
     var created_at: String,
     var updated_at: String,
     var uploaded: Boolean
-): Parcelable{
+) : Parcelable {
     fun address(): String {
         return "$municipality $ward, $district"
     }

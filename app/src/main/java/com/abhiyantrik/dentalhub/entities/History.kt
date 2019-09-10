@@ -9,7 +9,8 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 @Parcelize
 class History : Parcelable {
-    @Id var id: Long = 0
+    @Id
+    var id: Long = 0
     var encounter: ToOne<Encounter>? = null
     var blood_disorder: Boolean = false
     var diabetes: Boolean = false

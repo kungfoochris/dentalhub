@@ -4,7 +4,6 @@ import android.os.Parcelable
 import android.util.Log
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.hornet.dateconverter.DateConverter
-import com.hornet.dateconverter.Model
 import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
@@ -16,8 +15,9 @@ import java.util.*
 
 @Entity
 @Parcelize
-class Patient: Parcelable {
-    @Id var id: Long=0
+class Patient : Parcelable {
+    @Id
+    var id: Long = 0
     var remote_id: String = ""
     var first_name: String = ""
     var middle_name: String = ""
@@ -27,7 +27,7 @@ class Patient: Parcelable {
     var phone: String = ""
     var education: String = ""
     var ward: Int = 0
-    var municipality: Int =0
+    var municipality: Int = 0
     var district: Int = 0
     var latitude: String = ""
     var longitude: String = ""
@@ -49,9 +49,10 @@ class Patient: Parcelable {
     var encounters: ToMany<Encounter>? = null
 
 
-    fun referall(): String{
+    fun referall(): String {
         return "$recall_date $recall_time"
     }
+
     fun address(): String {
         val municipalityName = municipalityName()
         val districtName = districtName()
@@ -64,13 +65,13 @@ class Patient: Parcelable {
         return "$first_name $middle_name $last_name"
     }
 
-    fun wardNumber(): String{
+    fun wardNumber(): String {
         var wardNumberString = "-"
-        try{
+        try {
             val wardBox = ObjectBox.boxStore.boxFor(Ward::class.java)
             val ward = wardBox.query().equal(Ward_.remote_id, ward.toLong()).build().findFirst()
-            wardNumberString =  "${ward?.ward}"
-        }catch (e: KotlinNullPointerException){
+            wardNumberString = "${ward?.ward}"
+        } catch (e: KotlinNullPointerException) {
             Log.d("Patient", e.printStackTrace().toString())
         }
         return wardNumberString
@@ -79,13 +80,16 @@ class Patient: Parcelable {
 
     fun municipalityName(): String {
         var municipalityNameString = "-"
-        try{
+        try {
             val municipalityBox = ObjectBox.boxStore.boxFor(Municipality::class.java)
-            val municipalityName = municipalityBox.query().equal(Municipality_.remote_id, municipality.toLong()).build().findFirst()!!
+            val municipalityName = municipalityBox.query().equal(
+                Municipality_.remote_id,
+                municipality.toLong()
+            ).build().findFirst()!!
 
             municipalityNameString = municipalityName.name
-        }catch (e: KotlinNullPointerException){
-            Log.d("Patient",e.printStackTrace().toString())
+        } catch (e: KotlinNullPointerException) {
+            Log.d("Patient", e.printStackTrace().toString())
         }
         return municipalityNameString
 
@@ -95,9 +99,12 @@ class Patient: Parcelable {
         var districtNameString = "-"
         try {
             val districtBox = ObjectBox.boxStore.boxFor(District::class.java)
-            val districtName = districtBox.query().equal(District_.remote_id, district.toLong()).build().findFirst()!!
+            val districtName = districtBox.query().equal(
+                District_.remote_id,
+                district.toLong()
+            ).build().findFirst()!!
             districtNameString = districtName.name
-        }catch (e: KotlinNullPointerException){
+        } catch (e: KotlinNullPointerException) {
             Log.d("Patient", e.printStackTrace().toString())
         }
         return districtNameString
@@ -129,14 +136,17 @@ class Patient: Parcelable {
                 age--
             }
             Log.d("AGE ", age.toString())
-            Log.d("Month", ((today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR))/30).toString())
+            Log.d(
+                "Month",
+                ((today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR)) / 30).toString()
+            )
             return if (age <= 0) {
-                val months = (today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR))/30
+                val months = (today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR)) / 30
                 "$months months"
-            }else{
+            } else {
                 "$age years"
             }
-        }catch (e: StringIndexOutOfBoundsException){
+        } catch (e: StringIndexOutOfBoundsException) {
             Log.d("Patient", "Could not calculate date")
             return "-"
         }

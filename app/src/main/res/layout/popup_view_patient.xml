@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvFirstName"
                 android:layout_weight="0.65"
                 android:text="@string/first_name_"
                 android:textSize="18sp"
@@ -65,7 +64,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <TextView
-                android:id="@+id/tvMiddleName"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/middle_name_"
@@ -86,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvLastName"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/last_name_"
@@ -107,7 +104,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvGenderpopup"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/gender_"
@@ -128,7 +124,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvDateofBirth"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/date_of_birth_"
@@ -149,7 +144,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvPhonepopup"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/phone_"
@@ -170,7 +164,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvDistrict"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/district_"
@@ -191,7 +184,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvMunicipality"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/municipality_"
@@ -211,7 +203,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvWard"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/ward_"
@@ -232,7 +223,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/tvEducationLevel"
                 android:layout_weight="0.65"
                 android:textSize="18sp"
                 android:text="@string/education_level_"

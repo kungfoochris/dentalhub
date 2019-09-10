@@ -26,7 +26,11 @@ class NetworkStateReceiver : BroadcastReceiver() {
 
         if (ni != null && ni.state == NetworkInfo.State.CONNECTED) {
             connected = true
-        } else if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, java.lang.Boolean.FALSE)) {
+        } else if (intent.getBooleanExtra(
+                ConnectivityManager.EXTRA_NO_CONNECTIVITY,
+                java.lang.Boolean.FALSE
+            )
+        ) {
             connected = false
         }
 

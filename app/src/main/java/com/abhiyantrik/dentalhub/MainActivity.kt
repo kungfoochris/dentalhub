@@ -1,21 +1,17 @@
 package com.abhiyantrik.dentalhub
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,21 +20,16 @@ import com.abhiyantrik.dentalhub.adapters.PatientAdapter
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.entities.Recall
-import com.abhiyantrik.dentalhub.entities.Recall_
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
 import com.abhiyantrik.dentalhub.services.SyncService
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
-import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import io.objectbox.exception.DbException
 import io.objectbox.query.Query
-import java.text.DecimalFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 
@@ -82,9 +73,16 @@ class MainActivity : AppCompatActivity() {
         setupUI()
 
         Log.d("Location", DentalApp.geography_name)
-        Log.d("Proxy: ", DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME,"Some thing is fishy."))
+        Log.d(
+            "Proxy: ",
+            DentalApp.readFromPreference(
+                context,
+                Constants.PREF_PROFILE_FULL_NAME,
+                "Some thing is fishy."
+            )
+        )
         Log.d("Activity", DentalApp.activity_name)
-        tvName.text = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME,"")
+        tvName.text = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME, "")
         tvLocation.text = DentalApp.geography_name
         tvActivity.text = DentalApp.activity_name
     }
@@ -136,9 +134,10 @@ class MainActivity : AppCompatActivity() {
         allPatientRecall.add(rowThisWeek)
 
         var nextDay = DateHelper.getNextDay(today)
-        Log.d("NEXT WEEK","NEXT WEEK")
-        for(i in 1..8){
-            val thisWeekPatients = patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
+        Log.d("NEXT WEEK", "NEXT WEEK")
+        for (i in 1..8) {
+            val thisWeekPatients =
+                patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
             allPatientRecall.addAll(thisWeekPatients)
             nextDay = DateHelper.getNextDay(nextDay)
         }
@@ -147,15 +146,15 @@ class MainActivity : AppCompatActivity() {
         rowRecallNextMonth.first_name = "Recall Next Month"
         rowRecallNextMonth.content = "header"
         allPatientRecall.add(rowRecallNextMonth)
-        Log.d("NEXT MONTH","NEXT MONTH")
-        for(i in 1..24){
-            val thisMonthPatients = patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
+        Log.d("NEXT MONTH", "NEXT MONTH")
+        for (i in 1..24) {
+            val thisMonthPatients =
+                patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
             allPatientRecall.addAll(thisMonthPatients)
             nextDay = DateHelper.getNextDay(nextDay)
         }
         setupAdapter(allPatientRecall)
     }
-
 
 
     @AddTrace(name = "setupUIMainActivity", enabled = true /* optional */)
@@ -179,7 +178,8 @@ class MainActivity : AppCompatActivity() {
 
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
-        dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.HORIZONTAL)
+        dividerItemDecoration =
+            DividerItemDecoration(recyclerView.context, DividerItemDecoration.HORIZONTAL)
         val divider = RecyclerViewItemSeparator(0)
         recyclerView.addItemDecoration(divider)
 
@@ -211,11 +211,12 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
         Log.d(TAG, "listPatientsFromLocalDB()")
-        try{
+        try {
             allPatients =
-                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id).orderDesc(Patient_.id).build().find()
+                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id)
+                    .orderDesc(Patient_.id).build().find()
             setupAdapter(allPatients)
-        }catch(e: DbException){
+        } catch (e: DbException) {
             Log.d("DBException", e.printStackTrace().toString())
         }
 
@@ -224,31 +225,36 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "setupAdapterMainActivity", enabled = true /* optional */)
     private fun setupAdapter(patientList: List<Patient>) {
         patientAdapter =
-            PatientAdapter(context, patientList, true, object : PatientAdapter.PatientClickListener {
-                override fun onRemovePatientClick(patient: Patient) {
-                    val tempPatient = patientsBox.query().equal(Patient_.id,patient.id).build().findFirst()!!
-                    tempPatient.recall_date = ""
-                    patientsBox.put(tempPatient)
-                    listPatients()
-                }
+            PatientAdapter(
+                context,
+                patientList,
+                true,
+                object : PatientAdapter.PatientClickListener {
+                    override fun onRemovePatientClick(patient: Patient) {
+                        val tempPatient =
+                            patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
+                        tempPatient.recall_date = ""
+                        patientsBox.put(tempPatient)
+                        listPatients()
+                    }
 
-                override fun onDelayPatientClick(patient: Patient) {
-                    displayDelayDialog(patient)
-                }
+                    override fun onDelayPatientClick(patient: Patient) {
+                        displayDelayDialog(patient)
+                    }
 
-                override fun onCallPatientClick(patient: Patient) {
-                    val call = Intent(Intent.ACTION_DIAL)
-                    call.data = Uri.parse("tel:" + patient.phone)
-                    startActivity(call)
-                }
+                    override fun onCallPatientClick(patient: Patient) {
+                        val call = Intent(Intent.ACTION_DIAL)
+                        call.data = Uri.parse("tel:" + patient.phone)
+                        startActivity(call)
+                    }
 
-                override fun onViewPatientDetailClick(patient: Patient) {
-                    val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
-                    viewPatientIntent.putExtra("PATIENT_ID", patient.id)
-                    startActivity(viewPatientIntent)
-                }
+                    override fun onViewPatientDetailClick(patient: Patient) {
+                        val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
+                        viewPatientIntent.putExtra("PATIENT_ID", patient.id)
+                        startActivity(viewPatientIntent)
+                    }
 
-            })
+                })
         recyclerView.adapter = patientAdapter
         patientAdapter.notifyDataSetChanged()
     }
@@ -304,49 +310,49 @@ class MainActivity : AppCompatActivity() {
             DialogInterface.OnClickListener { dialog, item ->
                 loading.visibility = View.VISIBLE
                 Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
-                val tempPatient = patientsBox.query().equal(Patient_.id,patient.id).build().findFirst()!!
+                val tempPatient =
+                    patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
 
                 var recallDate = tempPatient.recall_date
-                when(item){
+                when (item) {
                     0 -> {
                         //calendar.add(Calendar.DAY_OF_YEAR,7)
-                        for(i in 1..7){
+                        for (i in 1..7) {
                             recallDate = DateHelper.getNextDay(recallDate)
                         }
                     }
                     1 -> {
                         //calendar.add(Calendar.DAY_OF_YEAR,14)
-                        for(i in 1..14){
+                        for (i in 1..14) {
                             recallDate = DateHelper.getNextDay(recallDate)
                         }
                     }
                     2 -> {
                         //calendar.add(Calendar.DAY_OF_YEAR,21)
-                        for(i in 1..21){
+                        for (i in 1..21) {
                             recallDate = DateHelper.getNextDay(recallDate)
                         }
                     }
                     3 -> {
                         //calendar.add(Calendar.DAY_OF_YEAR,28)
-                        for(i in 1..28){
+                        for (i in 1..28) {
                             recallDate = DateHelper.getNextDay(recallDate)
                         }
                     }
                     4 -> {
                         //calendar.add(Calendar.DAY_OF_YEAR,60)
-                        for(i in 1..60){
+                        for (i in 1..60) {
                             recallDate = DateHelper.getNextDay(recallDate)
                         }
                     }
-                    5->{
+                    5 -> {
                         //calendar.add(Calendar.DAY_OF_YEAR,90)
-                        for(i in 1..90){
+                        for (i in 1..90) {
                             recallDate = DateHelper.getNextDay(recallDate)
                         }
                     }
                 }
 
-                //val newDate = SimpleDateFormat("yyyy-mm-dd").format(calendar.time)
                 tempPatient.recall_date = recallDate
                 patientsBox.put(tempPatient)
                 loading.visibility = View.GONE
@@ -356,16 +362,5 @@ class MainActivity : AppCompatActivity() {
         val alert = delayChooser.create()
         alert.show()
     }
-
-//    @AddTrace(name = "displaySearchDialogMainActivity", enabled = true /* optional */)
-//    private fun displaySearchDialog() {
-//        Log.d("TAG", "displaySearchDialog()")
-//        val searchDialogView = LayoutInflater.from(this).inflate(R.layout.search_dialog, null)
-//        val mBuilder =
-//            AlertDialog.Builder(this).setView(searchDialogView).setTitle(getString(R.string.search))
-//
-//        mBuilder.show()
-//    }
-
 
 }

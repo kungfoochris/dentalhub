@@ -1,17 +1,17 @@
 package com.abhiyantrik.dentalhub
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.app.Activity;
-import android.view.KeyEvent
-import android.view.inputmethod.EditorInfo
 import com.abhiyantrik.dentalhub.entities.Geography
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.LoginResponse
@@ -56,9 +56,9 @@ class LoginActivity : Activity() {
                 processLogin()
             }
         }
-        etPassword.setOnEditorActionListener(object: TextView.OnEditorActionListener{
+        etPassword.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
-                if(p1 == EditorInfo.IME_ACTION_GO){
+                if (p1 == EditorInfo.IME_ACTION_GO) {
                     tvErrorMessage.visibility = View.GONE
                     if (formIsValid()) {
                         processLogin()
@@ -134,9 +134,9 @@ class LoginActivity : Activity() {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                if(BuildConfig.DEBUG){
+                if (BuildConfig.DEBUG) {
                     tvErrorMessage.text = t.message.toString()
-                }else{
+                } else {
                     tvErrorMessage.text = getString(R.string.failure_message)
                 }
                 tvErrorMessage.visibility = View.VISIBLE
