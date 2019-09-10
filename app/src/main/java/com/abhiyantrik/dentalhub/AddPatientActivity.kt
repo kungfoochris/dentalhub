@@ -242,7 +242,7 @@ class AddPatientActivity : AppCompatActivity() {
 
     private fun updateUI() {
         if (patient != null) {
-            title = patient!!.fullName()
+            title = resources.getString(R.string.edit) + " : " + patient!!.fullName()
             etFirstName.setText(patient!!.first_name)
             etMiddleName.setText(patient!!.middle_name)
             etLastName.setText(patient!!.last_name)
@@ -255,6 +255,7 @@ class AddPatientActivity : AppCompatActivity() {
                 )
             )
         } else {
+            title = resources.getString(R.string.add_new_patient)
             setupDistricts(35) // set default as kaski 35 is remote_id of Kaski District
         }
     }
