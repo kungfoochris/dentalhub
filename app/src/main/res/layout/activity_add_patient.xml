@@ -30,11 +30,13 @@
                         android:layout_height="wrap_content"/>
                 <EditText
                         android:layout_weight="@dimen/form_col_2_weight"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:id="@+id/etFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_first_name"
+                        android:singleLine="true"
+                        android:nextFocusDown="@+id/etMiddleName"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
                 />
@@ -52,10 +54,13 @@
                 <EditText
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:id="@+id/etMiddleName"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_middle_name"
+                        android:singleLine="true"
+                        android:nextFocusUp="@+id/etFirstName"
+                        android:nextFocusDown="@+id/etLastName"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 />
             </LinearLayout>
@@ -72,25 +77,33 @@
                 <EditText
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:id="@+id/etLastName"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_last_name"
-                />
+                        android:singleLine="true"
+                        android:nextFocusUp="@+id/etMiddleName"
+                        android:nextFocusDown="@+id/spinnerGender"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        />
             </LinearLayout>
             <LinearLayout
                     android:weightSum="1"
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/gender"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                 <Spinner
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:id="@+id/spinnerGender"
+                        android:nextFocusUp="@+id/etLastName"
+                        android:nextFocusDown="@+id/spinnerDobDay"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="@dimen/spinner_default_height"/>
             </LinearLayout>
 
 
@@ -101,17 +114,30 @@
                     android:layout_height="wrap_content">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
-                        android:text="@string/date_of_birth"
+                        android:text="@string/date_of_birth_with_format"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <EditText
-                        android:id="@+id/etDOB"
-                        android:inputType="date"
-                        android:layout_weight="@dimen/form_col_1_weight"
-                        android:hint="@string/date_of_birth"
+                <LinearLayout
+                        android:layout_weight="@dimen/form_col_2_weight"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                />
+                        android:layout_height="wrap_content">
+                    <Spinner
+                            android:id="@+id/spinnerDobDay"
+                            android:nextFocusDown="@+id/spinnerDobMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    <Spinner
+                            android:id="@+id/spinnerDobMonth"
+                            android:nextFocusDown="@+id/spinnerDobYear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    <Spinner
+                            android:id="@+id/spinnerDobYear"
+                            android:nextFocusDown="@+id/etPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                     android:weightSum="1"
@@ -125,9 +151,12 @@
                         android:layout_height="wrap_content"/>
                 <EditText
                         android:id="@+id/etPhone"
-                        android:layout_weight="@dimen/form_col_1_weight"
+                        android:layout_weight="@dimen/form_col_2_weight"
                         android:hint="@string/phone"
                         android:inputType="phone"
+                        android:singleLine="true"
+                        android:nextFocusUp="@+id/spinnerDobYear"
+                        android:nextFocusDown="@+id/spinnerDistrict"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                 />
@@ -145,8 +174,9 @@
                 <Spinner
                         android:id="@+id/spinnerDistrict"
                         android:padding="4dp"
+                        android:nextFocusDown="@+id/spinnerMunicipality"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/spinner_default_height"
                         android:layout_weight="@dimen/form_col_2_weight"
                 />
             </LinearLayout>
@@ -162,9 +192,10 @@
                         android:layout_height="wrap_content"/>
                 <Spinner
                         android:id="@+id/spinnerMunicipality"
+                        android:nextFocusDown="@+id/spinnerWard"
                         android:padding="4dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/spinner_default_height"
                         android:layout_weight="@dimen/form_col_2_weight"
                 />
             </LinearLayout>
@@ -181,8 +212,9 @@
                 <Spinner
                         android:id="@+id/spinnerWard"
                         android:padding="4dp"
+                        android:nextFocusDown="@+id/spinnerEducationLevel"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/spinner_default_height"
                         android:layout_weight="@dimen/form_col_2_weight"
                 />
             </LinearLayout>
@@ -190,7 +222,8 @@
             <LinearLayout
                     android:weightSum="1"
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/educationLevel"
@@ -201,7 +234,7 @@
                         android:padding="4dp"
                         android:id="@+id/spinnerEducationLevel"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="@dimen/spinner_default_height"/>
             </LinearLayout>
             <TextView
                     android:id="@+id/tvErrorMessage"
@@ -212,6 +245,7 @@
                     android:textColor="@android:color/holo_red_dark"
             />
             <Button
+                    android:layout_marginTop="5dp"
                     android:id="@+id/btnAddPatient"
                     android:text="@string/save_patient"
                     android:background="@drawable/default_button_background"

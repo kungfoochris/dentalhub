@@ -413,8 +413,6 @@
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
                             android:layout_height="48dp"/>
-
-
                 </LinearLayout>
             </LinearLayout>
 
@@ -422,27 +420,53 @@
 
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <TextView
-                    android:text="@string/fv_applied"
+            <CheckBox
+                    android:id="@+id/checkBoxSDFWholeMouth"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-            <CheckBox
-                    android:id="@+id/checkBoxFVApplied"
+            <TextView
+                    android:id="@+id/tvSDFWholeMouthTreatment"
+                    android:text="@string/sdf_whole_mouth"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <TextView
-                    android:text="@string/treatment_plan_complete"
+            <CheckBox
+                    android:id="@+id/checkBoxFVApplied"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="@string/fv_applied"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <CheckBox
                     android:id="@+id/checkBoxTreatmentPlanComplete"
+                    android:scaleY="1.5"
+                    android:scaleX="1.5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="@string/treatment_plan_complete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -459,12 +483,13 @@
                     android:id="@+id/etNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top|right"
+                    android:gravity="top|left"
                     android:lines="5"
             />
         </LinearLayout>
         <LinearLayout
                 android:weightSum="1"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -472,6 +497,8 @@
                     android:id="@+id/btnBack"
                     android:layout_weight="0.5"
                     android:text="@string/back"
+                    android:layout_marginEnd="2.5dp"
+                    android:background="@drawable/default_button_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
             />
@@ -479,6 +506,8 @@
                     android:id="@+id/btnNext"
                     android:layout_weight="0.5"
                     android:text="@string/next"
+                    android:layout_marginStart="2.5dp"
+                    android:background="@drawable/default_button_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
             />

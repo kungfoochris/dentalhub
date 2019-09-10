@@ -1,6 +1,6 @@
 <resources>
-    <string name="api_url">http://104.155.163.124:3000/api/v1/</string>
-    <!--<string name="api_url">http://192.168.1.69:3000/api/v1/</string>-->
+    <string name="api_url">http://104.155.163.124:6061/api/v1/</string>
+<!--    <string name="api_url">http://192.168.1.69:6061/api/v1/</string>-->
     <string name="app_name">Dental Hub</string>
     <string name="submit">Submit</string>
     <string name="title_activity_login">Sign in</string>
@@ -38,34 +38,7 @@
     <string name="view_patient_detail">View Patient Detail</string>
 
 
-    <string-array name="gender_list">
-        <item>male</item>
-        <item>female</item>
-        <item>other</item>
-    </string-array>
-    <string-array name="martial_status_list">
-        <item>single</item>
-        <item>married</item>
-        <item>divorced</item>
-    </string-array>
-    <string-array name="education_level_list">
-        <item>uneducated</item>
-        <item>literate</item>
-        <item>graduate</item>
-    </string-array>
 
-    <string-array name="carries_risk">
-        <item>Low</item>
-        <item>Medium</item>
-        <item>High</item>
-    </string-array>
-
-    <string-array name="encounter_reason">
-        <item>Checkup / Screening</item>
-        <item>Relief of Pain</item>
-        <item>Continuation of Treatment Plan</item>
-        <item>Other problem</item>
-    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -95,16 +68,15 @@
     <string name="fv_applied">FV Applied</string>
     <string name="treatment_plan_complete">Treatment plan complete</string>
     <string name="notes">Notes</string>
-    <string name="cavity_permanent_tooth">Cavity Permanent Tooth</string>
-    <string name="cavity_permanent_anterior">Cavity Permanent Anterior</string>
-    <string name="active_infection">Active Infection</string>
+    <string name="cavity_permanent_molar">Cavity Permanent Molar or Premolar</string>
+    <string name="cavity_permanent_anterior">Cavity Permanent Canine or Incisor</string>
     <string name="need_art_filling">Need ART Filling</string>
     <string name="need_sealant">Need Sealant</string>
     <string name="need_sdf">Need SDF</string>
     <string name="need_extraction">Need Extraction</string>
     <string name="caries_risk">Caries Risk</string>
-    <string name="decayed_primary_teeth">No. of decayed primary teeth</string>
-    <string name="decayed_permanent_teeth">No. of decayed permanent teeth</string>
+    <string name="decayed_primary_teeth">No. of Decayed Primary Teeth</string>
+    <string name="decayed_permanent_teeth">No. of Decayed Permanent Teeth</string>
     <string name="save">Save</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
@@ -124,7 +96,7 @@
     <string name="other_problem">Other Problem</string>
     <string name="checkup_screening">Checkup / Screening</string>
     <string name="relief_of_pain">Relief of pain</string>
-    <string name="continuation_of_treatment_plan">Continuation of treatment plan.</string>
+    <string name="continuation_of_treatment_plan">Continuation of treatment plan</string>
     <string name="continue_">Continue</string>
     <string name="primary_reason_for_encounter">Primary reason for encounter</string>
     <string name="ward_is_required">Ward number is required</string>
@@ -177,4 +149,25 @@
     <string name="search_hint">Search</string>
     <string name="username_is_required">Username is required.</string>
     <string name="prompt_username">Username</string>
+    <string name="sdf_whole_mouth">SDF Whole Mouth</string>
+    <string name="pain_due_to_reversible_pulpitis">Pain due to Reversible Pulpitis</string>
+    <string name="active_infection">Active Infection</string>
+    <string name="username_password_dont_matched">Username or password didn\'t matched.</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="date_of_birth_with_format">Date of birth</string>
+    <string name="location">Location</string>
+    <string name="activity">Activity</string>
+
+    <string name="one_week">1 week</string>
+    <string name="one_month">1 month</string>
+    <string name="six_months">6 months</string>
+    <string name="one_year">1 year</string>
+    <string name="high_bp">High BP</string>
+    <string name="low_bp">Low BP</string>
+    <string name="thyroid_disorder">Thyroid Disorder</string>
+    <string name="low_bp_is_checked">Low BP is already checked.</string>
+    <string name="high_bp_is_checked">High BP is already checked.</string>
+    <string name="failure_message">Can\'t reach to Dental Hub server at the moment. Please check your connection and try in a while.</string>
+    <string name="could_not_load_activity">Activities could not be loaded.</string>
+    <string name="could_not_load_locations">Locations could not be loaded.</string>
 </resources>

@@ -4,13 +4,13 @@
     <item
             android:id="@+id/viewPatient"
             android:title="@string/view_patient_info"
-            android:icon="@android:drawable/ic_menu_view"
+            android:icon="@drawable/view"
             app:showAsAction="always"
     />
     <item
             android:id="@+id/editPatient"
             android:title="@string/modify_patient"
-            android:icon="@android:drawable/ic_menu_edit"
+            android:icon="@drawable/edit"
             app:showAsAction="always"
     />
 </menu>

@@ -4,6 +4,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
+        android:background="@color/white"
 >
     <LinearLayout
 
@@ -12,28 +13,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             tools:context=".LoginActivity">
 
         <ImageView
-                android:src="@drawable/logo"
+                android:src="@drawable/banner"
                 android:contentDescription="@string/app_name"
                 android:layout_gravity="center"
-                android:layout_width="144dp"
-                android:layout_height="144dp"
-                android:layout_marginTop="64dp"
+                android:layout_width="420dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginStart="-3dp"
         />
 
-        <TextView
-                android:text="@string/app_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="26sp"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
-        />
 
         <EditText
                 android:layout_gravity="center"
@@ -57,8 +50,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/auth_fields"
                 android:hint="@string/prompt_password"
+                android:imeActionId="@integer/loginImeActionID"
                 android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionGo"
                 android:inputType="textPassword"
                 android:selectAllOnFocus="true"
                 android:drawableStart="@drawable/lock"
@@ -83,7 +77,7 @@
         <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="420dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:textColor="@color/login_button_color"
                 android:background="@drawable/default_button_background"

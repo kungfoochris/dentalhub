@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                <RadioButton android:id="@+id/radioHealthPost"
+                <RadioButton android:id="@+id/radioHealthPostActivity"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
                              android:text="@string/health_post"
@@ -74,6 +74,13 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
+<!--                <Spinner-->
+<!--                        android:id="@+id/spinnerSchoolSeminar"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:layout_marginBottom="8dp"-->
+<!--                        />-->
                 <RadioButton android:id="@+id/radioCommunityOutreach"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
@@ -81,6 +88,13 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
+<!--                <Spinner-->
+<!--                        android:id="@+id/spinnerCommunityOutreach"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:layout_marginBottom="8dp"-->
+<!--                        />-->
                 <RadioButton android:id="@+id/radioTraining"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
@@ -88,10 +102,18 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
+<!--                <Spinner-->
+<!--                        android:id="@+id/spinnerTranning"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:layout_marginBottom="8dp"-->
+<!--                        />-->
             </RadioGroup>
             <EditText
+                    android:id="@+id/etOtherDetailsActivity"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/rgActivities"
-                    android:id="@+id/etOtherDetails"
                     android:hint="@string/other_details"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
@@ -121,7 +143,7 @@
             android:text="@string/logout"
             android:layout_width="420dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/default_button_background"
+            android:background="@drawable/logout_button_background"
             app:layout_constraintTop_toBottomOf="@+id/btnGo"
             android:padding="8dp"
             android:layout_marginTop="16dp"
@@ -130,4 +152,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
     />
+    <ProgressBar
+            android:id="@+id/progressbarActivitySelector"
+            android:elevation="2dp"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 </androidx.constraintlayout.widget.ConstraintLayout>

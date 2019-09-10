@@ -1,42 +1,35 @@
 {
   "project_info": {
-    "project_number": "120689180865",
-    "firebase_url": "https://dentalhub-91db3.firebaseio.com",
-    "project_id": "dentalhub-91db3",
-    "storage_bucket": "dentalhub-91db3.appspot.com"
+    "project_number": "376758827420",
+    "firebase_url": "https://dentalhub-65fb2.firebaseio.com",
+    "project_id": "dentalhub-65fb2",
+    "storage_bucket": "dentalhub-65fb2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:120689180865:android:fa3ae6b15a5627e6",
+        "mobilesdk_app_id": "1:376758827420:android:99221c5cc262de75",
         "android_client_info": {
-          "package_name": "com.example.dentalhub"
+          "package_name": "com.abhiyantrik.dentalhub"
         }
       },
       "oauth_client": [
         {
-          "client_id": "120689180865-4vjc1u137lmo12q5rcklknb4g3fltns2.apps.googleusercontent.com",
+          "client_id": "376758827420-rji508n5fi038i6u3nlf7gdfua5d4mgo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCWOyEvQVSF8rNUHZ052AbwF-K3NfoKZKo"
+          "current_key": "AIzaSyCaoYxdKH-SIxq1_mPm1c-MaZBSgaUsv7k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "120689180865-4vjc1u137lmo12q5rcklknb4g3fltns2.apps.googleusercontent.com",
+              "client_id": "376758827420-rji508n5fi038i6u3nlf7gdfua5d4mgo.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "120689180865-omabdudakoau0tle50pgqu0eolp3vbpk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.dentalhub"
-              }
             }
           ]
         }

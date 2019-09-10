@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-            android:id="@+id/addPatient"
-            android:title="@string/add_patient"
-            android:icon="@drawable/add"
-            app:showAsAction="always"
-    />
-    <item
-            android:id="@+id/refresh"
-            android:title="@string/refresh"
-            android:icon="@android:drawable/ic_popup_sync"
-            app:showAsAction="always"
-    />
+
     <item
             android:id="@+id/search"
             android:title="@string/search"
             android:icon="@drawable/search"
             app:showAsAction="ifRoom"
-    />
-    <item
-            android:id="@+id/sync"
-            android:title="@string/sync"
     />
     <item
             android:id="@+id/logout"
