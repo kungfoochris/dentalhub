@@ -248,10 +248,6 @@ class AddPatientActivity : AppCompatActivity() {
             etLastName.setText(patient!!.last_name)
             etPhone.setText(patient!!.phone)
             setupDistricts(patient!!.district)
-//            etStreetAddress.setText(patient!!.street_address)
-//            etCity.setText(patient!!.city)
-//            etState.setText(patient!!.state)
-//            etCountry.setText(patient!!.country)
             spinnerGender.setSelection(resources.getStringArray(R.array.gender_list).indexOf(patient!!.gender))
             spinnerEducationLevel.setSelection(
                 resources.getStringArray(R.array.education_level_list).indexOf(
@@ -259,7 +255,7 @@ class AddPatientActivity : AppCompatActivity() {
                 )
             )
         } else {
-            setupDistricts(0)
+            setupDistricts(35) // set default as kaski 35 is remote_id of Kaski District
         }
     }
 
