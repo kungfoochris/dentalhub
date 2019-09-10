@@ -152,7 +152,7 @@
     <string name="sdf_whole_mouth">SDF Whole Mouth</string>
     <string name="pain_due_to_reversible_pulpitis">Pain due to Reversible Pulpitis</string>
     <string name="active_infection">Active Infection</string>
-    <string name="username_password_dont_matched">Username or password didn\'t matched.</string>
+    <string name="username_password_dont_matched">Please enter correct username/password.</string>
     <string name="dashboard">Dashboard</string>
     <string name="date_of_birth_with_format">Date of birth</string>
     <string name="location">Location</string>
