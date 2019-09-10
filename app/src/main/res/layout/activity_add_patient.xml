@@ -111,6 +111,7 @@
                 <Spinner
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:id="@+id/spinnerGender"
+                        android:background="@drawable/spinner"
                         android:nextFocusUp="@+id/etLastName"
                         android:nextFocusDown="@+id/spinnerDobDay"
                         android:layout_width="match_parent"
