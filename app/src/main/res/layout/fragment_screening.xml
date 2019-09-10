@@ -13,9 +13,10 @@
 
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/caries_risk"
@@ -29,9 +30,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/decayed_primary_teeth"
@@ -47,9 +49,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/decayed_permanent_teeth"
@@ -64,9 +67,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/cavity_permanent_molar"
@@ -82,9 +86,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/cavity_permanent_anterior"
@@ -100,9 +105,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="1"
                     android:text="@string/active_infection"
@@ -118,9 +124,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/pain_due_to_reversible_pulpitis"
@@ -136,9 +143,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/need_sdf"
@@ -154,9 +162,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/need_sealant"
@@ -172,9 +181,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/need_art_filling"
@@ -190,9 +200,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="1"
                     android:text="@string/need_extraction"
@@ -208,9 +219,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="1"
                     android:text="@string/high_bp"
@@ -227,9 +239,11 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <TextView
                     android:layout_weight="1"
                     android:text="@string/low_bp"
@@ -246,9 +260,10 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="1"
                     android:textSize="@dimen/default_font_size"
@@ -266,10 +281,10 @@
 
         <LinearLayout
                 android:weightSum="1"
-                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp">
             <Button
                     android:id="@+id/btnBack"
                     android:layout_weight="0.5"

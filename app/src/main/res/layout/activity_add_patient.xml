@@ -22,7 +22,10 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    >
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/first_name"
@@ -45,7 +48,10 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    >
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/middle_name"
@@ -68,7 +74,10 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    >
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/last_name"
@@ -91,7 +100,9 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/gender"
@@ -111,7 +122,10 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    >
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/date_of_birth_with_format"
@@ -122,19 +136,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <Spinner
+                            android:background="@drawable/spinner"
+                            android:layout_marginEnd="4dp"
                             android:id="@+id/spinnerDobDay"
                             android:nextFocusDown="@+id/spinnerDobMonth"
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content" />
                     <Spinner
                             android:id="@+id/spinnerDobMonth"
+                            android:background="@drawable/spinner"
                             android:nextFocusDown="@+id/spinnerDobYear"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            />
                     <Spinner
+                            android:background="@drawable/spinner"
                             android:id="@+id/spinnerDobYear"
                             android:nextFocusDown="@+id/etPhone"
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
+                            android:layout_marginStart="4dp"
                             android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -143,7 +165,10 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    >
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/phone"
@@ -165,7 +190,9 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/district"
@@ -174,6 +201,7 @@
                 <Spinner
                         android:id="@+id/spinnerDistrict"
                         android:padding="4dp"
+                        android:background="@drawable/spinner"
                         android:nextFocusDown="@+id/spinnerMunicipality"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/spinner_default_height"
@@ -184,13 +212,17 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    >
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/municipality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 <Spinner
+                        android:background="@drawable/spinner"
                         android:id="@+id/spinnerMunicipality"
                         android:nextFocusDown="@+id/spinnerWard"
                         android:padding="4dp"
@@ -203,7 +235,9 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin">
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/ward"
@@ -212,6 +246,7 @@
                 <Spinner
                         android:id="@+id/spinnerWard"
                         android:padding="4dp"
+                        android:background="@drawable/spinner"
                         android:nextFocusDown="@+id/spinnerEducationLevel"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/spinner_default_height"
@@ -223,7 +258,10 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    >
                 <TextView
                         android:layout_weight="@dimen/form_col_1_weight"
                         android:text="@string/educationLevel"
@@ -232,6 +270,7 @@
                 <Spinner
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:padding="4dp"
+                        android:background="@drawable/spinner"
                         android:id="@+id/spinnerEducationLevel"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/spinner_default_height"/>
@@ -245,7 +284,7 @@
                     android:textColor="@android:color/holo_red_dark"
             />
             <Button
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="24dp"
                     android:id="@+id/btnAddPatient"
                     android:text="@string/save_patient"
                     android:background="@drawable/default_button_background"

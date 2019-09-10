@@ -14,7 +14,10 @@
         <RadioGroup android:id="@+id/rgReferrals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <RadioButton android:id="@+id/radioNoReferral"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
@@ -46,26 +49,39 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:hint="@string/other"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
         />
             <TextView
                     android:id="@+id/tvRecallDateReferral"
                     android:text="@string/recall_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    />
             <EditText
                     android:id="@+id/etRecallDate"
                     android:hint="@string/recall_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
                     />
         <EditText
                 android:id="@+id/etRecallTime"
                 android:hint="@string/recall_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                />
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <RadioGroup
                     android:id="@+id/rgRecalls"
                     android:orientation="horizontal"
@@ -100,7 +116,7 @@
 
         <LinearLayout
                 android:weightSum="1"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="24dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

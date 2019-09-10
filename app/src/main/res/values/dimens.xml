@@ -7,4 +7,6 @@
     <dimen name="default_font_size">18sp</dimen>
     <dimen name="default_checkbox_scaleX">1.5</dimen>
     <dimen name="spinner_default_height">35dp</dimen>
+    <dimen name="fieldBottomMargin">8dp</dimen>
+    <dimen name="fieldTopMargin">8dp</dimen>
 </resources>
