@@ -198,10 +198,10 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvOtherDetails: TextView
 
     // recall
-    private lateinit var tvRecallDate: TextView
-    private lateinit var tvRecallTime: TextView
-    private lateinit var tvRecallGeography: TextView
-    private lateinit var tvRecallActivity: TextView
+//    private lateinit var tvRecallDate: TextView
+//    private lateinit var tvRecallTime: TextView
+//    private lateinit var tvRecallGeography: TextView
+//    private lateinit var tvRecallActivity: TextView
 
     private lateinit var context: Context
 
@@ -425,16 +425,16 @@ class ViewEncounterActivity : AppCompatActivity() {
         // schedule
 
         // Schedule Title TextView
-        tvRecallDate = findViewById(R.id.tvRecallDate)
-        tvRecallTime = findViewById(R.id.tvRecallTime)
-        tvRecallActivity = findViewById(R.id.tvRecallActivity)
-        tvRecallGeography = findViewById(R.id.tvRecallGeography)
+//        tvRecallDate = findViewById(R.id.tvRecallDate)
+//        tvRecallTime = findViewById(R.id.tvRecallTime)
+//        tvRecallActivity = findViewById(R.id.tvRecallActivity)
+//        tvRecallGeography = findViewById(R.id.tvRecallGeography)
 
         // Schedule Data TextView
-        tvRecallDate.text = recall.date
-        tvRecallTime.text = recall.time
-        tvRecallActivity.text = recall.activity
-        tvRecallGeography.text = recall.geography
+//        tvRecallDate.text = recall.date
+//        tvRecallTime.text = recall.time
+//        tvRecallActivity.text = recall.activity
+//        tvRecallGeography.text = recall.geography
 
     }
 

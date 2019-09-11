@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
 //        }
         allPatientRecall = mutableListOf()
         val today = DateHelper.getCurrentNepaliDate()
-        val todayPatient = patientsBox.query().equal(Patient_.recall_date, today).build().find()
+        val todayPatient = patientsBox.query().equal(Patient_.recall_date, today).equal(Patient_.recall_geography, DentalApp.geography_name).build().find()
 
 
         val rowToday = Patient()
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("NEXT WEEK", "NEXT WEEK")
         for (i in 1..8) {
             val thisWeekPatients =
-                patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
+                patientsBox.query().equal(Patient_.recall_date, nextDay).equal(Patient_.recall_geography, DentalApp.geography_name).build().find()
             allPatientRecall.addAll(thisWeekPatients)
             nextDay = DateHelper.getNextDay(nextDay)
         }
@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("NEXT MONTH", "NEXT MONTH")
         for (i in 1..24) {
             val thisMonthPatients =
-                patientsBox.query().equal(Patient_.recall_date, nextDay).build().find()
+                patientsBox.query().equal(Patient_.recall_date, nextDay).equal(Patient_.recall_geography, DentalApp.geography_name).build().find()
             allPatientRecall.addAll(thisMonthPatients)
             nextDay = DateHelper.getNextDay(nextDay)
         }

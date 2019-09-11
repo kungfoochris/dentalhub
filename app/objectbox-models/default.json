@@ -660,7 +660,7 @@
     },
     {
       "id": "13:3411229424671924617",
-      "lastPropertyId": "26:3189613728421570657",
+      "lastPropertyId": "27:1079473111627415256",
       "name": "Patient",
       "properties": [
         {
@@ -762,6 +762,10 @@
         {
           "id": "26:3189613728421570657",
           "name": "updated_by"
+        },
+        {
+          "id": "27:1079473111627415256",
+          "name": "recall_geography"
         }
       ],
       "relations": []

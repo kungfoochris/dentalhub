@@ -224,6 +224,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun updateRecallDate(recallDate: String, etRecallTime: String) {
         patient.recall_date = recallDate
         patient.recall_time = etRecallTime
+        patient.recall_geography = DentalApp.geography_name
         patientBox.put(patient)
     }
 
