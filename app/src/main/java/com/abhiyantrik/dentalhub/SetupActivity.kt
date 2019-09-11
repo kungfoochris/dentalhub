@@ -218,12 +218,12 @@ class SetupActivity : AppCompatActivity() {
                                     patientEntity.recall = null
                                     patientEntity.author = patient.author
 
-                                    if(patient.created_at.isBlank()){
+                                    if(patient.created_at==null){
                                         patientEntity.created_at = DateHelper.getCurrentNepaliDate()
                                     }else{
                                         patientEntity.created_at = patient.created_at
                                     }
-                                    if(patient.updated_at.isBlank()){
+                                    if(patient.updated_at==null){
                                         patientEntity.updated_at = DateHelper.getCurrentNepaliDate()
                                     }else{
                                         patientEntity.updated_at = patient.updated_at
