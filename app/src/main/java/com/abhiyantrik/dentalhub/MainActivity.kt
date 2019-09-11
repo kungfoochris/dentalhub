@@ -224,11 +224,15 @@ class MainActivity : AppCompatActivity() {
 
     @AddTrace(name = "setupAdapterMainActivity", enabled = true /* optional */)
     private fun setupAdapter(patientList: List<Patient>) {
+        var displayDelayAndRemoveBtn = false
+        if (DentalApp.activity_name == "Health Post") {
+            displayDelayAndRemoveBtn = true
+        }
         patientAdapter =
             PatientAdapter(
                 context,
                 patientList,
-                true,
+                displayDelayAndRemoveBtn,
                 object : PatientAdapter.PatientClickListener {
                     override fun onRemovePatientClick(patient: Patient) {
                         val tempPatient =

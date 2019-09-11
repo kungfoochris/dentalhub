@@ -129,8 +129,6 @@ Bapp/src/main/java/com/abhiyantrik/dentalhub/utils/AdapterHelper.kt,b/f/bf9cadf
 x
 Happ/src/main/java/com/abhiyantrik/dentalhub/services/BootstrapService.kt,9/0/909ab9155984218eddda6d366825e4afffb160c3
 x
-Happ/src/main/java/com/abhiyantrik/dentalhub/AddPatientDynamicActivity.kt,b/9/b90e61068fd6a1c219e604c93567c542387331ad
-x
 Happ/src/main/java/com/abhiyantrik/dentalhub/adapters/EncounterAdapter.kt,f/4/f40257e0a54ccd77b4c04ed2dc2906fceac49a95
 o
 ?app/src/main/java/com/abhiyantrik/dentalhub/utils/DateHelper.kt,c/d/cd8ba4ec97e60f685ee43da28943b5d65c3bece1
