@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.utils.DateHelper
+import java.lang.NumberFormatException
 
 class PatientAdapter(
     context: Context,
@@ -36,8 +38,13 @@ class PatientAdapter(
     }
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
-        val patientItem: Patient = data[position]
-        holder.bindPatient(context, patientItem, displayDelay)
+        try{
+            val patientItem: Patient = data[position]
+            holder.bindPatient(context, patientItem, displayDelay)
+        }catch (e: NumberFormatException){
+            Log.d("PatientAdapter", "invalid position")
+        }
+
     }
 
     override fun getItemCount() = data.size

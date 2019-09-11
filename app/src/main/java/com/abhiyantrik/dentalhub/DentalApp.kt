@@ -2,11 +2,11 @@ package com.abhiyantrik.dentalhub
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.multidex.MultiDexApplication
 import com.abhiyantrik.dentalhub.models.Location
-import com.abhiyantrik.dentalhub.models.Profile
 import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper
 
@@ -25,7 +25,7 @@ class DentalApp : MultiDexApplication() {
         val firebaseConfig: FirebaseConfig = FirebaseConfig()
         editableDuration = firebaseConfig.fetchEditableTime()
 
-
+        activitySuggestions = DentalApp.readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS).toMutableSet()
 
         NotificationHelper.createNotificationChannel(
             this,
@@ -57,6 +57,8 @@ class DentalApp : MultiDexApplication() {
         var editableDuration: Long = 86400
         var fullName = ""
 
+        var activitySuggestions = mutableSetOf<String>()
+
 
         fun saveToPreference(context: Context, preferenceName: String, preferenceValue: String) {
             val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
@@ -70,6 +72,18 @@ class DentalApp : MultiDexApplication() {
             val editor = sharedPreferences.edit()
             editor.putInt(preferenceName, preferenceValue)
             editor.apply()
+        }
+        fun addStringToPreference(context: Context, preferenceValue: String){
+            activitySuggestions.add(preferenceValue)
+            Log.d("Suggestions", activitySuggestions.toString())
+            val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putStringSet(Constants.PREF_ACTIVITY_SUGGESTIONS, activitySuggestions)
+            editor.apply()
+        }
+        fun readStringSetFromPreference(context: Context, preferenceName: String): Set<String> {
+            val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
+            return prefs.getStringSet(preferenceName, emptySet())
         }
 
 

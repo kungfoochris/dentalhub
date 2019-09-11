@@ -6,8 +6,10 @@ import java.util.*
 
 @Parcelize
 class Patient(
-    var id: Int,
+    var id: String,
     var uid: String,
+    var author: String,
+    var updated_by: String,
     var first_name: String,
     var middle_name: String,
     var last_name: String,
@@ -20,8 +22,8 @@ class Patient(
     var district: Int,
     var latitude: String,
     var longitude: String,
-    var geography_id: String,
-    var activityarea_id: String,
+    var geography: String,
+    var activity_area: String,
     var created_at: String,
     var updated_at: String,
     var uploaded: Boolean

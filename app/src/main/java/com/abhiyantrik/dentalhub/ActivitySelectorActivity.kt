@@ -12,6 +12,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
+import android.widget.ArrayAdapter
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.text.Editable
+import android.text.TextWatcher
 
 
 class ActivitySelectorActivity : AppCompatActivity() {
@@ -28,7 +35,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
 
-    private lateinit var etOtherDetails: EditText
+    private lateinit var etOtherDetails: AutoCompleteTextView
     var selectedActivity = ""
     var selectedActivityId = ""
     var activityOtherDetail = ""
@@ -61,6 +68,31 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         // load the id and name of the activity
         loadActivityId()
+
+        Log.d("Suggestions", DentalApp.activitySuggestions.toString())
+
+        val arrayAdapter = ArrayAdapter<String>(
+            this,
+            android.R.layout.select_dialog_item, DentalApp.activitySuggestions.toList()
+        )
+        etOtherDetails.threshold = 1
+        etOtherDetails.setAdapter(arrayAdapter)
+        arrayAdapter.notifyDataSetChanged()
+
+        etOtherDetails.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+        })
 
         rgActivities.setOnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.radioHealthPostActivity) {
@@ -102,6 +134,8 @@ class ActivitySelectorActivity : AppCompatActivity() {
 //                )
 
                 DentalApp.activity_name = selectedActivity
+                DentalApp.addStringToPreference(context, etOtherDetails.text.toString())
+
                 if (selectedActivity == "Health Post") {
                     DentalApp.activity_id = selectedActivityId
                     DentalApp.activity_name = selectedActivity

@@ -49,7 +49,7 @@ interface DjangoInterface {
         @Field("geography_id") geography_id: String
     ): Call<PatientModel>
 
-    @GET("/patients")
+    @GET("patients")
     fun getPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
 
 

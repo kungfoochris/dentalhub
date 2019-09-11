@@ -32,6 +32,8 @@ class Constants {
         val PREF_ACTIVITY_NAME = "ACTIVITY_NAME"
         @JvmStatic
         val PREF_ACTIVITY_REMARKS = "ACTIVITY_REMARKS"
+        @JvmStatic
+        val PREF_ACTIVITY_SUGGESTIONS = "ACTIVITY_SUGGESTIONS"
 
         @JvmStatic
         val PREF_PROFILE_FULL_NAME = "USER_FULL_NAME"
