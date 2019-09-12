@@ -138,3 +138,5 @@ Mapp/src/androidTest/java/com/abhiyantrik/dentalhub/ExampleInstrumentedTest.kt,
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 7
 gradlew,5/b/5bbfa66edb4db3c7c33c5181f43510990d3307f9
+l
+<app/src/main/java/com/abhiyantrik/dentalhub/entities/User.kt,e/e/ee0d3197088ad87d8e74e2682b4cca9ea43013c3

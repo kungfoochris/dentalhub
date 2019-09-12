@@ -115,46 +115,39 @@ class ReferralFragment : Fragment() {
 
             when (i) {
                 R.id.radioOneWeek -> {
-                    if(dayToday+7 > 30){
-                        recallDate =
-                            "$yearToday-" + DecimalFormat("00").format(monthToday+1) + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
+                    recallDate = if(dayToday+7 > 30){
+                        "$yearToday-" + DecimalFormat("00").format(monthToday+1) + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
                     }else{
 
                         if(monthToday+1 > 12){
-                            recallDate =
-                                "${yearToday+1}-" + DecimalFormat("00").format("01") + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
+                            "${yearToday+1}-" + DecimalFormat("00").format("01") + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
                         }else{
-                            recallDate =
-                                "$yearToday-" + DecimalFormat("00").format(monthToday+1) + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
+                            "$yearToday-" + DecimalFormat("00").format(monthToday+1) + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
                         }
 
                     }
 
                 }
                 R.id.radioOneMonth -> {
-                    if (monthToday == 12) {
-                        recallDate =
-                            "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
-                                "00"
-                            ).format(dayToday)
+                    recallDate = if (monthToday == 12) {
+                        "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
                     } else {
-                        recallDate =
-                            "${yearToday}-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
-                                "00"
-                            ).format(dayToday)
+                        "${yearToday}-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
                     }
                 }
                 R.id.radioSixMonths -> {
-                    if (monthToday + 6 > 12) {
-                        recallDate =
-                            "${yearToday + 1}-" + DecimalFormat("00").format(((monthToday + 6) % 12)) + "-" + DecimalFormat(
-                                "00"
-                            ).format(dayToday)
+                    recallDate = if (monthToday + 6 > 12) {
+                        "${yearToday + 1}-" + DecimalFormat("00").format(((monthToday + 6) % 12)) + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
                     } else {
-                        recallDate =
-                            "$yearToday-" + DecimalFormat("00").format(monthToday + 6) + "-" + DecimalFormat(
-                                "00"
-                            ).format(dayToday)
+                        "$yearToday-" + DecimalFormat("00").format(monthToday + 6) + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
                     }
                 }
                 R.id.radioOneYear -> {
