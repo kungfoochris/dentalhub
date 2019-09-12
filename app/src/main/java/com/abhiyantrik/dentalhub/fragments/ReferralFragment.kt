@@ -268,7 +268,7 @@ class ReferralFragment : Fragment() {
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
 
-            etRecallDate.setText(patient.recall_date)
+
 
             val radioButtonMap = mapOf(
                 radioNoReferral to referral.no_referral,
@@ -287,6 +287,8 @@ class ReferralFragment : Fragment() {
             }
 
             if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
+            etRecallDate.setText(patient.recall_date)
+            etRecallTime.setText(patient.recall_time)
         }
     }
 
