@@ -455,6 +455,12 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                 teeth[buttonNumber] = "SMART"
                 button.setTextColor(btnOnSelectTextColor)
             }
+            else -> {
+                button.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.treatment_none, null)
+                teeth[buttonNumber] = "NONE"
+                button.setTextColor(btnOnSelectTextColor)
+            }
         }
 
     }
