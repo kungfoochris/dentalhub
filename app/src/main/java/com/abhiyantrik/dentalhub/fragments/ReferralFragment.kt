@@ -174,7 +174,7 @@ class ReferralFragment : Fragment() {
 
             }
         }
-        etRecallTime.setOnFocusChangeListener { view, b ->
+        etRecallTime.setOnFocusChangeListener { _, b ->
             if (b) {
                 // Get Current Time
                 val c = Calendar.getInstance()
@@ -184,7 +184,7 @@ class ReferralFragment : Fragment() {
                 // Launch Time Picker Dialog
                 val timePickerDialog = TimePickerDialog(
                     activity,
-                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                    TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                         etRecallTime.setText(
                             DecimalFormat("00").format(
                                 hourOfDay
@@ -233,8 +233,6 @@ class ReferralFragment : Fragment() {
 
                 val recallDate = etRecallDate.text.toString()
                 val recallTime = etRecallTime.text.toString()
-                val selectedGeography = DentalApp.geography_id
-                val selectedActivity = DentalApp.activity_id
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
                 referralFormCommunicator.updateRecallDate(recallDate, recallTime)
 
