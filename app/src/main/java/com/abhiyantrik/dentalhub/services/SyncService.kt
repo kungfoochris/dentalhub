@@ -421,7 +421,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             patient.latitude,
             patient.longitude,
             patient.activityarea_id,
-            patient.geography_id
+            patient.geography_id,
+            patient.author,
+            patient.updated_by!!,
+            patient.created_at,
+            patient.updated_at
         )
         print("Response before")
         call.enqueue(object : Callback<PatientModel> {

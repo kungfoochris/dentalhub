@@ -21,6 +21,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.entities.Recall
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
+import com.abhiyantrik.dentalhub.services.SyncDownloadService
 import com.abhiyantrik.dentalhub.services.SyncService
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
@@ -192,6 +193,7 @@ class MainActivity : AppCompatActivity() {
         fabBtnSync.setOnClickListener {
             Log.d(TAG, "startSync")
             startService(Intent(this, SyncService::class.java))
+            startService(Intent(this, SyncDownloadService::class.java))
             //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
         }
 

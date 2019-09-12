@@ -32,6 +32,7 @@ class SetupActivity : AppCompatActivity() {
     var profileLoadComplete = false
     var dataLoadComplete = false
     var patientDataLoadComplete = false
+    var downloadedPatients = mutableListOf<PatientModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,7 +161,9 @@ class SetupActivity : AppCompatActivity() {
                                 "true"
                             )
                             dataLoadComplete = true
-                            loadPatientData()
+                            //loadPatientData()
+                            startActivity(Intent(context, LocationSelectorActivity::class.java))
+                            finish()
                         }
                     }
                 } else {
@@ -192,13 +195,16 @@ class SetupActivity : AppCompatActivity() {
                             patientDataLoadComplete = true
                             val allPatients = response.body() as List<PatientModel>
                             for (patient in allPatients){
-                                val existingPatient =patientsBox.query().equal(Patient_.remote_id, patient.id.toString()).build().findFirst()
+                                val existingPatient =patientsBox.query().equal(Patient_.remote_id,
+                                    patient.id
+                                ).build().findFirst()
                                 if(existingPatient != null){
                                     Log.d("SetupActivity", existingPatient.fullName()+" already exists.")
                                     tvMessage.text = tvMessage.text.toString() + existingPatient.fullName()+" already exists.\n"
                                 }else{
+                                    downloadedPatients.add(patient)
                                     val patientEntity = Patient()
-                                    patientEntity.remote_id = patient.id.toString()
+                                    patientEntity.remote_id = patient.id
                                     patientEntity.first_name = patient.first_name
                                     patientEntity.middle_name = patient.middle_name
                                     patientEntity.last_name = patient.last_name
@@ -236,9 +242,8 @@ class SetupActivity : AppCompatActivity() {
 
                             }
                             tvMessage.text = tvMessage.text.toString() + "Loading patients complete\n"
-                            if(patientDataLoadComplete && profileLoadComplete && dataLoadComplete){
-                                startActivity(Intent(context, LocationSelectorActivity::class.java))
-                                finish()
+                            if(patientDataLoadComplete && profileLoadComplete && dataLoadComplete) {
+                                loadEncounterData()
                             }
                         }
                     }
@@ -250,6 +255,14 @@ class SetupActivity : AppCompatActivity() {
         })
 
     }
+
+    private fun loadEncounterData() {
+        tvMessage.text = tvMessage.text.toString() + "Loading encounter data...\n"
+        startActivity(Intent(context, LocationSelectorActivity::class.java))
+        finish()
+
+    }
+
 
     private fun initUI() {
         tvMessage = findViewById(R.id.tvMessage)

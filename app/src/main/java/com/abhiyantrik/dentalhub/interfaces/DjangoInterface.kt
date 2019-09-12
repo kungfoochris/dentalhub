@@ -46,12 +46,18 @@ interface DjangoInterface {
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
         @Field("activityarea_id") activity_area_id: String,
-        @Field("geography_id") geography_id: String
+        @Field("geography_id") geography_id: String,
+        @Field("author") author: String,
+        @Field("updated_by") updated_by: String,
+        @Field("created_at") createdAt: String?,
+        @Field("updated_at") updatedAt: String?
     ): Call<PatientModel>
 
     @GET("patients")
     fun getPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
 
+    @GET("patients/{patientId}/encounters")
+    fun getEncounter(@Header("Authorization") token: String, @Field("patientId") patientId: String)
 
     @FormUrlEncoded
     @POST("activities")

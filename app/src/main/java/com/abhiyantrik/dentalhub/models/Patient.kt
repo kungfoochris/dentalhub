@@ -24,8 +24,8 @@ class Patient(
     var longitude: String,
     var geography: String,
     var activity_area: String,
-    var created_at: String,
-    var updated_at: String,
+    var created_at: String?,
+    var updated_at: String?,
     var uploaded: Boolean
 ) : Parcelable {
     fun address(): String {
