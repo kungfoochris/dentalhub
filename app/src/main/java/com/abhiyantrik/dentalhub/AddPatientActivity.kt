@@ -191,16 +191,7 @@ class AddPatientActivity : AppCompatActivity() {
             spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
             spinnerWard.setSelection(selectedWardIndex)
 
-            val nepaliDateToday = DateConverter().todayNepaliDate
-            val currentYear = nepaliDateToday.year
-            val startYear = currentYear - 120
 
-            val dobDay = patient!!.dob.substring(8,10)
-            val dobMonth = patient!!.dob.substring(5,7)
-            val dobYear = patient!!.dob.substring(0,4)
-            spinnerDobDay.setSelection(dobDay.toInt()-1)
-            spinnerDobMonth.setSelection(dobMonth.toInt()-1)
-            spinnerDobYear.setSelection((startYear..currentYear).reversed().toList().indexOf(dobYear.toInt()))
         } else {
             Toast.makeText(context, "Municipality not found.", Toast.LENGTH_LONG).show()
         }
@@ -266,6 +257,16 @@ class AddPatientActivity : AppCompatActivity() {
                 )
             )
             //spinnerDobDay.setSelection()
+            val nepaliDateToday = DateConverter().todayNepaliDate
+            val currentYear = nepaliDateToday.year
+            val startYear = currentYear - 120
+
+            val dobDay = patient!!.dob.substring(8,10)
+            val dobMonth = patient!!.dob.substring(5,7)
+            val dobYear = patient!!.dob.substring(0,4)
+            spinnerDobDay.setSelection(dobDay.toInt()-1)
+            spinnerDobMonth.setSelection(dobMonth.toInt()-1)
+            spinnerDobYear.setSelection((startYear..currentYear).reversed().toList().indexOf(dobYear.toInt()))
         } else {
             title = resources.getString(R.string.add_new_patient)
             setupDistricts(35) // set default as kaski 35 is remote_id of Kaski District
