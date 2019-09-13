@@ -344,7 +344,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         // to hide if screening items are unchecked while adding encounter
         hideString(screening.carries_risk, tvCarriesRiskTitle, tvCarriesRisk)
         hideInt(
-            screening.decayed_pimary_teeth,
+            screening.decayed_primary_teeth,
             tvNoOfDecayedPrimaryTeethTitle,
             tvNoOfDecayedPrimaryTeeth
         )
@@ -354,12 +354,12 @@ class ViewEncounterActivity : AppCompatActivity() {
             tvNoOfDecayedPermanentTeeth
         )
         hideBoolean(
-            screening.cavity_permanent_tooth,
+            screening.cavity_permanent_posterior_teeth,
             tvCavityPermanentToothTitle,
             tvCavityPermanentTooth
         )
         hideBoolean(
-            screening.cavity_permanent_anterior,
+            screening.cavity_permanent_anterior_teeth,
             tvCavityPermanentAnteriorTitle,
             tvCavityPermanentAnterior
         )

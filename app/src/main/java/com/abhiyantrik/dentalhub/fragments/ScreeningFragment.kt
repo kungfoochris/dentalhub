@@ -184,14 +184,14 @@ class ScreeningFragment : Fragment() {
                 spinnerRisk.setSelection(indexofRisk)
             }
 
-            if (screening.decayed_pimary_teeth != 0) spinnerNoOfDecayedPrimaryTeeth
-                .setSelection(screening.decayed_pimary_teeth)
+            if (screening.decayed_primary_teeth != 0) spinnerNoOfDecayedPrimaryTeeth
+                .setSelection(screening.decayed_primary_teeth)
             if (screening.decayed_permanent_teeth != 0) spinnerNoOfDecayedPermanentTeeth
                 .setSelection(screening.decayed_permanent_teeth)
 
-            if (screening.cavity_permanent_anterior) checkBoxCavityPermanentAnterior.isChecked =
+            if (screening.cavity_permanent_anterior_teeth) checkBoxCavityPermanentAnterior.isChecked =
                 true
-            if (screening.cavity_permanent_tooth) checkBoxCavityPermanentTooth.isChecked = true
+            if (screening.cavity_permanent_posterior_teeth) checkBoxCavityPermanentTooth.isChecked = true
             if (screening.reversible_pulpitis) checkBoxReversiblePulpitis.isChecked = true
             if (screening.need_art_filling) checkBoxNeedARTFilling.isChecked = true
             if (screening.need_sealant) checkBoxNeedSealant.isChecked = true

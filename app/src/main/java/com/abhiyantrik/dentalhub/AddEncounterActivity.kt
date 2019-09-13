@@ -281,9 +281,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         screening.carries_risk = carriesRisk
         try {
-            screening.decayed_pimary_teeth = decayedPrimaryTeeth.toInt()
+            screening.decayed_primary_teeth = decayedPrimaryTeeth.toInt()
         } catch (e: NumberFormatException) {
-            screening.decayed_pimary_teeth = 0
+            screening.decayed_primary_teeth = 0
         }
         try {
             screening.decayed_permanent_teeth = decayedPermanentTeeth.toInt()
@@ -291,8 +291,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
             screening.decayed_permanent_teeth = 0
         }
-        screening.cavity_permanent_tooth = cavityPermanentTooth
-        screening.cavity_permanent_anterior = cavityPermanentAnterior
+        screening.cavity_permanent_posterior_teeth = cavityPermanentTooth
+        screening.cavity_permanent_anterior_teeth = cavityPermanentAnterior
         screening.active_infection = activeInfection
         screening.need_art_filling = needARTFilling
         screening.need_sealant = needSealant
