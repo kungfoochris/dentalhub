@@ -192,10 +192,10 @@ class MainActivity : AppCompatActivity() {
         }
         fabBtnSync.setOnClickListener {
             Log.d(TAG, "startSync")
-            if(DentalApp.uploadSyncRunning){
+            if(!DentalApp.uploadSyncRunning){
                 startService(Intent(this, SyncService::class.java))
             }
-            if(DentalApp.downloadSyncRunning){
+            if(!DentalApp.downloadSyncRunning){
                 startService(Intent(this, SyncDownloadService::class.java))
             }
             //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
