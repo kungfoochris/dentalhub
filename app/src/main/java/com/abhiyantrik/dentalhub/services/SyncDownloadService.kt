@@ -33,7 +33,13 @@ class SyncDownloadService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         patientsBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Patient::class.java)
+        DentalApp.downloadSyncRunning = true
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DentalApp.downloadSyncRunning = false
     }
 
     private fun loadPatientData() {
