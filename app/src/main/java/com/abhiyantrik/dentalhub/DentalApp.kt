@@ -57,6 +57,9 @@ class DentalApp : MultiDexApplication() {
         var editableDuration: Long = 86400
         var fullName = ""
 
+        var uploadSyncRunning = false
+        var downloadSyncRunning = false
+
         var activitySuggestions = mutableSetOf<String>()
 
 
