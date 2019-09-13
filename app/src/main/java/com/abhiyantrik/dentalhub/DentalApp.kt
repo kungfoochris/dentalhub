@@ -59,7 +59,9 @@ class DentalApp : MultiDexApplication() {
 
         var lastRecallDate = ""
         var lastRecallTime = ""
-        var lastDob = ""
+        var lastDobYearIndex = 0
+        var lastDobMonthIndex = 0
+        var lastDobDayIndex = 0
 
 
         var uploadSyncRunning = false
