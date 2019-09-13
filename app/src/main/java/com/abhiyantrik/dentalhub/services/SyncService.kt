@@ -64,6 +64,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
+        DentalApp.uploadSyncRunning = true
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -79,6 +80,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
     override fun onDestroy() {
         DentalApp.cancelNotification(applicationContext, 1001)
+        DentalApp.uploadSyncRunning = false
         super.onDestroy()
         networkStateReceiver.removeListener(this)
         this.unregisterReceiver(networkStateReceiver)
