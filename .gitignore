@@ -15,3 +15,4 @@
 .externalNativeBuild
 /.idea/sonarlint/*
 /app/release
+/app/objectbox-models
