@@ -132,7 +132,9 @@ class DentalApp : MultiDexApplication() {
             removeFromPreference(context, Constants.PREF_AUTH_EMAIL)
             removeFromPreference(context, Constants.PREF_AUTH_PASSWORD)
             removeFromPreference(context, Constants.PREF_AUTH_SOCIAL)
-            removeFromPreference(context, "SELECTED_LOCATION")
+            removeFromPreference(context, Constants.PREF_ACTIVITY_NAME)
+            removeFromPreference(context, Constants.PREF_SELECTED_LOCATION_ID)
+            removeFromPreference(context, Constants.PREF_SELECTED_LOCATION_NAME)
         }
 
         fun isConnectedToWifi(context: Context): Boolean {
