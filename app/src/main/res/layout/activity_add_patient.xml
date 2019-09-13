@@ -137,9 +137,15 @@
                         android:text="@string/date_of_birth_with_format"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <LinearLayout
+                <HorizontalScrollView
                         android:layout_weight="@dimen/form_col_2_weight"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="left"
+                            android:orientation="horizontal"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     <Spinner
                             android:background="@drawable/spinner"
@@ -165,7 +171,7 @@
                             android:layout_marginStart="4dp"
                             android:layout_height="wrap_content" />
                 </LinearLayout>
-
+                </HorizontalScrollView>
             </LinearLayout>
             <LinearLayout
                     android:weightSum="1"
