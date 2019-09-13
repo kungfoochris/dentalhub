@@ -8,11 +8,11 @@
         android:id="@+id/mainActivityLayout"
         android:orientation="vertical"
         tools:context=".MainActivity"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         android:background="@color/grey_50"
 >
     <androidx.cardview.widget.CardView
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:id="@+id/profileView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"
@@ -70,6 +70,8 @@
     </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:id="@+id/recyclerView"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -124,5 +126,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
+<fragment
+        android:id="@+id/tickerFragment"
+        android:name="com.abhiyantrik.dentalhub.fragments.TickerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
