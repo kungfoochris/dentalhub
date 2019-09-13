@@ -5,10 +5,11 @@
         android:layout_height="match_parent"
         >
     <LinearLayout
-            android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:padding="8dp"
             >
         <RadioGroup android:id="@+id/rgReferrals"

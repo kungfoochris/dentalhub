@@ -80,9 +80,13 @@ class ReferralFragment : Fragment() {
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
 
 
+        rgReferrals.check(R.id.radioHealthPost)
 
         etRecallDate = view.findViewById(R.id.etRecallDate)
         etRecallTime = view.findViewById(R.id.etRecallTime)
+
+        etRecallDate.setText(DentalApp.lastRecallDate)
+        etRecallTime.setText(DentalApp.lastRecallDate)
 
         rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.radioOther) {
@@ -234,6 +238,8 @@ class ReferralFragment : Fragment() {
 
                 val recallDate = etRecallDate.text.toString()
                 val recallTime = etRecallTime.text.toString()
+                DentalApp.lastRecallDate = recallDate
+                DentalApp.lastRecallTime = recallTime
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
                 referralFormCommunicator.updateRecallDate(recallDate, recallTime)
 

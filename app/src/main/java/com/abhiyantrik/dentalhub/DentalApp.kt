@@ -57,6 +57,13 @@ class DentalApp : MultiDexApplication() {
         var editableDuration: Long = 86400
         var fullName = ""
 
+        var lastRecallDate = ""
+        var lastRecallTime = ""
+        var lastDobYearIndex = 0
+        var lastDobMonthIndex = 0
+        var lastDobDayIndex = 0
+
+
         var uploadSyncRunning = false
         var downloadSyncRunning = false
 

@@ -269,6 +269,9 @@ class AddPatientActivity : AppCompatActivity() {
             spinnerDobYear.setSelection((startYear..currentYear).reversed().toList().indexOf(dobYear.toInt()))
         } else {
             title = resources.getString(R.string.add_new_patient)
+            spinnerDobDay.setSelection(DentalApp.lastDobDayIndex)
+            spinnerDobMonth.setSelection(DentalApp.lastDobMonthIndex)
+            spinnerDobYear.setSelection(DentalApp.lastDobYearIndex)
             setupDistricts(35) // set default as kaski 35 is remote_id of Kaski District
         }
     }
@@ -360,6 +363,10 @@ class AddPatientActivity : AppCompatActivity() {
     }
 
     private fun getFormattedDob(): String {
+        DentalApp.lastDobDayIndex = spinnerDobDay.selectedItemPosition
+        DentalApp.lastDobMonthIndex = spinnerDobMonth.selectedItemPosition
+        DentalApp.lastDobYearIndex = spinnerDobYear.selectedItemPosition
+
         val dobYear = spinnerDobYear.selectedItem.toString()
         val dobMonth = DecimalFormat("00").format(spinnerDobMonth.selectedItemPosition + 1)
         val dobDay = DecimalFormat("00").format(spinnerDobDay.selectedItem)
