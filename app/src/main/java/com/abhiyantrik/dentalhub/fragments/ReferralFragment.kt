@@ -80,6 +80,7 @@ class ReferralFragment : Fragment() {
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
 
 
+
         etRecallDate = view.findViewById(R.id.etRecallDate)
         etRecallTime = view.findViewById(R.id.etRecallTime)
 
