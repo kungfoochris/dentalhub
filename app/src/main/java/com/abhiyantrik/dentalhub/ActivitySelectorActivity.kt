@@ -13,10 +13,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
 import android.widget.ArrayAdapter
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.text.Editable
 import android.text.TextWatcher
 
@@ -73,7 +69,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         val arrayAdapter = ArrayAdapter<String>(
             this,
-            android.R.layout.select_dialog_item, DentalApp.activitySuggestions.toList()
+            android.R.layout.simple_list_item_1, DentalApp.activitySuggestions.toTypedArray()
         )
         etOtherDetails.threshold = 1
         etOtherDetails.setAdapter(arrayAdapter)
