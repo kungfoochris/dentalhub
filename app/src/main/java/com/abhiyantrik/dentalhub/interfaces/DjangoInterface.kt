@@ -50,6 +50,31 @@ interface DjangoInterface {
         @Field("updated_at") updatedAt: String?
     ): Call<PatientModel>
 
+    @FormUrlEncoded
+    @PUT("patient/{patientId}")
+    fun updatePatient(
+        @Header("Authorization") token: String,
+        @Path("patientId")patientId: String,
+        @Field("first_name") firstName: String,
+        @Field("last_name") lastName: String,
+        @Field("gender") gender: String,
+        @Field("phone") phone: String,
+        @Field("middle_name") middleName: String?,
+        @Field("dob") dob: String,
+        @Field("education") education: String,
+        @Field("ward_id") ward: Int,
+        @Field("municipality_id") municipality: Int,
+        @Field("district_id") district: Int,
+        @Field("latitude") latitude: String,
+        @Field("longitude") longitude: String,
+        @Field("activityarea_id") activity_area_id: String,
+        @Field("geography_id") geography_id: String,
+        @Field("author") author: String,
+        @Field("updated_by") updated_by: String,
+        @Field("created_at") createdAt: String?,
+        @Field("updated_at") updatedAt: String?
+    ): Call<PatientModel>
+
     @GET("patients")
     fun getPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
 

@@ -14,6 +14,7 @@ import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.utils.AdapterHelper
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.DateValidator
+import com.abhiyantrik.dentalhub.workers.UpdatePatientWorker
 import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
 import com.google.firebase.perf.metrics.AddTrace
 import com.hornet.dateconverter.DateConverter
@@ -398,6 +399,12 @@ class AddPatientActivity : AppCompatActivity() {
             startActivity(viewPatientIntent)
             finish()
         } else {
+            val data = Data.Builder().putLong("PATIENT_ID",patient.id)
+            val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
+                .setInputData(data.build())
+                .setConstraints(DentalApp.uploadConstraints)
+                .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
             finish()
         }
     }
