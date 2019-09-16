@@ -27,8 +27,6 @@ class SyncDownloadService : Service() {
     private lateinit var treatmentsBox: Box<com.abhiyantrik.dentalhub.entities.Treatment>
     private lateinit var referralsBox: Box<com.abhiyantrik.dentalhub.entities.Referral>
 
-    var downloadedPatients = mutableListOf<Patient>()
-
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
@@ -89,7 +87,6 @@ class SyncDownloadService : Service() {
                                         "Not downloading, already exists."
                                     )
                                 }else{
-                                    downloadedPatients.add(patient)
                                     val patientEntity = com.abhiyantrik.dentalhub.entities.Patient()
                                     patientEntity.remote_id = patient.id
                                     patientEntity.first_name = patient.first_name
