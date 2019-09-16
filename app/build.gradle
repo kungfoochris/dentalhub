@@ -28,6 +28,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 configurations {
@@ -36,6 +44,8 @@ configurations {
 }
 
 dependencies {
+    def work_version = "2.2.0"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -52,6 +62,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:18.0.0'
     //implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation 'com.google.firebase:firebase-perf:18.0.1'
+
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
 
 
     implementation 'com.google.android.gms:play-services-location:17.0.0'
