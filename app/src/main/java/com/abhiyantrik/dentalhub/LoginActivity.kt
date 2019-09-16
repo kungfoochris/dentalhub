@@ -78,8 +78,11 @@ class LoginActivity : Activity() {
     @AddTrace(name = "processLogin", enabled = true /* optional */)
     private fun processLogin() {
         val view = this.currentFocus
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        if(view!=null){
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
 
         Log.d(TAG, "processLogin()")
         loading.visibility = View.VISIBLE
