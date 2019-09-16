@@ -50,7 +50,7 @@ class SplashActivity : Activity() {
 //                    if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty()){
 //                        startActivity(Intent(this, LocationSelectorActivity::class.java))
 //                    }
-                    if (selectedLocationId.isNullOrEmpty() || selectedActivityId.isNullOrEmpty()) {
+                    if (selectedActivityName.isEmpty() || selectedLocationName.isEmpty()) {
                         startActivity(Intent(this, LocationSelectorActivity::class.java))
                     } else {
                         DentalApp.fullName = DentalApp.readFromPreference(
