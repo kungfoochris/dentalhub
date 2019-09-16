@@ -30,6 +30,14 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters): Worker(
     }
 
     private fun downloadPatients() {
+        DentalApp.displayNotification(
+            applicationContext,
+            1001,
+            "Syncing...",
+            "Downloading patients ...",
+            "Downloading patients ..."
+        )
+
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.getPatients("JWT $token")
@@ -99,6 +107,8 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters): Worker(
             }
 
         }
+
+        DentalApp.cancelNotification(applicationContext, 1001)
     }
 
     private fun loadEncounterData(patientId: String) {

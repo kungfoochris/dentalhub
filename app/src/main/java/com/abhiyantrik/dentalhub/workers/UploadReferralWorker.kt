@@ -36,6 +36,14 @@ class UploadReferralWorker (context: Context, params: WorkerParameters): Worker(
     }
 
     private fun saveReferralToServer(encounterId: String, referral: Referral) {
+        DentalApp.displayNotification(
+            applicationContext,
+            1001,
+            "Syncing...",
+            "Uploading referral ...",
+            "Uploading referral ..."
+        )
+
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addReferral(
@@ -55,6 +63,8 @@ class UploadReferralWorker (context: Context, params: WorkerParameters): Worker(
         val dbReferralEntity = referralBox.query().equal(Referral_.encounterId, encounterId).build().findFirst()!!
         dbReferralEntity.remote_id = tempReferral.id
         referralBox.put(dbReferralEntity)
+
+        DentalApp.cancelNotification(applicationContext, 1001)
 
     }
 }

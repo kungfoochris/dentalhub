@@ -34,6 +34,14 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters): Worker(co
     }
 
     private fun saveHistoryToServer(encounterId: String,history: History) {
+        DentalApp.displayNotification(
+            applicationContext,
+            1001,
+            "Syncing...",
+            "Uploading history ...",
+            "Uploading history ..."
+        )
+
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addHistory(
@@ -58,5 +66,7 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters): Worker(co
         val dbHistoryEntity = historyBox.query().equal(History_.encounterId, encounterId).build().findFirst()!!
         dbHistoryEntity.remote_id = tempHistory.id
         historyBox.put(dbHistoryEntity)
+
+        DentalApp.cancelNotification(applicationContext, 1001)
     }
 }

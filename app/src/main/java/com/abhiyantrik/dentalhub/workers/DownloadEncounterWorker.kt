@@ -40,7 +40,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
     }
 
     private fun downloadEncounters(patientId: String) {
-
+        DentalApp.displayNotification(
+            applicationContext,
+            1001,
+            "Syncing...",
+            "Downloading encounters ...",
+            "Downloading encounters ..."
+        )
         val dbPatientEntity = patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -223,6 +229,8 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
 
 
         }
+
+        DentalApp.cancelNotification(applicationContext, 1001)
     }
 
 }

@@ -33,6 +33,14 @@ class UploadScreeningWorker (context: Context, params: WorkerParameters): Worker
     }
 
     private fun saveScreeningToServer(encounterId: String, screening: Screening) {
+        DentalApp.displayNotification(
+            applicationContext,
+            1001,
+            "Syncing...",
+            "Uploading screening ...",
+            "Uploading screening ..."
+        )
+
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addScreening(
@@ -57,6 +65,8 @@ class UploadScreeningWorker (context: Context, params: WorkerParameters): Worker
         val dbScreeningEntity = screeningBox.query().equal(Screening_.encounterId, encounterId).build().findFirst()!!
         dbScreeningEntity.remote_id = tempScreening.id
         screeningBox.put(dbScreeningEntity)
+
+        DentalApp.cancelNotification(applicationContext, 1001)
 
     }
 }

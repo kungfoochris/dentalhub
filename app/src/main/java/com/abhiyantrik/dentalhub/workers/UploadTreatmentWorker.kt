@@ -33,6 +33,14 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters): Worker(
     }
 
     private fun saveTreatmentToServer(encounterId: String, treatment: Treatment) {
+        DentalApp.displayNotification(
+            applicationContext,
+            1001,
+            "Syncing...",
+            "Uploading treatment ...",
+            "Uploading treatment ..."
+        )
+
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addTreatment(
@@ -108,5 +116,7 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters): Worker(
         val dbTreatmentEntity = treatmentBox.query().equal(Treatment_.encounterId, encounterId).build().findFirst()!!
         dbTreatmentEntity.remote_id = tempTreatment.id
         treatmentBox.put(dbTreatmentEntity)
+
+        DentalApp.cancelNotification(applicationContext, 1001)
     }
 }
