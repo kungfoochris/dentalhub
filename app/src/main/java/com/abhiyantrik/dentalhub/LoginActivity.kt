@@ -20,6 +20,10 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.inputmethod.InputMethodManager
+
 
 class LoginActivity : Activity() {
     private lateinit var etEmail: EditText
@@ -73,6 +77,10 @@ class LoginActivity : Activity() {
 
     @AddTrace(name = "processLogin", enabled = true /* optional */)
     private fun processLogin() {
+        val view = this.currentFocus
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+
         Log.d(TAG, "processLogin()")
         loading.visibility = View.VISIBLE
         tvErrorMessage.visibility = View.GONE
