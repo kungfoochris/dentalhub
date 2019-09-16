@@ -7,14 +7,20 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.utils.AdapterHelper
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.DateValidator
+import com.abhiyantrik.dentalhub.workers.UpdatePatientWorker
+import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
 import com.google.firebase.perf.metrics.AddTrace
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import java.text.DecimalFormat
+import java.util.concurrent.TimeUnit
 
 class AddPatientActivity : AppCompatActivity() {
 
@@ -380,10 +386,25 @@ class AddPatientActivity : AppCompatActivity() {
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
         if (action == "new") {
             val pt = patientBox.query().orderDesc(Patient_.id).build().findFirst()!!
+
+            val data = Data.Builder().putLong("PATIENT_ID",pt.id)
+            val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
+                .setInputData(data.build())
+                .setConstraints(DentalApp.uploadConstraints)
+                .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+
+
             viewPatientIntent.putExtra("PATIENT_ID", pt.id)
             startActivity(viewPatientIntent)
             finish()
         } else {
+            val data = Data.Builder().putLong("PATIENT_ID",patient.id)
+            val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
+                .setInputData(data.build())
+                .setConstraints(DentalApp.uploadConstraints)
+                .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
             finish()
         }
     }

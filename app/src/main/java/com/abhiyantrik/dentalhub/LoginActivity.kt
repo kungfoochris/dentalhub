@@ -20,6 +20,10 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.inputmethod.InputMethodManager
+
 
 class LoginActivity : Activity() {
     private lateinit var etEmail: EditText
@@ -73,6 +77,13 @@ class LoginActivity : Activity() {
 
     @AddTrace(name = "processLogin", enabled = true /* optional */)
     private fun processLogin() {
+        val view = this.currentFocus
+        if(view!=null){
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
+
         Log.d(TAG, "processLogin()")
         loading.visibility = View.VISIBLE
         tvErrorMessage.visibility = View.GONE
@@ -105,14 +116,17 @@ class LoginActivity : Activity() {
                         400 -> {
                             tvErrorMessage.text = getString(R.string.error_http_400)
                             tvErrorMessage.visibility = View.VISIBLE
+                            loading.visibility = View.GONE
                         }
                         404 -> {
                             tvErrorMessage.text = getString(R.string.error_http_404)
                             tvErrorMessage.visibility = View.VISIBLE
+                            loading.visibility = View.GONE
                         }
                         else -> {
                             tvErrorMessage.text = getString(R.string.error_http_500)
                             tvErrorMessage.visibility = View.VISIBLE
+                            loading.visibility = View.GONE
                         }
                     }
                     loading.visibility = View.GONE
@@ -120,6 +134,7 @@ class LoginActivity : Activity() {
                     if (response.code() == 400) {
                         tvErrorMessage.text = getString(R.string.username_password_dont_matched)
                         tvErrorMessage.visibility = View.VISIBLE
+                        loading.visibility = View.GONE
                     }
                     Log.d("response CODE", response.code().toString())
                     Log.d("response BODY", response.errorBody().toString())

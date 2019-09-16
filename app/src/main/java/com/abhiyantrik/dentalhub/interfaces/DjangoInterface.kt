@@ -4,10 +4,7 @@ import android.content.Context
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Patient
-import com.abhiyantrik.dentalhub.models.District
-import com.abhiyantrik.dentalhub.models.Geography
-import com.abhiyantrik.dentalhub.models.LoginResponse
-import com.abhiyantrik.dentalhub.models.Profile
+import com.abhiyantrik.dentalhub.models.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -33,6 +30,31 @@ interface DjangoInterface {
     fun addPatient(
         @Header("Authorization") token: String,
         @Field("id") id: Long,
+        @Field("first_name") firstName: String,
+        @Field("last_name") lastName: String,
+        @Field("gender") gender: String,
+        @Field("phone") phone: String,
+        @Field("middle_name") middleName: String?,
+        @Field("dob") dob: String,
+        @Field("education") education: String,
+        @Field("ward_id") ward: Int,
+        @Field("municipality_id") municipality: Int,
+        @Field("district_id") district: Int,
+        @Field("latitude") latitude: String,
+        @Field("longitude") longitude: String,
+        @Field("activityarea_id") activity_area_id: String,
+        @Field("geography_id") geography_id: String,
+        @Field("author") author: String,
+        @Field("updated_by") updated_by: String,
+        @Field("created_at") createdAt: String?,
+        @Field("updated_at") updatedAt: String?
+    ): Call<PatientModel>
+
+    @FormUrlEncoded
+    @PUT("patient/{patientId}")
+    fun updatePatient(
+        @Header("Authorization") token: String,
+        @Path("patientId")patientId: String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
         @Field("gender") gender: String,
@@ -223,7 +245,7 @@ interface DjangoInterface {
     fun listGeographies(@Header("Authorization") token: String): Call<List<Geography>>
 
     @GET("activities")
-    fun listActivities(): Call<List<Activity>>
+    fun listActivities(): Call<List<ActivitySuggestion>>
 
     @GET("profile")
     fun fetchProfile(@Header("Authorization") token: String): Call<Profile>

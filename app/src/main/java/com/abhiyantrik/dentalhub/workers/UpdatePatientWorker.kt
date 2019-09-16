@@ -13,26 +13,24 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
-class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(context, params) {
+class UpdatePatientWorker(context: Context, params: WorkerParameters): Worker(context, params) {
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<Encounter>
 
     override fun doWork(): Result {
-        return try {
+        return try{
             patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
             encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
 
             val patientId = inputData.getLong("PATIENT_ID", 0)
-            val dbPatientEntity = patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
+            val dbPatientEntity = patientsBox.query().equal(Patient_.id, patientId).equal(Patient_.updated, true).build().findFirst()
             savePatientToServer(dbPatientEntity!!)
-            return Result.success()
 
+            Result.success()
         }catch (e: Exception){
             Result.failure()
-
         }
-
     }
 
     private fun savePatientToServer(patient: Patient) {
@@ -45,9 +43,9 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
         )
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
-        val call = panelService.addPatient(
+        val call = panelService.updatePatient(
             "JWT $token",
-            patient.id,
+            patient.remote_id,
             patient.first_name,
             patient.last_name,
             patient.gender,
@@ -71,7 +69,6 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
         val tempPatient = call.execute().body()
         val dbPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
         dbPatient!!.remote_id = tempPatient!!.uid
-        dbPatient.uploaded = true
         dbPatient.updated = false
         println("Patient uid is ${tempPatient.uid}")
         patientsBox.put(dbPatient)
@@ -86,11 +83,9 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
                     .setInputData(data.build())
                     .setConstraints(DentalApp.uploadConstraints)
                     .setInitialDelay(100,
-                    TimeUnit.MILLISECONDS).build()
+                        TimeUnit.MILLISECONDS).build()
                 WorkManager.getInstance(applicationContext).enqueue(uploadEncounterWorkerRequest)
             }
         }
-
     }
-
 }

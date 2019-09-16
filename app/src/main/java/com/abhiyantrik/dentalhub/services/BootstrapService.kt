@@ -69,40 +69,40 @@ class BootstrapService : Service() {
 //
 //    }
 
-    private fun listActivities() {
-        Log.d(TAG, "listActivities()")
-        val panelService = DjangoInterface.create(this)
-        val call = panelService.listActivities()
-        call.enqueue(object : Callback<List<Activity>> {
-            override fun onFailure(call: Call<List<Activity>>, t: Throwable) {
-                Log.d(TAG, "onFailure()")
-                Log.d(TAG, t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<List<Activity>>,
-                response: Response<List<Activity>>
-            ) {
-                Log.d(TAG, "onResponse()")
-                if (null != response.body()) {
-                    when (response.code()) {
-                        200 -> {
-                            val allActivities: List<Activity> = response.body() as List<Activity>
-                            for (activity in allActivities) {
-                                val a = activitiesBox.query().equal(Activity_.name, activity.name)
-                                    .build().findFirst()
-                                if (a == null) {
-                                    activity.remote_id = activity.id
-                                    activity.id = 0
-                                    activitiesBox.put(activity)
-                                }
-
-                            }
-                        }
-                    }
-                }
-            }
-
-        })
-    }
+//    private fun listActivities() {
+//        Log.d(TAG, "listActivities()")
+//        val panelService = DjangoInterface.create(this)
+//        val call = panelService.listActivities()
+//        call.enqueue(object : Callback<List<Activity>> {
+//            override fun onFailure(call: Call<List<Activity>>, t: Throwable) {
+//                Log.d(TAG, "onFailure()")
+//                Log.d(TAG, t.toString())
+//            }
+//
+//            override fun onResponse(
+//                call: Call<List<Activity>>,
+//                response: Response<List<Activity>>
+//            ) {
+//                Log.d(TAG, "onResponse()")
+//                if (null != response.body()) {
+//                    when (response.code()) {
+//                        200 -> {
+//                            val allActivities: List<Activity> = response.body() as List<Activity>
+//                            for (activity in allActivities) {
+//                                val a = activitiesBox.query().equal(Activity_.name, activity.name)
+//                                    .build().findFirst()
+//                                if (a == null) {
+//                                    activity.remote_id = activity.id
+//                                    activity.id = 0
+//                                    activitiesBox.put(activity)
+//                                }
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//        })
+//    }
 }

@@ -66,6 +66,7 @@ class DateHelper {
         }
 
         fun formatNepaliDate(context: Context, date: String): String {
+            Log.d("FORMAT: ", date)
             var nepaliFormattedDate = ""
             try {
                 // write the formatting logic

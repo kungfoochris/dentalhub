@@ -7,6 +7,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.multidex.MultiDexApplication
 import androidx.work.Configuration
+import androidx.work.Constraints
+import androidx.work.NetworkType
 import com.abhiyantrik.dentalhub.models.Location
 import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper
@@ -68,6 +70,15 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
 
         var uploadSyncRunning = false
         var downloadSyncRunning = false
+
+        var uploadConstraints: Constraints  = Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        var downloadConstraints: Constraints  = Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
 
         var activitySuggestions = mutableSetOf<String>()
 
