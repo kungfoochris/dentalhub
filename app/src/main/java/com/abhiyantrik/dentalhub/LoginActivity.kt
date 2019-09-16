@@ -113,14 +113,17 @@ class LoginActivity : Activity() {
                         400 -> {
                             tvErrorMessage.text = getString(R.string.error_http_400)
                             tvErrorMessage.visibility = View.VISIBLE
+                            loading.visibility = View.GONE
                         }
                         404 -> {
                             tvErrorMessage.text = getString(R.string.error_http_404)
                             tvErrorMessage.visibility = View.VISIBLE
+                            loading.visibility = View.GONE
                         }
                         else -> {
                             tvErrorMessage.text = getString(R.string.error_http_500)
                             tvErrorMessage.visibility = View.VISIBLE
+                            loading.visibility = View.GONE
                         }
                     }
                     loading.visibility = View.GONE
@@ -128,6 +131,7 @@ class LoginActivity : Activity() {
                     if (response.code() == 400) {
                         tvErrorMessage.text = getString(R.string.username_password_dont_matched)
                         tvErrorMessage.visibility = View.VISIBLE
+                        loading.visibility = View.GONE
                     }
                     Log.d("response CODE", response.code().toString())
                     Log.d("response BODY", response.errorBody().toString())
