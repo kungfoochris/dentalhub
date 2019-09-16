@@ -57,6 +57,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
             if(encountersBox.query().equal(Encounter_.remote_id, encounter.id.toString()).build().find().size > 0){
                 Log.d("", "Encounter already downloaded.")
             }else{
+
                 val encounterEntity = com.abhiyantrik.dentalhub.entities.Encounter()
                 encounterEntity.encounter_type = encounter.encounter_type
                 encounterEntity.created_at = encounter.created_at
@@ -74,6 +75,14 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
                 if(historyBox.query().equal(History_.remote_id, encounter.history!!.id.toString()).build().find().size > 0){
                     Log.d("History","Already downloaded")
                 }else{
+                    DentalApp.displayNotification(
+                        applicationContext,
+                        1001,
+                        "Syncing...",
+                        "Downloading history ...",
+                        "Downloading history ..."
+                    )
+
                     val historyEntity = History()
                     if(encounter.history != null ){
                         historyEntity.remote_id = encounter.history!!.id.toString()
@@ -101,6 +110,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
                 if(screeningBox.query().equal(Screening_.remote_id, encounter.screening!!.id.toString()).build().find().size > 0){
                     Log.d("Screening","Already downloaded")
                 }else{
+                    DentalApp.displayNotification(
+                        applicationContext,
+                        1001,
+                        "Syncing...",
+                        "Downloading screening ...",
+                        "Downloading screening ..."
+                    )
                     val screeningEntity = Screening()
                     if(encounter.screening != null ){
                         screeningEntity.remote_id = encounter.screening!!.id.toString()
@@ -128,6 +144,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
                 if(treatmentsBox.query().equal(Treatment_.remote_id, encounter.treatment!!.id.toString()).build().find().size > 0){
                     Log.d("Screening","Already downloaded")
                 }else{
+                    DentalApp.displayNotification(
+                        applicationContext,
+                        1001,
+                        "Syncing...",
+                        "Downloading treatment ...",
+                        "Downloading treatment ..."
+                    )
                     val treatmentEntity = Treatment()
                     if(encounter.treatment != null ){
                         treatmentEntity.remote_id = encounter.treatment!!.id.toString()
@@ -209,6 +232,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
                 if(referralsBox.query().equal(Referral_.remote_id, encounter.treatment!!.id.toString()).build().find().size > 0){
                     Log.d("Screening","Already downloaded")
                 }else{
+                    DentalApp.displayNotification(
+                        applicationContext,
+                        1001,
+                        "Syncing...",
+                        "Downloading referral ...",
+                        "Downloading referral ..."
+                    )
                     val referralEntity = Referral()
                     if(encounter.referral != null ){
                         referralEntity.remote_id = encounter.referral!!.id.toString()
