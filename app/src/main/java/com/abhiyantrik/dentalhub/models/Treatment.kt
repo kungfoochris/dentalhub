@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Treatment : Parcelable {
-    var id: Long = 0
+    var id: String = ""
     var sdf_whole_mouth: Boolean = false
     var fv_applied: Boolean = false
     var treatment_plan_complete: Boolean = false

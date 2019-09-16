@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Referral : Parcelable {
-    var id: Long = 0
+    var id: String = ""
     var no_referral: Boolean = false
     var health_post: Boolean = false
     var hygienist: Boolean = false

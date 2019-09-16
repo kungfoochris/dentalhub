@@ -21,6 +21,7 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
@@ -94,8 +95,8 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         //displayNotification()
         allPatients = patientsBox.query().build().find()
         for (patient in allPatients) {
-            val data = Data.Builder().putLong("ID",patient.id)
-            val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>().setInputData(data.build()).build()
+            val data = Data.Builder().putLong("PATIENT_ID",patient.id)
+            val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>().setInputData(data.build()).setInitialDelay(100,TimeUnit.MILLISECONDS).build()
             WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
         }
     }
@@ -213,6 +214,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     //    @AddTrace(name = "syncService_saveScreeningToServer()", enabled = true /* optional */)
     private fun saveScreeningToServer(remoteId: String, screening: Screening, encounterId: Long) {
         Log.d("SyncService", "saveScreeningToServer()")
+        Log.d("saveScreeningToServer", screening.toString())
         Log.d("saveScreeningToServer", screening.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
@@ -546,8 +548,8 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                             val dbEncounter =
                                 encountersBox.query().equal(Encounter_.id, tempEncounter.id).build()
                                     .findFirst()
-                            dbEncounter!!.remote_id = serverEncounter.uid
-                            println("Encounter uid is : ${serverEncounter.uid}")
+                            dbEncounter!!.remote_id = serverEncounter.id
+                            println("Encounter uid is : ${serverEncounter.id}")
                             dbEncounter.uploaded = true
                             encountersBox.put(dbEncounter)
                             saveAllFragmentsToServer(dbEncounter)
