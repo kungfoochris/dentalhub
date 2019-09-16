@@ -66,16 +66,16 @@
             </LinearLayout>
         </LinearLayout>
 
-
     </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:id="@+id/recyclerView"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
             android:focusable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileView"
