@@ -344,6 +344,9 @@ class SyncDownloadService : Service() {
 
                             }
                         }
+                        else -> {
+                            Log.d(TAG, response.code().toString())
+                        }
                     }
                 }
             }
