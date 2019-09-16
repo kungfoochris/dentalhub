@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub.entities
 import android.os.Parcelable
 import android.util.Log
 import com.abhiyantrik.dentalhub.ObjectBox
+import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
@@ -53,7 +54,12 @@ class Patient : Parcelable {
 
 
     fun referall(): String {
-        return "$recall_date $recall_time"
+        return if(recall_date.isEmpty()){
+            DateHelper.getCurrentDate()
+        }else {
+            "$recall_date $recall_time"
+        }
+
     }
 
     fun address(): String {
