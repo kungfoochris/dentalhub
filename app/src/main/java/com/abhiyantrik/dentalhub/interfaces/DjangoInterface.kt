@@ -4,10 +4,7 @@ import android.content.Context
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Patient
-import com.abhiyantrik.dentalhub.models.District
-import com.abhiyantrik.dentalhub.models.Geography
-import com.abhiyantrik.dentalhub.models.LoginResponse
-import com.abhiyantrik.dentalhub.models.Profile
+import com.abhiyantrik.dentalhub.models.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -223,7 +220,7 @@ interface DjangoInterface {
     fun listGeographies(@Header("Authorization") token: String): Call<List<Geography>>
 
     @GET("activities")
-    fun listActivities(): Call<List<Activity>>
+    fun listActivities(): Call<List<ActivitySuggestion>>
 
     @GET("profile")
     fun fetchProfile(@Header("Authorization") token: String): Call<Profile>

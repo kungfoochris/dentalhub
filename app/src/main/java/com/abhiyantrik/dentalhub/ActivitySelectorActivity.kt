@@ -15,6 +15,7 @@ import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
 import android.widget.ArrayAdapter
 import android.text.Editable
 import android.text.TextWatcher
+import com.abhiyantrik.dentalhub.models.ActivitySuggestion
 
 
 class ActivitySelectorActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
 
+    lateinit var arrayAdapter: ArrayAdapter<String>
     private lateinit var etOtherDetails: AutoCompleteTextView
     var selectedActivity = ""
     var selectedActivityId = ""
@@ -64,10 +66,11 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         // load the id and name of the activity
         loadActivityId()
+        loadActivitySuggestions()
 
         Log.d("Suggestions", DentalApp.activitySuggestions.toString())
 
-        val arrayAdapter = ArrayAdapter<String>(
+        arrayAdapter = ArrayAdapter<String>(
             this,
             android.R.layout.simple_list_item_1, DentalApp.activitySuggestions.toTypedArray()
         )
@@ -90,7 +93,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         })
 
-        rgActivities.setOnCheckedChangeListener { radioGroup, i ->
+        rgActivities.setOnCheckedChangeListener { _, i ->
             if (i == R.id.radioHealthPostActivity) {
                 etOtherDetails.setText("")
                 etOtherDetails.visibility = View.GONE
@@ -167,6 +170,31 @@ class ActivitySelectorActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    private fun loadActivitySuggestions() {
+        val panelService = DjangoInterface.create(context)
+        val call = panelService.listActivities()
+        call.enqueue(object:Callback<List<ActivitySuggestion>>{
+            override fun onFailure(call: Call<List<ActivitySuggestion>>, t: Throwable) {
+                Log.d("loadActivityId()", "onFailure")
+            }
+
+            override fun onResponse(
+                call: Call<List<ActivitySuggestion>>,
+                response: Response<List<ActivitySuggestion>>
+            ) {
+
+                val allActivitySuggestions = response.body() as List<ActivitySuggestion>
+                for(act in allActivitySuggestions){
+                    DentalApp.activitySuggestions.add(act.area)
+                }
+                arrayAdapter.notifyDataSetChanged()
+            }
+
+        })
+
+
     }
 
     private fun loadActivityId() {
