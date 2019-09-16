@@ -5,12 +5,16 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
 import android.util.Log
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.broadcastreceivers.NetworkStateReceiver
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
 import io.objectbox.Box
@@ -87,7 +91,13 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     private fun startSync() {
-        displayNotification()
+        //displayNotification()
+        allPatients = patientsBox.query().build().find()
+        for (patient in allPatients) {
+            val data = Data.Builder().putLong("ID",patient.id)
+            val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>().setInputData(data.build()).build()
+            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+        }
     }
 
     override fun networkAvailable() {

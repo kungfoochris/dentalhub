@@ -6,13 +6,15 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.multidex.MultiDexApplication
+import androidx.work.Configuration
 import com.abhiyantrik.dentalhub.models.Location
 import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper
 
 
-class DentalApp : MultiDexApplication() {
+class DentalApp : MultiDexApplication(), Configuration.Provider{
 
+    override fun getWorkManagerConfiguration() = Configuration.Builder().setMinimumLoggingLevel(Log.VERBOSE).build()
 
     override fun onCreate() {
         super.onCreate()
