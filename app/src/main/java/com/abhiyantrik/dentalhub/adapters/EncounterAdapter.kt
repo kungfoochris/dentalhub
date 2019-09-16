@@ -65,7 +65,7 @@ class EncounterAdapter(
         private var ibEdit: ImageButton = itemView.findViewById(R.id.ibEdit)
 
         fun bindEncounter(encounter: Encounter) {
-            tvEncounterName.text = encounter.encounter_type
+            tvEncounterName.text = encounter.encounter_type + " " + encounter.other_problem
             tvEncounterDate.text = DateHelper.formatNepaliDate(context, encounter.created_at)
             if (encounter.isEditable()) {
                 ibEdit.visibility = View.VISIBLE
