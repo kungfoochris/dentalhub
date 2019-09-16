@@ -96,7 +96,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             val data = Data.Builder().putLong("PATIENT_ID",patient.id)
             val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
                 .setInputData(data.build())
-                .setConstraints(DentalApp.constraints)
+                .setConstraints(DentalApp.uploadConstraints)
                 .setInitialDelay(100,TimeUnit.MILLISECONDS).build()
             WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
         }

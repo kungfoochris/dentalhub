@@ -22,7 +22,6 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
         super.onCreate()
         ObjectBox.init(this)
 
-        constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 
         defaultChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name)
         syncChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name) + "-sync"
@@ -72,7 +71,14 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
         var uploadSyncRunning = false
         var downloadSyncRunning = false
 
-        lateinit var constraints: Constraints
+        var uploadConstraints: Constraints  = Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        var downloadConstraints: Constraints  = Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
 
         var activitySuggestions = mutableSetOf<String>()
 

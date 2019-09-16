@@ -42,7 +42,7 @@ class SyncDownloadService : Service() {
         //loadPatientData()
         val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
             .setInitialDelay(100, TimeUnit.MILLISECONDS)
-            .setConstraints(DentalApp.constraints)
+            .setConstraints(DentalApp.downloadConstraints)
             .build()
         WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
     }

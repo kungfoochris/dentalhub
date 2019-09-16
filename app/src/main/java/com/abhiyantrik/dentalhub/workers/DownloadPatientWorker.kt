@@ -115,7 +115,7 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters): Worker(
         val data = Data.Builder().putString("PATIENT_ID",patientId)
         val downloadEncounterWorkerRequest = OneTimeWorkRequestBuilder<DownloadEncounterWorker>()
             .setInputData(data.build())
-            .setConstraints(DentalApp.constraints)
+            .setConstraints(DentalApp.downloadConstraints)
             .setInitialDelay(100,
             TimeUnit.MILLISECONDS).build()
         WorkManager.getInstance(applicationContext).enqueue(downloadEncounterWorkerRequest)
