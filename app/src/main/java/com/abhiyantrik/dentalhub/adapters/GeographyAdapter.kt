@@ -1,7 +1,5 @@
 package com.abhiyantrik.dentalhub.adapters
 
-import com.abhiyantrik.dentalhub.models.Geography
-
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.R
+import com.abhiyantrik.dentalhub.models.Geography
 
 class GeographyAdapter(
     var context: Context,

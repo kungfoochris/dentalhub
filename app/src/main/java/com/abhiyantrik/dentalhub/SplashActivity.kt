@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import com.abhiyantrik.dentalhub.services.BootstrapService
 import com.google.firebase.perf.metrics.AddTrace
 
 class SplashActivity : Activity() {
@@ -22,27 +21,43 @@ class SplashActivity : Activity() {
         Handler().postDelayed({
             val token: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
             val email: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL, "")
-            val password: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_PASSWORD, "")
+            val password: String =
+                DentalApp.readFromPreference(context, Constants.PREF_AUTH_PASSWORD, "")
             if (token.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
-                val setupComplete = DentalApp.readFromPreference(context, Constants.PREF_SETUP_COMPLETE,"false")
-                if(setupComplete == "true") {
-                    val selectedLocationId = DentalApp.readFromPreference(context, Constants.PREF_SELECTED_LOCATION_ID, "")
-                    val selectedLocationName = DentalApp.readFromPreference(context, Constants.PREF_SELECTED_LOCATION_NAME, "")
-                    val selectedActivityName = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
-                    val selectedActivityId = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
-                    val remarks = DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
-
+                val setupComplete =
+                    DentalApp.readFromPreference(context, Constants.PREF_SETUP_COMPLETE, "false")
+                if (setupComplete == "true") {
+                    val selectedLocationId = DentalApp.readFromPreference(
+                        context,
+                        Constants.PREF_SELECTED_LOCATION_ID,
+                        ""
+                    )
+                    val selectedLocationName = DentalApp.readFromPreference(
+                        context,
+                        Constants.PREF_SELECTED_LOCATION_NAME,
+                        ""
+                    )
+                    val selectedActivityName =
+                        DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_NAME, "")
+                    val selectedActivityId =
+                        DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_ID, "")
+                    val remarks =
+                        DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
 
 
 //                    if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty()){
 //                        startActivity(Intent(this, LocationSelectorActivity::class.java))
 //                    }
-                    if(selectedLocationId.isNullOrEmpty() || selectedActivityId.isNullOrEmpty()){
+                    if (selectedLocationId.isNullOrEmpty() || selectedActivityId.isNullOrEmpty()) {
                         startActivity(Intent(this, LocationSelectorActivity::class.java))
                     } else {
-                        DentalApp.fullName = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME,"")
+                        DentalApp.fullName = DentalApp.readFromPreference(
+                            context,
+                            Constants.PREF_PROFILE_FULL_NAME,
+                            ""
+                        )
                         DentalApp.geography_id = selectedLocationId
                         DentalApp.geography_name = selectedLocationName
                         DentalApp.activity_id = selectedActivityId
@@ -50,7 +65,7 @@ class SplashActivity : Activity() {
                         DentalApp.activityRemarks = remarks
                         startActivity(Intent(this, MainActivity::class.java))
                     }
-                }else{
+                } else {
                     startActivity(Intent(this, SetupActivity::class.java))
                 }
 

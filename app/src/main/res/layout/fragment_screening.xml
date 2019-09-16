@@ -13,65 +13,72 @@
 
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/caries_risk"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <Spinner
                     android:id="@+id/spinnerRisk"
-                    android:layout_width="wrap_content"
+                    android:background="@drawable/spinner"
+                    android:layout_width="120dp"
                     android:layout_height="@dimen/spinner_default_height"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/decayed_primary_teeth"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <Spinner
                     android:id="@+id/spinnerNoOfDecayedPrimaryTeeth"
-                    android:layout_width="100dp"
+                    android:background="@drawable/spinner"
+                    android:layout_width="120dp"
                     android:dropDownWidth="75dp"
                     android:scrollbarSize="20dp"
                     android:layout_height="@dimen/spinner_default_height"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/decayed_permanent_teeth"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <Spinner
                     android:id="@+id/spinnerNoOfDecayedPermanentTeeth"
-                    android:layout_width="100dp"
+                    android:background="@drawable/spinner"
+                    android:layout_width="120dp"
                     android:dropDownWidth="75dp"
                     android:layout_height="@dimen/spinner_default_height"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/cavity_permanent_molar"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxCavityPermanentTooth"
@@ -82,14 +89,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/cavity_permanent_anterior"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxCavityPermanentAnterior"
@@ -100,14 +108,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="1"
                     android:text="@string/active_infection"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxActiveInfection"
@@ -118,14 +127,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/pain_due_to_reversible_pulpitis"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxReversiblePulpitis"
@@ -136,14 +146,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/need_sdf"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedSDF"
@@ -154,14 +165,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/need_sealant"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedSealant"
@@ -172,14 +184,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
                     android:text="@string/need_art_filling"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedARTFilling"
@@ -190,14 +203,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="1"
                     android:text="@string/need_extraction"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <CheckBox
                     android:id="@+id/checkBoxNeedExtraction"
@@ -208,14 +222,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="1"
                     android:text="@string/high_bp"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content" />
             <CheckBox
                     android:id="@+id/checkBoxHighBP"
@@ -227,14 +242,16 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <TextView
                     android:layout_weight="1"
                     android:text="@string/low_bp"
                     android:textSize="@dimen/default_font_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content" />
             <CheckBox
                     android:id="@+id/checkBoxLowBP"
@@ -246,14 +263,15 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="1"
                     android:textSize="@dimen/default_font_size"
                     android:text="@string/thyroid_disorder"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content" />
             <CheckBox
                     android:id="@+id/checkBoxThyroidDisorder"
@@ -266,10 +284,12 @@
 
         <LinearLayout
                 android:weightSum="1"
-                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                >
             <Button
                     android:id="@+id/btnBack"
                     android:layout_weight="0.5"

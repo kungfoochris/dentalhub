@@ -3,42 +3,48 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
->
+        >
     <LinearLayout
-            android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:padding="8dp"
-    >
+            >
         <RadioGroup android:id="@+id/rgReferrals"
-                    android:layout_width="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
+            <RadioButton
+                    android:id="@+id/radioNoReferral"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-            <RadioButton android:id="@+id/radioNoReferral"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/no_referral"/>
+                    android:text="@string/no_referral"/>
             <RadioButton android:id="@+id/radioHealthPost"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/health_post"/>
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/health_post"/>
             <RadioButton android:id="@+id/radioHygienist"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/hygienist"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hygienist"/>
             <RadioButton android:id="@+id/radioDentist"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/dentist"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dentist"/>
             <RadioButton android:id="@+id/radioGeneralPhysician"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/general_physician"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/general_physician"/>
             <RadioButton android:id="@+id/radioOther"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/other"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other"/>
         </RadioGroup>
         <EditText
                 android:visibility="gone"
@@ -46,26 +52,46 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:hint="@string/other"
-        />
-            <TextView
-                    android:id="@+id/tvRecallDateReferral"
-                    android:text="@string/recall_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            <EditText
-                    android:id="@+id/etRecallDate"
-                    android:hint="@string/recall_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                android:inputType="text"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                />
+        <TextView
+                android:id="@+id/tvRecallDateReferral"
+                android:text="@string/recall_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                />
+        <EditText
+                android:id="@+id/etRecallDate"
+                android:hint="@string/recall_date"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                />
         <EditText
                 android:id="@+id/etRecallTime"
                 android:hint="@string/recall_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                />
+        <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+        <LinearLayout
+                android:gravity="center"
+                android:layout_gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <RadioGroup
                     android:id="@+id/rgRecalls"
                     android:orientation="horizontal"
@@ -97,10 +123,12 @@
                         android:text="@string/one_year"/>
             </RadioGroup>
         </LinearLayout>
+        </HorizontalScrollView>
 
         <LinearLayout
                 android:weightSum="1"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -112,7 +140,7 @@
                     android:background="@drawable/default_button_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-            />
+                    />
             <Button
                     android:id="@+id/btnNext"
                     android:layout_weight="0.5"
@@ -121,7 +149,7 @@
                     android:background="@drawable/default_button_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-            />
+                    />
 
         </LinearLayout>
     </LinearLayout>

@@ -64,6 +64,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
+        DentalApp.uploadSyncRunning = true
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -79,6 +80,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
     override fun onDestroy() {
         DentalApp.cancelNotification(applicationContext, 1001)
+        DentalApp.uploadSyncRunning = false
         super.onDestroy()
         networkStateReceiver.removeListener(this)
         this.unregisterReceiver(networkStateReceiver)
@@ -208,10 +210,10 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             "JWT $token",
             remoteId,
             screening.carries_risk,
-            screening.decayed_pimary_teeth,
+            screening.decayed_primary_teeth,
             screening.decayed_permanent_teeth,
-            screening.cavity_permanent_anterior,
-            screening.cavity_permanent_tooth,
+            screening.cavity_permanent_anterior_teeth,
+            screening.cavity_permanent_posterior_teeth,
             screening.reversible_pulpitis,
             screening.need_art_filling,
             screening.need_sealant,
@@ -421,7 +423,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             patient.latitude,
             patient.longitude,
             patient.activityarea_id,
-            patient.geography_id
+            patient.geography_id,
+            patient.author,
+            patient.updated_by!!,
+            patient.created_at,
+            patient.updated_at
         )
         print("Response before")
         call.enqueue(object : Callback<PatientModel> {

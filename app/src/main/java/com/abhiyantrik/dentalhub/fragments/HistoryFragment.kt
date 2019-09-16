@@ -50,7 +50,6 @@ class HistoryFragment : Fragment() {
     private lateinit var btnSave: Button
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,14 +60,16 @@ class HistoryFragment : Fragment() {
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         historyBox = ObjectBox.boxStore.boxFor(History::class.java)
 
-        checkBoxBloodDisorderOrBleedingProblem = view.findViewById(R.id.checkBoxBloodDisorderOrBleedingProblem)
+        checkBoxBloodDisorderOrBleedingProblem =
+            view.findViewById(R.id.checkBoxBloodDisorderOrBleedingProblem)
         checkBoxDiabetes = view.findViewById(R.id.checkBoxDiabetes)
         checkBoxLiverProblem = view.findViewById(R.id.checkBoxLiverProblem)
         checkBoxRheumaticFever = view.findViewById(R.id.checkBoxRheumaticFever)
         checkBoxSeizuresOrEpilepsy = view.findViewById(R.id.checkBoxSeizuresOrEpilepsy)
         checkBoxHepatitisBOrC = view.findViewById(R.id.checkBoxHepatitisBOrC)
         checkBoxHIV = view.findViewById(R.id.checkBoxHIV)
-        checkBoxNoUnderlyingMedicalCondition = view.findViewById(R.id.checkBoxNoUnderlyingMedicalCondition)
+        checkBoxNoUnderlyingMedicalCondition =
+            view.findViewById(R.id.checkBoxNoUnderlyingMedicalCondition)
         checkBoxNotTakingAnyMedications = view.findViewById(R.id.checkBoxNotTakingAnyMedications)
         checkBoxNoAllergies = view.findViewById(R.id.checkBoxNoAllergies)
 
@@ -182,13 +183,18 @@ class HistoryFragment : Fragment() {
         checkbox.setOnCheckedChangeListener { compoundButton, _ ->
             if (checkBoxNoUnderlyingMedicalCondition.isChecked) {
                 compoundButton.isChecked = false
-                Toast.makeText(activity, "Please uncheck the Not underlying medical condition.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    activity,
+                    "Please uncheck the Not underlying medical condition.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     private fun setupUI(applicationContext: Context) {
-        val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+        val encounterId =
+            DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
 
         if (encounterId != 0.toLong()) {
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
@@ -207,7 +213,8 @@ class HistoryFragment : Fragment() {
             if (history.hepatitis_b_or_c) checkBoxHepatitisBOrC.isChecked = true
             if (history.hiv) checkBoxHIV.isChecked = true
             etOther.setText(history.other)
-            if (history.no_underlying_medical_condition) checkBoxNoUnderlyingMedicalCondition.isChecked = true
+            if (history.no_underlying_medical_condition) checkBoxNoUnderlyingMedicalCondition.isChecked =
+                true
             etMedications.setText(history.medications)
             if (history.not_taking_any_medications) checkBoxNotTakingAnyMedications.isChecked = true
 
@@ -225,8 +232,7 @@ class HistoryFragment : Fragment() {
             } else {
                 etAllergies.setText(history.allergies)
             }
-        }
-        else {
+        } else {
             history = historyBox.query().orderDesc(History_.id).build().findFirst()!!
         }
     }

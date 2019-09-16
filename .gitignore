@@ -8,9 +8,11 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 /.idea/sonarlint
+/.idea/codeStyles/Project.xml
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 /.idea/sonarlint/*
 /app/release
+/app/objectbox-models

@@ -41,7 +41,7 @@ class AddPatientActivity : AppCompatActivity() {
     private var patient: Patient? = null
     private val TAG = "AddPatientActivity"
     private var action = "new"
-    private var patientId:Long = 0
+    private var patientId: Long = 0
 
     private var allWards = mutableListOf<Ward>()
     private var allMunicipalities = mutableListOf<Municipality>()
@@ -58,9 +58,9 @@ class AddPatientActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_patient)
         patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
-        patientId = intent.getLongExtra("PATIENT_ID",0)
-        if(patientId!=0.toLong()){
-            patient = patientBox.query().equal(Patient_.id,patientId).build().findFirst()
+        patientId = intent.getLongExtra("PATIENT_ID", 0)
+        if (patientId != 0.toLong()) {
+            patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()
         }
         action = intent.getStringExtra("ACTION")
         context = this
@@ -98,7 +98,6 @@ class AddPatientActivity : AppCompatActivity() {
         spinnerGender = findViewById(R.id.spinnerGender)
         spinnerEducationLevel = findViewById(R.id.spinnerEducationLevel)
 
-        setupDistricts()
         spinnerGender.adapter =
             AdapterHelper.createAdapter(
                 context,
@@ -116,8 +115,12 @@ class AddPatientActivity : AppCompatActivity() {
         val startYear = currentYear - 120
 
         spinnerDobDay.adapter = AdapterHelper.createAdapterWithInts(context, (1..32).toList())
-        spinnerDobMonth.adapter = AdapterHelper.createAdapter(context, resources.getStringArray(R.array.months).toList())
-        spinnerDobYear.adapter = AdapterHelper.createAdapterWithInts(context, (startYear..currentYear).reversed().toList())
+        spinnerDobMonth.adapter =
+            AdapterHelper.createAdapter(context, resources.getStringArray(R.array.months).toList())
+        spinnerDobYear.adapter = AdapterHelper.createAdapterWithInts(
+            context,
+            (startYear..currentYear).reversed().toList()
+        )
 
         updateUI()
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
@@ -133,12 +136,18 @@ class AddPatientActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                setupMunicipalities()
+                if (patient != null) {
+                    setupMunicipalities(patient!!.municipality)
+                } else {
+                    setupMunicipalities(0)
+                }
+
             }
         }
         spinnerMunicipality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                // no thing to do yet
+                Log.d("TAG", "nothing selected")
             }
 
             override fun onItemSelected(
@@ -147,7 +156,12 @@ class AddPatientActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                setupWards()
+                if (patient != null) {
+                    setupWards(patient!!.ward)
+                } else {
+                    setupWards(0)
+                }
+
             }
 
         }
@@ -158,66 +172,107 @@ class AddPatientActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupWards() {
+    private fun setupWards(selectedWard: Int) {
         if (allMunicipalities.size > 0) {
             val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
             Log.d("Selected Municipality: ", spinnerMunicipality.selectedItem.toString())
             Log.d("Municipality Position: ", spinnerMunicipality.selectedItemPosition.toString())
+            var selectedWardIndex = 0
             val dbWards =
                 wardsBox.query().equal(Ward_.municipalityId, dbMunicipality.id).build().find()
             val wards = mutableListOf<String>()
             allWards = dbWards
-            for (ward in dbWards) {
+            for ((count, ward) in dbWards.withIndex()) {
+                if (selectedWard == ward.remote_id) {
+                    selectedWardIndex = count
+                }
                 wards.add(ward.ward.toString())
             }
             spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
+            spinnerWard.setSelection(selectedWardIndex)
+
+
         } else {
             Toast.makeText(context, "Municipality not found.", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun setupMunicipalities() {
+    private fun setupMunicipalities(selectedMunicipality: Int) {
         Log.d("Selected District", spinnerDistrict.selectedItem.toString())
         Log.d("District Position", spinnerDistrict.selectedItemPosition.toString())
+        var selectedMunicipalityIndex = 0
         val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
         allMunicipalities =
             municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
         val municipalitiesList = mutableListOf<String>()
-        for (municipality in allMunicipalities) {
+        for ((count, municipality) in allMunicipalities.withIndex()) {
+            if (selectedMunicipality == municipality.remote_id) {
+                selectedMunicipalityIndex = count
+            }
             municipalitiesList.add(municipality.name.capitalize())
         }
         spinnerMunicipality.adapter =
             AdapterHelper.createAdapter(context, municipalitiesList.toList())
-        setupWards()
+        spinnerMunicipality.setSelection(selectedMunicipalityIndex)
+        if (patient != null) {
+            setupWards(patient!!.ward)
+        } else {
+            setupWards(0)
+        }
+
     }
 
-    private fun setupDistricts() {
+    private fun setupDistricts(selectedDistrict: Int) {
         allDistricts = districtsBox.query().build().find()
         val districtsList = mutableListOf<String>()
-        for (district in allDistricts) {
+        var selectedDistrictIndex = 0
+        for ((count, district) in allDistricts.withIndex()) {
+            if (selectedDistrict == district.remote_id) {
+                selectedDistrictIndex = count
+            }
             districtsList.add(district.name.capitalize())
         }
         spinnerDistrict.adapter = AdapterHelper.createAdapter(context, districtsList.toList())
-        setupMunicipalities()
+        spinnerDistrict.setSelection(selectedDistrictIndex)
+        if (patient != null) {
+            setupMunicipalities(patient!!.municipality)
+        } else {
+            setupMunicipalities(0)
+        }
+
     }
 
     private fun updateUI() {
         if (patient != null) {
-            title = patient!!.fullName()
+            title = resources.getString(R.string.edit) + " : " + patient!!.fullName()
             etFirstName.setText(patient!!.first_name)
             etMiddleName.setText(patient!!.middle_name)
             etLastName.setText(patient!!.last_name)
             etPhone.setText(patient!!.phone)
-//            etStreetAddress.setText(patient!!.street_address)
-//            etCity.setText(patient!!.city)
-//            etState.setText(patient!!.state)
-//            etCountry.setText(patient!!.country)
+            setupDistricts(patient!!.district)
             spinnerGender.setSelection(resources.getStringArray(R.array.gender_list).indexOf(patient!!.gender))
             spinnerEducationLevel.setSelection(
                 resources.getStringArray(R.array.education_level_list).indexOf(
                     patient!!.education
                 )
             )
+            //spinnerDobDay.setSelection()
+            val nepaliDateToday = DateConverter().todayNepaliDate
+            val currentYear = nepaliDateToday.year
+            val startYear = currentYear - 120
+
+            val dobDay = patient!!.dob.substring(8,10)
+            val dobMonth = patient!!.dob.substring(5,7)
+            val dobYear = patient!!.dob.substring(0,4)
+            spinnerDobDay.setSelection(dobDay.toInt()-1)
+            spinnerDobMonth.setSelection(dobMonth.toInt()-1)
+            spinnerDobYear.setSelection((startYear..currentYear).reversed().toList().indexOf(dobYear.toInt()))
+        } else {
+            title = resources.getString(R.string.add_new_patient)
+            spinnerDobDay.setSelection(DentalApp.lastDobDayIndex)
+            spinnerDobMonth.setSelection(DentalApp.lastDobMonthIndex)
+            spinnerDobYear.setSelection(DentalApp.lastDobYearIndex)
+            setupDistricts(35) // set default as kaski 35 is remote_id of Kaski District
         }
     }
 
@@ -240,7 +295,6 @@ class AddPatientActivity : AppCompatActivity() {
         val dbWard = allWards[spinnerWard.selectedItemPosition]
 
 
-
         val id: Long = 0
         val firstName = etFirstName.text.toString()
         val middleName = etMiddleName.text.toString()
@@ -257,7 +311,7 @@ class AddPatientActivity : AppCompatActivity() {
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentNepaliDate()
-        if (action=="edit") {
+        if (action == "edit") {
             patient = patientsBox.get(patientId)
             patient!!.first_name = firstName
             patient!!.middle_name = middleName
@@ -276,6 +330,7 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.created_at = date
             patient!!.updated_at = date
             patient!!.updated = true
+            patient!!.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
             return patient!!
         } else {
             val tempPatient = Patient()
@@ -300,14 +355,20 @@ class AddPatientActivity : AppCompatActivity() {
             tempPatient.uploaded = false
             tempPatient.updated = false
             tempPatient.recall = null
+            tempPatient.author = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
+            tempPatient.updated_by = ""
             return tempPatient
 
         }
     }
 
     private fun getFormattedDob(): String {
+        DentalApp.lastDobDayIndex = spinnerDobDay.selectedItemPosition
+        DentalApp.lastDobMonthIndex = spinnerDobMonth.selectedItemPosition
+        DentalApp.lastDobYearIndex = spinnerDobYear.selectedItemPosition
+
         val dobYear = spinnerDobYear.selectedItem.toString()
-        val dobMonth = DecimalFormat("00").format(spinnerDobMonth.selectedItemPosition+1)
+        val dobMonth = DecimalFormat("00").format(spinnerDobMonth.selectedItemPosition + 1)
         val dobDay = DecimalFormat("00").format(spinnerDobDay.selectedItem)
         return "$dobYear-$dobMonth-$dobDay"
     }
@@ -321,6 +382,7 @@ class AddPatientActivity : AppCompatActivity() {
             val pt = patientBox.query().orderDesc(Patient_.id).build().findFirst()!!
             viewPatientIntent.putExtra("PATIENT_ID", pt.id)
             startActivity(viewPatientIntent)
+            finish()
         } else {
             finish()
         }
@@ -335,18 +397,18 @@ class AddPatientActivity : AppCompatActivity() {
         val phone = etPhone.text.toString()
         val dob = getFormattedDob()
 
-        if(spinnerDistrict.selectedItem == null) {
+        if (spinnerDistrict.selectedItem == null) {
             tvErrorMessage.text = "District is not selected."
             tvErrorMessage.visibility = View.VISIBLE
         }
 
-        if(spinnerMunicipality.selectedItem == null) {
+        if (spinnerMunicipality.selectedItem == null) {
             tvErrorMessage.text = "Municipality is not selected."
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
 
-        if(spinnerWard.selectedItem == null) {
+        if (spinnerWard.selectedItem == null) {
             tvErrorMessage.text = "Ward is not selected."
             tvErrorMessage.visibility = View.VISIBLE
             return false
@@ -393,8 +455,4 @@ class AddPatientActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    override fun onPause() {
-        finish()
-        super.onPause()
-    }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,16 +19,15 @@ import com.abhiyantrik.dentalhub.fragments.interfaces.HistoryFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.ReferralFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.ScreeningFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.TreatmentFormCommunicator
+import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
-import android.widget.ImageButton
-import com.abhiyantrik.dentalhub.utils.DateHelper
 
 
-class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator, HistoryFormCommunicator,
+class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
+    HistoryFormCommunicator,
     ScreeningFormCommunicator, TreatmentFormCommunicator, ReferralFormCommunicator {
-
 
 
     private lateinit var pager: ViewPager
@@ -71,7 +71,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         patientId = intent.getLongExtra("PATIENT_ID", 0.toLong())
         patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
-        
+
         title = patient.fullName()
 
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
@@ -178,9 +178,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.viewPatient -> {
-                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
-                val inflate : LayoutInflater = layoutInflater
-                val view : View = inflate.inflate(R.layout.popup_view_patient, null)
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                val inflate: LayoutInflater = layoutInflater
+                val view: View = inflate.inflate(R.layout.popup_view_patient, null)
 
                 // to get all id of the textView
                 val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
@@ -209,7 +209,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
 
                 builder.setView(view)
-                val dialog : Dialog = builder.create()
+                val dialog: Dialog = builder.create()
                 dialog.show()
 
                 btnCloseDialog.setOnClickListener {
@@ -224,6 +224,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun updateRecallDate(recallDate: String, etRecallTime: String) {
         patient.recall_date = recallDate
         patient.recall_time = etRecallTime
+        patient.recall_geography = DentalApp.geography_name
         patientBox.put(patient)
     }
 
@@ -235,7 +236,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     ) {
 
         history =
-            historyBox.query().equal(History_.encounterId, encounter.id).orderDesc(History_.id).build().findFirst()!!
+            historyBox.query().equal(
+                History_.encounterId,
+                encounter.id
+            ).orderDesc(History_.id).build().findFirst()!!
 
         history.blood_disorder = bloodDisorders
         history.diabetes = diabetes
@@ -268,7 +272,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         highBloodPressure: Boolean,
         lowBloodPressure: Boolean,
         thyroidDisorder: Boolean
-        ) {
+    ) {
 
         screening = screeningBox.query().equal(
             Screening_.encounterId,
@@ -277,9 +281,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         screening.carries_risk = carriesRisk
         try {
-            screening.decayed_pimary_teeth = decayedPrimaryTeeth.toInt()
+            screening.decayed_primary_teeth = decayedPrimaryTeeth.toInt()
         } catch (e: NumberFormatException) {
-            screening.decayed_pimary_teeth = 0
+            screening.decayed_primary_teeth = 0
         }
         try {
             screening.decayed_permanent_teeth = decayedPermanentTeeth.toInt()
@@ -287,8 +291,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
             screening.decayed_permanent_teeth = 0
         }
-        screening.cavity_permanent_tooth = cavityPermanentTooth
-        screening.cavity_permanent_anterior = cavityPermanentAnterior
+        screening.cavity_permanent_posterior_teeth = cavityPermanentTooth
+        screening.cavity_permanent_anterior_teeth = cavityPermanentAnterior
         screening.active_infection = activeInfection
         screening.need_art_filling = needARTFilling
         screening.need_sealant = needSealant
@@ -394,7 +398,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         otherDetails: String
     ) {
         referral =
-            referralBox.query().equal(Referral_.encounterId, encounter.id).orderDesc(Referral_.id).build().findFirst()!!
+            referralBox.query().equal(
+                Referral_.encounterId,
+                encounter.id
+            ).orderDesc(Referral_.id).build().findFirst()!!
 
         referral.no_referral = noReferral
         referral.health_post = healthPost

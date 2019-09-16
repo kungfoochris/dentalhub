@@ -304,7 +304,7 @@
     },
     {
       "id": "4:8273927813278974540",
-      "lastPropertyId": "16:8263475291464200628",
+      "lastPropertyId": "19:5060951473033961087",
       "name": "Screening",
       "properties": [
         {
@@ -316,20 +316,8 @@
           "name": "carries_risk"
         },
         {
-          "id": "3:1053510854425686550",
-          "name": "decayed_pimary_teeth"
-        },
-        {
           "id": "4:1700290721726719468",
           "name": "decayed_permanent_teeth"
-        },
-        {
-          "id": "5:1592735126494306688",
-          "name": "cavity_permanent_anterior"
-        },
-        {
-          "id": "6:1565515948411630779",
-          "name": "cavity_permanent_tooth"
         },
         {
           "id": "7:7191823461075208336",
@@ -371,6 +359,18 @@
         {
           "id": "16:8263475291464200628",
           "name": "thyroid_disorder"
+        },
+        {
+          "id": "17:5130446583861502568",
+          "name": "decayed_primary_teeth"
+        },
+        {
+          "id": "18:496131577501722700",
+          "name": "cavity_permanent_anterior_teeth"
+        },
+        {
+          "id": "19:5060951473033961087",
+          "name": "cavity_permanent_posterior_teeth"
         }
       ],
       "relations": []
@@ -660,7 +660,7 @@
     },
     {
       "id": "13:3411229424671924617",
-      "lastPropertyId": "24:5759885828143895783",
+      "lastPropertyId": "27:1079473111627415256",
       "name": "Patient",
       "properties": [
         {
@@ -754,6 +754,18 @@
         {
           "id": "24:5759885828143895783",
           "name": "recall_time"
+        },
+        {
+          "id": "25:5414089350219966313",
+          "name": "author"
+        },
+        {
+          "id": "26:3189613728421570657",
+          "name": "updated_by"
+        },
+        {
+          "id": "27:1079473111627415256",
+          "name": "recall_geography"
         }
       ],
       "relations": []
@@ -772,7 +784,10 @@
   "retiredPropertyUids": [
     5299329281423898360,
     1911530764915936424,
-    948629889420617613
+    948629889420617613,
+    1053510854425686550,
+    1592735126494306688,
+    1565515948411630779
   ],
   "retiredRelationUids": [],
   "version": 1

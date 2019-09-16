@@ -6,8 +6,8 @@ data class Profile(
     var middle_name: String,
     var last_name: String,
     var image: String
-){
-    fun fullName(): String{
+) {
+    fun fullName(): String {
         return "$first_name $middle_name $last_name"
     }
 }

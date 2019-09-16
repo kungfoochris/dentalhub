@@ -1,6 +1,5 @@
 package com.abhiyantrik.dentalhub.fragments
 
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -28,14 +27,14 @@ class ReferralFragment : Fragment() {
     private lateinit var referralBox: Box<Referral>
     private var referral = Referral()
 
-//    private lateinit var radioButtonNoReferral: RadioButton
+    //    private lateinit var radioButtonNoReferral: RadioButton
 //    private lateinit var radioButtonHealthPost: RadioButton
 //    private lateinit var radioButtonHygienist: RadioButton
 //    private lateinit var radioButtonDentist: RadioButton
 //    private lateinit var radioButtonGeneralPhysician: RadioButton
 //    private lateinit var radioButtonOther: RadioButton
-    private lateinit var tvRecallDateReferral : TextView
-    private lateinit var rgReferrals : RadioGroup
+    private lateinit var tvRecallDateReferral: TextView
+    private lateinit var rgReferrals: RadioGroup
     private lateinit var rgRecalls: RadioGroup
     private lateinit var etOtherDetails: EditText
 
@@ -81,8 +80,13 @@ class ReferralFragment : Fragment() {
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
 
 
+        rgReferrals.check(R.id.radioHealthPost)
+
         etRecallDate = view.findViewById(R.id.etRecallDate)
         etRecallTime = view.findViewById(R.id.etRecallTime)
+
+        etRecallDate.setText(DentalApp.lastRecallDate)
+        etRecallTime.setText(DentalApp.lastRecallDate)
 
         rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.radioOther) {
@@ -114,26 +118,48 @@ class ReferralFragment : Fragment() {
             val monthToday = todayNepali.month + 1
             val dayToday = todayNepali.day
 
-            when(i){
+            when (i) {
                 R.id.radioOneWeek -> {
-                    recallDate = "$yearToday-"+DecimalFormat("00").format(monthToday)+"-${(dayToday+7)%30}"
+                    recallDate = if(dayToday+7 > 30){
+                        "$yearToday-" + DecimalFormat("00").format(monthToday+1) + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
+                    }else{
+
+                        if(monthToday+1 > 12){
+                            "${yearToday+1}-" + DecimalFormat("00").format("01") + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
+                        }else{
+                            "$yearToday-" + DecimalFormat("00").format(monthToday+1) + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
+                        }
+
+                    }
+
                 }
                 R.id.radioOneMonth -> {
-                    if(monthToday==12){
-                        recallDate = "${yearToday+1}-"+DecimalFormat("00").format(monthToday-11)+"-"+DecimalFormat("00").format(dayToday)
-                    }else{
-                        recallDate = "${yearToday}-"+DecimalFormat("00").format(monthToday+1)+"-"+DecimalFormat("00").format(dayToday)
+                    recallDate = if (monthToday == 12) {
+                        "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
+                    } else {
+                        "${yearToday}-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
                     }
                 }
                 R.id.radioSixMonths -> {
-                    if(monthToday>6){
-                        recallDate = "${yearToday+1}-"+DecimalFormat("00").format(((monthToday+6)%12))+"-"+DecimalFormat("00").format(dayToday)
-                    }else{
-                        recallDate = "$yearToday-"+DecimalFormat("00").format(monthToday+6)+"-"+DecimalFormat("00").format(dayToday)
+                    recallDate = if (monthToday + 6 > 12) {
+                        "${yearToday + 1}-" + DecimalFormat("00").format(((monthToday + 6) % 12)) + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
+                    } else {
+                        "$yearToday-" + DecimalFormat("00").format(monthToday + 6) + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
                     }
                 }
                 R.id.radioOneYear -> {
-                    recallDate = "${yearToday+1}-"+DecimalFormat("00").format(monthToday)+"-"+DecimalFormat("00").format(dayToday)
+                    recallDate =
+                        "${yearToday + 1}-" + DecimalFormat("00").format(monthToday) + "-" + DecimalFormat(
+                            "00"
+                        ).format(dayToday)
                 }
             }
             etRecallDate.setText(recallDate)
@@ -141,18 +167,19 @@ class ReferralFragment : Fragment() {
 
         etRecallDate.setOnFocusChangeListener { _, b ->
             if (b) {
-               val nepaliDateConverter = DateConverter()
-                val dpd = com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
-                    val month = DecimalFormat("00").format(monthOfYear+1).toString()
-                    val day = DecimalFormat("00").format(dayOfMonth).toString()
-                    etRecallDate.setText("$year-$month-$day")
-                }
+                val nepaliDateConverter = DateConverter()
+                val dpd =
+                    com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
+                        val month = DecimalFormat("00").format(monthOfYear + 1).toString()
+                        val day = DecimalFormat("00").format(dayOfMonth).toString()
+                        etRecallDate.setText("$year-$month-$day")
+                    }
                 dpd.setMinDate(nepaliDateConverter.todayNepaliDate)
-                dpd.show(fragmentManager,"RecallDate")
+                dpd.show(fragmentManager, "RecallDate")
 
             }
         }
-        etRecallTime.setOnFocusChangeListener { view, b ->
+        etRecallTime.setOnFocusChangeListener { _, b ->
             if (b) {
                 // Get Current Time
                 val c = Calendar.getInstance()
@@ -162,7 +189,7 @@ class ReferralFragment : Fragment() {
                 // Launch Time Picker Dialog
                 val timePickerDialog = TimePickerDialog(
                     activity,
-                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                    TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                         etRecallTime.setText(
                             DecimalFormat("00").format(
                                 hourOfDay
@@ -186,11 +213,11 @@ class ReferralFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         referralFormCommunicator = activity as ReferralFormCommunicator
-        
+
         setupUI(activity as Context)
 
         btnNext.setOnClickListener {
-            if(isFormValid()){
+            if (isFormValid()) {
                 val noReferral = radioNoReferral.isChecked
                 val healthPost = radioHealthPost.isChecked
                 val hygienist = radioHygienist.isChecked
@@ -211,14 +238,14 @@ class ReferralFragment : Fragment() {
 
                 val recallDate = etRecallDate.text.toString()
                 val recallTime = etRecallTime.text.toString()
-                val selectedGeography = DentalApp.geography_id
-                val selectedActivity = DentalApp.activity_id
+                DentalApp.lastRecallDate = recallDate
+                DentalApp.lastRecallTime = recallTime
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
                 referralFormCommunicator.updateRecallDate(recallDate, recallTime)
 
                 fragmentCommunicator.goForward()
 
-            }else{
+            } else {
                 // form is not valid
             }
         }
@@ -229,24 +256,35 @@ class ReferralFragment : Fragment() {
 
     private fun setupUI(applicationContext: Context) {
 
-        val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+        val encounterId =
+            DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
 
         if (encounterId != 0.toLong()) {
 
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
 
-            patient = patientBox.query().equal(Patient_.id, DentalApp.readIntFromPreference(applicationContext, Constants.PREF_SELECTED_PATIENT).toLong()).build().findFirst()!!
+            patient = patientBox.query().equal(
+                Patient_.id,
+                DentalApp.readIntFromPreference(
+                    applicationContext,
+                    Constants.PREF_SELECTED_PATIENT
+                ).toLong()
+            ).build().findFirst()!!
             referral = referralBox.query()
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
 
-            etRecallDate.setText(patient.recall_date)
 
-            val radioButtonMap = mapOf(radioNoReferral to referral.no_referral,
-                radioHealthPost to referral.health_post, radioHygienist to referral.hygienist,
-                radioDentist to referral.dentist, radioGeneralPhysician to referral.general_physician,
-                radioOther to referral.other)
+
+            val radioButtonMap = mapOf(
+                radioNoReferral to referral.no_referral,
+                radioHealthPost to referral.health_post,
+                radioHygienist to referral.hygienist,
+                radioDentist to referral.dentist,
+                radioGeneralPhysician to referral.general_physician,
+                radioOther to referral.other
+            )
 
             for (radioButton in radioButtonMap) {
                 if (radioButton.value) {
@@ -256,13 +294,15 @@ class ReferralFragment : Fragment() {
             }
 
             if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
+            etRecallDate.setText(patient.recall_date)
+            etRecallTime.setText(patient.recall_time)
         }
     }
 
     private fun isFormValid(): Boolean {
         var status = false
 
-        if( (radioOther.isChecked && etOtherDetails.text.toString().isNotEmpty()) || (!radioOther.isChecked) && etOtherDetails.text.isEmpty()){
+        if ((radioOther.isChecked && etOtherDetails.text.toString().isNotEmpty()) || (!radioOther.isChecked) && etOtherDetails.text.isEmpty()) {
             status = true
         }
 
@@ -274,7 +314,11 @@ class ReferralFragment : Fragment() {
 
         if (radioHealthPost.isChecked) {
             if (etRecallDate.text.isNullOrBlank()) { // || etRecallTime.text.isNullOrBlank()
-                Toast.makeText(activity, "Recall Date and Time should be specified.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    activity,
+                    "Recall Date and Time should be specified.",
+                    Toast.LENGTH_SHORT
+                ).show()
                 status = false
             }
         }

@@ -12,6 +12,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
+import android.widget.ArrayAdapter
+import android.text.Editable
+import android.text.TextWatcher
 
 
 class ActivitySelectorActivity : AppCompatActivity() {
@@ -28,7 +31,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
 
-    private lateinit var etOtherDetails: EditText
+    private lateinit var etOtherDetails: AutoCompleteTextView
     var selectedActivity = ""
     var selectedActivityId = ""
     var activityOtherDetail = ""
@@ -61,6 +64,31 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         // load the id and name of the activity
         loadActivityId()
+
+        Log.d("Suggestions", DentalApp.activitySuggestions.toString())
+
+        val arrayAdapter = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_list_item_1, DentalApp.activitySuggestions.toTypedArray()
+        )
+        etOtherDetails.threshold = 1
+        etOtherDetails.setAdapter(arrayAdapter)
+        arrayAdapter.notifyDataSetChanged()
+
+        etOtherDetails.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+        })
 
         rgActivities.setOnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.radioHealthPostActivity) {
@@ -102,11 +130,21 @@ class ActivitySelectorActivity : AppCompatActivity() {
 //                )
 
                 DentalApp.activity_name = selectedActivity
+                DentalApp.addStringToPreference(context, etOtherDetails.text.toString())
+
                 if (selectedActivity == "Health Post") {
                     DentalApp.activity_id = selectedActivityId
                     DentalApp.activity_name = selectedActivity
-                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, selectedActivityId)
-                    DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
+                    DentalApp.saveToPreference(
+                        context,
+                        Constants.PREF_ACTIVITY_ID,
+                        selectedActivityId
+                    )
+                    DentalApp.saveToPreference(
+                        context,
+                        Constants.PREF_ACTIVITY_NAME,
+                        selectedActivity
+                    )
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -139,6 +177,15 @@ class ActivitySelectorActivity : AppCompatActivity() {
         call.enqueue(object : Callback<List<ActivityModel>> {
             override fun onFailure(call: Call<List<ActivityModel>>, t: Throwable) {
                 Log.d("loadActivityId()", "onFailure")
+                if (BuildConfig.DEBUG) {
+                    Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.could_not_load_activity),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
             override fun onResponse(
@@ -182,7 +229,11 @@ class ActivitySelectorActivity : AppCompatActivity() {
         val token = DentalApp.readFromPreference(this, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call =
-            panelService.addActivity("JWT $token", selectedActivityId, etOtherDetails.text.toString())
+            panelService.addActivity(
+                "JWT $token",
+                selectedActivityId,
+                etOtherDetails.text.toString()
+            )
         call.enqueue(object : Callback<ActivityModel> {
             override fun onFailure(call: Call<ActivityModel>, t: Throwable) {
                 Log.d("onFailure", t.toString())
@@ -203,8 +254,16 @@ class ActivitySelectorActivity : AppCompatActivity() {
                         )
                         DentalApp.activity_id = selectedActivityId
                         DentalApp.activity_name = selectedActivity
-                        DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_ID, selectedActivityId)
-                        DentalApp.saveToPreference(context, Constants.PREF_ACTIVITY_NAME, selectedActivity)
+                        DentalApp.saveToPreference(
+                            context,
+                            Constants.PREF_ACTIVITY_ID,
+                            selectedActivityId
+                        )
+                        DentalApp.saveToPreference(
+                            context,
+                            Constants.PREF_ACTIVITY_NAME,
+                            selectedActivity
+                        )
                         println("Got the post method. ${serverActivity.id}")
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)

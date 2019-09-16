@@ -13,10 +13,10 @@ class Screening : Parcelable {
     var id: Long = 0
     var encounter: ToOne<Encounter>? = null
     var carries_risk: String = "Low"
-    var decayed_pimary_teeth: Int = 0
+    var decayed_primary_teeth: Int = 0
     var decayed_permanent_teeth: Int = 0
-    var cavity_permanent_anterior: Boolean = false
-    var cavity_permanent_tooth: Boolean = false
+    var cavity_permanent_anterior_teeth: Boolean = false
+    var cavity_permanent_posterior_teeth: Boolean = false
     var reversible_pulpitis: Boolean = false
     var need_art_filling: Boolean = false
     var need_sealant: Boolean = false

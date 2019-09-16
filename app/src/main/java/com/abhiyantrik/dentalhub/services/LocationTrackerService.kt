@@ -41,8 +41,9 @@ class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks,
     @SuppressLint("MissingPermission")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        googleApiClient = GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this).build()
+        googleApiClient =
+            GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).build()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
 

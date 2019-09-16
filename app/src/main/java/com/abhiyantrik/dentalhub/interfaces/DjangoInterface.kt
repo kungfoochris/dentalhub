@@ -18,9 +18,9 @@ import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
 import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
+import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
-import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 
 interface DjangoInterface {
 
@@ -46,8 +46,18 @@ interface DjangoInterface {
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
         @Field("activityarea_id") activity_area_id: String,
-        @Field("geography_id") geography_id: String
+        @Field("geography_id") geography_id: String,
+        @Field("author") author: String,
+        @Field("updated_by") updated_by: String,
+        @Field("created_at") createdAt: String?,
+        @Field("updated_at") updatedAt: String?
     ): Call<PatientModel>
+
+    @GET("patients")
+    fun getPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
+
+    @GET("patients/{patientId}/encounters")
+    fun getEncounter(@Header("Authorization") token: String, @Field("patientId") patientId: String)
 
     @FormUrlEncoded
     @POST("activities")
@@ -109,7 +119,7 @@ interface DjangoInterface {
         @Field("high_blood_pressure") high_blood_pressure: Boolean,
         @Field("low_blood_pressure") low_blood_pressure: Boolean,
         @Field("thyroid") thyroid: Boolean
-        ): Call<ScreeningModel>
+    ): Call<ScreeningModel>
 
     @FormUrlEncoded
     @POST("encounter/{remoteId}/treatment")

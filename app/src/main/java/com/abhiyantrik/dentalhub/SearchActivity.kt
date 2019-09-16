@@ -1,9 +1,9 @@
 package com.abhiyantrik.dentalhub
 
 import android.app.ListActivity
-import android.os.Bundle
 import android.app.SearchManager
 import android.content.Intent
+import android.os.Bundle
 
 
 class SearchActivity : ListActivity() {
@@ -19,6 +19,7 @@ class SearchActivity : ListActivity() {
 
 
     }
+
     private fun doSearch(queryStr: String) {
         // get a Cursor, prepare the ListAdapter
         // and set it

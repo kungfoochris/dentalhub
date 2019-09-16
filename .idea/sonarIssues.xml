@@ -3,6 +3,11 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/fragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0d45e468e6c719d1740737543702178b/jars/classes.jar!/info/hoang8f/android/segmented/SegmentedGroup.class">
           <value>
             <set />
@@ -84,6 +89,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/build/tmp/kapt3/stubs/debug/com/abhiyantrik/dentalhub/entities/Patient.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/abhiyantrik/dentalhub/ExampleInstrumentedTest.kt">
           <value>
             <set />
           </value>
@@ -223,6 +233,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/fragments/TickerFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/fragments/TreatmentFragment.kt">
           <value>
             <set />
@@ -259,6 +274,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/models/History.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhiyantrik/dentalhub/models/Patient.kt">
           <value>
             <set />
           </value>
@@ -663,6 +683,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/drawable/spinner.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/drawable/treatment_art.xml">
           <value>
             <set />
@@ -833,6 +858,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_ticker.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_treatment.xml">
           <value>
             <set />
@@ -939,11 +969,6 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/StudioProjects/transit-points/app/src/main/res/layout/activity_main.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="/fragment.java">
           <value>
             <set />
           </value>

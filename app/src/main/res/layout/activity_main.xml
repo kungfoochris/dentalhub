@@ -8,11 +8,11 @@
         android:id="@+id/mainActivityLayout"
         android:orientation="vertical"
         tools:context=".MainActivity"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         android:background="@color/grey_50"
 >
     <androidx.cardview.widget.CardView
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:id="@+id/profileView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"
@@ -30,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <ImageView
-                    android:id="@+id/ivProfileImage"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:src="@drawable/profile"
@@ -67,14 +66,16 @@
             </LinearLayout>
         </LinearLayout>
 
-
     </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
             android:focusable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileView"
@@ -84,7 +85,7 @@
             android:id="@+id/fabAddPatient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/add_icon"
+            android:src="@drawable/add_patient"
             android:backgroundTint="@color/colorPrimary"
             app:borderWidth="0dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,5 +126,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
+<fragment
+        android:id="@+id/tickerFragment"
+        android:name="com.abhiyantrik.dentalhub.fragments.TickerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

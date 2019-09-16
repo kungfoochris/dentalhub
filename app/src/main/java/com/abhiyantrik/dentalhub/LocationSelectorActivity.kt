@@ -8,12 +8,15 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.adapters.GeographyAdapter
-import com.abhiyantrik.dentalhub.entities.*
+import com.abhiyantrik.dentalhub.entities.District
+import com.abhiyantrik.dentalhub.entities.Municipality
+import com.abhiyantrik.dentalhub.entities.Ward
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Geography
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
@@ -36,7 +39,7 @@ class LocationSelectorActivity : AppCompatActivity() {
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var dividerItemDecoration: DividerItemDecoration
     private lateinit var context: Context
-//    var allGeographies = mutableListOf<Geography>()
+    //    var allGeographies = mutableListOf<Geography>()
     var allAPIGeographies = listOf<Geography>()
 
     private lateinit var geographyAdapter: GeographyAdapter
@@ -72,7 +75,7 @@ class LocationSelectorActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         btnLogout = findViewById(R.id.btnLogout)
 
-        wardsBox= ObjectBox.boxStore.boxFor(Ward::class.java)
+        wardsBox = ObjectBox.boxStore.boxFor(Ward::class.java)
 
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
@@ -95,12 +98,24 @@ class LocationSelectorActivity : AppCompatActivity() {
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(context)
         val call = panelService.listGeographies("JWT $token")
-        call.enqueue(object: retrofit2.Callback<List<Geography>> {
+        call.enqueue(object : retrofit2.Callback<List<Geography>> {
             override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
                 Log.d(TAG, "onFaliure()")
+                if (BuildConfig.DEBUG) {
+                    Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.could_not_load_locations),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
-            override fun onResponse(call: Call<List<Geography>>, response: Response<List<Geography>>) {
+            override fun onResponse(
+                call: Call<List<Geography>>,
+                response: Response<List<Geography>>
+            ) {
                 println("Print geography ${response.body()} and code ${response.code()}")
                 if (null != response.body()) {
                     when (response.code()) {
@@ -132,16 +147,27 @@ class LocationSelectorActivity : AppCompatActivity() {
 
     private fun setupAdapter() {
 
-        geographyAdapter = GeographyAdapter(context, allAPIGeographies, object : GeographyAdapter.GeographyClickListener {
-            override fun onGeographyClick(geography: Geography) {
-                DentalApp.saveToPreference(context, Constants.PREF_SELECTED_LOCATION_ID, geography.id)
-                DentalApp.saveToPreference(context, Constants.PREF_SELECTED_LOCATION_NAME, geography.tole)
-                DentalApp.geography_id = geography.id
-                DentalApp.geography_name = geography.tole
-                startActivity(Intent(context, ActivitySelectorActivity::class.java))
-                finish()
-            }
-        })
+        geographyAdapter = GeographyAdapter(
+            context,
+            allAPIGeographies,
+            object : GeographyAdapter.GeographyClickListener {
+                override fun onGeographyClick(geography: Geography) {
+                    DentalApp.saveToPreference(
+                        context,
+                        Constants.PREF_SELECTED_LOCATION_ID,
+                        geography.id
+                    )
+                    DentalApp.saveToPreference(
+                        context,
+                        Constants.PREF_SELECTED_LOCATION_NAME,
+                        geography.tole
+                    )
+                    DentalApp.geography_id = geography.id
+                    DentalApp.geography_name = geography.tole
+                    startActivity(Intent(context, ActivitySelectorActivity::class.java))
+                    finish()
+                }
+            })
         recyclerView.adapter = geographyAdapter
         geographyAdapter.notifyDataSetChanged()
     }

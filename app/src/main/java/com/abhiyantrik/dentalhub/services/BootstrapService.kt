@@ -8,7 +8,6 @@ import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Activity_
 import com.abhiyantrik.dentalhub.entities.Geography
-import com.abhiyantrik.dentalhub.entities.Geography_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
 import retrofit2.Call
@@ -80,14 +79,18 @@ class BootstrapService : Service() {
                 Log.d(TAG, t.toString())
             }
 
-            override fun onResponse(call: Call<List<Activity>>, response: Response<List<Activity>>) {
+            override fun onResponse(
+                call: Call<List<Activity>>,
+                response: Response<List<Activity>>
+            ) {
                 Log.d(TAG, "onResponse()")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
                             val allActivities: List<Activity> = response.body() as List<Activity>
                             for (activity in allActivities) {
-                                val a = activitiesBox.query().equal(Activity_.name, activity.name).build().findFirst()
+                                val a = activitiesBox.query().equal(Activity_.name, activity.name)
+                                    .build().findFirst()
                                 if (a == null) {
                                     activity.remote_id = activity.id
                                     activity.id = 0

@@ -16,7 +16,8 @@ import com.google.android.gms.location.*
 class GpsUtils(private val context: Context) {
     private val mSettingsClient: SettingsClient = LocationServices.getSettingsClient(context)
     private val mLocationSettingsRequest: LocationSettingsRequest
-    private val locationManager: LocationManager = context.getSystemService(LOCATION_SERVICE) as LocationManager
+    private val locationManager: LocationManager =
+        context.getSystemService(LOCATION_SERVICE) as LocationManager
     private val locationRequest: LocationRequest = LocationRequest.create()
     val TAG = "GpsUtils"
 

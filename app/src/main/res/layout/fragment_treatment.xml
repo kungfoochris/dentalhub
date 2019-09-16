@@ -15,13 +15,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
         <LinearLayout
-                android:id="@+id/treatmentSelector"
                 android:gravity="center"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="match_parent"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin">
             <Button
                     android:id="@+id/btnSDF"
                     android:text="SDF"
@@ -42,7 +41,7 @@
                     android:id="@+id/btnART"
                     android:text="ART"
                     android:layout_margin="5dp"
-                    android:background="@color/grey_500"
+                    android:background="@drawable/treatment_art_outline"
                     android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -50,7 +49,7 @@
                     android:id="@+id/btnEXO"
                     android:text="EXO"
                     android:layout_margin="5dp"
-                    android:background="@color/grey_500"
+                    android:background="@drawable/treatment_exo_outline"
                     android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -58,7 +57,7 @@
                     android:id="@+id/btnSMART"
                     android:text="SMART"
                     android:layout_margin="5dp"
-                    android:background="@color/grey_500"
+                    android:background="@drawable/treatment_smart_outline"
                     android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -66,7 +65,7 @@
                     android:id="@+id/btnUNTR"
                     android:text="UNTR"
                     android:layout_margin="5dp"
-                    android:background="@color/grey_500"
+                    android:background="@drawable/treatment_untr_outline"
                     android:textColor="@color/treatment_button_default_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -83,6 +82,8 @@
                     android:layout_gravity="left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
             >
                 <LinearLayout android:orientation="horizontal"
                               android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -424,9 +425,11 @@
 
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <CheckBox
                     android:id="@+id/checkBoxSDFWholeMouth"
                     android:scaleY="1.5"
@@ -443,9 +446,11 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <CheckBox
                     android:id="@+id/checkBoxFVApplied"
                     android:scaleY="1.5"
@@ -459,10 +464,11 @@
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <CheckBox
                     android:id="@+id/checkBoxTreatmentPlanComplete"
                     android:scaleY="1.5"
@@ -477,7 +483,10 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fieldTopMargin"
+                android:layout_marginBottom="@dimen/fieldBottomMargin"
+                >
             <TextView
                     android:text="@string/notes"
                     android:layout_gravity="start"
@@ -493,7 +502,8 @@
         </LinearLayout>
         <LinearLayout
                 android:weightSum="1"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -14,11 +14,13 @@ import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.TreatmentFragmentCommunicator
-import com.abhiyantrik.dentalhub.entities.*
+import com.abhiyantrik.dentalhub.entities.Encounter
+import com.abhiyantrik.dentalhub.entities.Encounter_
+import com.abhiyantrik.dentalhub.entities.Screening
+import com.abhiyantrik.dentalhub.entities.Screening_
 import com.abhiyantrik.dentalhub.fragments.interfaces.ScreeningFormCommunicator
 import com.abhiyantrik.dentalhub.utils.AdapterHelper
 import io.objectbox.Box
-import kotlinx.android.synthetic.main.fragment_screening.*
 
 class ScreeningFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
@@ -79,7 +81,10 @@ class ScreeningFragment : Fragment() {
 
         if (container != null) {
             spinnerRisk.adapter =
-                AdapterHelper.createAdapter(container.context, resources.getStringArray(R.array.carries_risk).toList())
+                AdapterHelper.createAdapter(
+                    container.context,
+                    resources.getStringArray(R.array.carries_risk).toList()
+                )
             spinnerNoOfDecayedPrimaryTeeth.adapter =
                 AdapterHelper.createAdapterWithInts(container.context, (0..20).toList())
             spinnerNoOfDecayedPermanentTeeth.adapter =
@@ -132,15 +137,23 @@ class ScreeningFragment : Fragment() {
         }
 
         checkBoxHighBP.setOnCheckedChangeListener { compoundButton, b ->
-            if(b && checkBoxLowBP.isChecked){
+            if (b && checkBoxLowBP.isChecked) {
                 compoundButton.isChecked = false
-                Toast.makeText(context, resources.getString(R.string.low_bp_is_checked), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    resources.getString(R.string.low_bp_is_checked),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
         checkBoxLowBP.setOnCheckedChangeListener { compoundButton, b ->
-            if(b && checkBoxHighBP.isChecked){
+            if (b && checkBoxHighBP.isChecked) {
                 compoundButton.isChecked = false
-                Toast.makeText(context, resources.getString(R.string.high_bp_is_checked), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    resources.getString(R.string.high_bp_is_checked),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
         btnBack.setOnClickListener {
@@ -151,7 +164,8 @@ class ScreeningFragment : Fragment() {
 
     private fun setupUI(applicationContext: Context) {
 
-        val encounterId = DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+        val encounterId =
+            DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
         println("Encounter Id is in screening $encounterId")
 
         if (encounterId != 0.toLong()) {
@@ -170,22 +184,23 @@ class ScreeningFragment : Fragment() {
                 spinnerRisk.setSelection(indexofRisk)
             }
 
-            if (screening.decayed_pimary_teeth != 0) spinnerNoOfDecayedPrimaryTeeth
-                .setSelection(screening.decayed_pimary_teeth)
+            if (screening.decayed_primary_teeth != 0) spinnerNoOfDecayedPrimaryTeeth
+                .setSelection(screening.decayed_primary_teeth)
             if (screening.decayed_permanent_teeth != 0) spinnerNoOfDecayedPermanentTeeth
                 .setSelection(screening.decayed_permanent_teeth)
 
-            if (screening.cavity_permanent_anterior) checkBoxCavityPermanentAnterior.isChecked = true
-            if (screening.cavity_permanent_tooth) checkBoxCavityPermanentTooth.isChecked = true
+            if (screening.cavity_permanent_anterior_teeth) checkBoxCavityPermanentAnterior.isChecked =
+                true
+            if (screening.cavity_permanent_posterior_teeth) checkBoxCavityPermanentTooth.isChecked = true
             if (screening.reversible_pulpitis) checkBoxReversiblePulpitis.isChecked = true
             if (screening.need_art_filling) checkBoxNeedARTFilling.isChecked = true
             if (screening.need_sealant) checkBoxNeedSealant.isChecked = true
             if (screening.need_sdf) checkBoxNeedSDF.isChecked = true
             if (screening.need_extraction) checkBoxNeedExtraction.isChecked = true
             if (screening.active_infection) checkBoxActiveInfection.isChecked = true
-            if(screening.low_blood_pressure) checkBoxLowBP.isChecked = true
-            if(screening.high_blood_pressure) checkBoxHighBP.isChecked = true
-            if(screening.thyroid_disorder) checkBoxThyroidDisorder.isChecked = true
+            if (screening.low_blood_pressure) checkBoxLowBP.isChecked = true
+            if (screening.high_blood_pressure) checkBoxHighBP.isChecked = true
+            if (screening.thyroid_disorder) checkBoxThyroidDisorder.isChecked = true
         }
     }
 
