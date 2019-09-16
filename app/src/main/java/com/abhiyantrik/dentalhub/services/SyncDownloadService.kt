@@ -4,6 +4,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import androidx.work.Constraints
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
@@ -38,7 +40,10 @@ class SyncDownloadService : Service() {
     override fun onCreate() {
         super.onCreate()
         //loadPatientData()
-        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>().setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
+            .setInitialDelay(100, TimeUnit.MILLISECONDS)
+            .setConstraints(DentalApp.constraints)
+            .build()
         WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
     }
 

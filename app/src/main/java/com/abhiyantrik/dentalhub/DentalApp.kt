@@ -7,6 +7,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.multidex.MultiDexApplication
 import androidx.work.Configuration
+import androidx.work.Constraints
+import androidx.work.NetworkType
 import com.abhiyantrik.dentalhub.models.Location
 import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper
@@ -20,6 +22,7 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
         super.onCreate()
         ObjectBox.init(this)
 
+        constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 
         defaultChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name)
         syncChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name) + "-sync"
@@ -68,6 +71,8 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
 
         var uploadSyncRunning = false
         var downloadSyncRunning = false
+
+        lateinit var constraints: Constraints
 
         var activitySuggestions = mutableSetOf<String>()
 

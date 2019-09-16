@@ -82,7 +82,10 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
         for (eachEncounter in allEncounters) {
             if (!eachEncounter.uploaded) {
                 val data = Data.Builder().putLong("ENCOUNTER_ID",eachEncounter.id).putLong("PATIENT_ID",dbPatient.id)
-                val uploadEncounterWorkerRequest = OneTimeWorkRequestBuilder<UploadEncounterWorker>().setInputData(data.build()).setInitialDelay(100,
+                val uploadEncounterWorkerRequest = OneTimeWorkRequestBuilder<UploadEncounterWorker>()
+                    .setInputData(data.build())
+                    .setConstraints(DentalApp.constraints)
+                    .setInitialDelay(100,
                     TimeUnit.MILLISECONDS).build()
                 WorkManager.getInstance(applicationContext).enqueue(uploadEncounterWorkerRequest)
             }
