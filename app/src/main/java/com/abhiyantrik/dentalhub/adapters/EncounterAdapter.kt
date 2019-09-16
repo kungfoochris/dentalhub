@@ -72,9 +72,6 @@ class EncounterAdapter(
             } else {
                 ibEdit.visibility = View.INVISIBLE
             }
-
         }
-
-
     }
 }
