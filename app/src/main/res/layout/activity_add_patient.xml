@@ -303,6 +303,7 @@
                     android:layout_gravity="center"
                     android:paddingStart="42dp"
                     android:paddingEnd="42dp"
+                    android:layout_marginBottom="@dimen/userInfoFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -314,8 +315,8 @@
             android:name="com.abhiyantrik.dentalhub.fragments.TickerFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     <ProgressBar
             android:id="@+id/loading"
             android:visibility="gone"

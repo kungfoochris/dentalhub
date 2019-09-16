@@ -228,7 +228,7 @@ class ViewPatientActivity : AppCompatActivity() {
                 if (rbOtherProblem.isChecked && etOtherProblem.text.isNullOrEmpty()) {
                     Toast.makeText(
                         this,
-                        "Radio button other problem is selected but problem is empty",
+                        "Other Problem text is empty.",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
