@@ -11,6 +11,7 @@ import kotlinx.android.parcel.Parcelize
 class Referral : Parcelable {
     @Id
     var id: Long = 0
+    var remote_id: String = ""
     var encounter: ToOne<Encounter>? = null
     var no_referral: Boolean = false
     var health_post: Boolean = false

@@ -17,4 +17,7 @@ class Screening : Parcelable {
     var need_sdf: Boolean = false
     var need_extraction: Boolean = false
     var active_infection: Boolean = false
+    var high_blood_pressure: Boolean = false
+    var low_blood_pressure: Boolean = false
+    var thyroid_disorder: Boolean = false
 }

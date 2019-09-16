@@ -6,7 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class History : Parcelable {
     var id: Long = 0
-    var uid: String = ""
     var blood_disorder: Boolean = false
     var diabetes: Boolean = false
     var liver_problem: Boolean = false

@@ -11,6 +11,7 @@ import kotlinx.android.parcel.Parcelize
 class History : Parcelable {
     @Id
     var id: Long = 0
+    var remote_id: String = ""
     var encounter: ToOne<Encounter>? = null
     var blood_disorder: Boolean = false
     var diabetes: Boolean = false

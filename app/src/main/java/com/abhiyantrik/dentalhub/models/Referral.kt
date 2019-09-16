@@ -12,6 +12,7 @@ class Referral : Parcelable {
     var dentist: Boolean = false
     var general_physician: Boolean = false
     var other_details: String = ""
+    var other: Boolean = false
 //    var date: String = ""
 //    var time: String = ""
 }

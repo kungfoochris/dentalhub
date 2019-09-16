@@ -57,7 +57,7 @@ interface DjangoInterface {
     fun getPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
 
     @GET("patients/{patientId}/encounters")
-    fun getEncounter(@Header("Authorization") token: String, @Field("patientId") patientId: String)
+    fun getEncounter(@Header("Authorization") token: String, @Query("patientId") patientId: String): Call<List<EncounterModel>>
 
     @FormUrlEncoded
     @POST("activities")

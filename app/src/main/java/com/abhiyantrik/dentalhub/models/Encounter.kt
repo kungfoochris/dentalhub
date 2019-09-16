@@ -12,4 +12,9 @@ class Encounter : Parcelable {
     var created_at: String = ""
     var updated_at: String = ""
     var uploaded: Boolean = false
+
+    var history: History? = null
+    var screening: Screening? = null
+    var treatment: Treatment? = null
+    var referral: Referral? = null
 }

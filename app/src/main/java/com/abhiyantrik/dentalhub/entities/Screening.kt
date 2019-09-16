@@ -11,6 +11,7 @@ import kotlinx.android.parcel.Parcelize
 class Screening : Parcelable {
     @Id
     var id: Long = 0
+    var remote_id: String = ""
     var encounter: ToOne<Encounter>? = null
     var carries_risk: String = "Low"
     var decayed_primary_teeth: Int = 0
