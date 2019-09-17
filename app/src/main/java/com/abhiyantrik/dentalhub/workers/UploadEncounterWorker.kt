@@ -28,6 +28,7 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
             val patientId = inputData.getLong("PATIENT_ID", 0)
             val encounterId = inputData.getLong("ENCOUNTER_ID", 0)
 
+            Log.d("UploadEncounterWorker", "Upload encounter".plus(patientId).plus(" / ").plus(encounterId))
             val dbPatientEntity =
                 patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
             val dbEncounterEntity =
@@ -42,7 +43,7 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
             )
             Result.success()
         } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            Log.d("UploadEncounterWorkerEx", e.printStackTrace().toString())
             Result.failure()
         }
     }

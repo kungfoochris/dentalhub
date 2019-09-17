@@ -56,7 +56,7 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             patient.id
                         ).build().findFirst()
                         if (existingPatient != null) {
-                            Log.d("SetupActivity", existingPatient.fullName() + " already exists.")
+                            Log.d("DownloadPatientWorker", existingPatient.fullName() + " already exists.")
                             //tvMessage.text = tvMessage.text.toString() + existingPatient.fullName()+" already exists.\n"
 
                             loadEncounterData(existingPatient.remote_id)

@@ -7,9 +7,9 @@ import kotlinx.android.parcel.Parcelize
 class Encounter : Parcelable {
     var id: String = ""
     var encounter_type: String = ""
-    var other_detail: String = ""
+    var other_detail: String? = ""
     var created_at: String = ""
-    var updated_at: String = ""
+    var updated_at: String? = ""
     var uploaded: Boolean = false
 
     var author: String = ""

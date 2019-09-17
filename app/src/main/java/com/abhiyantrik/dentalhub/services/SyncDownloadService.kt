@@ -9,6 +9,7 @@ import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
+import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Encounter
@@ -93,7 +94,7 @@ class SyncDownloadService : Service() {
                                 ).build().findFirst()
                                 if (existingPatient != null) {
                                     Log.d(
-                                        "SetupActivity",
+                                        "SyncDownloadService",
                                         existingPatient.fullName() + " already exists."
                                     )
                                     //tvMessage.text = tvMessage.text.toString() + existingPatient.fullName()+" already exists.\n"
@@ -101,12 +102,12 @@ class SyncDownloadService : Service() {
                                     DentalApp.displayNotification(
                                         applicationContext,
                                         1001,
-                                        "Syncing...",
+                                        applicationContext.resources.getString(R.string.sync_ticker),
                                         existingPatient.fullName(),
-                                        "Not downloading, already exists."
+                                        applicationContext.resources.getString(R.string.already_exists)
                                     )
                                 } else {
-                                    val patientEntity = com.abhiyantrik.dentalhub.entities.Patient()
+                                    val patientEntity = Patient()
                                     patientEntity.remote_id = patient.id
                                     patientEntity.first_name = patient.first_name
                                     patientEntity.middle_name = patient.middle_name
@@ -143,9 +144,9 @@ class SyncDownloadService : Service() {
                                     DentalApp.displayNotification(
                                         applicationContext,
                                         1001,
-                                        "Syncing...",
+                                        applicationContext.resources.getString(R.string.sync_ticker),
                                         patient.fullName(),
-                                        "Downloading patient detail"
+                                        applicationContext.resources.getString(R.string.downloading_patient_detail)
                                     )
                                     loadEncounterData(patient.id)
                                     //tvMessage.text = tvMessage.text.toString() + patient.fullName()+" downloaded.\n"
@@ -188,7 +189,7 @@ class SyncDownloadService : Service() {
                             for (encounter in allEncounters) {
                                 if (encountersBox.query().equal(
                                         Encounter_.remote_id,
-                                        encounter.id.toString()
+                                        encounter.id
                                     ).build().find().size > 0
                                 ) {
                                     Log.d("", "Encounter already downloaded.")
@@ -197,9 +198,9 @@ class SyncDownloadService : Service() {
                                         com.abhiyantrik.dentalhub.entities.Encounter()
                                     encounterEntity.encounter_type = encounter.encounter_type
                                     encounterEntity.created_at = encounter.created_at
-                                    encounterEntity.updated_at = encounter.updated_at
-                                    encounterEntity.other_problem = encounter.other_detail
-                                    encounterEntity.remote_id = encounter.id.toString()
+                                    encounterEntity.updated_at = encounter.updated_at!!
+                                    encounterEntity.other_problem = encounter.other_detail!!
+                                    encounterEntity.remote_id = encounter.id
                                     encounterEntity.patient?.target = dbPatientEntity
                                     encounterEntity.uploaded = true
                                     encountersBox.put(encounterEntity)
@@ -211,7 +212,7 @@ class SyncDownloadService : Service() {
                                     // save history
                                     if (historyBox.query().equal(
                                             History_.remote_id,
-                                            encounter.history!!.id.toString()
+                                            encounter.history!!.id
                                         ).build().find().size > 0
                                     ) {
                                         Log.d("History", "Already downloaded")
@@ -219,7 +220,7 @@ class SyncDownloadService : Service() {
                                         val historyEntity = History()
                                         if (encounter.history != null) {
                                             historyEntity.remote_id =
-                                                encounter.history!!.id.toString()
+                                                encounter.history!!.id
                                             historyEntity.encounter?.target = dbEncounterEntity
                                             historyEntity.blood_disorder =
                                                 encounter.history!!.blood_disorder
@@ -252,7 +253,7 @@ class SyncDownloadService : Service() {
                                     // save screening
                                     if (screeningBox.query().equal(
                                             Screening_.remote_id,
-                                            encounter.screening!!.id.toString()
+                                            encounter.screening!!.id
                                         ).build().find().size > 0
                                     ) {
                                         Log.d("Screening", "Already downloaded")
@@ -260,7 +261,7 @@ class SyncDownloadService : Service() {
                                         val screeningEntity = Screening()
                                         if (encounter.screening != null) {
                                             screeningEntity.remote_id =
-                                                encounter.screening!!.id.toString()
+                                                encounter.screening!!.id
                                             screeningEntity.encounter?.target = dbEncounterEntity
                                             screeningEntity.carries_risk =
                                                 encounter.screening!!.carries_risk
@@ -298,7 +299,7 @@ class SyncDownloadService : Service() {
                                     // save treatment
                                     if (treatmentsBox.query().equal(
                                             Treatment_.remote_id,
-                                            encounter.treatment!!.id.toString()
+                                            encounter.treatment!!.id
                                         ).build().find().size > 0
                                     ) {
                                         Log.d("Screening", "Already downloaded")
@@ -306,7 +307,7 @@ class SyncDownloadService : Service() {
                                         val treatmentEntity = Treatment()
                                         if (encounter.treatment != null) {
                                             treatmentEntity.remote_id =
-                                                encounter.treatment!!.id.toString()
+                                                encounter.treatment!!.id
                                             treatmentEntity.encounter?.target = dbEncounterEntity
                                             treatmentEntity.sdf_whole_mouth =
                                                 encounter.treatment!!.sdf_whole_mouth
@@ -387,7 +388,7 @@ class SyncDownloadService : Service() {
                                     // save referral
                                     if (referralsBox.query().equal(
                                             Referral_.remote_id,
-                                            encounter.treatment!!.id.toString()
+                                            encounter.treatment!!.id
                                         ).build().find().size > 0
                                     ) {
                                         Log.d("Screening", "Already downloaded")
@@ -395,7 +396,7 @@ class SyncDownloadService : Service() {
                                         val referralEntity = Referral()
                                         if (encounter.referral != null) {
                                             referralEntity.remote_id =
-                                                encounter.referral!!.id.toString()
+                                                encounter.referral!!.id
                                             referralEntity.encounter?.target = dbEncounterEntity
                                             referralEntity.no_referral =
                                                 encounter.referral!!.no_referral

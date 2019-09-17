@@ -32,7 +32,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             Result.success()
 
         } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            Log.d("UploadPatientWorkerEx", e.printStackTrace().toString())
             Result.failure()
 
         }
@@ -102,6 +102,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
 
         val allEncounters =
             encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
+        Log.d(patient.fullName(), allEncounters.size.toString())
         for (eachEncounter in allEncounters) {
             if (!eachEncounter.uploaded) {
                 val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)

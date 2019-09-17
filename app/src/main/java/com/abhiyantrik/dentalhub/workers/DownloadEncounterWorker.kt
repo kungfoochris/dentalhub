@@ -81,10 +81,15 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             if(encounter.updated_at==null){
                                 encounterEntity.updated_at = encounter.created_at
                             }else{
-                                encounterEntity.updated_at = encounter.updated_at
+                                encounterEntity.updated_at = encounter.updated_at!!
                             }
 
-                            encounterEntity.other_problem = encounter.other_detail
+                            if(encounter.other_detail==null){
+                                encounterEntity.other_problem = ""
+                            }else{
+                                encounterEntity.other_problem = encounter.other_detail!!
+                            }
+
                             encounterEntity.remote_id = encounter.id
                             encounterEntity.patient?.target = dbPatientEntity
                             encounterEntity.author = encounter.author
@@ -97,7 +102,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             encounterEntity.uploaded = true
                             encountersBox.put(encounterEntity)
 
-                            val dbEncounterEntity = encountersBox.query().orderDesc(
+                            val dbEncounterEntity = encountersBox.query().equal(Encounter_.patientId, dbPatientEntity!!.id).orderDesc(
                                 Encounter_.id
                             ).build().findFirst()
 
