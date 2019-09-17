@@ -64,6 +64,8 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
             dbEncounterEntity.encounter_type,
             dbEncounterEntity.other_problem,
             dbEncounterEntity.author,
+            dbEncounterEntity.created_at,
+            dbEncounterEntity.updated_at,
             dbEncounterEntity.updated_by!!
         )
         val response = call.execute()

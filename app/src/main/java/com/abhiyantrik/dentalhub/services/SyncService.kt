@@ -521,6 +521,8 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             tempEncounter.encounter_type,
             tempEncounter.other_problem,
             tempEncounter.author,
+            tempEncounter.created_at,
+            tempEncounter.updated_at,
             tempEncounter.updated_by!!
         )
         call.enqueue(object : Callback<EncounterModel> {

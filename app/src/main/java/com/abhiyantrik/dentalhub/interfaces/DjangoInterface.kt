@@ -99,6 +99,8 @@ interface DjangoInterface {
         @Field("encounter_type") encounterType: String,
         @Field("other_detail") otherDetail: String,
         @Field("author") author: String,
+        @Field("created_at") created_at: String,
+        @Field("updated_at") updated_at: String,
         @Field("updated_by") updated_by: String
     ): Call<EncounterModel>
 
