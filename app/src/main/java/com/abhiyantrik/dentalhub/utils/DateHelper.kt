@@ -31,11 +31,11 @@ class DateHelper {
             var day = date.substring(8, 10).toInt()
             var month = date.substring(5, 7).toInt()
             var year = date.substring(0, 4).toInt()
-            if (day >= 30 && month == 12) {
+            if (day == 32 && month == 12) {
                 year += 1
                 month = 1
                 day = 1
-            } else if (day >= 30) {
+            } else if (day == 32) {
                 month += 1
                 day = 1
             } else {
