@@ -15,6 +15,6 @@ interface ScreeningFormCommunicator {
         activeInfection: Boolean,
         highBloodPressure: Boolean,
         lowBloodPressure: Boolean,
-        thyroidPressure: Boolean
+        thyroidDisorder: Boolean
     )
 }

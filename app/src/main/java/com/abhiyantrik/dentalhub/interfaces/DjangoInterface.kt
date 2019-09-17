@@ -140,7 +140,7 @@ interface DjangoInterface {
         @Field("active_infection") active_infection: Boolean,
         @Field("high_blood_pressure") high_blood_pressure: Boolean,
         @Field("low_blood_pressure") low_blood_pressure: Boolean,
-        @Field("thyroid") thyroid: Boolean
+        @Field("thyroid_disorder") thyroid_disorder: Boolean
     ): Call<ScreeningModel>
 
     @FormUrlEncoded
