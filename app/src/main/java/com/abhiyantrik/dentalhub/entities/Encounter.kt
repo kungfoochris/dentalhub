@@ -2,6 +2,7 @@ package com.abhiyantrik.dentalhub.entities
 
 import android.os.Parcelable
 import com.abhiyantrik.dentalhub.DentalApp
+import com.abhiyantrik.dentalhub.utils.DateHelper
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import io.objectbox.relation.ToOne
@@ -26,8 +27,14 @@ class Encounter : Parcelable {
 
     fun isEditable(): Boolean {
         val date1 = Date()
+        var createdAt = ""
+        if(created_at.isEmpty()){
+            createdAt = DateHelper.getCurrentDate()
+        }else{
+            createdAt = created_at + " 00:01:00"
+        }
         val date2 =
-            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(created_at + " 00:01:00")
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(createdAt)
         val difference = date1.time - date2.time
         return difference * 1000 < DentalApp.editableDuration
     }
