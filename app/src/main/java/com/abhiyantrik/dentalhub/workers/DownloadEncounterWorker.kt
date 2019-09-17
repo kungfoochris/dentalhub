@@ -77,7 +77,12 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             val encounterEntity = com.abhiyantrik.dentalhub.entities.Encounter()
                             encounterEntity.encounter_type = encounter.encounter_type
                             encounterEntity.created_at = encounter.created_at
-                            encounterEntity.updated_at = encounter.updated_at
+                            if(encounter.updated_at==null){
+                                encounterEntity.updated_at = encounter.created_at
+                            }else{
+                                encounterEntity.updated_at = encounter.updated_at
+                            }
+
                             encounterEntity.other_problem = encounter.other_detail
                             encounterEntity.remote_id = encounter.id
                             encounterEntity.patient?.target = dbPatientEntity
