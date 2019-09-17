@@ -6,6 +6,7 @@ import androidx.work.*
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
+import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Patient
@@ -63,9 +64,9 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             DentalApp.displayNotification(
                                 applicationContext,
                                 1001,
-                                "Syncing...",
+                                applicationContext.resources.getString(R.string.sync_ticker),
                                 existingPatient.fullName(),
-                                "Not downloading, already exists."
+                                applicationContext.resources.getString(R.string.already_exists)
                             )
                         } else {
                             val patientEntity = com.abhiyantrik.dentalhub.entities.Patient()
@@ -110,9 +111,9 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             DentalApp.displayNotification(
                                 applicationContext,
                                 1001,
-                                "Syncing...",
+                                applicationContext.resources.getString(R.string.sync_ticker),
                                 patient.fullName(),
-                                "Downloading patient detail"
+                                applicationContext.resources.getString(R.string.downloading_patient_detail)
                             )
                             loadEncounterData(patient.id)
                             //tvMessage.text = tvMessage.text.toString() + patient.fullName()+" downloaded.\n"

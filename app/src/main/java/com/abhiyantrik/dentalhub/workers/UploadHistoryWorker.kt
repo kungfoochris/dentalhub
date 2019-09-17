@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
+import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
@@ -40,9 +41,9 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
         DentalApp.displayNotification(
             applicationContext,
             1001,
-            "Syncing...",
-            "Uploading history ...",
-            "Uploading history ..."
+            applicationContext.resources.getString(R.string.sync_ticker),
+            applicationContext.resources.getString(R.string.uploading_history),
+            applicationContext.resources.getString(R.string.uploading_history)
         )
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")

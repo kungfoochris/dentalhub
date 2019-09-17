@@ -6,6 +6,7 @@ import androidx.work.*
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
+import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Encounter
 import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
@@ -41,9 +42,9 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
         DentalApp.displayNotification(
             applicationContext,
             1001,
-            "Syncing...",
-            "uploading patient ...",
-            "uploading patient ..."
+            applicationContext.resources.getString(R.string.sync_ticker),
+            applicationContext.resources.getString(R.string.uploading_patient),
+            applicationContext.resources.getString(R.string.uploading_patient)
         )
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)

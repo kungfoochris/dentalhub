@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
+import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Encounter
 import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Referral
@@ -42,9 +43,9 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
         DentalApp.displayNotification(
             applicationContext,
             1001,
-            "Syncing...",
-            "Uploading referral ...",
-            "Uploading referral ..."
+            applicationContext.resources.getString(R.string.sync_ticker),
+            applicationContext.resources.getString(R.string.uploading_referral),
+            applicationContext.resources.getString(R.string.uploading_referral)
         )
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")

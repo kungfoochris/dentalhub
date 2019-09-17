@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
+import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Encounter
@@ -15,7 +16,7 @@ import io.objectbox.Box
 class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
     Worker(context, params) {
 
-    private lateinit var patientsBox: Box<com.abhiyantrik.dentalhub.entities.Patient>
+    private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<com.abhiyantrik.dentalhub.entities.Encounter>
     private lateinit var historyBox: Box<History>
     private lateinit var screeningBox: Box<Screening>
@@ -25,17 +26,17 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
     override fun doWork(): Result {
         return try {
             patientsBox =
-                ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Patient::class.java)
+                ObjectBox.boxStore.boxFor(Patient::class.java)
             encountersBox =
                 ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Encounter::class.java)
             screeningBox =
-                ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Screening::class.java)
+                ObjectBox.boxStore.boxFor(Screening::class.java)
             treatmentsBox =
-                ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Treatment::class.java)
+                ObjectBox.boxStore.boxFor(Treatment::class.java)
             historyBox =
-                ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.History::class.java)
+                ObjectBox.boxStore.boxFor(History::class.java)
             referralsBox =
-                ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Referral::class.java)
+                ObjectBox.boxStore.boxFor(Referral::class.java)
 
             val patientId = inputData.getString("PATIENT_ID")!!
             downloadEncounters(patientId)
@@ -50,9 +51,9 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
         DentalApp.displayNotification(
             applicationContext,
             1001,
-            "Syncing...",
-            "Downloading encounters ...",
-            "Downloading encounters ..."
+            applicationContext.resources.getString(R.string.sync_ticker),
+            applicationContext.resources.getString(R.string.downloading_encounters),
+            applicationContext.resources.getString(R.string.downloading_encounters)
         )
         val dbPatientEntity =
             patientsBox.query().equal(Patient_.remote_id, patientId).build().findFirst()
@@ -103,7 +104,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             // save history
                             if (historyBox.query().equal(
                                     History_.remote_id,
-                                    encounter.history!!.id.toString()
+                                    encounter.history!!.id
                                 ).build().find().size > 0
                             ) {
                                 Log.d("History", "Already downloaded")
@@ -111,14 +112,14 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 DentalApp.displayNotification(
                                     applicationContext,
                                     1001,
-                                    "Syncing...",
-                                    "Downloading history ...",
-                                    "Downloading history ..."
+                                    applicationContext.resources.getString(R.string.sync_ticker),
+                                    applicationContext.resources.getString(R.string.downloading_history),
+                                    applicationContext.resources.getString(R.string.downloading_history)
                                 )
 
                                 val historyEntity = History()
                                 if (encounter.history != null) {
-                                    historyEntity.remote_id = encounter.history!!.id.toString()
+                                    historyEntity.remote_id = encounter.history!!.id
                                     historyEntity.encounter?.target = dbEncounterEntity
                                     historyEntity.blood_disorder =
                                         encounter.history!!.blood_disorder
@@ -148,7 +149,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             // save screening
                             if (screeningBox.query().equal(
                                     Screening_.remote_id,
-                                    encounter.screening!!.id.toString()
+                                    encounter.screening!!.id
                                 ).build().find().size > 0
                             ) {
                                 Log.d("Screening", "Already downloaded")
@@ -156,9 +157,9 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 DentalApp.displayNotification(
                                     applicationContext,
                                     1001,
-                                    "Syncing...",
-                                    "Downloading screening ...",
-                                    "Downloading screening ..."
+                                    applicationContext.resources.getString(R.string.sync_ticker),
+                                    applicationContext.resources.getString(R.string.downloading_screening),
+                                    applicationContext.resources.getString(R.string.downloading_screening)
                                 )
                                 val screeningEntity = Screening()
                                 if (encounter.screening != null) {
@@ -199,7 +200,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             // save treatment
                             if (treatmentsBox.query().equal(
                                     Treatment_.remote_id,
-                                    encounter.treatment!!.id.toString()
+                                    encounter.treatment!!.id
                                 ).build().find().size > 0
                             ) {
                                 Log.d("Screening", "Already downloaded")
@@ -207,13 +208,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 DentalApp.displayNotification(
                                     applicationContext,
                                     1001,
-                                    "Syncing...",
-                                    "Downloading treatment ...",
-                                    "Downloading treatment ..."
+                                    applicationContext.resources.getString(R.string.sync_ticker),
+                                    applicationContext.resources.getString(R.string.downloading_treatment),
+                                    applicationContext.resources.getString(R.string.downloading_treatment)
                                 )
                                 val treatmentEntity = Treatment()
                                 if (encounter.treatment != null) {
-                                    treatmentEntity.remote_id = encounter.treatment!!.id.toString()
+                                    treatmentEntity.remote_id = encounter.treatment!!.id
                                     treatmentEntity.encounter?.target = dbEncounterEntity
                                     treatmentEntity.sdf_whole_mouth =
                                         encounter.treatment!!.sdf_whole_mouth
@@ -301,13 +302,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 DentalApp.displayNotification(
                                     applicationContext,
                                     1001,
-                                    "Syncing...",
-                                    "Downloading referral ...",
-                                    "Downloading referral ..."
+                                    applicationContext.resources.getString(R.string.sync_ticker),
+                                    applicationContext.resources.getString(R.string.downloading_referral),
+                                    applicationContext.resources.getString(R.string.downloading_referral)
                                 )
                                 val referralEntity = Referral()
                                 if (encounter.referral != null) {
-                                    referralEntity.remote_id = encounter.referral!!.id.toString()
+                                    referralEntity.remote_id = encounter.referral!!.id
                                     referralEntity.encounter?.target = dbEncounterEntity
                                     referralEntity.no_referral = encounter.referral!!.no_referral
                                     referralEntity.health_post = encounter.referral!!.health_post

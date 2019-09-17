@@ -134,4 +134,17 @@
     <string name="failure_message">Can\'t reach to Dental Hub server at the moment. Please check your connection and try in a while.</string>
     <string name="could_not_load_activity">Activities could not be loaded.</string>
     <string name="could_not_load_locations">Locations could not be loaded.</string>
+    <string name="syncing">Syncing ...</string>
+    <string name="downloading_encounters">Downloading encounters ...</string>
+    <string name="downloading_history">Downloading history ...</string>
+    <string name="downloading_screening">Downloading screening ...</string>
+    <string name="downloading_treatment">Downloading treatment ...</string>
+    <string name="downloading_referral">Downloading referral ...</string>
+    <string name="uploading_patient">Uploading patient ...</string>
+    <string name="downloading_patient_detail">Downloading patient detail ...</string>
+    <string name="already_exists">Resource already exists.</string>
+    <string name="uploading_history">Uploading history ...</string>
+    <string name="uploading_referral">Uploading referral ...</string>
+    <string name="uploading_screening">Uploading screening ...</string>
+    <string name="uploading_treatment">Uploading treatment ...</string>
 </resources>
