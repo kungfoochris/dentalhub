@@ -86,15 +86,10 @@ class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks,
     private fun startLocationUpdates() {
         locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        locationRequest.interval = 2 * 1000 // 10 seconds
-        locationRequest.fastestInterval = 1 * 1000 // 5 seconds
+        locationRequest.interval = 60 * 1000 // 60 seconds
+        locationRequest.fastestInterval = 30 * 1000 // 30 seconds
 
         //LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient,locationRequest, this)
     }
 
-
-    override fun onDestroy() {
-//        googleApiClient.disconnect()
-        super.onDestroy()
-    }
 }
