@@ -52,7 +52,7 @@ class SearchPatientActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-
+        DentalApp.saveIntToPreference(context, Constants.PREF_LAST_SELECTED_PATIENT_POSITION, 0)
         setupUI()
 
     }
@@ -79,6 +79,8 @@ class SearchPatientActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         listPatients()
+        val lastSelectedPosition = DentalApp.readIntFromPreference(context, Constants.PREF_LAST_SELECTED_PATIENT_POSITION)
+        recyclerView.scrollToPosition(lastSelectedPosition)
         //manager.startSearch(null, false, componentName, null, false)
 //        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
     }
@@ -110,7 +112,8 @@ class SearchPatientActivity : AppCompatActivity() {
                     listPatients()
                 }
 
-                override fun onViewPatientDetailClick(patient: Patient) {
+                override fun onViewPatientDetailClick(position: Int, patient: Patient) {
+                    DentalApp.saveIntToPreference(context, Constants.PREF_LAST_SELECTED_PATIENT_POSITION, position)
                     val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
                     viewPatientIntent.putExtra("PATIENT_ID", patient.id)
                     startActivity(viewPatientIntent)

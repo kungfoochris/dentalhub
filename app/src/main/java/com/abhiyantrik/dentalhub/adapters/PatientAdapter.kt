@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.abhiyantrik.dentalhub.Constants
+import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.utils.DateHelper
@@ -25,7 +27,7 @@ class PatientAdapter(
     private val context: Context = context
 
     interface PatientClickListener {
-        fun onViewPatientDetailClick(patient: Patient)
+        fun onViewPatientDetailClick(position: Int, patient: Patient)
         fun onCallPatientClick(patient: Patient)
         fun onDelayPatientClick(patient: Patient)
         fun onRemovePatientClick(patient: Patient)
@@ -39,7 +41,7 @@ class PatientAdapter(
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
         try {
             val patientItem: Patient = data[position]
-            holder.bindPatient(context, patientItem, displayDelay)
+            holder.bindPatient(context, position, patientItem, displayDelay)
         } catch (e: NumberFormatException) {
             Log.d("PatientAdapter", "invalid position")
         }
@@ -65,7 +67,7 @@ class PatientAdapter(
         private var patientHeaderTitle: TextView = itemView.findViewById(R.id.patientHeaderTitle)
 
 
-        fun bindPatient(context: Context, patient: Patient, displayDelay: Boolean) {
+        fun bindPatient(context: Context, position:Int, patient: Patient, displayDelay: Boolean) {
             if (patient.content == "patient") {
                 tvName.text = patient.fullName()
                 tvAddress.text = ""
@@ -82,7 +84,7 @@ class PatientAdapter(
                     patientClickListener.onDelayPatientClick(patient)
                 }
                 btnViewPatientDetail.setOnClickListener {
-                    patientClickListener.onViewPatientDetailClick(patient)
+                    patientClickListener.onViewPatientDetailClick(position, patient)
                 }
                 btnDelete.setOnClickListener {
                     patientClickListener.onRemovePatientClick(patient)

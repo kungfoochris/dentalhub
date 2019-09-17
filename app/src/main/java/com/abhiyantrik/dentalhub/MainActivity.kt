@@ -264,7 +264,8 @@ class MainActivity : AppCompatActivity() {
                         startActivity(call)
                     }
 
-                    override fun onViewPatientDetailClick(patient: Patient) {
+                    override fun onViewPatientDetailClick(position: Int,patient: Patient) {
+                        DentalApp.saveIntToPreference(context, Constants.PREF_LAST_SELECTED_PATIENT_POSITION, position)
                         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
                         viewPatientIntent.putExtra("PATIENT_ID", patient.id)
                         startActivity(viewPatientIntent)
