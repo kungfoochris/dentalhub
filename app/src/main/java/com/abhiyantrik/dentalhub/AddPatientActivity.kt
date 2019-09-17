@@ -336,6 +336,7 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.created_at = date
             patient!!.updated_at = date
             patient!!.updated = true
+            patient!!.author = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
             patient!!.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
             return patient!!
         } else {
@@ -362,7 +363,7 @@ class AddPatientActivity : AppCompatActivity() {
             tempPatient.updated = false
             tempPatient.recall = null
             tempPatient.author = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
-            tempPatient.updated_by = ""
+            tempPatient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
             return tempPatient
 
         }

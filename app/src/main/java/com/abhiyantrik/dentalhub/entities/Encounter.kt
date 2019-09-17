@@ -20,6 +20,8 @@ class Encounter : Parcelable {
     var created_at: String = ""
     var updated_at: String = ""
     var uploaded: Boolean = false
+    var author: String = ""
+    var updated_by : String? = ""
     var patient: ToOne<Patient>? = null
 
     fun isEditable(): Boolean {

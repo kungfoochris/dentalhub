@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.work.*
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
@@ -26,9 +27,10 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
             val patientId = inputData.getLong("PATIENT_ID", 0)
             val dbPatientEntity = patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
             savePatientToServer(dbPatientEntity!!)
-            return Result.success()
+            Result.success()
 
         }catch (e: Exception){
+            Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
 
         }
@@ -45,6 +47,10 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
         )
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
+        var updater = patient.updated_by
+        if(patient.updated_by==null){
+            updater = DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID,"")
+        }
         val call = panelService.addPatient(
             "JWT $token",
             patient.id,
@@ -63,17 +69,17 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
             patient.activityarea_id,
             patient.geography_id,
             patient.author,
-            patient.updated_by!!,
+            updater!!,
             patient.created_at,
             patient.updated_at
         )
         print("Response before")
         val tempPatient = call.execute().body()
         val dbPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
-        dbPatient!!.remote_id = tempPatient!!.uid
+        dbPatient!!.remote_id = tempPatient!!.id
         dbPatient.uploaded = true
         dbPatient.updated = false
-        println("Patient uid is ${tempPatient.uid}")
+        println("Patient uid is ${tempPatient.id}")
         patientsBox.put(dbPatient)
 
         DentalApp.cancelNotification(applicationContext, 1001)

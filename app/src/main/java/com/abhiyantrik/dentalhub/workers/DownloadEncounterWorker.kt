@@ -35,6 +35,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
             downloadEncounters(patientId)
             Result.success()
         }catch (e: Exception){
+            Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
     }
@@ -47,14 +48,14 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
             "Downloading encounters ...",
             "Downloading encounters ..."
         )
-        val dbPatientEntity = patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
+        val dbPatientEntity = patientsBox.query().equal(Patient_.remote_id, patientId).build().findFirst()
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.getEncounter("JWT $token", patientId)
         val allEncounters = call.execute().body() as List<Encounter>
         for(encounter in allEncounters){
-            if(encountersBox.query().equal(Encounter_.remote_id, encounter.id.toString()).build().find().size > 0){
+            if(encountersBox.query().equal(Encounter_.remote_id, encounter.id).build().find().size > 0){
                 Log.d("", "Encounter already downloaded.")
             }else{
 
@@ -63,8 +64,10 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters): Worke
                 encounterEntity.created_at = encounter.created_at
                 encounterEntity.updated_at = encounter.updated_at
                 encounterEntity.other_problem = encounter.other_detail
-                encounterEntity.remote_id = encounter.id.toString()
+                encounterEntity.remote_id = encounter.id
                 encounterEntity.patient?.target = dbPatientEntity
+                encounterEntity.author = encounter.author
+                encounterEntity.updated_by = encounter.updated_by
                 encounterEntity.uploaded = true
                 encountersBox.put(encounterEntity)
 

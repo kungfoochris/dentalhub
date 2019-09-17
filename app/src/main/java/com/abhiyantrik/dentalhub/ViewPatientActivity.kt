@@ -91,7 +91,7 @@ class ViewPatientActivity : AppCompatActivity() {
         fabEditPatient = findViewById(R.id.fabEditPatient)
 
         mLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = mLayoutManager as RecyclerView.LayoutManager?
+        recyclerView.layoutManager = mLayoutManager
         dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         val divider = RecyclerViewItemSeparator(0)
         recyclerView.addItemDecoration(divider)
@@ -194,10 +194,10 @@ class ViewPatientActivity : AppCompatActivity() {
 
         // to get all id of the Button
         val rgAddEncounter = view.findViewById<RadioGroup>(R.id.rgAddEncounter)
-        val rbCheckupScreening = view.findViewById<RadioButton>(R.id.rbCheckupScreening)
-        val rbReliefOfPain = view.findViewById<RadioButton>(R.id.rbReliefOfPain)
-        val rbContinuationOfTreatmentPlan =
-            view.findViewById<RadioButton>(R.id.rbContinuationOfTreatmentPlan)
+//        val rbCheckupScreening = view.findViewById<RadioButton>(R.id.rbCheckupScreening)
+//        val rbReliefOfPain = view.findViewById<RadioButton>(R.id.rbReliefOfPain)
+//        val rbContinuationOfTreatmentPlan =
+//            view.findViewById<RadioButton>(R.id.rbContinuationOfTreatmentPlan)
         val rbOtherProblem = view.findViewById<RadioButton>(R.id.rbOtherProblem)
         val etOtherProblem = view.findViewById<EditText>(R.id.etOtherProblemPopUp)
         val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
@@ -213,7 +213,7 @@ class ViewPatientActivity : AppCompatActivity() {
             dialog.dismiss()
         }
 
-        rgAddEncounter.setOnCheckedChangeListener { radioGroup, i ->
+        rgAddEncounter.setOnCheckedChangeListener { _, i ->
             if (i == R.id.rbOtherProblem) {
                 etOtherProblem.visibility = View.VISIBLE
             } else {
@@ -273,6 +273,8 @@ class ViewPatientActivity : AppCompatActivity() {
         encounter.other_problem = otherProblem
         encounter.created_at = date
         encounter.updated_at = date
+        encounter.author = DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID,"")
+        encounter.updated_by = DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID,"")
         encounter.patient?.target = patient
         encounterBox.put(encounter)
 

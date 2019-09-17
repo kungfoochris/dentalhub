@@ -127,8 +127,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                     encounter.id
                 ).orderDesc(Referral_.id).build().findFirst()!!
 
-//            recall = recallBox.query().equal(Recall_.id, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
-
         }
 
         initUI()
@@ -151,22 +149,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         val fragmentAdapter = FormPageAdapter(supportFragmentManager)
         pager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(pager)
-
-//        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-//            override fun onTabReselected(p0: TabLayout.Tab?) {
-//                //
-//
-//            }
-//
-//            override fun onTabUnselected(p0: TabLayout.Tab?) {
-//                //
-//            }
-//
-//            override fun onTabSelected(p0: TabLayout.Tab?) {
-//                //
-//            }
-//
-//        })
 
     }
 

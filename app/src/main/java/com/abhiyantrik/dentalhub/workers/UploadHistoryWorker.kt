@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
@@ -29,6 +30,7 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters): Worker(co
 
             Result.success()
         }catch (e: Exception){
+            Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
     }

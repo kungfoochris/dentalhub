@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:8623945972200860446",
-      "lastPropertyId": "58:236166849881126967",
+      "lastPropertyId": "59:1223590712206886599",
       "name": "Treatment",
       "properties": [
         {
@@ -240,6 +240,10 @@
         {
           "id": "58:236166849881126967",
           "name": "sdf_whole_mouth"
+        },
+        {
+          "id": "59:1223590712206886599",
+          "name": "remote_id"
         }
       ],
       "relations": []
@@ -304,7 +308,7 @@
     },
     {
       "id": "4:8273927813278974540",
-      "lastPropertyId": "19:5060951473033961087",
+      "lastPropertyId": "20:7743733895842092927",
       "name": "Screening",
       "properties": [
         {
@@ -371,6 +375,10 @@
         {
           "id": "19:5060951473033961087",
           "name": "cavity_permanent_posterior_teeth"
+        },
+        {
+          "id": "20:7743733895842092927",
+          "name": "remote_id"
         }
       ],
       "relations": []
@@ -418,7 +426,7 @@
     },
     {
       "id": "7:180778302686884712",
-      "lastPropertyId": "9:179342509255224655",
+      "lastPropertyId": "10:8461470073183433483",
       "name": "Referral",
       "properties": [
         {
@@ -457,13 +465,17 @@
           "id": "9:179342509255224655",
           "indexId": "6:8442982598767589056",
           "name": "encounterId"
+        },
+        {
+          "id": "10:8461470073183433483",
+          "name": "remote_id"
         }
       ],
       "relations": []
     },
     {
       "id": "8:4100589893316217199",
-      "lastPropertyId": "15:9214461506063424550",
+      "lastPropertyId": "16:5625068185284998629",
       "name": "History",
       "properties": [
         {
@@ -526,6 +538,10 @@
           "id": "15:9214461506063424550",
           "indexId": "7:1947139086298389756",
           "name": "encounterId"
+        },
+        {
+          "id": "16:5625068185284998629",
+          "name": "remote_id"
         }
       ],
       "relations": []

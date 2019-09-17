@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.work.*
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
@@ -29,6 +30,7 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters): Worker(co
 
             Result.success()
         }catch (e: Exception){
+            Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
     }
@@ -68,9 +70,7 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters): Worker(co
         print("Response before")
         val tempPatient = call.execute().body()
         val dbPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
-        dbPatient!!.remote_id = tempPatient!!.uid
-        dbPatient.updated = false
-        println("Patient uid is ${tempPatient.uid}")
+        dbPatient!!.updated = false
         patientsBox.put(dbPatient)
 
         DentalApp.cancelNotification(applicationContext, 1001)

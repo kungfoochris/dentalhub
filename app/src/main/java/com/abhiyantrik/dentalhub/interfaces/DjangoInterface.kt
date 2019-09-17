@@ -98,7 +98,9 @@ interface DjangoInterface {
         @Field("geography_id") geographyId: String,
         @Field("activityarea_id") activityareaId: String,
         @Field("encounter_type") encounterType: String,
-        @Field("other_detail") otherDetail: String
+        @Field("other_detail") otherDetail: String,
+        @Field("author") author: String,
+        @Field("updated_by") updated_by: String
     ): Call<EncounterModel>
 
     @FormUrlEncoded

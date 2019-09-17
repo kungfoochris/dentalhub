@@ -47,8 +47,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     private lateinit var encounterReferral: List<Referral>
 
 
-    var totalTasks = 0
-    var failedTasks = 0
     var successTasks = 0
     var totalRetrofitProcessed = 0
 
@@ -71,22 +69,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         return super.onStartCommand(intent, flags, startId)
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        networkStateReceiver = NetworkStateReceiver()
-        networkStateReceiver.addListener(this)
-        this.registerReceiver(
-            networkStateReceiver,
-            IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION)
-        )
-    }
 
     override fun onDestroy() {
         DentalApp.cancelNotification(applicationContext, 1001)
         DentalApp.uploadSyncRunning = false
         super.onDestroy()
-        networkStateReceiver.removeListener(this)
-        this.unregisterReceiver(networkStateReceiver)
     }
 
     private fun startSync() {
@@ -458,10 +445,10 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                             val dbPatient =
                                 patientsBox.query().equal(Patient_.id, patient.id).build()
                                     .findFirst()
-                            dbPatient!!.remote_id = tempPatient.uid
+                            dbPatient!!.remote_id = tempPatient.id
                             dbPatient.uploaded = true
                             dbPatient.updated = false
-                            println("Patient uid is ${tempPatient.uid}")
+                            println("Patient uid is ${tempPatient.id}")
                             patientsBox.put(dbPatient)
                             Log.d("savePatientToServer", tempPatient.fullName() + " saved.")
                             checkAllEncounter(dbPatient)
@@ -516,7 +503,7 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     @AddTrace(name = "syncService_saveEncounterToServer", enabled = true /* optional */)
     private fun saveEncounterToServer(
         patientId: String,
-        patientGoegraphy: String,
+        patientGeography: String,
         patientActivityId: String,
         tempEncounter: Encounter
     ) {
@@ -528,10 +515,12 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
             "JWT $token",
             patientId,
             tempEncounter.id.toString(),
-            patientGoegraphy,
+            patientGeography,
             patientActivityId,
             tempEncounter.encounter_type,
-            tempEncounter.other_problem
+            tempEncounter.other_problem,
+            tempEncounter.author,
+            tempEncounter.updated_by!!
         )
         call.enqueue(object : Callback<EncounterModel> {
             override fun onFailure(call: Call<EncounterModel>, t: Throwable) {

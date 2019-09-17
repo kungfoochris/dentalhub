@@ -7,7 +7,6 @@ import java.util.*
 @Parcelize
 class Patient(
     var id: String,
-    var uid: String,
     var author: String,
     var updated_by: String,
     var first_name: String,

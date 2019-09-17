@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.work.*
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
@@ -40,6 +41,7 @@ class UploadEncounterWorker (context: Context, params: WorkerParameters): Worker
             )
             Result.success()
         }catch (e: Exception){
+            Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
     }
@@ -47,7 +49,7 @@ class UploadEncounterWorker (context: Context, params: WorkerParameters): Worker
     private fun saveEncounterToServer(
         remoteId: String,
         geographyId: String,
-        activityareaId: String,
+        activityAreaId: String,
         dbEncounterEntity: Encounter?
     ) {
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -57,9 +59,11 @@ class UploadEncounterWorker (context: Context, params: WorkerParameters): Worker
             remoteId,
             dbEncounterEntity!!.id.toString(),
             geographyId,
-            activityareaId,
+            activityAreaId,
             dbEncounterEntity.encounter_type,
-            dbEncounterEntity.other_problem
+            dbEncounterEntity.other_problem,
+            dbEncounterEntity.author,
+            dbEncounterEntity.updated_by!!
         )
 
         val tempEncounter = call.execute().body() as EncounterModel

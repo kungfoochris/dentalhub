@@ -25,6 +25,7 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters): Worker(
             downloadPatients()
             Result.success()
         }catch (e: Exception){
+            Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
     }
