@@ -6,4 +6,5 @@
     <dimen name="spinner_default_height">35dp</dimen>
     <dimen name="fieldBottomMargin">8dp</dimen>
     <dimen name="fieldTopMargin">8dp</dimen>
+    <dimen name="userInfoFragment">25dp</dimen>
 </resources>
