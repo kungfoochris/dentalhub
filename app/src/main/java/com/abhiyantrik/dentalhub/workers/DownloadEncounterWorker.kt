@@ -82,7 +82,12 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             encounterEntity.remote_id = encounter.id
                             encounterEntity.patient?.target = dbPatientEntity
                             encounterEntity.author = encounter.author
-                            encounterEntity.updated_by = encounter.updated_by
+                            if(encounterEntity.updated_by==null){
+                                encounterEntity.updated_by = encounter.author
+                            }else{
+                                encounterEntity.updated_by = encounter.updated_by
+                            }
+
                             encounterEntity.uploaded = true
                             encountersBox.put(encounterEntity)
 

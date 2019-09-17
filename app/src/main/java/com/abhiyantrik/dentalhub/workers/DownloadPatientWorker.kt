@@ -99,7 +99,12 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             } else {
                                 patientEntity.updated_at = patient.updated_at
                             }
-                            patientEntity.updated_by = patient.updated_by
+                            if(patient.updated_by==null){
+                                patientEntity.updated_by = patient.author
+                            }else{
+                                patientEntity.updated_by = patient.updated_by
+                            }
+
 
                             patientsBox.put(patientEntity)
                             DentalApp.displayNotification(

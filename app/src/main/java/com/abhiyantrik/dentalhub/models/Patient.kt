@@ -8,7 +8,7 @@ import java.util.*
 class Patient(
     var id: String,
     var author: String,
-    var updated_by: String,
+    var updated_by: String?,
     var first_name: String,
     var middle_name: String,
     var last_name: String,
