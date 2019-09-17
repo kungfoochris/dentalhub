@@ -14,6 +14,7 @@ import com.abhiyantrik.dentalhub.broadcastreceivers.NetworkStateReceiver
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
+import com.abhiyantrik.dentalhub.workers.UploadWorker
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
 import io.objectbox.Box
@@ -67,7 +68,12 @@ class SyncService : Service(){
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         DentalApp.uploadSyncRunning = true
-        startSync()
+        val uploadWorkerRequest = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setConstraints(DentalApp.uploadConstraints)
+            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+        WorkManager.getInstance(applicationContext).enqueue(uploadWorkerRequest)
+
+        //startSync()
         return super.onStartCommand(intent, flags, startId)
     }
 
