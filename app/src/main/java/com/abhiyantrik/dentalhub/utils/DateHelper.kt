@@ -67,20 +67,25 @@ class DateHelper {
 
         fun formatNepaliDate(context: Context, date: String): String {
             Log.d("FORMAT: ", date)
-            var nepaliFormattedDate = ""
-            try {
-                // write the formatting logic
-                nepaliFormattedDate = date.substring(0, 4) + " " + getNepaliMonthName(
-                    context,
-                    date.substring(5, 7).toInt()
-                ) + " " + date.substring(8, 10)
-            } catch (e: IllegalArgumentException) {
+            var nepaliFormattedDate: String
+            if(date.isNotEmpty()){
+                try {
+                    // write the formatting logic
+                    nepaliFormattedDate = date.substring(0, 4) + " " + getNepaliMonthName(
+                        context,
+                        date.substring(5, 7).toInt()
+                    ) + " " + date.substring(8, 10)
+                } catch (e: IllegalArgumentException) {
+                    nepaliFormattedDate = "-"
+                    Log.d("DateHelper", e.printStackTrace().toString())
+                } catch (e: StringIndexOutOfBoundsException) {
+                    nepaliFormattedDate = "-"
+                    Log.d("DateHelper", e.printStackTrace().toString())
+                }
+            }else{
                 nepaliFormattedDate = "-"
-                Log.d("DateHelper", e.printStackTrace().toString())
-            } catch (e: StringIndexOutOfBoundsException) {
-                nepaliFormattedDate = "-"
-                Log.d("DateHelper", e.printStackTrace().toString())
             }
+
             return nepaliFormattedDate
         }
 
