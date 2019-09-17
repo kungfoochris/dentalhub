@@ -44,6 +44,7 @@ class SyncDownloadService : Service() {
             .setConstraints(DentalApp.downloadConstraints)
             .build()
         WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+        stopSelf()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

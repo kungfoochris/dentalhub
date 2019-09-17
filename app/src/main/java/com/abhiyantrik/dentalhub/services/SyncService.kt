@@ -28,7 +28,7 @@ import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
 
-class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener {
+class SyncService : Service(){
 
 
     private lateinit var patientsBox: Box<Patient>
@@ -70,6 +70,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         return super.onStartCommand(intent, flags, startId)
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        startSync()
+    }
+
 
     override fun onDestroy() {
         DentalApp.cancelNotification(applicationContext, 1001)
@@ -78,7 +83,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
     }
 
     private fun startSync() {
-        //displayNotification()
         allPatients = patientsBox.query().build().find()
         for (patient in allPatients) {
             val data = Data.Builder().putLong("PATIENT_ID", patient.id)
@@ -88,17 +92,9 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
                 .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
             WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
         }
+        stopSelf()
     }
 
-    override fun networkAvailable() {
-        Log.d("SyncService", "networkAvailable()")
-        startSync()
-    }
-
-    override fun networkUnavailable() {
-        Log.d("SyncService", "networkUnavailable()")
-        pauseSync()
-    }
 
     private fun pauseSync() {
         // stop the sync
@@ -130,24 +126,6 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
 
 
         stopSelf()
-
-//        var i = 0
-//        fixedRateTimer("default", false, 0L, 1000) {
-//            i += 1
-//            DentalApp.displayNotification(
-//                applicationContext,
-//                1001,
-//                "Title",
-//                allPatients[i].fullName(),
-//                "Long Description"
-//            )
-//            if (i > allPatients.size) {
-//                DentalApp.cancelNotification(applicationContext, 1001)
-//                cancel()
-//                stopSelf()
-//            }
-//        }
-
 
     }
 
