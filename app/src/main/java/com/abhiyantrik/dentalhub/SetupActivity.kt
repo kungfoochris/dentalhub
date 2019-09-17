@@ -44,7 +44,7 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun loadProfile() {
-        tvMessage.text = tvMessage.text.toString() + "Loading profile...\n"
+        tvMessage.append("Loading profile...\n")
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.fetchProfile("JWT $token")
@@ -52,9 +52,9 @@ class SetupActivity : AppCompatActivity() {
             override fun onFailure(call: Call<Profile>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 if (BuildConfig.DEBUG) {
-                    tvMessage.text = tvMessage.text.toString() + t.message.toString()
+                    tvMessage.append(t.message.toString())
                 } else {
-                    tvMessage.text = tvMessage.text.toString() + "Failed to load profile\n"
+                    tvMessage.append("Failed to load profile\n")
                 }
             }
 
@@ -77,7 +77,7 @@ class SetupActivity : AppCompatActivity() {
                                 p.image
                             )
                             profileLoadComplete = true
-                            tvMessage.text = tvMessage.text.toString() + "Loading profile complete\n"
+                            tvMessage.append("Loading profile complete\n")
                             loadData()
                         }
                     }
@@ -92,13 +92,13 @@ class SetupActivity : AppCompatActivity() {
     private fun loadData() {
 
         Log.d(TAG, "listAddressess()")
-        tvMessage.text = tvMessage.text.toString() + "Loading addresses...\n"
+        tvMessage.append("Loading addresses...\n")
         val panelService = DjangoInterface.create(this)
         val call = panelService.listAddresses()
         call.enqueue(object : Callback<List<District>> {
             override fun onFailure(call: Call<List<District>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                tvMessage.text = tvMessage.text.toString() + "Failed to load adresses\n"
+                tvMessage.append("Failed to load adresses\n")
                 Log.d(TAG, t.toString())
             }
 
@@ -153,8 +153,7 @@ class SetupActivity : AppCompatActivity() {
                                     }
                                 }
                             }
-                            tvMessage.text =
-                                tvMessage.text.toString() + "Loading address complete\n"
+                            tvMessage.append("Loading address complete\n")
                             DentalApp.saveToPreference(
                                 context,
                                 Constants.PREF_SETUP_COMPLETE,
@@ -176,14 +175,14 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun loadPatientData() {
-        tvMessage.text = tvMessage.text.toString() + "Loading patients...\n"
+        tvMessage.append("Loading patients...\n")
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.getPatients("JWT $token")
         call.enqueue(object: Callback<List<PatientModel>>{
             override fun onFailure(call: Call<List<PatientModel>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                tvMessage.text = tvMessage.text.toString() + "Failed to load patients\n"
+                tvMessage.append("Failed to load patients\n")
                 Log.d(TAG, t.toString())
             }
 
@@ -200,7 +199,7 @@ class SetupActivity : AppCompatActivity() {
                                 ).build().findFirst()
                                 if(existingPatient != null){
                                     Log.d("SetupActivity", existingPatient.fullName()+" already exists.")
-                                    tvMessage.text = tvMessage.text.toString() + existingPatient.fullName()+" already exists.\n"
+                                    tvMessage.append(existingPatient.fullName()+" already exists.\n")
                                 }else{
                                     downloadedPatients.add(patient)
                                     val patientEntity = Patient()
@@ -237,7 +236,7 @@ class SetupActivity : AppCompatActivity() {
                                     patientEntity.updated_by = patient.updated_by
 
                                     patientsBox.put(patientEntity)
-                                    tvMessage.text = tvMessage.text.toString() + patient.fullName()+" downloaded.\n"
+                                    tvMessage.append(patient.fullName()+" downloaded.\n")
                                 }
 
                             }
@@ -257,7 +256,7 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun loadEncounterData() {
-        tvMessage.text = tvMessage.text.toString() + "Loading encounter data...\n"
+        tvMessage.append("Loading encounter data...\n")
         startActivity(Intent(context, LocationSelectorActivity::class.java))
         finish()
 
