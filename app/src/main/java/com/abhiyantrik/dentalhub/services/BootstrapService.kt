@@ -3,16 +3,10 @@ package com.abhiyantrik.dentalhub.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.entities.Activity
-import com.abhiyantrik.dentalhub.entities.Activity_
 import com.abhiyantrik.dentalhub.entities.Geography
-import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class BootstrapService : Service() {

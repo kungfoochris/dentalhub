@@ -2,10 +2,11 @@ package com.abhiyantrik.dentalhub.services
 
 import android.app.Service
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.IBinder
 import android.util.Log
-import androidx.work.*
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
@@ -80,11 +81,11 @@ class SyncService : Service(), NetworkStateReceiver.NetworkStateReceiverListener
         //displayNotification()
         allPatients = patientsBox.query().build().find()
         for (patient in allPatients) {
-            val data = Data.Builder().putLong("PATIENT_ID",patient.id)
+            val data = Data.Builder().putLong("PATIENT_ID", patient.id)
             val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
                 .setInputData(data.build())
                 .setConstraints(DentalApp.uploadConstraints)
-                .setInitialDelay(100,TimeUnit.MILLISECONDS).build()
+                .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
             WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
         }
     }

@@ -14,22 +14,24 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
-class UpdatePatientWorker(context: Context, params: WorkerParameters): Worker(context, params) {
+class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<Encounter>
 
     override fun doWork(): Result {
-        return try{
+        return try {
             patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
             encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
 
             val patientId = inputData.getLong("PATIENT_ID", 0)
-            val dbPatientEntity = patientsBox.query().equal(Patient_.id, patientId).equal(Patient_.updated, true).build().findFirst()
+            val dbPatientEntity =
+                patientsBox.query().equal(Patient_.id, patientId).equal(Patient_.updated, true)
+                    .build().findFirst()
             savePatientToServer(dbPatientEntity!!)
 
             Result.success()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
@@ -68,24 +70,38 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters): Worker(co
             patient.updated_at
         )
         print("Response before")
-        val tempPatient = call.execute().body()
-        val dbPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
-        dbPatient!!.updated = false
-        patientsBox.put(dbPatient)
+        val response = call.execute()
+        if (response.isSuccessful) {
+            when (response.code()) {
+                200, 201 -> {
+                    val dbPatient =
+                        patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
+                    dbPatient!!.updated = false
+                    patientsBox.put(dbPatient)
 
-        DentalApp.cancelNotification(applicationContext, 1001)
 
-        val allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
-        for (eachEncounter in allEncounters) {
-            if (!eachEncounter.uploaded) {
-                val data = Data.Builder().putLong("ENCOUNTER_ID",eachEncounter.id).putLong("PATIENT_ID",dbPatient.id)
-                val uploadEncounterWorkerRequest = OneTimeWorkRequestBuilder<UploadEncounterWorker>()
-                    .setInputData(data.build())
-                    .setConstraints(DentalApp.uploadConstraints)
-                    .setInitialDelay(100,
-                        TimeUnit.MILLISECONDS).build()
-                WorkManager.getInstance(applicationContext).enqueue(uploadEncounterWorkerRequest)
+                    val allEncounters =
+                        encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
+                    for (eachEncounter in allEncounters) {
+                        if (!eachEncounter.uploaded) {
+                            val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)
+                                .putLong("PATIENT_ID", dbPatient.id)
+                            val uploadEncounterWorkerRequest =
+                                OneTimeWorkRequestBuilder<UploadEncounterWorker>()
+                                    .setInputData(data.build())
+                                    .setConstraints(DentalApp.uploadConstraints)
+                                    .setInitialDelay(
+                                        100,
+                                        TimeUnit.MILLISECONDS
+                                    ).build()
+                            WorkManager.getInstance(applicationContext)
+                                .enqueue(uploadEncounterWorkerRequest)
+                        }
+                    }
+                }
             }
         }
+        DentalApp.cancelNotification(applicationContext, 1001)
+
     }
 }

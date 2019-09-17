@@ -9,13 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.District
-import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 import com.abhiyantrik.dentalhub.models.Profile
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 
 class SetupActivity : AppCompatActivity() {
 
@@ -179,28 +179,35 @@ class SetupActivity : AppCompatActivity() {
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.getPatients("JWT $token")
-        call.enqueue(object: Callback<List<PatientModel>>{
+        call.enqueue(object : Callback<List<PatientModel>> {
             override fun onFailure(call: Call<List<PatientModel>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 tvMessage.append("Failed to load patients\n")
                 Log.d(TAG, t.toString())
             }
 
-            override fun onResponse(call: Call<List<PatientModel>>, response: Response<List<PatientModel>>) {
-                if(null!= response.body()){
+            override fun onResponse(
+                call: Call<List<PatientModel>>,
+                response: Response<List<PatientModel>>
+            ) {
+                if (null != response.body()) {
                     Log.d("SetupActivity", response.code().toString())
-                    when(response.code()){
+                    when (response.code()) {
                         200 -> {
                             patientDataLoadComplete = true
                             val allPatients = response.body() as List<PatientModel>
-                            for (patient in allPatients){
-                                val existingPatient =patientsBox.query().equal(Patient_.remote_id,
+                            for (patient in allPatients) {
+                                val existingPatient = patientsBox.query().equal(
+                                    Patient_.remote_id,
                                     patient.id
                                 ).build().findFirst()
-                                if(existingPatient != null){
-                                    Log.d("SetupActivity", existingPatient.fullName()+" already exists.")
-                                    tvMessage.append(existingPatient.fullName()+" already exists.\n")
-                                }else{
+                                if (existingPatient != null) {
+                                    Log.d(
+                                        "SetupActivity",
+                                        existingPatient.fullName() + " already exists."
+                                    )
+                                    tvMessage.append(existingPatient.fullName() + " already exists.\n")
+                                } else {
                                     downloadedPatients.add(patient)
                                     val patientEntity = Patient()
                                     patientEntity.remote_id = patient.id
@@ -223,30 +230,30 @@ class SetupActivity : AppCompatActivity() {
                                     patientEntity.recall = null
                                     patientEntity.author = patient.author
 
-                                    if(patient.created_at==null){
+                                    if (patient.created_at == null) {
                                         patientEntity.created_at = DateHelper.getCurrentNepaliDate()
-                                    }else{
+                                    } else {
                                         patientEntity.created_at = patient.created_at
                                     }
-                                    if(patient.updated_at==null){
+                                    if (patient.updated_at == null) {
                                         patientEntity.updated_at = DateHelper.getCurrentNepaliDate()
-                                    }else{
+                                    } else {
                                         patientEntity.updated_at = patient.updated_at
                                     }
                                     patientEntity.updated_by = patient.updated_by
 
                                     patientsBox.put(patientEntity)
-                                    tvMessage.append(patient.fullName()+" downloaded.\n")
+                                    tvMessage.append(patient.fullName() + " downloaded.\n")
                                 }
 
                             }
                             tvMessage.append("Loading patients complete\n")
-                            if(patientDataLoadComplete && profileLoadComplete && dataLoadComplete) {
+                            if (patientDataLoadComplete && profileLoadComplete && dataLoadComplete) {
                                 loadEncounterData()
                             }
                         }
                     }
-                }else{
+                } else {
                     Log.d(TAG, response.code().toString())
                 }
             }

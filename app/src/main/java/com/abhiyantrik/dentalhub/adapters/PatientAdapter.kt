@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.utils.DateHelper
-import java.lang.NumberFormatException
 
 class PatientAdapter(
     context: Context,
@@ -38,10 +37,10 @@ class PatientAdapter(
     }
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
-        try{
+        try {
             val patientItem: Patient = data[position]
             holder.bindPatient(context, patientItem, displayDelay)
-        }catch (e: NumberFormatException){
+        } catch (e: NumberFormatException) {
             Log.d("PatientAdapter", "invalid position")
         }
 

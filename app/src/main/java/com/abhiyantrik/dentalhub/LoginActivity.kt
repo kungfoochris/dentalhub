@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -20,9 +21,6 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.inputmethod.InputMethodManager
 
 
 class LoginActivity : Activity() {
@@ -78,7 +76,7 @@ class LoginActivity : Activity() {
     @AddTrace(name = "processLogin", enabled = true /* optional */)
     private fun processLogin() {
         val view = this.currentFocus
-        if(view!=null){
+        if (view != null) {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }

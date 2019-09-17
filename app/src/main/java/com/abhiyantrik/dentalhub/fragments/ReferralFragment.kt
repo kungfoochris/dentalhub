@@ -120,14 +120,20 @@ class ReferralFragment : Fragment() {
 
             when (i) {
                 R.id.radioOneWeek -> {
-                    recallDate = if(dayToday+7 > 30){
-                        "$yearToday-" + DecimalFormat("00").format(monthToday+1) + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
-                    }else{
+                    recallDate = if (dayToday + 7 > 30) {
+                        "$yearToday-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
+                            "00"
+                        ).format((dayToday + 7) % 30)
+                    } else {
 
-                        if(monthToday+1 > 12){
-                            "${yearToday+1}-" + DecimalFormat("00").format("01") + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
-                        }else{
-                            "$yearToday-" + DecimalFormat("00").format(monthToday+1) + "-"+DecimalFormat("00").format((dayToday + 7) % 30)
+                        if (monthToday + 1 > 12) {
+                            "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
+                                "00"
+                            ).format((dayToday + 7) % 30)
+                        } else {
+                            "$yearToday-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
+                                "00"
+                            ).format((dayToday + 7) % 30)
                         }
 
                     }
@@ -274,7 +280,6 @@ class ReferralFragment : Fragment() {
             referral = referralBox.query()
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
-
 
 
             val radioButtonMap = mapOf(

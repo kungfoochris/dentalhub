@@ -2,7 +2,6 @@ package com.abhiyantrik.dentalhub.interfaces
 
 import android.content.Context
 import com.abhiyantrik.dentalhub.R
-import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.models.*
 import com.google.gson.Gson
@@ -54,7 +53,7 @@ interface DjangoInterface {
     @PUT("patient/{patientId}")
     fun updatePatient(
         @Header("Authorization") token: String,
-        @Path("patientId")patientId: String,
+        @Path("patientId") patientId: String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
         @Field("gender") gender: String,

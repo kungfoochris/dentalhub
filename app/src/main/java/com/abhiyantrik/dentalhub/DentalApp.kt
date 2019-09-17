@@ -14,22 +14,27 @@ import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper
 
 
-class DentalApp : MultiDexApplication(), Configuration.Provider{
+class DentalApp : MultiDexApplication(), Configuration.Provider {
 
-    override fun getWorkManagerConfiguration() = Configuration.Builder().setMinimumLoggingLevel(Log.VERBOSE).build()
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder().setMinimumLoggingLevel(Log.VERBOSE).build()
 
     override fun onCreate() {
         super.onCreate()
         ObjectBox.init(this)
 
 
-        defaultChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name)
-        syncChannelId = applicationContext.packageName + applicationContext.getString(R.string.app_name) + "-sync"
+        defaultChannelId =
+            applicationContext.packageName + applicationContext.getString(R.string.app_name)
+        syncChannelId =
+            applicationContext.packageName + applicationContext.getString(R.string.app_name) + "-sync"
 
         val firebaseConfig: FirebaseConfig = FirebaseConfig()
         editableDuration = firebaseConfig.fetchEditableTime()
 
-        activitySuggestions = DentalApp.readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS).toMutableSet()
+        activitySuggestions =
+            DentalApp.readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS)
+                .toMutableSet()
 
         NotificationHelper.createNotificationChannel(
             this,
@@ -52,7 +57,7 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
 
         var geography_id: String = ""
         var geography_name: String = ""
-        var activity_id : String = ""
+        var activity_id: String = ""
         var activity_name: String = ""
         var activityRemarks: String = ""
 
@@ -71,11 +76,11 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
         var uploadSyncRunning = false
         var downloadSyncRunning = false
 
-        var uploadConstraints: Constraints  = Constraints.Builder()
+        var uploadConstraints: Constraints = Constraints.Builder()
             .setRequiresBatteryNotLow(true)
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-        var downloadConstraints: Constraints  = Constraints.Builder()
+        var downloadConstraints: Constraints = Constraints.Builder()
             .setRequiresBatteryNotLow(true)
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -84,26 +89,31 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
 
 
         fun saveToPreference(context: Context, preferenceName: String, preferenceValue: String) {
-            val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
+            val sharedPreferences =
+                context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putString(preferenceName, preferenceValue)
             editor.apply()
         }
 
-        fun saveIntToPreference(context: Context, preferenceName: String, preferenceValue: Int){
-            val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
+        fun saveIntToPreference(context: Context, preferenceName: String, preferenceValue: Int) {
+            val sharedPreferences =
+                context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putInt(preferenceName, preferenceValue)
             editor.apply()
         }
-        fun addStringToPreference(context: Context, preferenceValue: String){
+
+        fun addStringToPreference(context: Context, preferenceValue: String) {
             activitySuggestions.add(preferenceValue)
             Log.d("Suggestions", activitySuggestions.toString())
-            val sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
+            val sharedPreferences =
+                context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putStringSet(Constants.PREF_ACTIVITY_SUGGESTIONS, activitySuggestions)
             editor.apply()
         }
+
         fun readStringSetFromPreference(context: Context, preferenceName: String): Set<String> {
             val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             return prefs.getStringSet(preferenceName, emptySet())
@@ -117,10 +127,15 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
             editor.apply()
         }
 
-        fun readFromPreference(context: Context, preferenceName: String, defaultValue: String): String {
+        fun readFromPreference(
+            context: Context,
+            preferenceName: String,
+            defaultValue: String
+        ): String {
             val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             return prefs.getString(preferenceName, defaultValue).toString()
         }
+
         fun readIntFromPreference(context: Context, preferenceName: String): Int {
             val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             return prefs.getInt(preferenceName, 0)
@@ -151,13 +166,20 @@ class DentalApp : MultiDexApplication(), Configuration.Provider{
         }
 
         fun isConnectedToWifi(context: Context): Boolean {
-            val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val connManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
             return mWifi.isConnected
 
         }
 
-        fun displayNotification(context: Context, id: Int, title: String, desc: String, longDesc: String) {
+        fun displayNotification(
+            context: Context,
+            id: Int,
+            title: String,
+            desc: String,
+            longDesc: String
+        ) {
             val notificationBuilder = NotificationCompat.Builder(context, syncChannelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)

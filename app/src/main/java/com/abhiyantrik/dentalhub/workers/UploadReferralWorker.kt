@@ -10,13 +10,12 @@ import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.entities.Encounter
 import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Referral
-import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 import com.abhiyantrik.dentalhub.entities.Referral_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
-import java.lang.Exception
+import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 
-class UploadReferralWorker (context: Context, params: WorkerParameters): Worker(context, params) {
+class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private lateinit var referralBox: Box<Referral>
     private lateinit var encountersBox: Box<Encounter>
@@ -27,11 +26,13 @@ class UploadReferralWorker (context: Context, params: WorkerParameters): Worker(
             encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
             val encounterId = inputData.getLong("ENCOUNTER_ID", 0)
 
-            val tempReferral = referralBox.query().equal(Referral_.encounterId, encounterId).build().findFirst()!!
-            val dbReferralEntity = encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
+            val tempReferral =
+                referralBox.query().equal(Referral_.encounterId, encounterId).build().findFirst()!!
+            val dbReferralEntity =
+                encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
             saveReferralToServer(dbReferralEntity!!.remote_id, tempReferral)
             Result.success()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
@@ -59,13 +60,22 @@ class UploadReferralWorker (context: Context, params: WorkerParameters): Worker(
             referral.general_physician,
             referral.other_details,
             "",
-        ""
+            ""
         )
-        val tempReferral = call.execute().body() as ReferralModel
-        val dbReferralEntity = referralBox.query().equal(Referral_.encounterId, encounterId).build().findFirst()!!
-        dbReferralEntity.remote_id = tempReferral.id
-        referralBox.put(dbReferralEntity)
-
+        val response = call.execute()
+        if (response.isSuccessful) {
+            when (response.code()) {
+                200, 201 -> {
+                    val tempReferral = response.body() as ReferralModel
+                    val dbReferralEntity = referralBox.query().equal(
+                        Referral_.encounterId,
+                        encounterId
+                    ).build().findFirst()!!
+                    dbReferralEntity.remote_id = tempReferral.id
+                    referralBox.put(dbReferralEntity)
+                }
+            }
+        }
         DentalApp.cancelNotification(applicationContext, 1001)
 
     }

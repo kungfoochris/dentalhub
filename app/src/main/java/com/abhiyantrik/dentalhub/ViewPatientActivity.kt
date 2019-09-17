@@ -273,8 +273,10 @@ class ViewPatientActivity : AppCompatActivity() {
         encounter.other_problem = otherProblem
         encounter.created_at = date
         encounter.updated_at = date
-        encounter.author = DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID,"")
-        encounter.updated_by = DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID,"")
+        encounter.author =
+            DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
+        encounter.updated_by =
+            DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
         encounter.patient?.target = patient
         encounterBox.put(encounter)
 

@@ -40,7 +40,7 @@ class Patient : Parcelable {
     var created_at: String? = ""
     var updated_at: String? = ""
     var author: String = ""
-    var updated_by : String? = ""
+    var updated_by: String? = ""
     var uploaded: Boolean = false
     var updated: Boolean = false
     var content: String = "patient"
@@ -54,9 +54,9 @@ class Patient : Parcelable {
 
 
     fun referall(): String {
-        return if(recall_date.isEmpty()){
+        return if (recall_date.isEmpty()) {
             DateHelper.getCurrentDate()
-        }else {
+        } else {
             "$recall_date $recall_time"
         }
 

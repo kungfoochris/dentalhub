@@ -77,7 +77,7 @@ class DateHelper {
             } catch (e: IllegalArgumentException) {
                 nepaliFormattedDate = "-"
                 Log.d("DateHelper", e.printStackTrace().toString())
-            }catch(e: StringIndexOutOfBoundsException){
+            } catch (e: StringIndexOutOfBoundsException) {
                 nepaliFormattedDate = "-"
                 Log.d("DateHelper", e.printStackTrace().toString())
             }

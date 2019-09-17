@@ -5,5 +5,4 @@ class Municipality(
     var name: String,
     var category: String,
     var wards: List<Ward>
-) {
-}
+)

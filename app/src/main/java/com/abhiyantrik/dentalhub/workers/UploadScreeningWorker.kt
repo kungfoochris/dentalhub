@@ -8,12 +8,11 @@ import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.entities.*
-import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
-import java.lang.Exception
+import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 
-class UploadScreeningWorker (context: Context, params: WorkerParameters): Worker(context, params) {
+class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private lateinit var screeningBox: Box<Screening>
     private lateinit var encountersBox: Box<Encounter>
@@ -24,11 +23,15 @@ class UploadScreeningWorker (context: Context, params: WorkerParameters): Worker
             encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
             val encounterId = inputData.getLong("ENCOUNTER_ID", 0)
 
-            val tempScreening = screeningBox.query().equal(Screening_.encounterId, encounterId).build().findFirst()!!
-            val dbEncounterEntity = encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
+            val tempScreening = screeningBox.query().equal(
+                Screening_.encounterId,
+                encounterId
+            ).build().findFirst()!!
+            val dbEncounterEntity =
+                encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
             saveScreeningToServer(dbEncounterEntity!!.remote_id, tempScreening)
             Result.success()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
@@ -63,10 +66,22 @@ class UploadScreeningWorker (context: Context, params: WorkerParameters): Worker
             screening.low_blood_pressure,
             screening.thyroid_disorder
         )
-        val tempScreening = call.execute().body() as ScreeningModel
-        val dbScreeningEntity = screeningBox.query().equal(Screening_.encounterId, encounterId).build().findFirst()!!
-        dbScreeningEntity.remote_id = tempScreening.id
-        screeningBox.put(dbScreeningEntity)
+        val response = call.execute()
+        if (response.isSuccessful) {
+            when (response.code()) {
+                200, 201 -> {
+                    val tempScreening = response.body() as ScreeningModel
+                    val dbScreeningEntity = screeningBox.query().equal(
+                        Screening_.encounterId,
+                        encounterId
+                    ).build().findFirst()!!
+                    dbScreeningEntity.remote_id = tempScreening.id
+                    screeningBox.put(dbScreeningEntity)
+
+
+                }
+            }
+        }
 
         DentalApp.cancelNotification(applicationContext, 1001)
 

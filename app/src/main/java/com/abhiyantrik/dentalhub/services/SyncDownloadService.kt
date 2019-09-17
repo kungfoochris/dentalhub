@@ -4,8 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import androidx.work.Constraints
-import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
@@ -48,12 +46,18 @@ class SyncDownloadService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        patientsBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Patient::class.java)
-        encountersBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Encounter::class.java)
-        historyBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.History::class.java)
-        treatmentsBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Treatment::class.java)
-        referralsBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Referral::class.java)
-        screeningBox = ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Screening::class.java)
+        patientsBox =
+            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Patient::class.java)
+        encountersBox =
+            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Encounter::class.java)
+        historyBox =
+            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.History::class.java)
+        treatmentsBox =
+            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Treatment::class.java)
+        referralsBox =
+            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Referral::class.java)
+        screeningBox =
+            ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Screening::class.java)
 
         DentalApp.downloadSyncRunning = true
         return super.onStartCommand(intent, flags, startId)
@@ -69,7 +73,7 @@ class SyncDownloadService : Service() {
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.getPatients("JWT $token")
-        call.enqueue(object: Callback<List<Patient>> {
+        call.enqueue(object : Callback<List<Patient>> {
             override fun onFailure(call: Call<List<Patient>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 //tvMessage.text = tvMessage.text.toString() + "Failed to load patients\n"
@@ -77,17 +81,21 @@ class SyncDownloadService : Service() {
             }
 
             override fun onResponse(call: Call<List<Patient>>, response: Response<List<Patient>>) {
-                if(null!= response.body()){
+                if (null != response.body()) {
                     Log.d("SetupActivity", response.code().toString())
-                    when(response.code()){
+                    when (response.code()) {
                         200 -> {
                             val allPatients = response.body() as List<Patient>
-                            for (patient in allPatients){
-                                val existingPatient =patientsBox.query().equal(Patient_.remote_id,
+                            for (patient in allPatients) {
+                                val existingPatient = patientsBox.query().equal(
+                                    Patient_.remote_id,
                                     patient.id
                                 ).build().findFirst()
-                                if(existingPatient != null){
-                                    Log.d("SetupActivity", existingPatient.fullName()+" already exists.")
+                                if (existingPatient != null) {
+                                    Log.d(
+                                        "SetupActivity",
+                                        existingPatient.fullName() + " already exists."
+                                    )
                                     //tvMessage.text = tvMessage.text.toString() + existingPatient.fullName()+" already exists.\n"
                                     loadEncounterData(existingPatient.remote_id)
                                     DentalApp.displayNotification(
@@ -97,7 +105,7 @@ class SyncDownloadService : Service() {
                                         existingPatient.fullName(),
                                         "Not downloading, already exists."
                                     )
-                                }else{
+                                } else {
                                     val patientEntity = com.abhiyantrik.dentalhub.entities.Patient()
                                     patientEntity.remote_id = patient.id
                                     patientEntity.first_name = patient.first_name
@@ -119,14 +127,14 @@ class SyncDownloadService : Service() {
                                     patientEntity.recall = null
                                     patientEntity.author = patient.author
 
-                                    if(patient.created_at==null){
+                                    if (patient.created_at == null) {
                                         patientEntity.created_at = DateHelper.getCurrentNepaliDate()
-                                    }else{
+                                    } else {
                                         patientEntity.created_at = patient.created_at
                                     }
-                                    if(patient.updated_at==null){
+                                    if (patient.updated_at == null) {
                                         patientEntity.updated_at = DateHelper.getCurrentNepaliDate()
-                                    }else{
+                                    } else {
                                         patientEntity.updated_at = patient.updated_at
                                     }
                                     patientEntity.updated_by = patient.updated_by
@@ -146,7 +154,7 @@ class SyncDownloadService : Service() {
                             }
                         }
                     }
-                }else{
+                } else {
                     Log.d(TAG, response.code().toString())
                 }
             }
@@ -155,11 +163,11 @@ class SyncDownloadService : Service() {
 
     }
 
-    fun loadEncounterData(patientId: String){
+    fun loadEncounterData(patientId: String) {
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.getEncounter("JWT $token", patientId)
-        call.enqueue(object: Callback<List<Encounter>> {
+        call.enqueue(object : Callback<List<Encounter>> {
             override fun onFailure(call: Call<List<Encounter>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 Log.d(TAG, t.toString())
@@ -170,17 +178,23 @@ class SyncDownloadService : Service() {
                 response: Response<List<Encounter>>
             ) {
 
-                if(null!= response.body()){
-                    val dbPatientEntity = patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
+                if (null != response.body()) {
+                    val dbPatientEntity =
+                        patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
                     Log.d("SetupActivity", response.code().toString())
-                    when(response.code()) {
+                    when (response.code()) {
                         200 -> {
                             val allEncounters = response.body() as List<Encounter>
-                            for(encounter in allEncounters){
-                                if(encountersBox.query().equal(Encounter_.remote_id, encounter.id.toString()).build().find().size > 0){
+                            for (encounter in allEncounters) {
+                                if (encountersBox.query().equal(
+                                        Encounter_.remote_id,
+                                        encounter.id.toString()
+                                    ).build().find().size > 0
+                                ) {
                                     Log.d("", "Encounter already downloaded.")
-                                }else{
-                                    val encounterEntity = com.abhiyantrik.dentalhub.entities.Encounter()
+                                } else {
+                                    val encounterEntity =
+                                        com.abhiyantrik.dentalhub.entities.Encounter()
                                     encounterEntity.encounter_type = encounter.encounter_type
                                     encounterEntity.created_at = encounter.created_at
                                     encounterEntity.updated_at = encounter.updated_at
@@ -190,28 +204,44 @@ class SyncDownloadService : Service() {
                                     encounterEntity.uploaded = true
                                     encountersBox.put(encounterEntity)
 
-                                    val dbEncounterEntity = encountersBox.query().orderDesc(Encounter_.id).build().findFirst()
+                                    val dbEncounterEntity =
+                                        encountersBox.query().orderDesc(Encounter_.id).build()
+                                            .findFirst()
 
                                     // save history
-                                    if(historyBox.query().equal(History_.remote_id, encounter.history!!.id.toString()).build().find().size > 0){
-                                        Log.d("History","Already downloaded")
-                                    }else{
+                                    if (historyBox.query().equal(
+                                            History_.remote_id,
+                                            encounter.history!!.id.toString()
+                                        ).build().find().size > 0
+                                    ) {
+                                        Log.d("History", "Already downloaded")
+                                    } else {
                                         val historyEntity = History()
-                                        if(encounter.history != null ){
-                                            historyEntity.remote_id = encounter.history!!.id.toString()
+                                        if (encounter.history != null) {
+                                            historyEntity.remote_id =
+                                                encounter.history!!.id.toString()
                                             historyEntity.encounter?.target = dbEncounterEntity
-                                            historyEntity.blood_disorder = encounter.history!!.blood_disorder
+                                            historyEntity.blood_disorder =
+                                                encounter.history!!.blood_disorder
                                             historyEntity.diabetes = encounter.history!!.diabetes
-                                            historyEntity.liver_problem = encounter.history!!.liver_problem
-                                            historyEntity.rheumatic_fever = encounter.history!!.rheumatic_fever
-                                            historyEntity.seizuers_or_epilepsy = encounter.history!!.seizuers_or_epilepsy
-                                            historyEntity.hepatitis_b_or_c = encounter.history!!.hepatitis_b_or_c
+                                            historyEntity.liver_problem =
+                                                encounter.history!!.liver_problem
+                                            historyEntity.rheumatic_fever =
+                                                encounter.history!!.rheumatic_fever
+                                            historyEntity.seizuers_or_epilepsy =
+                                                encounter.history!!.seizuers_or_epilepsy
+                                            historyEntity.hepatitis_b_or_c =
+                                                encounter.history!!.hepatitis_b_or_c
                                             historyEntity.hiv = encounter.history!!.hiv
                                             historyEntity.other = encounter.history!!.other
-                                            historyEntity.no_underlying_medical_condition = encounter.history!!.no_underlying_medical_condition
-                                            historyEntity.medications = encounter.history!!.medications
-                                            historyEntity.not_taking_any_medications = encounter.history!!.not_taking_any_medications
-                                            historyEntity.no_allergies = encounter.history!!.no_allergies
+                                            historyEntity.no_underlying_medical_condition =
+                                                encounter.history!!.no_underlying_medical_condition
+                                            historyEntity.medications =
+                                                encounter.history!!.medications
+                                            historyEntity.not_taking_any_medications =
+                                                encounter.history!!.not_taking_any_medications
+                                            historyEntity.no_allergies =
+                                                encounter.history!!.no_allergies
                                             historyEntity.allergies = encounter.history!!.allergies
 
                                         }
@@ -220,43 +250,70 @@ class SyncDownloadService : Service() {
 
 
                                     // save screening
-                                    if(screeningBox.query().equal(Screening_.remote_id, encounter.screening!!.id.toString()).build().find().size > 0){
-                                        Log.d("Screening","Already downloaded")
-                                    }else{
+                                    if (screeningBox.query().equal(
+                                            Screening_.remote_id,
+                                            encounter.screening!!.id.toString()
+                                        ).build().find().size > 0
+                                    ) {
+                                        Log.d("Screening", "Already downloaded")
+                                    } else {
                                         val screeningEntity = Screening()
-                                        if(encounter.screening != null ){
-                                            screeningEntity.remote_id = encounter.screening!!.id.toString()
+                                        if (encounter.screening != null) {
+                                            screeningEntity.remote_id =
+                                                encounter.screening!!.id.toString()
                                             screeningEntity.encounter?.target = dbEncounterEntity
-                                            screeningEntity.carries_risk = encounter.screening!!.carries_risk
-                                            screeningEntity.decayed_primary_teeth = encounter.screening!!.decayed_primary_teeth
-                                            screeningEntity.decayed_permanent_teeth = encounter.screening!!.decayed_permanent_teeth
-                                            screeningEntity.cavity_permanent_anterior_teeth = encounter.screening!!.cavity_permanent_anterior_teeth
-                                            screeningEntity.cavity_permanent_posterior_teeth = encounter.screening!!.cavity_permanent_posterior_teeth
-                                            screeningEntity.reversible_pulpitis = encounter.screening!!.reversible_pulpitis
-                                            screeningEntity.need_art_filling = encounter.screening!!.need_art_filling
-                                            screeningEntity.need_sealant = encounter.screening!!.need_sealant
-                                            screeningEntity.need_sdf = encounter.screening!!.need_sdf
-                                            screeningEntity.need_extraction = encounter.screening!!.need_extraction
-                                            screeningEntity.active_infection = encounter.screening!!.active_infection
-                                            screeningEntity.high_blood_pressure = encounter.screening!!.high_blood_pressure
-                                            screeningEntity.low_blood_pressure = encounter.screening!!.low_blood_pressure
-                                            screeningEntity.thyroid_disorder = encounter.screening!!.thyroid_disorder
+                                            screeningEntity.carries_risk =
+                                                encounter.screening!!.carries_risk
+                                            screeningEntity.decayed_primary_teeth =
+                                                encounter.screening!!.decayed_primary_teeth
+                                            screeningEntity.decayed_permanent_teeth =
+                                                encounter.screening!!.decayed_permanent_teeth
+                                            screeningEntity.cavity_permanent_anterior_teeth =
+                                                encounter.screening!!.cavity_permanent_anterior_teeth
+                                            screeningEntity.cavity_permanent_posterior_teeth =
+                                                encounter.screening!!.cavity_permanent_posterior_teeth
+                                            screeningEntity.reversible_pulpitis =
+                                                encounter.screening!!.reversible_pulpitis
+                                            screeningEntity.need_art_filling =
+                                                encounter.screening!!.need_art_filling
+                                            screeningEntity.need_sealant =
+                                                encounter.screening!!.need_sealant
+                                            screeningEntity.need_sdf =
+                                                encounter.screening!!.need_sdf
+                                            screeningEntity.need_extraction =
+                                                encounter.screening!!.need_extraction
+                                            screeningEntity.active_infection =
+                                                encounter.screening!!.active_infection
+                                            screeningEntity.high_blood_pressure =
+                                                encounter.screening!!.high_blood_pressure
+                                            screeningEntity.low_blood_pressure =
+                                                encounter.screening!!.low_blood_pressure
+                                            screeningEntity.thyroid_disorder =
+                                                encounter.screening!!.thyroid_disorder
                                         }
                                         screeningBox.put(screeningEntity)
                                     }
 
 
                                     // save treatment
-                                    if(treatmentsBox.query().equal(Treatment_.remote_id, encounter.treatment!!.id.toString()).build().find().size > 0){
-                                        Log.d("Screening","Already downloaded")
-                                    }else{
+                                    if (treatmentsBox.query().equal(
+                                            Treatment_.remote_id,
+                                            encounter.treatment!!.id.toString()
+                                        ).build().find().size > 0
+                                    ) {
+                                        Log.d("Screening", "Already downloaded")
+                                    } else {
                                         val treatmentEntity = Treatment()
-                                        if(encounter.treatment != null ){
-                                            treatmentEntity.remote_id = encounter.treatment!!.id.toString()
+                                        if (encounter.treatment != null) {
+                                            treatmentEntity.remote_id =
+                                                encounter.treatment!!.id.toString()
                                             treatmentEntity.encounter?.target = dbEncounterEntity
-                                            treatmentEntity.sdf_whole_mouth = encounter.treatment!!.sdf_whole_mouth
-                                            treatmentEntity.fv_applied = encounter.treatment!!.fv_applied
-                                            treatmentEntity.treatment_plan_complete = encounter.treatment!!.treatment_plan_complete
+                                            treatmentEntity.sdf_whole_mouth =
+                                                encounter.treatment!!.sdf_whole_mouth
+                                            treatmentEntity.fv_applied =
+                                                encounter.treatment!!.fv_applied
+                                            treatmentEntity.treatment_plan_complete =
+                                                encounter.treatment!!.treatment_plan_complete
                                             treatmentEntity.notes = encounter.treatment!!.notes
 
                                             treatmentEntity.tooth11 = encounter.treatment!!.tooth11
@@ -328,20 +385,30 @@ class SyncDownloadService : Service() {
 
 
                                     // save referral
-                                    if(referralsBox.query().equal(Referral_.remote_id, encounter.treatment!!.id.toString()).build().find().size > 0){
-                                        Log.d("Screening","Already downloaded")
-                                    }else{
+                                    if (referralsBox.query().equal(
+                                            Referral_.remote_id,
+                                            encounter.treatment!!.id.toString()
+                                        ).build().find().size > 0
+                                    ) {
+                                        Log.d("Screening", "Already downloaded")
+                                    } else {
                                         val referralEntity = Referral()
-                                        if(encounter.referral != null ){
-                                            referralEntity.remote_id = encounter.referral!!.id.toString()
+                                        if (encounter.referral != null) {
+                                            referralEntity.remote_id =
+                                                encounter.referral!!.id.toString()
                                             referralEntity.encounter?.target = dbEncounterEntity
-                                            referralEntity.no_referral = encounter.referral!!.no_referral
-                                            referralEntity.health_post = encounter.referral!!.health_post
-                                            referralEntity.hygienist = encounter.referral!!.hygienist
+                                            referralEntity.no_referral =
+                                                encounter.referral!!.no_referral
+                                            referralEntity.health_post =
+                                                encounter.referral!!.health_post
+                                            referralEntity.hygienist =
+                                                encounter.referral!!.hygienist
                                             referralEntity.dentist = encounter.referral!!.dentist
-                                            referralEntity.general_physician = encounter.referral!!.general_physician
+                                            referralEntity.general_physician =
+                                                encounter.referral!!.general_physician
                                             referralEntity.other = encounter.referral!!.other
-                                            referralEntity.other_details = encounter.referral!!.other_details
+                                            referralEntity.other_details =
+                                                encounter.referral!!.other_details
 
                                         }
                                         referralsBox.put(referralEntity)

@@ -191,7 +191,8 @@ class ScreeningFragment : Fragment() {
 
             if (screening.cavity_permanent_anterior_teeth) checkBoxCavityPermanentAnterior.isChecked =
                 true
-            if (screening.cavity_permanent_posterior_teeth) checkBoxCavityPermanentTooth.isChecked = true
+            if (screening.cavity_permanent_posterior_teeth) checkBoxCavityPermanentTooth.isChecked =
+                true
             if (screening.reversible_pulpitis) checkBoxReversiblePulpitis.isChecked = true
             if (screening.need_art_filling) checkBoxNeedARTFilling.isChecked = true
             if (screening.need_sealant) checkBoxNeedSealant.isChecked = true

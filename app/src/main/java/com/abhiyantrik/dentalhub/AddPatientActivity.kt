@@ -267,11 +267,11 @@ class AddPatientActivity : AppCompatActivity() {
             val currentYear = nepaliDateToday.year
             val startYear = currentYear - 120
 
-            val dobDay = patient!!.dob.substring(8,10)
-            val dobMonth = patient!!.dob.substring(5,7)
-            val dobYear = patient!!.dob.substring(0,4)
-            spinnerDobDay.setSelection(dobDay.toInt()-1)
-            spinnerDobMonth.setSelection(dobMonth.toInt()-1)
+            val dobDay = patient!!.dob.substring(8, 10)
+            val dobMonth = patient!!.dob.substring(5, 7)
+            val dobYear = patient!!.dob.substring(0, 4)
+            spinnerDobDay.setSelection(dobDay.toInt() - 1)
+            spinnerDobMonth.setSelection(dobMonth.toInt() - 1)
             spinnerDobYear.setSelection((startYear..currentYear).reversed().toList().indexOf(dobYear.toInt()))
         } else {
             title = resources.getString(R.string.add_new_patient)
@@ -336,8 +336,9 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.created_at = date
             patient!!.updated_at = date
             patient!!.updated = true
-            patient!!.author = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
-            patient!!.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
+            patient!!.author = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
+            patient!!.updated_by =
+                DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
             return patient!!
         } else {
             val tempPatient = Patient()
@@ -362,8 +363,10 @@ class AddPatientActivity : AppCompatActivity() {
             tempPatient.uploaded = false
             tempPatient.updated = false
             tempPatient.recall = null
-            tempPatient.author = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
-            tempPatient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID,"")
+            tempPatient.author =
+                DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
+            tempPatient.updated_by =
+                DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
             return tempPatient
 
         }
@@ -388,7 +391,7 @@ class AddPatientActivity : AppCompatActivity() {
         if (action == "new") {
             val pt = patientBox.query().orderDesc(Patient_.id).build().findFirst()!!
 
-            val data = Data.Builder().putLong("PATIENT_ID",pt.id)
+            val data = Data.Builder().putLong("PATIENT_ID", pt.id)
             val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
                 .setInputData(data.build())
                 .setConstraints(DentalApp.uploadConstraints)
@@ -400,7 +403,7 @@ class AddPatientActivity : AppCompatActivity() {
             startActivity(viewPatientIntent)
             finish()
         } else {
-            val data = Data.Builder().putLong("PATIENT_ID",patient.id)
+            val data = Data.Builder().putLong("PATIENT_ID", patient.id)
             val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
                 .setInputData(data.build())
                 .setConstraints(DentalApp.uploadConstraints)

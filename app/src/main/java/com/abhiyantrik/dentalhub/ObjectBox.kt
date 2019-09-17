@@ -16,7 +16,10 @@ object ObjectBox {
 
         if (BuildConfig.DEBUG) {
             AndroidObjectBrowser(boxStore).start(context.applicationContext)
-            Log.d("ObjectBox", "Using ObjectBox ${BoxStore.getVersion()} (${BoxStore.getVersionNative()})")
+            Log.d(
+                "ObjectBox",
+                "Using ObjectBox ${BoxStore.getVersion()} (${BoxStore.getVersionNative()})"
+            )
         }
     }
 

@@ -11,7 +11,7 @@ import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.R
 
-class TickerFragment: Fragment() {
+class TickerFragment : Fragment() {
     private lateinit var textView: TextView
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,9 +20,9 @@ class TickerFragment: Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_ticker, container, false)
         textView = view.findViewById<TextView>(R.id.textView)
-        when(DentalApp.activity_name){
+        when (DentalApp.activity_name) {
             "Health Post" -> {
-                    view.setBackgroundColor(resources.getColor(R.color.blue_500))
+                view.setBackgroundColor(resources.getColor(R.color.blue_500))
             }
             "School Seminar" -> {
                 view.setBackgroundColor(resources.getColor(R.color.red_500))
@@ -40,7 +40,11 @@ class TickerFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        textView.text = DentalApp.readFromPreference(activity as Context, Constants.PREF_PROFILE_FULL_NAME, "") + " | " + DentalApp.geography_name + " | " + DentalApp.activity_name
+        textView.text = DentalApp.readFromPreference(
+            activity as Context,
+            Constants.PREF_PROFILE_FULL_NAME,
+            ""
+        ) + " | " + DentalApp.geography_name + " | " + DentalApp.activity_name
 
     }
 }

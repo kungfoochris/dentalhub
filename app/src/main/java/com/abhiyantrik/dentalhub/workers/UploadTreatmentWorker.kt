@@ -7,13 +7,12 @@ import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
-import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
-import java.lang.Exception
+import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
 
-class UploadTreatmentWorker(context: Context, params: WorkerParameters): Worker(context, params) {
+class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var encountersBox: Box<Encounter>
@@ -24,11 +23,15 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters): Worker(
             encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
             val encounterId = inputData.getLong("ENCOUNTER_ID", 0)
 
-            val tempTreatment = treatmentBox.query().equal(Treatment_.encounterId, encounterId).build().findFirst()!!
-            val dbEncounterEntity = encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
+            val tempTreatment = treatmentBox.query().equal(
+                Treatment_.encounterId,
+                encounterId
+            ).build().findFirst()!!
+            val dbEncounterEntity =
+                encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
             saveTreatmentToServer(dbEncounterEntity!!.remote_id, tempTreatment)
             Result.success()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
@@ -114,10 +117,21 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters): Worker(
             treatment.treatment_plan_complete,
             treatment.notes
         )
-        val tempTreatment = call.execute().body() as TreatmentModel
-        val dbTreatmentEntity = treatmentBox.query().equal(Treatment_.encounterId, encounterId).build().findFirst()!!
-        dbTreatmentEntity.remote_id = tempTreatment.id
-        treatmentBox.put(dbTreatmentEntity)
+        val response = call.execute()
+        if (response.isSuccessful) {
+            when (response.code()) {
+                200, 201 -> {
+                    val tempTreatment = response.body() as TreatmentModel
+                    val dbTreatmentEntity = treatmentBox.query().equal(
+                        Treatment_.encounterId,
+                        encounterId
+                    ).build().findFirst()!!
+                    dbTreatmentEntity.remote_id = tempTreatment.id
+                    treatmentBox.put(dbTreatmentEntity)
+                }
+            }
+        }
+
 
         DentalApp.cancelNotification(applicationContext, 1001)
     }

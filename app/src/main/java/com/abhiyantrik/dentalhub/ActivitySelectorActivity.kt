@@ -3,19 +3,18 @@ package com.abhiyantrik.dentalhub
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.abhiyantrik.dentalhub.models.ActivitySuggestion
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
-import android.widget.ArrayAdapter
-import android.text.Editable
-import android.text.TextWatcher
-import com.abhiyantrik.dentalhub.models.ActivitySuggestion
 
 
 class ActivitySelectorActivity : AppCompatActivity() {
@@ -78,7 +77,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         etOtherDetails.setAdapter(arrayAdapter)
         arrayAdapter.notifyDataSetChanged()
 
-        etOtherDetails.addTextChangedListener(object: TextWatcher{
+        etOtherDetails.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -175,7 +174,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
     private fun loadActivitySuggestions() {
         val panelService = DjangoInterface.create(context)
         val call = panelService.listActivities()
-        call.enqueue(object:Callback<List<ActivitySuggestion>>{
+        call.enqueue(object : Callback<List<ActivitySuggestion>> {
             override fun onFailure(call: Call<List<ActivitySuggestion>>, t: Throwable) {
                 Log.d("loadActivityId()", "onFailure")
             }
@@ -186,7 +185,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
             ) {
 
                 val allActivitySuggestions = response.body() as List<ActivitySuggestion>
-                for(act in allActivitySuggestions){
+                for (act in allActivitySuggestions) {
                     DentalApp.activitySuggestions.add(act.area)
                 }
                 arrayAdapter.notifyDataSetChanged()

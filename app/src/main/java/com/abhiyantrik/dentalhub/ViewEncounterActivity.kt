@@ -296,7 +296,7 @@ class ViewEncounterActivity : AppCompatActivity() {
             tvNotTakingAnyMedicationsTitle.visibility = View.GONE
             tvNotTakingAnyMedications.visibility = View.GONE
         } else {
-            tvNotTakingAnyMedications.setText(history.medications)
+            tvNotTakingAnyMedications.text = history.medications
         }
         // hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
         // since alleragies is little different i.e. if no_allergies is True show allergies(String) else don't show both no_allergies(Int) and allergies(String)
@@ -304,7 +304,7 @@ class ViewEncounterActivity : AppCompatActivity() {
             tvAllergiesTitle.visibility = View.GONE
             tvAllergies.visibility = View.GONE
         } else {
-            tvAllergies.setText(history.allergies)
+            tvAllergies.text = history.allergies
         }
 
         // screening

@@ -21,7 +21,7 @@ class Encounter : Parcelable {
     var updated_at: String = ""
     var uploaded: Boolean = false
     var author: String = ""
-    var updated_by : String? = ""
+    var updated_by: String? = ""
     var patient: ToOne<Patient>? = null
 
     fun isEditable(): Boolean {
@@ -29,6 +29,6 @@ class Encounter : Parcelable {
         val date2 =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(created_at + " 00:01:00")
         val difference = date1.time - date2.time
-        return difference*1000 < DentalApp.editableDuration
+        return difference * 1000 < DentalApp.editableDuration
     }
 }

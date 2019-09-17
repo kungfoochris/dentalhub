@@ -14,7 +14,7 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
-class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(context, params) {
+class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<Encounter>
@@ -25,11 +25,12 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
             encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
 
             val patientId = inputData.getLong("PATIENT_ID", 0)
-            val dbPatientEntity = patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
+            val dbPatientEntity =
+                patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
             savePatientToServer(dbPatientEntity!!)
             Result.success()
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
 
@@ -48,8 +49,9 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         var updater = patient.updated_by
-        if(patient.updated_by==null){
-            updater = DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID,"")
+        if (patient.updated_by == null) {
+            updater =
+                DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
         }
         val call = panelService.addPatient(
             "JWT $token",
@@ -74,28 +76,43 @@ class UploadPatientWorker(context: Context, params: WorkerParameters): Worker(co
             patient.updated_at
         )
         print("Response before")
-        val tempPatient = call.execute().body()
-        val dbPatient = patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
-        dbPatient!!.remote_id = tempPatient!!.id
-        dbPatient.uploaded = true
-        dbPatient.updated = false
-        println("Patient uid is ${tempPatient.id}")
-        patientsBox.put(dbPatient)
+        val response = call.execute()
+        if (response.isSuccessful) {
+            when (response.code()) {
+                200, 201 -> {
+                    val tempPatient = response.body()
+                    val dbPatient =
+                        patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
+                    dbPatient!!.remote_id = tempPatient!!.id
+                    dbPatient.uploaded = true
+                    dbPatient.updated = false
+                    println("Patient uid is ${tempPatient.id}")
+                    patientsBox.put(dbPatient)
 
-        DentalApp.cancelNotification(applicationContext, 1001)
+                    DentalApp.cancelNotification(applicationContext, 1001)
 
-        val allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
-        for (eachEncounter in allEncounters) {
-            if (!eachEncounter.uploaded) {
-                val data = Data.Builder().putLong("ENCOUNTER_ID",eachEncounter.id).putLong("PATIENT_ID",dbPatient.id)
-                val uploadEncounterWorkerRequest = OneTimeWorkRequestBuilder<UploadEncounterWorker>()
-                    .setInputData(data.build())
-                    .setConstraints(DentalApp.uploadConstraints)
-                    .setInitialDelay(100,
-                    TimeUnit.MILLISECONDS).build()
-                WorkManager.getInstance(applicationContext).enqueue(uploadEncounterWorkerRequest)
+                    val allEncounters =
+                        encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
+                    for (eachEncounter in allEncounters) {
+                        if (!eachEncounter.uploaded) {
+                            val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)
+                                .putLong("PATIENT_ID", dbPatient.id)
+                            val uploadEncounterWorkerRequest =
+                                OneTimeWorkRequestBuilder<UploadEncounterWorker>()
+                                    .setInputData(data.build())
+                                    .setConstraints(DentalApp.uploadConstraints)
+                                    .setInitialDelay(
+                                        100,
+                                        TimeUnit.MILLISECONDS
+                                    ).build()
+                            WorkManager.getInstance(applicationContext)
+                                .enqueue(uploadEncounterWorkerRequest)
+                        }
+                    }
+                }
             }
         }
+
 
     }
 
