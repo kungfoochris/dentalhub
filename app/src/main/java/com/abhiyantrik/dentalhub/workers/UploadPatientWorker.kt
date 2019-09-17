@@ -105,6 +105,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
         Log.d(patient.fullName(), allEncounters.size.toString())
         for (eachEncounter in allEncounters) {
             if (!eachEncounter.uploaded) {
+                Thread.sleep(500L)
                 val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)
                     .putLong("PATIENT_ID", dbPatient!!.id)
                 val uploadEncounterWorkerRequest =

@@ -67,13 +67,10 @@ class SyncService : Service(){
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         DentalApp.uploadSyncRunning = true
+        startSync()
         return super.onStartCommand(intent, flags, startId)
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        startSync()
-    }
 
 
     override fun onDestroy() {

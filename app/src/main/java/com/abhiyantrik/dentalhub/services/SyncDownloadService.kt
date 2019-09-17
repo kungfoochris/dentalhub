@@ -35,18 +35,6 @@ class SyncDownloadService : Service() {
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
-
-    override fun onCreate() {
-        super.onCreate()
-        //loadPatientData()
-        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
-            .setInitialDelay(100, TimeUnit.MILLISECONDS)
-            .setConstraints(DentalApp.downloadConstraints)
-            .build()
-        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
-        stopSelf()
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         patientsBox =
             ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Patient::class.java)
@@ -62,6 +50,13 @@ class SyncDownloadService : Service() {
             ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Screening::class.java)
 
         DentalApp.downloadSyncRunning = true
+
+        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
+            .setInitialDelay(100, TimeUnit.MILLISECONDS)
+            .setConstraints(DentalApp.downloadConstraints)
+            .build()
+        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+
         return super.onStartCommand(intent, flags, startId)
     }
 
