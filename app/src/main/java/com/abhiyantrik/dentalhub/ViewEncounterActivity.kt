@@ -33,7 +33,7 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
-    private lateinit var recallBox: Box<Recall>
+    //private lateinit var recallBox: Box<Recall>
 
     // history
 
@@ -222,7 +222,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
-        recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
+        //recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
         patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
@@ -236,7 +236,7 @@ class ViewEncounterActivity : AppCompatActivity() {
             treatmentBox.query().equal(Treatment_.encounterId, encounter.id).build().findFirst()!!
         referral =
             referralBox.query().equal(Referral_.encounterId, encounter.id).build().findFirst()!!
-        recall = recallBox.query().equal(Recall_.encounterId, encounter.id).build().findFirst()!!
+        //recall = recallBox.query().equal(Recall_.encounterId, encounter.id).build().findFirst()!!
 
 
         initUI()
