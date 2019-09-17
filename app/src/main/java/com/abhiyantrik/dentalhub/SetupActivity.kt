@@ -24,7 +24,7 @@ class SetupActivity : AppCompatActivity() {
 
     private lateinit var districtsBox: Box<com.abhiyantrik.dentalhub.entities.District>
     private lateinit var municipalitiesBox: Box<Municipality>
-    private lateinit var patientsBox: Box<com.abhiyantrik.dentalhub.entities.Patient>
+    private lateinit var patientsBox: Box<Patient>
     private lateinit var wardsBox: Box<Ward>
     var allDistricts = listOf<District>()
 
@@ -118,7 +118,7 @@ class SetupActivity : AppCompatActivity() {
                                         district.name
                                     ).build().count() == 0.toLong()
                                 ) {
-                                    val newDistrict = com.abhiyantrik.dentalhub.entities.District()
+                                    val newDistrict = District()
                                     newDistrict.remote_id = district.id
                                     newDistrict.name = district.name
                                     districtsBox.put(newDistrict)
@@ -240,7 +240,7 @@ class SetupActivity : AppCompatActivity() {
                                 }
 
                             }
-                            tvMessage.text = tvMessage.text.toString() + "Loading patients complete\n"
+                            tvMessage.append("Loading patients complete\n")
                             if(patientDataLoadComplete && profileLoadComplete && dataLoadComplete) {
                                 loadEncounterData()
                             }
