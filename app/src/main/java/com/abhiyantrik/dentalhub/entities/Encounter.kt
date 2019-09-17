@@ -27,11 +27,10 @@ class Encounter : Parcelable {
 
     fun isEditable(): Boolean {
         val date1 = Date()
-        var createdAt = ""
-        if(created_at.isEmpty()){
-            createdAt = DateHelper.getCurrentDate()
+        val createdAt: String = if(created_at.isEmpty()){
+            DateHelper.getCurrentDate()
         }else{
-            createdAt = created_at + " 00:01:00"
+            created_at.plus(" 00:01:00")
         }
         val date2 =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(createdAt)
