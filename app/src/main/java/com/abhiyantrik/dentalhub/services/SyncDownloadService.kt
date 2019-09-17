@@ -182,7 +182,7 @@ class SyncDownloadService : Service() {
                 if (null != response.body()) {
                     val dbPatientEntity =
                         patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
-                    Log.d("SetupActivity", response.code().toString())
+                    Log.d("SyncDownloadService", response.code().toString())
                     when (response.code()) {
                         200 -> {
                             val allEncounters = response.body() as List<Encounter>
@@ -192,7 +192,7 @@ class SyncDownloadService : Service() {
                                         encounter.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("", "Encounter already downloaded.")
+                                    Log.d("SyncDownloadService", "Encounter already downloaded.")
                                 } else {
                                     val encounterEntity =
                                         com.abhiyantrik.dentalhub.entities.Encounter()
