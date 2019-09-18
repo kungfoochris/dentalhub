@@ -86,7 +86,7 @@ class ReferralFragment : Fragment() {
         etRecallTime = view.findViewById(R.id.etRecallTime)
 
         etRecallDate.setText(DentalApp.lastRecallDate)
-        etRecallTime.setText(DentalApp.lastRecallDate)
+        etRecallTime.setText(DentalApp.lastRecallTime)
 
         rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.radioOther) {

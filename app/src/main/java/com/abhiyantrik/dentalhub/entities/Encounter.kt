@@ -9,6 +9,7 @@ import io.objectbox.relation.ToOne
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
 
 @Parcelize
 @Entity
@@ -37,7 +38,7 @@ class Encounter : Parcelable {
         }
         val date2 =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(createdAt)
-        val difference = date1.time - date2.time
-        return difference * 1000 < DentalApp.editableDuration
+        val difference = abs(date1.time - date2.time)
+        return difference / 1000.0 < DentalApp.editableDuration
     }
 }
