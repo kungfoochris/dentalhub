@@ -234,10 +234,10 @@ interface DjangoInterface {
         @Field("tooth74") tooth74: String,
         @Field("tooth75") tooth75: String,
 
-        @Field("whole_mouth") sdf_whole_mouth: Boolean,
-        @Field("fluoride_varnish") fv_applied: Boolean,
-        @Field("treatment_complete") treatment_plan_complete: Boolean,
-        @Field("note") notes: String
+        @Field("sdf_whole_mouth") sdf_whole_mouth: Boolean,
+        @Field("fv_applied") fv_applied: Boolean,
+        @Field("treatment_plan_complete") treatment_plan_complete: Boolean,
+        @Field("notes") notes: String
     ): Call<TreatmentModel>
 
     @FormUrlEncoded
