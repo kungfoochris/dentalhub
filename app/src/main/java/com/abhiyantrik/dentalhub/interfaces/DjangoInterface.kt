@@ -126,7 +126,7 @@ interface DjangoInterface {
     ): Call<HistoryModel>
 
     @FormUrlEncoded
-    @POST("encounter/{encounterId}/history")
+    @PUT("encounter/{encounterId}/history/update")
     fun updateHistory(
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
@@ -151,6 +151,27 @@ interface DjangoInterface {
     fun addScreening(
         @Header("Authorization") token: String,
         @Path("remoteId") encounterRemoteId: String,
+        @Field("carries_risk") carries_risk: String,
+        @Field("decayed_primary_teeth") decayed_primary_teeth: Int,
+        @Field("decayed_permanent_teeth") decayed_permanent_teeth: Int,
+        @Field("cavity_permanent_anterior_teeth") cavity_permanent_anterior_teeth: Boolean,
+        @Field("cavity_permanent_posterior_teeth") cavity_permanent_posterior_teeth: Boolean,
+        @Field("reversible_pulpitis") reversible_pulpitis: Boolean,
+        @Field("need_art_filling") need_art_filling: Boolean,
+        @Field("need_sealant") need_sealant: Boolean,
+        @Field("need_sdf") need_sdf: Boolean,
+        @Field("need_extraction") need_extraction: Boolean,
+        @Field("active_infection") active_infection: Boolean,
+        @Field("high_blood_pressure") high_blood_pressure: Boolean,
+        @Field("low_blood_pressure") low_blood_pressure: Boolean,
+        @Field("thyroid_disorder") thyroid_disorder: Boolean
+    ): Call<ScreeningModel>
+
+    @FormUrlEncoded
+    @PUT("encounter/{encounterId}/screening/update")
+    fun updateScreening(
+        @Header("Authorization") token: String,
+        @Path("encounterId") encounterId: String,
         @Field("carries_risk") carries_risk: String,
         @Field("decayed_primary_teeth") decayed_primary_teeth: Int,
         @Field("decayed_permanent_teeth") decayed_permanent_teeth: Int,
@@ -257,7 +278,7 @@ interface DjangoInterface {
     ): Call<ReferralModel>
 
     @FormUrlEncoded
-    @POST("encounter/{encounterId}/refer")
+    @PUT("encounter/{encounterId}/refer/update")
     fun updateReferral(
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
