@@ -23,6 +23,8 @@ class Encounter : Parcelable {
     var uploaded: Boolean = false
     var updated: Boolean = false
     var author: String = ""
+    var geography_id: String = ""
+    var activityarea_id: String = ""
     var updated_by: String? = ""
     var patient: ToOne<Patient>? = null
 
