@@ -12,6 +12,9 @@ class Encounter : Parcelable {
     var updated_at: String? = ""
     var uploaded: Boolean = false
 
+    var geography_id: String = ""
+    var activityarea_id: String = ""
+
     var author: String = ""
     var updated_by: String = ""
 

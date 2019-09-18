@@ -36,8 +36,6 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
 
             saveEncounterToServer(
                 dbPatientEntity!!.remote_id,
-                dbPatientEntity.geography_id,
-                dbPatientEntity.activityarea_id,
                 dbEncounterEntity
             )
             Result.success()
@@ -49,8 +47,6 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
 
     private fun saveEncounterToServer(
         remoteId: String,
-        geographyId: String,
-        activityAreaId: String,
         dbEncounterEntity: Encounter?
     ) {
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -59,8 +55,8 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             "JWT $token",
             remoteId,
             dbEncounterEntity!!.id.toString(),
-            geographyId,
-            activityAreaId,
+            dbEncounterEntity.geography_id,
+            dbEncounterEntity.activityarea_id,
             dbEncounterEntity.encounter_type,
             dbEncounterEntity.other_problem,
             dbEncounterEntity.author,

@@ -271,6 +271,8 @@ class ViewPatientActivity : AppCompatActivity() {
         encounter.id = 0
         encounter.encounter_type = encounterType
         encounter.other_problem = otherProblem
+        encounter.activityarea_id = DentalApp.activity_id
+        encounter.geography_id = DentalApp.geography_id
         encounter.created_at = date
         encounter.updated_at = date
         encounter.author =
