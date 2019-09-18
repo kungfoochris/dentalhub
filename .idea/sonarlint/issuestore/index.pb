@@ -160,3 +160,7 @@ z
 Japp/src/main/java/com/abhiyantrik/dentalhub/workers/UploadPatientWorker.kt,8/0/801c7708e59c316123dd18f948116407aa5a2f70
 z
 Japp/src/main/java/com/abhiyantrik/dentalhub/workers/UpdatePatientWorker.kt,e/0/e06cebc4c5ae5ec91b9fa8921114310a03772904
+†
+Vapp/src/main/java/com/abhiyantrik/dentalhub/workers/UploadIndividualEncounterWorker.kt,b/d/bd0c967239a4d328f88ed67284ee30ee78f5b99f
+s
+Capp/src/main/java/com/abhiyantrik/dentalhub/workers/UploadWorker.kt,2/7/27c13a25d0d57b2565463f214ccce2a889ea8418

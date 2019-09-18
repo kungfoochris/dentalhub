@@ -1,7 +1,8 @@
 Contributors
 ============
 Supported by:
-* [Abhiyantrik Technology Private Limited](https://abhiyantrik.com.np) 
+* [Abhiyantrik Technology Private Limited](https://abhiyantrik.com.np)
+* [Jevaia Oral Health Care](http://evanepal.org/) 
 
 Programmers:
 * [Milan Ghimire](http://milanghimiree.com.np)
