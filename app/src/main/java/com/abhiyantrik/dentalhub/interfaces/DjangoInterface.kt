@@ -382,6 +382,7 @@ interface DjangoInterface {
     @GET("activities")
     fun listActivities(): Call<List<ActivitySuggestion>>
 
+
     @GET("profile")
     fun fetchProfile(@Header("Authorization") token: String): Call<Profile>
 

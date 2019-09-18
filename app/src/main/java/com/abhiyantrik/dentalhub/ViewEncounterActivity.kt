@@ -35,6 +35,11 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var referralBox: Box<Referral>
     //private lateinit var recallBox: Box<Recall>
 
+    // Geography and Activity
+
+    private lateinit var tvActivity: TextView
+    private lateinit var tvGeography: TextView
+
     // history
 
     // History Titles TextView
@@ -243,6 +248,15 @@ class ViewEncounterActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
+
+        // Geography and activity
+
+        tvGeography = findViewById(R.id.tvGeography)
+        tvActivity = findViewById(R.id.tvActivity)
+
+        tvGeography.text = "geogra"
+        tvActivity.text = "acitivi"
+
         // history
 
         // History Title TextView
