@@ -49,42 +49,81 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
-        val call = panelService.addScreening(
-            "JWT $token",
-            encounterId,
-            screening.carries_risk,
-            screening.decayed_primary_teeth,
-            screening.decayed_permanent_teeth,
-            screening.cavity_permanent_anterior_teeth,
-            screening.cavity_permanent_posterior_teeth,
-            screening.reversible_pulpitis,
-            screening.need_art_filling,
-            screening.need_sealant,
-            screening.need_sdf,
-            screening.need_extraction,
-            screening.active_infection,
-            screening.high_blood_pressure,
-            screening.low_blood_pressure,
-            screening.thyroid_disorder
-        )
-        val response = call.execute()
-        if (response.isSuccessful) {
-            when (response.code()) {
-                200, 201 -> {
-                    val tempScreening = response.body() as ScreeningModel
-                    val dbScreeningEntity = screeningBox.query().equal(
-                        Screening_.encounterId,
-                        encounterId
-                    ).build().findFirst()!!
-                    dbScreeningEntity.remote_id = tempScreening.id
-                    dbScreeningEntity.uploaded = true
-                    dbScreeningEntity.updated = false
-                    screeningBox.put(dbScreeningEntity)
+
+        if(!screening.uploaded){
+            val call = panelService.addScreening(
+                "JWT $token",
+                encounterId,
+                screening.carries_risk,
+                screening.decayed_primary_teeth,
+                screening.decayed_permanent_teeth,
+                screening.cavity_permanent_anterior_teeth,
+                screening.cavity_permanent_posterior_teeth,
+                screening.reversible_pulpitis,
+                screening.need_art_filling,
+                screening.need_sealant,
+                screening.need_sdf,
+                screening.need_extraction,
+                screening.active_infection,
+                screening.high_blood_pressure,
+                screening.low_blood_pressure,
+                screening.thyroid_disorder
+            )
+            val response = call.execute()
+            if (response.isSuccessful) {
+                when (response.code()) {
+                    200, 201 -> {
+                        val tempScreening = response.body() as ScreeningModel
+                        val dbScreeningEntity = screeningBox.query().equal(
+                            Screening_.encounterId,
+                            encounterId
+                        ).build().findFirst()!!
+                        dbScreeningEntity.remote_id = tempScreening.id
+                        dbScreeningEntity.uploaded = true
+                        dbScreeningEntity.updated = false
+                        screeningBox.put(dbScreeningEntity)
 
 
+                    }
+                }
+            }
+        }else if(screening.updated){
+            val call = panelService.updateScreening(
+                "JWT $token",
+                encounterId,
+                screening.carries_risk,
+                screening.decayed_primary_teeth,
+                screening.decayed_permanent_teeth,
+                screening.cavity_permanent_anterior_teeth,
+                screening.cavity_permanent_posterior_teeth,
+                screening.reversible_pulpitis,
+                screening.need_art_filling,
+                screening.need_sealant,
+                screening.need_sdf,
+                screening.need_extraction,
+                screening.active_infection,
+                screening.high_blood_pressure,
+                screening.low_blood_pressure,
+                screening.thyroid_disorder
+            )
+            val response = call.execute()
+            if (response.isSuccessful) {
+                when (response.code()) {
+                    200, 201 -> {
+                        val dbScreeningEntity = screeningBox.query().equal(
+                            Screening_.encounterId,
+                            encounterId
+                        ).build().findFirst()!!
+                        dbScreeningEntity.uploaded = true
+                        dbScreeningEntity.updated = false
+                        screeningBox.put(dbScreeningEntity)
+
+
+                    }
                 }
             }
         }
+
 
         DentalApp.cancelNotification(applicationContext, 1001)
 
