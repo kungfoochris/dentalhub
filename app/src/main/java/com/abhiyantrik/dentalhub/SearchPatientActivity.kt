@@ -219,6 +219,7 @@ class SearchPatientActivity : AppCompatActivity() {
                         .or()
                         .contains(Patient_.last_name, query)
                         .orderDesc(Patient_.created_at)
+                        .equal(Patient_.geography_id, DentalApp.geography_id)
                         .build().find()
                 } catch (e: DbException) {
                     Log.d("DBException", e.printStackTrace().toString())
