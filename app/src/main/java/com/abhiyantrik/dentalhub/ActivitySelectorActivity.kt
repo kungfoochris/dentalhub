@@ -9,8 +9,11 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.abhiyantrik.dentalhub.entities.Activity
+import com.abhiyantrik.dentalhub.entities.Activity_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.ActivitySuggestion
+import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,6 +45,8 @@ class ActivitySelectorActivity : AppCompatActivity() {
     var training_id = ""
     var allAPIActivities = listOf<ActivityModel>()
 
+    private lateinit var activityBox: Box<Activity>
+
     var TAG = "ActivitySelectorActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +57,9 @@ class ActivitySelectorActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
+
+        activityBox = ObjectBox.boxStore.boxFor(Activity::class.java)
+
         rgActivities = findViewById(R.id.rgActivities)
         etOtherDetails = findViewById(R.id.etOtherDetailsActivity)
         btnGo = findViewById(R.id.btnGo)
@@ -230,8 +238,16 @@ class ActivitySelectorActivity : AppCompatActivity() {
                                 "School Seminar" -> school_seminar_id = eachActivity.id
                                 "Training" -> training_id = eachActivity.id
                             }
+
+                            if (activityBox.query()
+                                    .equal(Activity_.name, eachActivity.name)
+                                    .build().count() == 0.toLong()) {
+                                val newActivity = Activity()
+                                newActivity.remote_id = eachActivity.id
+                                newActivity.name = eachActivity.name
+                                activityBox.put(newActivity)
+                            }
                         }
-                        println("Community $communityoutreach_id health $healthpost_id school $school_seminar_id train $training_id")
                         progressBar.visibility = View.GONE
                     }
                     400 -> {

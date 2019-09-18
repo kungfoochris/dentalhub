@@ -7,8 +7,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-class Activity(
-    @Id var id: Long,
-    var remote_id: Long,
-    var name: String
-) : Parcelable
+class Activity : Parcelable {
+    @Id
+    var id: Long = 0
+    var remote_id: String = ""
+    var name: String = ""
+}
