@@ -126,6 +126,27 @@ interface DjangoInterface {
     ): Call<HistoryModel>
 
     @FormUrlEncoded
+    @POST("encounter/{encounterId}/history")
+    fun updateHistory(
+        @Header("Authorization") token: String,
+        @Path("encounterId") encounterId: String,
+        @Field("id") id: Long,
+        @Field("bleeding") bleeding: Boolean,
+        @Field("diabetes") diabetes: Boolean,
+        @Field("liver") liver: Boolean,
+        @Field("fever") fever: Boolean,
+        @Field("seizures") seizures: Boolean,
+        @Field("hepatitis") hepatitis: Boolean,
+        @Field("hiv") hiv: Boolean,
+        @Field("other") other: String,
+        @Field("no_underlying_medical") underlying_medical: Boolean,
+        @Field("not_taking_medication") no_taking_medication: Boolean,
+        @Field("medication") medication: String,
+        @Field("no_allergies") no_allergic: Boolean,
+        @Field("allergies") allergic: String
+    ): Call<HistoryModel>
+
+    @FormUrlEncoded
     @POST("encounter/{remoteId}/screening")
     fun addScreening(
         @Header("Authorization") token: String,
@@ -224,6 +245,22 @@ interface DjangoInterface {
     fun addReferral(
         @Header("Authorization") token: String,
         @Path("remoteId") encounterRemoteId: String,
+        @Field("id") id: Long = 0,
+        @Field("no_referal") no_referral: Boolean,
+        @Field("health_post") health_post: Boolean,
+        @Field("hygienist") hygienist: Boolean,
+        @Field("dentist") dentist: Boolean,
+        @Field("physician") general_physician: Boolean,
+        @Field("other") other_details: String,
+        @Field("date") date: String,
+        @Field("time") time: String
+    ): Call<ReferralModel>
+
+    @FormUrlEncoded
+    @POST("encounter/{encounterId}/refer")
+    fun updateReferral(
+        @Header("Authorization") token: String,
+        @Path("encounterId") encounterId: String,
         @Field("id") id: Long = 0,
         @Field("no_referal") no_referral: Boolean,
         @Field("health_post") health_post: Boolean,

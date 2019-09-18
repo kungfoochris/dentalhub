@@ -27,4 +27,6 @@ class Screening : Parcelable {
     var high_blood_pressure: Boolean = false
     var low_blood_pressure: Boolean = false
     var thyroid_disorder: Boolean = false
+    var uploaded: Boolean = false
+    var updated: Boolean = false
 }

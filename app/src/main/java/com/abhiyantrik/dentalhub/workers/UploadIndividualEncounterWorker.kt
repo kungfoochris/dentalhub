@@ -80,47 +80,10 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
                     dbEncounter.uploaded = true
                     encountersBox.put(dbEncounter)
 
-//                    val data = Data.Builder().putLong("ENCOUNTER_ID", dbEncounter.id)
-//                    val uploadHistoryWorkerRequest =
-//                        OneTimeWorkRequestBuilder<UploadHistoryWorker>()
-//                            .setInputData(data.build())
-//                            .setConstraints(DentalApp.uploadConstraints)
-//                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-//                    WorkManager.getInstance(applicationContext).enqueue(uploadHistoryWorkerRequest)
-//
-//
-//                    val uploadScreeningWorkerRequest =
-//                        OneTimeWorkRequestBuilder<UploadScreeningWorker>()
-//                            .setInputData(data.build())
-//                            .setConstraints(DentalApp.uploadConstraints)
-//                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-//                    WorkManager.getInstance(applicationContext)
-//                        .enqueue(uploadScreeningWorkerRequest)
-//
-//
-//                    val uploadTreatmentWorkerRequest =
-//                        OneTimeWorkRequestBuilder<UploadTreatmentWorker>()
-//                            .setInputData(data.build())
-//                            .setConstraints(DentalApp.uploadConstraints)
-//                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-//                    WorkManager.getInstance(applicationContext)
-//                        .enqueue(uploadTreatmentWorkerRequest)
-//
-//
-//                    val uploadReferralWorkerRequest =
-//                        OneTimeWorkRequestBuilder<UploadReferralWorker>()
-//                            .setInputData(data.build())
-//                            .setConstraints(DentalApp.uploadConstraints)
-//                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-//                    WorkManager.getInstance(applicationContext).enqueue(uploadReferralWorkerRequest)
-
 
                 }
             }
         }
 
     }
-//    private fun createOutputData(encounterId: Long):Data{
-//        return Data.Builder().putLong("ENCOUNTER_ID",encounterId).build()
-//    }
 }

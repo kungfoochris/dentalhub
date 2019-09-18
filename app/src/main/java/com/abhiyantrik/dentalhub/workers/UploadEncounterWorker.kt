@@ -33,11 +33,33 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
             Log.d(dbPatientEntity!!.fullName(), allEncounters.size.toString())
 
             for (eachEncounter in allEncounters) {
-                if (!eachEncounter.uploaded) {
-                    Thread.sleep(500L)
-                    val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)
-                        .putLong("PATIENT_ID", dbPatientEntity.id)
+                Thread.sleep(500L)
 
+                val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)
+                    .putLong("PATIENT_ID", dbPatientEntity.id)
+
+                val uploadHistoryWorkerRequest =
+                    OneTimeWorkRequestBuilder<UploadHistoryWorker>()
+                        .setInputData(data.build())
+                        .setConstraints(DentalApp.uploadConstraints)
+                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                val uploadScreeningWorkerRequest =
+                    OneTimeWorkRequestBuilder<UploadScreeningWorker>()
+                        .setInputData(data.build())
+                        .setConstraints(DentalApp.uploadConstraints)
+                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                val uploadTreatmentWorkerRequest =
+                    OneTimeWorkRequestBuilder<UploadTreatmentWorker>()
+                        .setInputData(data.build())
+                        .setConstraints(DentalApp.uploadConstraints)
+                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                val uploadReferralWorkerRequest =
+                    OneTimeWorkRequestBuilder<UploadReferralWorker>()
+                        .setInputData(data.build())
+                        .setConstraints(DentalApp.uploadConstraints)
+                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+
+                if (!eachEncounter.uploaded) {
                     val uploadIndividualEncounterWorkerRequest =
                         OneTimeWorkRequestBuilder<UploadIndividualEncounterWorker>()
                             .setInputData(data.build())
@@ -47,28 +69,21 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
                             TimeUnit.MILLISECONDS
                             ).build()
 
-                    val uploadHistoryWorkerRequest =
-                        OneTimeWorkRequestBuilder<UploadHistoryWorker>()
-                            .setInputData(data.build())
-                            .setConstraints(DentalApp.uploadConstraints)
-                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-                    val uploadScreeningWorkerRequest =
-                        OneTimeWorkRequestBuilder<UploadScreeningWorker>()
-                            .setInputData(data.build())
-                            .setConstraints(DentalApp.uploadConstraints)
-                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-                    val uploadTreatmentWorkerRequest =
-                        OneTimeWorkRequestBuilder<UploadTreatmentWorker>()
-                            .setInputData(data.build())
-                            .setConstraints(DentalApp.uploadConstraints)
-                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-                    val uploadReferralWorkerRequest =
-                        OneTimeWorkRequestBuilder<UploadReferralWorker>()
-                            .setInputData(data.build())
-                            .setConstraints(DentalApp.uploadConstraints)
-                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+
 
                     WorkManager.getInstance(applicationContext).beginWith(uploadIndividualEncounterWorkerRequest)
+                        .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
+                        .enqueue()
+                }else if(eachEncounter.updated){
+                    val updateIndividualEncounterWorkerRequest =
+                        OneTimeWorkRequestBuilder<UpdateIndividualEncounterWorker>()
+                            .setInputData(data.build())
+                            .setConstraints(DentalApp.uploadConstraints)
+                            .setInitialDelay(
+                                100,
+                                TimeUnit.MILLISECONDS
+                            ).build()
+                    WorkManager.getInstance(applicationContext).beginWith(updateIndividualEncounterWorkerRequest)
                         .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
                         .enqueue()
                 }

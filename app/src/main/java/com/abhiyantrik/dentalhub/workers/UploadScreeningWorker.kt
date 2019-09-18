@@ -77,6 +77,8 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                         encounterId
                     ).build().findFirst()!!
                     dbScreeningEntity.remote_id = tempScreening.id
+                    dbScreeningEntity.uploaded = true
+                    dbScreeningEntity.updated = false
                     screeningBox.put(dbScreeningEntity)
 
 

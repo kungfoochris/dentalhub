@@ -50,33 +50,68 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
-        val call = panelService.addReferral(
-            "JWT $token",
-            encounterId,
-            referral.id,
-            referral.no_referral,
-            referral.health_post,
-            referral.hygienist,
-            referral.dentist,
-            referral.general_physician,
-            referral.other_details,
-            "",
-            ""
-        )
-        val response = call.execute()
-        if (response.isSuccessful) {
-            when (response.code()) {
-                200, 201 -> {
-                    val tempReferral = response.body() as ReferralModel
-                    val dbReferralEntity = referralBox.query().equal(
-                        Referral_.encounterId,
-                        encounterId
-                    ).build().findFirst()!!
-                    dbReferralEntity.remote_id = tempReferral.id
-                    referralBox.put(dbReferralEntity)
+
+        if(!referral.uploaded){
+            val call = panelService.addReferral(
+                "JWT $token",
+                encounterId,
+                referral.id,
+                referral.no_referral,
+                referral.health_post,
+                referral.hygienist,
+                referral.dentist,
+                referral.general_physician,
+                referral.other_details,
+                "",
+                ""
+            )
+            val response = call.execute()
+            if (response.isSuccessful) {
+                when (response.code()) {
+                    200, 201 -> {
+                        val tempReferral = response.body() as ReferralModel
+                        val dbReferralEntity = referralBox.query().equal(
+                            Referral_.encounterId,
+                            encounterId
+                        ).build().findFirst()!!
+                        dbReferralEntity.remote_id = tempReferral.id
+                        dbReferralEntity.uploaded = true
+                        dbReferralEntity.updated = false
+                        referralBox.put(dbReferralEntity)
+                    }
+                }
+            }
+        }else if(referral.updated){
+            val call = panelService.updateReferral(
+                "JWT $token",
+                encounterId,
+                referral.id,
+                referral.no_referral,
+                referral.health_post,
+                referral.hygienist,
+                referral.dentist,
+                referral.general_physician,
+                referral.other_details,
+                "",
+                ""
+            )
+            val response = call.execute()
+            if (response.isSuccessful) {
+                when (response.code()) {
+                    200, 201 -> {
+                        val dbReferralEntity = referralBox.query().equal(
+                            Referral_.encounterId,
+                            encounterId
+                        ).build().findFirst()!!
+                        dbReferralEntity.uploaded = true
+                        dbReferralEntity.updated = false
+                        referralBox.put(dbReferralEntity)
+                    }
                 }
             }
         }
+
+
         DentalApp.cancelNotification(applicationContext, 1001)
 
     }

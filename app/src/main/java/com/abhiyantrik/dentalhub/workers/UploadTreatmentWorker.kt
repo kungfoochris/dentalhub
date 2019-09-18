@@ -128,6 +128,8 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
                         encounterId
                     ).build().findFirst()!!
                     dbTreatmentEntity.remote_id = tempTreatment.id
+                    dbTreatmentEntity.uploaded = true
+                    dbTreatmentEntity.updated = false
                     treatmentBox.put(dbTreatmentEntity)
                 }
             }

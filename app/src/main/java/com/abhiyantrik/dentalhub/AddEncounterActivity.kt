@@ -104,6 +104,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             DentalApp.saveToPreference(this, "Encounter_ID", encounterId.toString())
 
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
+            encounter.updated = true
+            encounterBox.put(encounter)
 
             history =
                 historyBox.query().equal(
@@ -236,6 +238,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         history.not_taking_any_medications = notTakingAnyMedications
         history.no_allergies = noAllergies
         history.allergies = allergies
+        history.updated = true
         historyBox.put(history)
     }
 
@@ -284,6 +287,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         screening.high_blood_pressure = highBloodPressure
         screening.low_blood_pressure = lowBloodPressure
         screening.thyroid_disorder = thyroidDisorder
+        screening.updated = true
 
         screeningBox.put(screening)
     }
@@ -367,6 +371,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         treatment.tooth74 = teeth[50]
         treatment.tooth75 = teeth[51]
 
+        treatment.updated = true
+
         treatmentBox.put(treatment)
     }
 
@@ -392,6 +398,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         referral.general_physician = generalPhysician
         referral.other = other
         referral.other_details = otherDetails
+        referral.updated = true
 
         referralBox.put(referral)
     }

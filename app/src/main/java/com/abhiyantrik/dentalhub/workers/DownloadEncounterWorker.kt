@@ -100,6 +100,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             }
 
                             encounterEntity.uploaded = true
+                            encounterEntity.updated = false
                             encountersBox.put(encounterEntity)
 
                             val dbEncounterEntity = encountersBox.query().equal(Encounter_.patientId, dbPatientEntity!!.id).orderDesc(
@@ -145,6 +146,8 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.history!!.not_taking_any_medications
                                     historyEntity.no_allergies = encounter.history!!.no_allergies
                                     historyEntity.allergies = encounter.history!!.allergies
+                                    historyEntity.updated = false
+                                    historyEntity.uploaded = true
 
                                 }
                                 historyBox.put(historyEntity)
@@ -197,8 +200,11 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.screening!!.low_blood_pressure
                                     screeningEntity.thyroid_disorder =
                                         encounter.screening!!.thyroid_disorder
+                                    screeningEntity.updated = false
+                                    screeningEntity.uploaded = true
                                 }
                                 screeningBox.put(screeningEntity)
+
                             }
 
 
@@ -291,6 +297,9 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     treatmentEntity.tooth84 = encounter.treatment!!.tooth84
                                     treatmentEntity.tooth85 = encounter.treatment!!.tooth85
 
+                                    treatmentEntity.updated = false
+                                    treatmentEntity.uploaded = true
+
                                 }
                                 treatmentsBox.put(treatmentEntity)
                             }
@@ -324,6 +333,8 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     referralEntity.other = encounter.referral!!.other
                                     referralEntity.other_details =
                                         encounter.referral!!.other_details
+                                    referralEntity.updated = false
+                                    referralEntity.uploaded = true
 
                                 }
                                 referralsBox.put(referralEntity)

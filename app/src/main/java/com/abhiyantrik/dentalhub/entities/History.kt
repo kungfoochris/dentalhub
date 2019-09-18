@@ -26,4 +26,6 @@ class History : Parcelable {
     var not_taking_any_medications: Boolean = false
     var no_allergies: Boolean = false
     var allergies: String = ""
+    var uploaded: Boolean = false
+    var updated: Boolean = false
 }

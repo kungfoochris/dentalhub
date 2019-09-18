@@ -79,4 +79,6 @@ class Treatment : Parcelable {
     var tooth75 = "NONE"
 
     var encounter: ToOne<Encounter>? = null
+    var uploaded: Boolean = false
+    var updated: Boolean = false
 }

@@ -20,4 +20,6 @@ class Referral : Parcelable {
     var general_physician: Boolean = false
     var other: Boolean = false
     var other_details: String = ""
+    var uploaded: Boolean = false
+    var updated: Boolean = false
 }

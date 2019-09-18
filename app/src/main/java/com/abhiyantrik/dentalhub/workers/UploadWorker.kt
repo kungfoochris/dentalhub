@@ -26,8 +26,21 @@ class UploadWorker (context: Context, params: WorkerParameters) : Worker(context
                     .setInputData(data.build())
                     .setConstraints(DentalApp.uploadConstraints)
                     .build()
-                WorkManager.getInstance(applicationContext).beginWith(uploadPatientWorkRequest)
-                    .then(uploadEncounterWorkRequest).enqueue()
+
+                val updatePatientWorkerRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
+                    .setInputData(data.build())
+                    .setConstraints(DentalApp.uploadConstraints)
+                    .build()
+                if(!patient.uploaded){
+                    WorkManager.getInstance(applicationContext).beginWith(uploadPatientWorkRequest)
+                        .then(uploadEncounterWorkRequest).enqueue()
+                }else if(patient.updated){
+                    WorkManager.getInstance(applicationContext).beginWith(updatePatientWorkerRequest)
+                        .then(uploadEncounterWorkRequest).enqueue()
+                }else{
+                    WorkManager.getInstance(applicationContext).enqueue(uploadEncounterWorkRequest)
+                }
+
             }
             Result.success()
         }catch (e: Exception){
