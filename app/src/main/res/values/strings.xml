@@ -147,4 +147,6 @@
     <string name="uploading_referral">Uploading referral ...</string>
     <string name="uploading_screening">Uploading screening ...</string>
     <string name="uploading_treatment">Uploading treatment ...</string>
+    <string name="geography">Geography</string>
+    <string name="activity">Activity</string>
 </resources>

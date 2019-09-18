@@ -580,7 +580,7 @@
     },
     {
       "id": "9:9009914417035523937",
-      "lastPropertyId": "11:4485335696190365085",
+      "lastPropertyId": "13:3488410798687656472",
       "name": "Encounter",
       "properties": [
         {
@@ -627,6 +627,14 @@
         {
           "id": "11:4485335696190365085",
           "name": "updated"
+        },
+        {
+          "id": "12:4792988437684540731",
+          "name": "geography_id"
+        },
+        {
+          "id": "13:3488410798687656472",
+          "name": "activityarea_id"
         }
       ],
       "relations": []

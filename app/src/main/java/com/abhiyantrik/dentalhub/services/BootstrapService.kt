@@ -3,11 +3,19 @@ package com.abhiyantrik.dentalhub.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
+import com.abhiyantrik.dentalhub.Constants
+import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Geography
+import com.abhiyantrik.dentalhub.entities.Geography_
+import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
+import retrofit2.Callback
+import retrofit2.Response
 
+import retrofit2.Call
 
 class BootstrapService : Service() {
     private lateinit var activitiesBox: Box<Activity>
@@ -23,7 +31,7 @@ class BootstrapService : Service() {
         geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
 
         //listGeographies()
-        ///listActivities()
+        //listActivities()
         return super.onStartCommand(intent, flags, startId)
     }
 
