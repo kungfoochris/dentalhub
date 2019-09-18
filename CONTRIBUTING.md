@@ -11,3 +11,6 @@ Programmers:
 UI/UX:
 * [Ghan Shyam Khadka](http://ghana.com.np)
 * [Manish Raj Silwal](http://manishrajsilwal.com.np)
+
+Quality Assurance:
+* Suman Ghimire
