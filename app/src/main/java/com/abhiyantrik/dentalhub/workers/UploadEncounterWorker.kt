@@ -86,6 +86,8 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
                     WorkManager.getInstance(applicationContext).beginWith(updateIndividualEncounterWorkerRequest)
                         .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
                         .enqueue()
+                }else{
+                    WorkManager.getInstance(applicationContext).enqueue(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
                 }
             }
 
