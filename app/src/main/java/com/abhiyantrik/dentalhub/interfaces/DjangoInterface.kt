@@ -262,12 +262,12 @@ interface DjangoInterface {
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
         @Field("id") id: Long = 0,
-        @Field("no_referal") no_referral: Boolean,
+        @Field("no_referral") no_referral: Boolean,
         @Field("health_post") health_post: Boolean,
         @Field("hygienist") hygienist: Boolean,
         @Field("dentist") dentist: Boolean,
-        @Field("physician") general_physician: Boolean,
-        @Field("other") other_details: String,
+        @Field("general_physician") general_physician: Boolean,
+        @Field("other_details") other_details: String,
         @Field("date") date: String,
         @Field("time") time: String
     ): Call<ReferralModel>
