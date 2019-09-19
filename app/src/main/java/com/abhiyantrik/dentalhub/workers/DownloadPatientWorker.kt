@@ -92,8 +92,17 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             patientEntity.updated = false
                             patientEntity.recall = null
                             patientEntity.author = patient.author
-                            patientEntity.created_at = patient.created_at
-                            patientEntity.updated_at = patient.updated_at
+                            try {
+                                patientEntity.created_at = patient.created_at
+                            }catch (e: Exception){
+                                patientEntity.created_at = DateHelper.getCurrentDate()
+                            }
+                            try{
+                                patientEntity.updated_at = patient.updated_at
+                            }catch (e: Exception){
+                                patientEntity.updated_at = DateHelper.getCurrentDate()
+                            }
+
                             if(patient.updated_by==null){
                                 patientEntity.updated_by = patient.author
                             }else{

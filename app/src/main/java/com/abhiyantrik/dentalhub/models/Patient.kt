@@ -26,8 +26,8 @@ class Patient(
     var recall_date: String,
     var recall_geography: String,
     var activity_area: String,
-    var created_at: String,
-    var updated_at: String,
+    var created_at: String?,
+    var updated_at: String?,
     var uploaded: Boolean
 ) : Parcelable {
     fun address(): String {
