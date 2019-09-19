@@ -85,6 +85,9 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             patientEntity.longitude = patient.longitude
                             patientEntity.geography_id = patient.geography
                             patientEntity.activityarea_id = patient.activity_area
+                            patientEntity.recall_time = patient.recall_time
+                            patientEntity.recall_date = patient.recall_date
+                            patientEntity.recall_geography = patient.recall_geography
                             patientEntity.uploaded = true
                             patientEntity.updated = false
                             patientEntity.recall = null
