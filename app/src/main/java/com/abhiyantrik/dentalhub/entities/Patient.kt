@@ -37,8 +37,8 @@ class Patient : Parcelable {
     var recall_date: String = ""
     var recall_time: String = "00:00:01"
     var recall_geography = ""
-    var created_at: String? = ""
-    var updated_at: String? = ""
+    var created_at: String = ""
+    var updated_at: String = ""
     var author: String = ""
     var updated_by: String? = ""
     var uploaded: Boolean = false

@@ -120,21 +120,19 @@ class ReferralFragment : Fragment() {
 
             when (i) {
                 R.id.radioOneWeek -> {
-                    recallDate = if (dayToday + 7 > 30) {
-                        "$yearToday-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
+                    recallDate = if (dayToday + 7 > 30 && monthToday+1 > 12) {
+                        "${yearToday+1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
                             "00"
                         ).format((dayToday + 7) % 30)
-                    } else {
-
-                        if (monthToday + 1 > 12) {
-                            "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
-                                "00"
-                            ).format((dayToday + 7) % 30)
-                        } else {
+                    } else if(dayToday+7 > 30){
                             "$yearToday-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
                                 "00"
                             ).format((dayToday + 7) % 30)
-                        }
+
+                    }else{
+                          "$yearToday-" + DecimalFormat("00").format("$monthToday") + "-" + DecimalFormat(
+                                "00"
+                            ).format((dayToday + 7) % 30)
 
                     }
 
