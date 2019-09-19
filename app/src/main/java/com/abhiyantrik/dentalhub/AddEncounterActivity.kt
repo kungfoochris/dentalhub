@@ -13,6 +13,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.adapters.FormPageAdapter
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.fragments.interfaces.HistoryFormCommunicator
@@ -20,9 +23,11 @@ import com.abhiyantrik.dentalhub.fragments.interfaces.ReferralFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.ScreeningFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import com.abhiyantrik.dentalhub.utils.DateHelper
+import com.abhiyantrik.dentalhub.workers.UpdatePatientWorker
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import java.util.concurrent.TimeUnit
 
 
 class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
@@ -208,8 +213,18 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun updateRecallDate(recallDate: String, recallTime: String) {
         patient.recall_date = recallDate
         patient.recall_time = recallTime
-        patient.recall_geography = DentalApp.geography_name
+        patient.recall_geography = DentalApp.geography_id
+        patient.updated = true
+        patient.updated_at = DateHelper.getCurrentDate()
+        patient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
         patientBox.put(patient)
+
+        val data = Data.Builder().putLong("PATIENT_ID", patient.id)
+        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
+            .setInputData(data.build())
+            .setConstraints(DentalApp.uploadConstraints)
+            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
     }
 
     override fun updateHistory(
