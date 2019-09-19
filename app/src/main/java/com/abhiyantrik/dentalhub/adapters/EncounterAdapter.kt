@@ -2,6 +2,7 @@ package com.abhiyantrik.dentalhub.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -65,7 +66,12 @@ class EncounterAdapter(
         private var ibEdit: ImageButton = itemView.findViewById(R.id.ibEdit)
 
         fun bindEncounter(encounter: Encounter) {
-            tvEncounterName.text = encounter.encounter_type + " " + encounter.other_problem
+            val encounterType: String = context.getString(R.string.other_problem)
+            if (encounter.encounter_type == encounterType) {
+                tvEncounterName.text = encounter.encounter_type + " - " + encounter.other_problem
+            } else {
+                tvEncounterName.text = encounter.encounter_type
+            }
             tvEncounterDate.text = DateHelper.formatNepaliDate(context, encounter.created_at)
             if (encounter.isEditable()) {
                 ibEdit.visibility = View.VISIBLE

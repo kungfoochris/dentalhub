@@ -4,7 +4,7 @@ data class Geography(
     var id: String,
     var district: String,
     var municipality: String,
-    var ward: Int,
+    var ward: String,
     var tole: String,
     var location: String
 )

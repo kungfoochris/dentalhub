@@ -7,16 +7,15 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-class Geography(
-    @Id var id: Long,
-    var remote_id: Long,
-    var street_address: String,
-    var city: String,
-    var state: String,
-    var country: String
-) : Parcelable {
-    fun address(): String {
-        return "$street_address $city"
-    }
+class Geography : Parcelable {
+    @Id var id: Long = 0
+    var remote_id: String = ""
+    var district: String = ""
+    var municipality: String = ""
+    var ward: String = ""
+    var tole: String = ""
 
+    fun address(): String {
+        return "$tole, $municipality-$ward, $district"
+    }
 }

@@ -14,11 +14,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.adapters.GeographyAdapter
-import com.abhiyantrik.dentalhub.entities.District
-import com.abhiyantrik.dentalhub.entities.Municipality
-import com.abhiyantrik.dentalhub.entities.Ward
+import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.abhiyantrik.dentalhub.models.Geography
+import com.abhiyantrik.dentalhub.models.Geography as GeographyModel
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import io.objectbox.Box
 import retrofit2.Call
@@ -40,12 +38,13 @@ class LocationSelectorActivity : AppCompatActivity() {
     private lateinit var dividerItemDecoration: DividerItemDecoration
     private lateinit var context: Context
     //    var allGeographies = mutableListOf<Geography>()
-    var allAPIGeographies = listOf<Geography>()
+    var allAPIGeographies = listOf<GeographyModel>()
 
     private lateinit var geographyAdapter: GeographyAdapter
     private val TAG = "selectorActivity"
 
 
+    private lateinit var geographyBox: Box<Geography>
     private lateinit var districtsBox: Box<District>
     private lateinit var municipalitiesBox: Box<Municipality>
     private lateinit var wardsBox: Box<Ward>
@@ -75,6 +74,7 @@ class LocationSelectorActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         btnLogout = findViewById(R.id.btnLogout)
 
+        geographyBox = ObjectBox.boxStore.boxFor(Geography::class.java)
         wardsBox = ObjectBox.boxStore.boxFor(Ward::class.java)
 
         mLayoutManager = LinearLayoutManager(this)
@@ -98,8 +98,8 @@ class LocationSelectorActivity : AppCompatActivity() {
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(context)
         val call = panelService.listGeographies("JWT $token")
-        call.enqueue(object : retrofit2.Callback<List<Geography>> {
-            override fun onFailure(call: Call<List<Geography>>, t: Throwable) {
+        call.enqueue(object : retrofit2.Callback<List<GeographyModel>> {
+            override fun onFailure(call: Call<List<GeographyModel>>, t: Throwable) {
                 Log.d(TAG, "onFaliure()")
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
@@ -113,14 +113,27 @@ class LocationSelectorActivity : AppCompatActivity() {
             }
 
             override fun onResponse(
-                call: Call<List<Geography>>,
-                response: Response<List<Geography>>
+                call: Call<List<GeographyModel>>,
+                response: Response<List<GeographyModel>>
             ) {
                 println("Print geography ${response.body()} and code ${response.code()}")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
-                            allAPIGeographies = response.body() as List<Geography>
+                            allAPIGeographies = response.body() as List<GeographyModel>
+                            for (eachGeography in allAPIGeographies) {
+                                if (geographyBox.query()
+                                        .equal(Geography_.remote_id, eachGeography.id)
+                                        .build().count() == 0.toLong()) {
+                                    val newGeography = Geography()
+                                    newGeography.remote_id = eachGeography.id
+                                    newGeography.district = eachGeography.district
+                                    newGeography.ward = eachGeography.ward
+                                    newGeography.municipality = eachGeography.municipality
+                                    newGeography.tole = eachGeography.tole
+                                    geographyBox.put(newGeography)
+                                }
+                            }
                             setupAdapter()
                         }
                         else -> {
@@ -151,7 +164,7 @@ class LocationSelectorActivity : AppCompatActivity() {
             context,
             allAPIGeographies,
             object : GeographyAdapter.GeographyClickListener {
-                override fun onGeographyClick(geography: Geography) {
+                override fun onGeographyClick(geography: GeographyModel) {
                     DentalApp.saveToPreference(
                         context,
                         Constants.PREF_SELECTED_LOCATION_ID,

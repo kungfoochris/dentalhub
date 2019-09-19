@@ -33,6 +33,8 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
+    private lateinit var geographyBox: Box<Geography>
+    private lateinit var activityBox: Box<Activity>
     //private lateinit var recallBox: Box<Recall>
 
     // Geography and Activity
@@ -227,6 +229,8 @@ class ViewEncounterActivity : AppCompatActivity() {
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
+        geographyBox = ObjectBox.boxStore.boxFor(Geography::class.java)
+        activityBox = ObjectBox.boxStore.boxFor(Activity::class.java)
         //recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
@@ -254,8 +258,22 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvGeography = findViewById(R.id.tvGeography)
         tvActivity = findViewById(R.id.tvActivity)
 
-        tvGeography.text = "geogra"
-        tvActivity.text = "acitivi"
+        var geographyID = Geography()
+        var activityID = Activity()
+
+        if ((encounter.geography_id).isNullOrEmpty()){
+            geographyID = geographyBox.query().equal(Geography_.remote_id, encounter.geography_id).build().findFirst()!!
+            tvGeography.text = geographyID.tole
+        } else {
+            tvGeography.text = DentalApp.geography_name
+        }
+
+        if ((encounter.activityarea_id).isNullOrEmpty()){
+            activityID = activityBox.query().equal(Activity_.remote_id, encounter.activityarea_id).build().findFirst()!!
+            tvActivity.text = activityID.name
+        } else {
+            tvActivity.text = DentalApp.activity_name
+        }
 
         // history
 
