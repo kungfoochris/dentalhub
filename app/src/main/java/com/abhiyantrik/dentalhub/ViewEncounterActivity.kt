@@ -261,14 +261,14 @@ class ViewEncounterActivity : AppCompatActivity() {
         var geographyID = Geography()
         var activityID = Activity()
 
-        if ((encounter.geography_id).isNullOrEmpty()){
+        if (!(encounter.geography_id).isNullOrEmpty()){
             geographyID = geographyBox.query().equal(Geography_.remote_id, encounter.geography_id).build().findFirst()!!
             tvGeography.text = geographyID.tole
         } else {
             tvGeography.text = DentalApp.geography_name
         }
 
-        if ((encounter.activityarea_id).isNullOrEmpty()){
+        if (!(encounter.activityarea_id).isNullOrEmpty()){
             activityID = activityBox.query().equal(Activity_.remote_id, encounter.activityarea_id).build().findFirst()!!
             tvActivity.text = activityID.name
         } else {
