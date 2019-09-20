@@ -129,8 +129,9 @@ class ReferralFragment : Fragment() {
                                 "00"
                             ).format((dayToday + 7) % 30)
 
-                    }else{
-                          "$yearToday-" + DecimalFormat("00").format("$monthToday") + "-" + DecimalFormat(
+                    }
+                    else{
+                          "$yearToday-" + DecimalFormat("00").format(monthToday) + "-" + DecimalFormat(
                                 "00"
                             ).format((dayToday + 7) % 30)
 
