@@ -23,7 +23,7 @@ import com.abhiyantrik.dentalhub.fragments.interfaces.ReferralFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.ScreeningFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import com.abhiyantrik.dentalhub.utils.DateHelper
-import com.abhiyantrik.dentalhub.workers.UpdatePatientWorker
+import com.abhiyantrik.dentalhub.workers.*
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
@@ -58,6 +58,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     var encounterId: Long = 0
     var patientId: Long = 0
 
+    var action = "new"
+
 
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +86,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         println("Encounter with edit mode :  $encounterId")
 
         if (encounterId == "0".toLong()) {
+            action = "new"
             encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()!!
 
             history.encounter?.target = encounter
@@ -105,7 +108,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             DentalApp.saveToPreference(this, "Encounter_ID", "0")
 
         } else {
-
+            action = "edit"
             DentalApp.saveToPreference(this, "Encounter_ID", encounterId.toString())
 
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
@@ -458,6 +461,63 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun goForward() {
         if (pager.currentItem == 3) {
             pager.currentItem = 0
+
+            val data = Data.Builder().putLong("ENCOUNTER_ID", encounter.id)
+                .putLong("PATIENT_ID", patient.id)
+
+            val uploadHistoryWorkerRequest =
+                OneTimeWorkRequestBuilder<UploadHistoryWorker>()
+                    .setInputData(data.build())
+                    .setConstraints(DentalApp.uploadConstraints)
+                    .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+            val uploadScreeningWorkerRequest =
+                OneTimeWorkRequestBuilder<UploadScreeningWorker>()
+                    .setInputData(data.build())
+                    .setConstraints(DentalApp.uploadConstraints)
+                    .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+            val uploadTreatmentWorkerRequest =
+                OneTimeWorkRequestBuilder<UploadTreatmentWorker>()
+                    .setInputData(data.build())
+                    .setConstraints(DentalApp.uploadConstraints)
+                    .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+            val uploadReferralWorkerRequest =
+                OneTimeWorkRequestBuilder<UploadReferralWorker>()
+                    .setInputData(data.build())
+                    .setConstraints(DentalApp.uploadConstraints)
+                    .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+
+            when (action) {
+                "new" -> {
+
+                    val uploadIndividualEncounterWorkerRequest =
+                        OneTimeWorkRequestBuilder<UploadIndividualEncounterWorker>()
+                            .setInputData(data.build())
+                            .setConstraints(DentalApp.uploadConstraints)
+                            .setInitialDelay(
+                                100,
+                                TimeUnit.MILLISECONDS
+                            ).build()
+
+
+
+                    WorkManager.getInstance(applicationContext).beginWith(uploadIndividualEncounterWorkerRequest)
+                        .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
+                        .enqueue()
+                }
+                "edit" -> {
+                    val updateIndividualEncounterWorkerRequest =
+                        OneTimeWorkRequestBuilder<UpdateIndividualEncounterWorker>()
+                            .setInputData(data.build())
+                            .setConstraints(DentalApp.uploadConstraints)
+                            .setInitialDelay(
+                                100,
+                                TimeUnit.MILLISECONDS
+                            ).build()
+                    WorkManager.getInstance(applicationContext).beginWith(updateIndividualEncounterWorkerRequest)
+                        .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
+                        .enqueue()
+                }
+            }
             onBackPressed()
         } else {
             pager.currentItem += 1
