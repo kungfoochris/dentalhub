@@ -24,8 +24,10 @@ interface DjangoInterface {
     @POST("token/obtain")
     fun login(@Field("username") username: String, @Field("password") password: String): Call<LoginResponse>
 
+//    For all patients url is '/patients'
+//    For geography restricted users url is '/accesspatients'
     @FormUrlEncoded
-    @POST("patients")
+    @POST("accesspatients")
     fun addPatient(
         @Header("Authorization") token: String,
         @Field("id") id: Long,

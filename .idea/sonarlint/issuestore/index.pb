@@ -170,3 +170,5 @@ h
 8app/src/main/java/com/abhiyantrik/dentalhub/ObjectBox.kt,e/8/e802e51a0896b0ca63ea860d46d97c877736d4e6
 w
 Gapp/src/main/java/com/abhiyantrik/dentalhub/fragments/TickerFragment.kt,9/6/96cc5679c1adc031ecfa3db3f38a701234a541cf
+†
+Vapp/src/main/java/com/abhiyantrik/dentalhub/workers/UpdateIndividualEncounterWorker.kt,1/3/13be4a4bfb1c159b9a41b031aaadc645753abca2
