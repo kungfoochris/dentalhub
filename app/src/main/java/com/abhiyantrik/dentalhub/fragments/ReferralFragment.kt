@@ -42,7 +42,6 @@ class ReferralFragment : Fragment() {
     private lateinit var etRecallTime: EditText
 
     private lateinit var activitiesBox: Box<Activity>
-    private lateinit var geographiesBox: Box<Geography>
     private lateinit var patientBox: Box<Patient>
 //    private lateinit var activitiesQuery: Query<Activity>
 //    private lateinit var geographiesQuery: Query<Geography>
@@ -60,13 +59,11 @@ class ReferralFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_referral, container, false)
 
         activitiesBox = ObjectBox.boxStore.boxFor(Activity::class.java)
-        geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
         patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
 
 //        activitiesQuery = activitiesBox.query().build()
-//        geographiesQuery = geographiesBox.query().build()
 
 //        radioButtonNoReferral = view.findViewById(R.id.radioNoReferral)
 //        radioButtonHealthPost = view.findViewById(R.id.radioHealthPost)

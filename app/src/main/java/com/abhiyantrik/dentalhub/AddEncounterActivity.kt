@@ -213,7 +213,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun updateRecallDate(recallDate: String, recallTime: String) {
         patient.recall_date = recallDate
         patient.recall_time = recallTime
-        patient.recall_geography = DentalApp.geography_id
+        patient.recall_geography = DentalApp.ward_id
         patient.updated = true
         patient.updated_at = DateHelper.getCurrentDate()
         patient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")

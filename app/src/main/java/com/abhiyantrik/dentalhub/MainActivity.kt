@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         setupUI()
 
-        Log.d("Location", DentalApp.geography_name)
+        Log.d("Location", DentalApp.ward_name)
         Log.d(
             "Proxy: ",
             DentalApp.readFromPreference(
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         )
         Log.d("Activity", DentalApp.activity_name)
         tvName.text = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME, "")
-        tvLocation.text = DentalApp.geography_name
+        tvLocation.text = DentalApp.ward_name
         tvActivity.text = DentalApp.activity_name
     }
 
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         allPatientRecall = mutableListOf()
         val today = DateHelper.getCurrentNepaliDate()
         val todayPatient = patientsBox.query().equal(Patient_.recall_date, today)
-            .equal(Patient_.recall_geography, DentalApp.geography_name).order(Patient_.recall_date)
+            .equal(Patient_.recall_geography, DentalApp.ward_name).order(Patient_.recall_date)
             .build().find()
 
 
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         for (i in 1..8) {
             val thisWeekPatients =
                 patientsBox.query().equal(Patient_.recall_date, nextDay)
-                    .equal(Patient_.recall_geography, DentalApp.geography_name)
+                    .equal(Patient_.recall_geography, DentalApp.ward_name)
                     .order(Patient_.recall_date).build().find()
             allPatientRecall.addAll(thisWeekPatients)
             nextDay = DateHelper.getNextDay(nextDay)
@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         for (i in 1..24) {
             val thisMonthPatients =
                 patientsBox.query().equal(Patient_.recall_date, nextDay)
-                    .equal(Patient_.recall_geography, DentalApp.geography_name)
+                    .equal(Patient_.recall_geography, DentalApp.ward_name)
                     .order(Patient_.recall_date).build().find()
             allPatientRecall.addAll(thisMonthPatients)
             nextDay = DateHelper.getNextDay(nextDay)
@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "listPatientsFromLocalDB()")
         try {
             allPatients =
-                patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id)
+                patientsBox.query().equal(Patient_.geography_id, DentalApp.ward_id)
                     .orderDesc(Patient_.created_at).build().find()
             setupAdapter(allPatients)
         } catch (e: DbException) {

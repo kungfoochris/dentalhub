@@ -8,8 +8,6 @@ import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.entities.Activity
-import com.abhiyantrik.dentalhub.entities.Geography
-import com.abhiyantrik.dentalhub.entities.Geography_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
 import retrofit2.Callback
@@ -19,7 +17,6 @@ import retrofit2.Call
 
 class BootstrapService : Service() {
     private lateinit var activitiesBox: Box<Activity>
-    private lateinit var geographiesBox: Box<Geography>
     val TAG = "BootstrapService"
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -28,7 +25,6 @@ class BootstrapService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         activitiesBox = ObjectBox.boxStore.boxFor(Activity::class.java)
-        geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
 
         //listGeographies()
         //listActivities()

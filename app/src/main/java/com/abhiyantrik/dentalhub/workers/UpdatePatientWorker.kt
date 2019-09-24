@@ -104,6 +104,8 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
                     }
                 }
             }
+        }else{
+            Log.d("UpdatePatientWorker", response.message())
         }
         DentalApp.cancelNotification(applicationContext, 1001)
 

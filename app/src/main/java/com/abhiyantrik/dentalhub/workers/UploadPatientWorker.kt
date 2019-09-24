@@ -100,6 +100,9 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
 
                     }
                 }
+            } else {
+                Log.d("UploadPatientWorker", response.message())
+                Log.d("UploadPatientWorker", response.errorBody().toString())
             }
         }
         createOutputData(dbPatient!!.id)

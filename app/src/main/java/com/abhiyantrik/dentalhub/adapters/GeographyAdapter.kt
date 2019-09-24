@@ -37,8 +37,7 @@ class GeographyAdapter(
 
         holder.itemView.setOnClickListener {
             Log.d("EncounterAdapter", "itemView clicked")
-            println("Item clicked is ${selectedGeography.tole}")
-            DentalApp.geography_id = selectedGeography.id
+            DentalApp.ward_id = selectedGeography.id
             geographyClickListener.onGeographyClick(selectedGeography)
         }
         holder.bindEncounter(selectedGeography)
@@ -54,7 +53,7 @@ class GeographyAdapter(
 
         fun bindEncounter(geography: Geography) {
 //            tvLocation.text = geography.name
-            tvLocation.text = geography.tole
+            tvLocation.text = geography.name
         }
 
 

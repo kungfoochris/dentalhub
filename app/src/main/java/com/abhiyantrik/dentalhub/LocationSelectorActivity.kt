@@ -39,12 +39,12 @@ class LocationSelectorActivity : AppCompatActivity() {
     private lateinit var context: Context
     //    var allGeographies = mutableListOf<Geography>()
     var allAPIGeographies = listOf<GeographyModel>()
+    var activeGeographies = mutableListOf<GeographyModel>()
 
     private lateinit var geographyAdapter: GeographyAdapter
     private val TAG = "selectorActivity"
 
 
-    private lateinit var geographyBox: Box<Geography>
     private lateinit var districtsBox: Box<District>
     private lateinit var municipalitiesBox: Box<Municipality>
     private lateinit var wardsBox: Box<Ward>
@@ -74,7 +74,6 @@ class LocationSelectorActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         btnLogout = findViewById(R.id.btnLogout)
 
-        geographyBox = ObjectBox.boxStore.boxFor(Geography::class.java)
         wardsBox = ObjectBox.boxStore.boxFor(Ward::class.java)
 
         mLayoutManager = LinearLayoutManager(this)
@@ -116,22 +115,13 @@ class LocationSelectorActivity : AppCompatActivity() {
                 call: Call<List<GeographyModel>>,
                 response: Response<List<GeographyModel>>
             ) {
-                println("Print geography ${response.body()} and code ${response.code()}")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
                             allAPIGeographies = response.body() as List<GeographyModel>
                             for (eachGeography in allAPIGeographies) {
-                                if (geographyBox.query()
-                                        .equal(Geography_.remote_id, eachGeography.id)
-                                        .build().count() == 0.toLong()) {
-                                    val newGeography = Geography()
-                                    newGeography.remote_id = eachGeography.id
-                                    newGeography.district = eachGeography.district
-                                    newGeography.ward = eachGeography.ward
-                                    newGeography.municipality = eachGeography.municipality
-                                    newGeography.tole = eachGeography.tole
-                                    geographyBox.put(newGeography)
+                                if (eachGeography.status) {
+                                    activeGeographies.add(eachGeography)
                                 }
                             }
                             setupAdapter()
@@ -173,10 +163,11 @@ class LocationSelectorActivity : AppCompatActivity() {
                     DentalApp.saveToPreference(
                         context,
                         Constants.PREF_SELECTED_LOCATION_NAME,
-                        geography.tole
+                        geography.name
                     )
+                    DentalApp.ward_id = geography.ward.toString()
+                    DentalApp.ward_name = geography.name
                     DentalApp.geography_id = geography.id
-                    DentalApp.geography_name = geography.tole
                     startActivity(Intent(context, ActivitySelectorActivity::class.java))
                     finish()
                 }

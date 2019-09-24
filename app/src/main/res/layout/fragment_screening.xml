@@ -19,7 +19,7 @@
                 android:layout_marginBottom="@dimen/fieldBottomMargin">
             <TextView
                     android:layout_weight="@dimen/form_col_1_weight"
-                    android:text="@string/caries_risk"
+                    android:text="@string/carries_risk"
                     android:textSize="@dimen/default_font_size"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>

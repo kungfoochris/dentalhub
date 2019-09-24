@@ -312,12 +312,13 @@ class AddPatientActivity : AppCompatActivity() {
         val ward = dbWard.remote_id
         val municipality = dbMunicipality.remote_id
         val district = dbDistrict.remote_id
-        val geography = DentalApp.geography_id
+        val geography = DentalApp.ward_id
         val activity = DentalApp.activity_id
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
         val date = DateHelper.getCurrentNepaliDate()
         if (action == "edit") {
+            patient!!.id = patientId
             patient = patientsBox.get(patientId)
             patient!!.first_name = firstName
             patient!!.middle_name = middleName
@@ -331,7 +332,7 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.district = district
             patient!!.latitude = latitude
             patient!!.longitude = longitude
-            patient!!.geography_id = DentalApp.geography_id
+            patient!!.geography_id = DentalApp.ward_id
             patient!!.activityarea_id = DentalApp.activity_id
             patient!!.created_at = date
             patient!!.updated_at = date
@@ -389,9 +390,9 @@ class AddPatientActivity : AppCompatActivity() {
         patientsBox.put(patient)
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
         if (action == "new") {
-            val pt = patientBox.query().orderDesc(Patient_.id).build().findFirst()!!
+            val dbPatientEntity = patientBox.query().orderDesc(Patient_.id).build().findFirst()!!
 
-            val data = Data.Builder().putLong("PATIENT_ID", pt.id)
+            val data = Data.Builder().putLong("PATIENT_ID", dbPatientEntity.id)
             val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
                 .setInputData(data.build())
                 .setConstraints(DentalApp.uploadConstraints)
@@ -399,7 +400,7 @@ class AddPatientActivity : AppCompatActivity() {
             WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
 
 
-            viewPatientIntent.putExtra("PATIENT_ID", pt.id)
+            viewPatientIntent.putExtra("PATIENT_ID", dbPatientEntity.id)
             startActivity(viewPatientIntent)
             finish()
         } else {

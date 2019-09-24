@@ -55,7 +55,7 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             "JWT $token",
             remoteId,
             dbEncounterEntity!!.id.toString(),
-            dbEncounterEntity.geography_id,
+            dbEncounterEntity.ward_id,
             dbEncounterEntity.activityarea_id,
             dbEncounterEntity.encounter_type,
             dbEncounterEntity.other_problem,

@@ -13,7 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.abhiyantrik.dentalhub.entities.Geography
+import com.abhiyantrik.dentalhub.entities.Ward
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.LoginResponse
 import com.google.firebase.perf.metrics.AddTrace
@@ -30,7 +30,6 @@ class LoginActivity : Activity() {
     private lateinit var loading: ProgressBar
     private lateinit var btnLogin: Button
     private lateinit var context: Context
-    private lateinit var geographiesBox: Box<Geography>
 
     private val TAG = "LoginActivity"
 
@@ -40,7 +39,6 @@ class LoginActivity : Activity() {
         setContentView(R.layout.activity_login)
 
         context = this
-        geographiesBox = ObjectBox.boxStore.boxFor(Geography::class.java)
         setupUI()
     }
 
