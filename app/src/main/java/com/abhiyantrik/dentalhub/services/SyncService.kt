@@ -148,12 +148,12 @@ class SyncService : Service(){
             history.seizuers_or_epilepsy,
             history.hepatitis_b_or_c,
             history.hiv,
-            history.other,
-            history.no_underlying_medical_condition,
-            history.not_taking_any_medications,
-            history.medications,
             history.no_allergies,
-            history.allergies
+            history.allergies,
+            history.other,
+            history.medications,
+            history.no_underlying_medical_condition,
+            history.not_taking_any_medications
         )
         call.enqueue(object : Callback<HistoryModel> {
             override fun onFailure(call: Call<HistoryModel>, t: Throwable) {
@@ -251,9 +251,7 @@ class SyncService : Service(){
             referral.hygienist,
             referral.dentist,
             referral.general_physician,
-            referral.other_details,
-            recall.date,
-            recall.time
+            referral.other_details
         )
 
         totalRetrofitProcessed += 1
@@ -488,7 +486,7 @@ class SyncService : Service(){
     @AddTrace(name = "syncService_saveEncounterToServer", enabled = true /* optional */)
     private fun saveEncounterToServer(
         patientId: String,
-        patientGeography: String,
+        patientGeography: Int,
         patientActivityId: String,
         tempEncounter: Encounter
     ) {
@@ -499,7 +497,7 @@ class SyncService : Service(){
         val call = panelService.addEncounter(
             "JWT $token",
             patientId,
-            tempEncounter.id.toString(),
+            tempEncounter.id.toInt(),
             patientGeography,
             patientActivityId,
             tempEncounter.encounter_type,

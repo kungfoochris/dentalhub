@@ -29,10 +29,9 @@ class SplashActivity : Activity() {
                 val setupComplete =
                     DentalApp.readFromPreference(context, Constants.PREF_SETUP_COMPLETE, "false")
                 if (setupComplete == "true") {
-                    val selectedLocationId = DentalApp.readFromPreference(
+                    val selectedLocationId = DentalApp.readIntFromPreference(
                         context,
-                        Constants.PREF_SELECTED_LOCATION_ID,
-                        ""
+                        Constants.PREF_SELECTED_LOCATION_ID
                     )
                     val selectedLocationName = DentalApp.readFromPreference(
                         context,

@@ -61,12 +61,12 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                 history.seizuers_or_epilepsy,
                 history.hepatitis_b_or_c,
                 history.hiv,
-                history.other,
-                history.no_underlying_medical_condition,
-                history.not_taking_any_medications,
-                history.medications,
                 history.no_allergies,
-                history.allergies
+                history.allergies,
+                history.other,
+                history.medications,
+                history.no_underlying_medical_condition,
+                history.not_taking_any_medications
             )
             val response = call.execute()
             if (response.isSuccessful) {
@@ -98,12 +98,12 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                 history.seizuers_or_epilepsy,
                 history.hepatitis_b_or_c,
                 history.hiv,
-                history.other,
-                history.no_underlying_medical_condition,
-                history.not_taking_any_medications,
-                history.medications,
                 history.no_allergies,
-                history.allergies
+                history.allergies,
+                history.other,
+                history.medications,
+                history.no_underlying_medical_condition,
+                history.not_taking_any_medications
             )
             val response = call.execute()
             if (response.isSuccessful) {

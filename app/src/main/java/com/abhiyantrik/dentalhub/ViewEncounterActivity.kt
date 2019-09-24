@@ -261,8 +261,8 @@ class ViewEncounterActivity : AppCompatActivity() {
         var wardID = Ward()
         var activityID = Activity()
 
-        if (!(encounter.ward_id).isNullOrEmpty()){
-            wardID = wardBox.query().equal(Ward_.remote_id, encounter.ward_id).build().findFirst()!!
+        if (encounter.ward_id != 0){
+            wardID = wardBox.query().equal(Ward_.remote_id, encounter.ward_id.toLong()).build().findFirst()!!
             tvWardName.text = wardID.name
         } else {
             tvWardName.text = DentalApp.ward_name

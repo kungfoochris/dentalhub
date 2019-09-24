@@ -155,7 +155,7 @@ class LocationSelectorActivity : AppCompatActivity() {
             allAPIGeographies,
             object : GeographyAdapter.GeographyClickListener {
                 override fun onGeographyClick(geography: GeographyModel) {
-                    DentalApp.saveToPreference(
+                    DentalApp.saveIntToPreference(
                         context,
                         Constants.PREF_SELECTED_LOCATION_ID,
                         geography.id
@@ -165,7 +165,7 @@ class LocationSelectorActivity : AppCompatActivity() {
                         Constants.PREF_SELECTED_LOCATION_NAME,
                         geography.name
                     )
-                    DentalApp.ward_id = geography.ward.toString()
+                    DentalApp.ward_id = geography.ward
                     DentalApp.ward_name = geography.name
                     DentalApp.geography_id = geography.id
                     startActivity(Intent(context, ActivitySelectorActivity::class.java))

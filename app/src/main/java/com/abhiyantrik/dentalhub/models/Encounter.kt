@@ -12,7 +12,7 @@ class Encounter : Parcelable {
     var updated_at: String? = ""
     var uploaded: Boolean = false
 
-    var ward_id: String = ""
+    var ward_id: Int = 0
     var activityarea_id: String = ""
 
     var author: String = ""

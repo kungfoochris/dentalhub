@@ -55,8 +55,8 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         private const val PREF_FILE_NAME = "dentalhub"
         var location: Location = Location("0", "0")
 
-        var geography_id: String = ""
-        var ward_id: String = ""
+        var geography_id: Int = 0
+        var ward_id: Int = 0
         var ward_name: String = ""
         var activity_id: String = ""
         var activity_name: String = ""

@@ -32,11 +32,11 @@ class Patient : Parcelable {
     var district: Int = 0
     var latitude: String = ""
     var longitude: String = ""
-    var geography_id: String = ""
+    var geography_id: Int = 0
     var activityarea_id: String = ""
     var recall_date: String = ""
     var recall_time: String = "00:00:01"
-    var recall_geography = ""
+    var recall_geography: Int = 0
     var created_at: String? = ""
     var updated_at: String? = ""
     var author: String = ""

@@ -61,9 +61,7 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
                 referral.hygienist,
                 referral.dentist,
                 referral.general_physician,
-                referral.other_details,
-                "",
-                ""
+                referral.other_details
             )
             val response = call.execute()
             if (response.isSuccessful) {
@@ -91,9 +89,7 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
                 referral.hygienist,
                 referral.dentist,
                 referral.general_physician,
-                referral.other_details,
-                "",
-                ""
+                referral.other_details
             )
             val response = call.execute()
             if (response.isSuccessful) {

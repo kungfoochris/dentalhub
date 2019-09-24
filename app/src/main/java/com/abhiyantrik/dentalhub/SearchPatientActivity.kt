@@ -88,7 +88,7 @@ class SearchPatientActivity : AppCompatActivity() {
     private fun listPatients() {
         try {
             patientsearchlist =
-                patientsBox.query().equal(Patient_.geography_id, DentalApp.ward_id)
+                patientsBox.query().equal(Patient_.geography_id, DentalApp.ward_id.toLong())
                     .orderDesc(Patient_.created_at).build()
                     .find()
             setupAdapter()
@@ -219,7 +219,7 @@ class SearchPatientActivity : AppCompatActivity() {
                         .or()
                         .contains(Patient_.last_name, query)
                         .orderDesc(Patient_.created_at)
-                        .equal(Patient_.geography_id, DentalApp.ward_id)
+                        .equal(Patient_.geography_id, DentalApp.ward_id.toLong())
                         .build().find()
                 } catch (e: DbException) {
                     Log.d("DBException", e.printStackTrace().toString())

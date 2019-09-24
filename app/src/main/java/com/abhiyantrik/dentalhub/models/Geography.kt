@@ -1,7 +1,7 @@
 package com.abhiyantrik.dentalhub.models
 
 data class Geography(
-    var id: String,
+    var id: Int,
     var location: String,
     var district: String,
     var municipality_name: String,

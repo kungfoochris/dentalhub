@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         allPatientRecall = mutableListOf()
         val today = DateHelper.getCurrentNepaliDate()
         val todayPatient = patientsBox.query().equal(Patient_.recall_date, today)
-            .equal(Patient_.recall_geography, DentalApp.ward_name).order(Patient_.recall_date)
+            .equal(Patient_.recall_geography, DentalApp.ward_id.toLong()).order(Patient_.recall_date)
             .build().find()
 
 
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         for (i in 1..8) {
             val thisWeekPatients =
                 patientsBox.query().equal(Patient_.recall_date, nextDay)
-                    .equal(Patient_.recall_geography, DentalApp.ward_name)
+                    .equal(Patient_.recall_geography, DentalApp.ward_id.toLong())
                     .order(Patient_.recall_date).build().find()
             allPatientRecall.addAll(thisWeekPatients)
             nextDay = DateHelper.getNextDay(nextDay)
@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         for (i in 1..24) {
             val thisMonthPatients =
                 patientsBox.query().equal(Patient_.recall_date, nextDay)
-                    .equal(Patient_.recall_geography, DentalApp.ward_name)
+                    .equal(Patient_.recall_geography, DentalApp.ward_id.toLong())
                     .order(Patient_.recall_date).build().find()
             allPatientRecall.addAll(thisMonthPatients)
             nextDay = DateHelper.getNextDay(nextDay)
@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "listPatientsFromLocalDB()")
         try {
             allPatients =
-                patientsBox.query().equal(Patient_.geography_id, DentalApp.ward_id)
+                patientsBox.query().equal(Patient_.geography_id, DentalApp.ward_id.toLong())
                     .orderDesc(Patient_.created_at).build().find()
             setupAdapter(allPatients)
         } catch (e: DbException) {

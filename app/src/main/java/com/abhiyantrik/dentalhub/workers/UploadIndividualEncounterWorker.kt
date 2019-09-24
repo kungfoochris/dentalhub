@@ -54,7 +54,7 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
         val call = panelService.addEncounter(
             "JWT $token",
             remoteId,
-            dbEncounterEntity!!.id.toString(),
+            dbEncounterEntity!!.id.toInt(),
             dbEncounterEntity.ward_id,
             dbEncounterEntity.activityarea_id,
             dbEncounterEntity.encounter_type,
