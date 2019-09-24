@@ -31,7 +31,7 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
                 referralBox.query().equal(Referral_.encounterId, encounterId).build().findFirst()!!
             val dbReferralEntity =
                 encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
-            saveReferralToServer(dbReferralEntity!!.remote_id, tempReferral)
+            saveReferralToServer(dbReferralEntity, tempReferral)
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
@@ -39,7 +39,7 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
         }
     }
 
-    private fun saveReferralToServer(encounterId: String, referral: Referral) {
+    private fun saveReferralToServer(encounter: Encounter?, referral: Referral) {
         DentalApp.displayNotification(
             applicationContext,
             1001,
@@ -54,7 +54,7 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
         if(!referral.uploaded){
             val call = panelService.addReferral(
                 "JWT $token",
-                encounterId,
+                encounter!!.remote_id,
                 referral.id,
                 referral.no_referral,
                 referral.health_post,
@@ -70,7 +70,7 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
                         val tempReferral = response.body() as ReferralModel
                         val dbReferralEntity = referralBox.query().equal(
                             Referral_.encounterId,
-                            encounterId
+                            encounter.id
                         ).build().findFirst()!!
                         dbReferralEntity.remote_id = tempReferral.id
                         dbReferralEntity.uploaded = true
@@ -82,7 +82,7 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
         }else if(referral.updated){
             val call = panelService.updateReferral(
                 "JWT $token",
-                encounterId,
+                encounter!!.remote_id,
                 referral.id,
                 referral.no_referral,
                 referral.health_post,
@@ -97,7 +97,7 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
                     200, 201 -> {
                         val dbReferralEntity = referralBox.query().equal(
                             Referral_.encounterId,
-                            encounterId
+                            encounter.id
                         ).build().findFirst()!!
                         dbReferralEntity.uploaded = true
                         dbReferralEntity.updated = false
