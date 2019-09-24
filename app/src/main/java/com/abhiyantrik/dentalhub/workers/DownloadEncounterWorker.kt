@@ -140,14 +140,22 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     historyEntity.hepatitis_b_or_c =
                                         encounter.history!!.hepatitis_b_or_c
                                     historyEntity.hiv = encounter.history!!.hiv
-                                    historyEntity.other = encounter.history!!.other
+                                    try {
+                                        historyEntity.other = encounter.history!!.other
+                                    }catch (e: Exception){
+                                        historyEntity.other = ""
+                                    }
                                     historyEntity.no_underlying_medical_condition =
                                         encounter.history!!.no_underlying_medical_condition
                                     historyEntity.medications = encounter.history!!.medications
                                     historyEntity.not_taking_any_medications =
                                         encounter.history!!.not_taking_any_medications
                                     historyEntity.no_allergies = encounter.history!!.no_allergies
-                                    historyEntity.allergies = encounter.history!!.allergies
+                                    try {
+                                        historyEntity.allergies = encounter.history!!.allergies
+                                    }catch (e: Exception){
+                                        historyEntity.allergies = ""
+                                    }
                                     historyEntity.updated = false
                                     historyEntity.uploaded = true
 

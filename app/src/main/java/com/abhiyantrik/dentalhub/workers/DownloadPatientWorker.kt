@@ -85,8 +85,16 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             patientEntity.longitude = patient.longitude
                             patientEntity.geography_id = patient.geography
                             patientEntity.activityarea_id = patient.activity_area
-                            patientEntity.recall_time = patient.recall_time
-                            patientEntity.recall_date = patient.recall_date
+                            try {
+                                patientEntity.recall_time = patient.recall_time!!
+                            }catch (e: Exception){
+                                patientEntity.recall_time = ""
+                            }
+                            try {
+                                patientEntity.recall_date = patient.recall_date!!
+                            }catch (e: Exception){
+                                patientEntity.recall_date = ""
+                            }
                             patientEntity.recall_geography = patient.recall_geography
                             patientEntity.uploaded = true
                             patientEntity.updated = false
@@ -125,6 +133,8 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                     }
                 }
             }
+        } else {
+            Log.d("downloadPatients", response.message())
         }
 
         DentalApp.cancelNotification(applicationContext, 1001)
