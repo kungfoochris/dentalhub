@@ -147,7 +147,11 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     }
                                     historyEntity.no_underlying_medical_condition =
                                         encounter.history!!.no_underlying_medical_condition
-                                    historyEntity.medications = encounter.history!!.medications
+                                    try {
+                                        historyEntity.medications = encounter.history!!.medications
+                                    }catch (e: Exception){
+                                        historyEntity.medications = ""
+                                    }
                                     historyEntity.not_taking_any_medications =
                                         encounter.history!!.not_taking_any_medications
                                     historyEntity.no_allergies = encounter.history!!.no_allergies
@@ -242,7 +246,11 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     treatmentEntity.fv_applied = encounter.treatment!!.fv_applied
                                     treatmentEntity.treatment_plan_complete =
                                         encounter.treatment!!.treatment_plan_complete
-                                    treatmentEntity.notes = encounter.treatment!!.notes
+                                    try {
+                                        treatmentEntity.notes = encounter.treatment!!.notes
+                                    }catch (e: Exception){
+                                        treatmentEntity.notes = ""
+                                    }
 
                                     treatmentEntity.tooth11 = encounter.treatment!!.tooth11
                                     treatmentEntity.tooth12 = encounter.treatment!!.tooth12
@@ -341,8 +349,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     referralEntity.general_physician =
                                         encounter.referral!!.general_physician
                                     referralEntity.other = encounter.referral!!.other
-                                    referralEntity.other_details =
-                                        encounter.referral!!.other_details
+                                    try {
+                                        referralEntity.other_details =
+                                            encounter.referral!!.other_details
+                                    }catch (e: Exception){
+                                        referralEntity.other_details = ""
+                                    }
+
                                     referralEntity.updated = false
                                     referralEntity.uploaded = true
 
