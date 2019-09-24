@@ -29,16 +29,21 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
             val dbPatientEntity =
                 patientsBox.query().equal(Patient_.id, patientId).equal(Patient_.updated, true)
                     .build().findFirst()
-            savePatientToServer(dbPatientEntity!!)
+            val responseStatus = savePatientToServer(dbPatientEntity!!)
 
-            Result.success()
+            if (responseStatus) {
+                Result.success()
+            } else {
+                Result.failure()
+            }
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
             Result.failure()
         }
     }
 
-    private fun savePatientToServer(patient: Patient) {
+    private fun savePatientToServer(patient: Patient): Boolean {
+        var responseStatus = false
         DentalApp.displayNotification(
             applicationContext,
             1001,
@@ -102,10 +107,14 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
                                 .enqueue(uploadEncounterWorkerRequest)
                         }
                     }
+                    responseStatus = true
                 }
             }
+        } else {
+            Log.d("UpdatePatientWorker", response.message())
+            responseStatus = false
         }
         DentalApp.cancelNotification(applicationContext, 1001)
-
+        return responseStatus
     }
 }

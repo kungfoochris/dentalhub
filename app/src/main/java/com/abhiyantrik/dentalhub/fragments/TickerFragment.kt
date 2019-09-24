@@ -44,7 +44,7 @@ class TickerFragment : Fragment() {
             activity as Context,
             Constants.PREF_PROFILE_FULL_NAME,
             ""
-        ) + " | " + DentalApp.geography_name + " | " + DentalApp.activity_name
+        ) + " | " + DentalApp.ward_name + " | " + DentalApp.activity_name
 
     }
 }

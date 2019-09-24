@@ -40,8 +40,6 @@ o
 ?app/src/main/java/com/abhiyantrik/dentalhub/models/Screening.kt,6/1/619dfa4f8951cf816be74495b2c02e645592207e
 j
 :app/src/main/java/com/abhiyantrik/dentalhub/models/Ward.kt,6/d/6d483481cc6302dbff63a3cea054b01d8683fcdc
-q
-Aapp/src/main/java/com/abhiyantrik/dentalhub/entities/Geography.kt,4/4/4450b56d4bfed6abaa1ad299933289dd69bc2952
 p
 @app/src/main/java/com/abhiyantrik/dentalhub/entities/Referral.kt,8/f/8f39e15feae363135cb88b8ad6eee5443e4d5803
 o
@@ -170,3 +168,5 @@ p
 @app/src/main/java/com/abhiyantrik/dentalhub/entities/Activity.kt,1/b/1b7ce5b56cbc2bf5ea2c579e278ebb05c9d06f27
 h
 8app/src/main/java/com/abhiyantrik/dentalhub/ObjectBox.kt,e/8/e802e51a0896b0ca63ea860d46d97c877736d4e6
+w
+Gapp/src/main/java/com/abhiyantrik/dentalhub/fragments/TickerFragment.kt,9/6/96cc5679c1adc031ecfa3db3f38a701234a541cf

@@ -42,10 +42,10 @@ interface DjangoInterface {
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
         @Field("activityarea_id") activity_area_id: String,
-        @Field("geography_id") geography_id: String,
+        @Field("geography_id") geography_id: Int,
         @Field("recall_date") recall_date: String,
         @Field("recall_time") recall_time : String,
-        @Field("recall_geography") recall_geography: String,
+        @Field("recall_geography") recall_geography: Int,
         @Field("author") author: String,
         @Field("updated_by") updated_by: String,
         @Field("created_at") createdAt: String?,
@@ -70,10 +70,10 @@ interface DjangoInterface {
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
         @Field("activityarea_id") activity_area_id: String,
-        @Field("geography_id") geography_id: String,
+        @Field("geography_id") geography_id: Int,
         @Field("recall_date") recall_date: String,
         @Field("recall_time") recall_time : String,
-        @Field("recall_geography") recall_geography: String,
+        @Field("recall_geography") recall_geography: Int,
         @Field("author") author: String,
         @Field("updated_by") updated_by: String,
         @Field("created_at") createdAt: String?,
@@ -99,8 +99,8 @@ interface DjangoInterface {
     fun addEncounter(
         @Header("Authorization") token: String,
         @Path("user") user: String,
-        @Field("id") id: String,
-        @Field("geography_id") geography_id: String,
+        @Field("id") id: Int,
+        @Field("geography_id") geography_id: Int,
         @Field("activityarea_id") activitarea_id: String,
         @Field("encounter_type") encounterType: String,
         @Field("other_detail") otherDetail: String,
@@ -123,12 +123,12 @@ interface DjangoInterface {
         @Field("seizuers_or_epilepsy") seizuers_or_epilepsy: Boolean,
         @Field("hepatitis_b_or_c") hepatitis_b_or_c: Boolean,
         @Field("hiv") hiv: Boolean,
-        @Field("other") other: String,
-        @Field("no_underlying_medical_condition") no_underlying_medical_condition: Boolean,
-        @Field("not_taking_any_medications") not_taking_any_medications: Boolean,
-        @Field("medications") medications: String,
         @Field("no_allergies") no_allergies: Boolean,
-        @Field("allergies") allergies: String
+        @Field("allergies") allergies: String,
+        @Field("other") other: String,
+        @Field("medications") medications: String,
+        @Field("no_underlying_medical_condition") no_underlying_medical_condition: Boolean,
+        @Field("not_taking_any_medications") not_taking_any_medications: Boolean
     ): Call<HistoryModel>
 
     @FormUrlEncoded
@@ -144,12 +144,12 @@ interface DjangoInterface {
         @Field("seizuers_or_epilepsy") seizuers_or_epilepsy: Boolean,
         @Field("hepatitis_b_or_c") hepatitis_b_or_c: Boolean,
         @Field("hiv") hiv: Boolean,
-        @Field("other") other: String,
-        @Field("no_underlying_medical_condition") no_underlying_medical_condition: Boolean,
-        @Field("not_taking_any_medications") not_taking_any_medications: Boolean,
-        @Field("medications") medications: String,
         @Field("no_allergies") no_allergies: Boolean,
-        @Field("allergies") allergies: String
+        @Field("allergies") allergies: String,
+        @Field("other") other: String,
+        @Field("medications") medications: String,
+        @Field("no_underlying_medical_condition") no_underlying_medical_condition: Boolean,
+        @Field("not_taking_any_medications") not_taking_any_medications: Boolean
     ): Call<HistoryModel>
 
     @FormUrlEncoded
@@ -160,13 +160,13 @@ interface DjangoInterface {
         @Field("carries_risk") carries_risk: String,
         @Field("decayed_primary_teeth") decayed_primary_teeth: Int,
         @Field("decayed_permanent_teeth") decayed_permanent_teeth: Int,
-        @Field("cavity_permanent_anterior_teeth") cavity_permanent_anterior_teeth: Boolean,
         @Field("cavity_permanent_posterior_teeth") cavity_permanent_posterior_teeth: Boolean,
+        @Field("cavity_permanent_anterior_teeth") cavity_permanent_anterior_teeth: Boolean,
+        @Field("need_sealant") need_sealant: Boolean,
         @Field("reversible_pulpitis") reversible_pulpitis: Boolean,
         @Field("need_art_filling") need_art_filling: Boolean,
-        @Field("need_sealant") need_sealant: Boolean,
-        @Field("need_sdf") need_sdf: Boolean,
         @Field("need_extraction") need_extraction: Boolean,
+        @Field("need_sdf") need_sdf: Boolean,
         @Field("active_infection") active_infection: Boolean,
         @Field("high_blood_pressure") high_blood_pressure: Boolean,
         @Field("low_blood_pressure") low_blood_pressure: Boolean,
@@ -352,9 +352,7 @@ interface DjangoInterface {
         @Field("hygienist") hygienist: Boolean,
         @Field("dentist") dentist: Boolean,
         @Field("physician") general_physician: Boolean,
-        @Field("other") other_details: String,
-        @Field("date") date: String,
-        @Field("time") time: String
+        @Field("other") other_details: String
     ): Call<ReferralModel>
 
     @FormUrlEncoded
@@ -362,15 +360,13 @@ interface DjangoInterface {
     fun updateReferral(
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
-        @Field("id") id: Long = 0,
+        @Field("id") id: Long,
         @Field("no_referral") no_referral: Boolean,
         @Field("health_post") health_post: Boolean,
-        @Field("hygienist") hygienist: Boolean,
         @Field("dentist") dentist: Boolean,
         @Field("general_physician") general_physician: Boolean,
-        @Field("other_details") other_details: String,
-        @Field("date") date: String,
-        @Field("time") time: String
+        @Field("hygienist") hygienist: Boolean,
+        @Field("other_details") other_details: String
     ): Call<ReferralModel>
 
     @GET("patients")

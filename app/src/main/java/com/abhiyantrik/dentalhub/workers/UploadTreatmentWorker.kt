@@ -30,7 +30,7 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
             ).build().findFirst()!!
             val dbEncounterEntity =
                 encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
-            saveTreatmentToServer(dbEncounterEntity!!.remote_id, tempTreatment)
+            saveTreatmentToServer(dbEncounterEntity, tempTreatment)
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
@@ -38,7 +38,7 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
         }
     }
 
-    private fun saveTreatmentToServer(encounterId: String, treatment: Treatment) {
+    private fun saveTreatmentToServer(encounter: Encounter?, treatment: Treatment) {
         DentalApp.displayNotification(
             applicationContext,
             1001,
@@ -53,7 +53,7 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
         if(!treatment.uploaded){
             val call = panelService.addTreatment(
                 "JWT $token",
-                encounterId,
+                encounter!!.remote_id,
                 treatment.id,
                 treatment.tooth18,
                 treatment.tooth17,
@@ -127,7 +127,7 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
                         val tempTreatment = response.body() as TreatmentModel
                         val dbTreatmentEntity = treatmentBox.query().equal(
                             Treatment_.encounterId,
-                            encounterId
+                            encounter!!.id
                         ).build().findFirst()!!
                         dbTreatmentEntity.remote_id = tempTreatment.id
                         dbTreatmentEntity.uploaded = true
@@ -139,7 +139,7 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
         }else if(treatment.updated){
             val call = panelService.updateTreatment(
                 "JWT $token",
-                encounterId,
+                encounter!!.remote_id,
                 treatment.id,
                 treatment.tooth18,
                 treatment.tooth17,
@@ -212,7 +212,7 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
                     200, 201 -> {
                         val dbTreatmentEntity = treatmentBox.query().equal(
                             Treatment_.encounterId,
-                            encounterId
+                            encounter!!.id
                         ).build().findFirst()!!
                         dbTreatmentEntity.uploaded = true
                         dbTreatmentEntity.updated = false

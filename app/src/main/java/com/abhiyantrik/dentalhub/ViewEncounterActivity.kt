@@ -33,14 +33,14 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
-    private lateinit var geographyBox: Box<Geography>
+    private lateinit var wardBox: Box<Ward>
     private lateinit var activityBox: Box<Activity>
     //private lateinit var recallBox: Box<Recall>
 
     // Geography and Activity
 
     private lateinit var tvActivity: TextView
-    private lateinit var tvGeography: TextView
+    private lateinit var tvWardName: TextView
 
     // history
 
@@ -229,7 +229,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
         treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
-        geographyBox = ObjectBox.boxStore.boxFor(Geography::class.java)
+        wardBox = ObjectBox.boxStore.boxFor(Ward::class.java)
         activityBox = ObjectBox.boxStore.boxFor(Activity::class.java)
         //recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
@@ -255,17 +255,17 @@ class ViewEncounterActivity : AppCompatActivity() {
 
         // Geography and activity
 
-        tvGeography = findViewById(R.id.tvGeography)
+        tvWardName = findViewById(R.id.tvWardName)
         tvActivity = findViewById(R.id.tvActivity)
 
-        var geographyID = Geography()
+        var wardID = Ward()
         var activityID = Activity()
 
-        if (!(encounter.geography_id).isNullOrEmpty()){
-            geographyID = geographyBox.query().equal(Geography_.remote_id, encounter.geography_id).build().findFirst()!!
-            tvGeography.text = geographyID.tole
+        if (encounter.ward_id != 0){
+            wardID = wardBox.query().equal(Ward_.remote_id, encounter.ward_id.toLong()).build().findFirst()!!
+            tvWardName.text = wardID.name
         } else {
-            tvGeography.text = DentalApp.geography_name
+            tvWardName.text = DentalApp.ward_name
         }
 
         if (!(encounter.activityarea_id).isNullOrEmpty()){
@@ -325,16 +325,16 @@ class ViewEncounterActivity : AppCompatActivity() {
         // left to history.medicine Edit Text ------------
 
         if (history.not_taking_any_medications) {
-            tvNotTakingAnyMedicationsTitle.visibility = View.GONE
-            tvNotTakingAnyMedications.visibility = View.GONE
+            tvNotTakingAnyMedicationsTitle.text = "Not Taking Any Medications"
+            tvNotTakingAnyMedications.text = "Yes"
         } else {
             tvNotTakingAnyMedications.text = history.medications
         }
         // hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
         // since alleragies is little different i.e. if no_allergies is True show allergies(String) else don't show both no_allergies(Int) and allergies(String)
         if (history.no_allergies) {
-            tvAllergiesTitle.visibility = View.GONE
-            tvAllergies.visibility = View.GONE
+            tvAllergiesTitle.text = "No Allergies"
+            tvAllergies.text = "Yes"
         } else {
             tvAllergies.text = history.allergies
         }

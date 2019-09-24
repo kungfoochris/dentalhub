@@ -29,7 +29,7 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                 historyBox.query().equal(History_.encounterId, encounterId).build().findFirst()!!
             val dbEncounterEntity =
                 encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
-            saveHistoryToServer(dbEncounterEntity!!.remote_id, tempHistory)
+            saveHistoryToServer(dbEncounterEntity, tempHistory)
 
             Result.success()
         } catch (e: Exception) {
@@ -38,7 +38,7 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
         }
     }
 
-    private fun saveHistoryToServer(encounterId: String, history: History) {
+    private fun saveHistoryToServer(encounter: Encounter?, history: History) {
         DentalApp.displayNotification(
             applicationContext,
             1001,
@@ -50,9 +50,10 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         if(!history.uploaded){
+            Log.d("SaveHistoryToServer", "New History Upload.")
             val call = panelService.addHistory(
                 "JWT $token",
-                encounterId,
+                encounter!!.remote_id,
                 history.id,
                 history.blood_disorder,
                 history.diabetes,
@@ -61,12 +62,12 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                 history.seizuers_or_epilepsy,
                 history.hepatitis_b_or_c,
                 history.hiv,
-                history.other,
-                history.no_underlying_medical_condition,
-                history.not_taking_any_medications,
-                history.medications,
                 history.no_allergies,
-                history.allergies
+                history.allergies,
+                history.other,
+                history.medications,
+                history.no_underlying_medical_condition,
+                history.not_taking_any_medications
             )
             val response = call.execute()
             if (response.isSuccessful) {
@@ -75,21 +76,22 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                         val tempHistory = response.body() as HistoryModel
                         val dbHistoryEntity = historyBox.query().equal(
                             History_.encounterId,
-                            encounterId
+                            encounter.id
                         ).build().findFirst()!!
                         dbHistoryEntity.remote_id = tempHistory.id
                         dbHistoryEntity.uploaded = true
                         dbHistoryEntity.updated = false
                         historyBox.put(dbHistoryEntity)
-
-
                     }
                 }
+            } else {
+                Log.d("UploadHistoryWorker", response.message() + response.code())
             }
         }else if(history.updated){
+            Log.d("SaveHistoryToServer", "Update History.")
             val call = panelService.updateHistory(
                 "JWT $token",
-                encounterId,
+                encounter!!.remote_id,
                 history.id,
                 history.blood_disorder,
                 history.diabetes,
@@ -98,12 +100,12 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                 history.seizuers_or_epilepsy,
                 history.hepatitis_b_or_c,
                 history.hiv,
-                history.other,
-                history.no_underlying_medical_condition,
-                history.not_taking_any_medications,
-                history.medications,
                 history.no_allergies,
-                history.allergies
+                history.allergies,
+                history.other,
+                history.medications,
+                history.no_underlying_medical_condition,
+                history.not_taking_any_medications
             )
             val response = call.execute()
             if (response.isSuccessful) {
@@ -111,20 +113,17 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                     200, 201 -> {
                         val dbHistoryEntity = historyBox.query().equal(
                             History_.encounterId,
-                            encounterId
+                            encounter.id
                         ).build().findFirst()!!
                         dbHistoryEntity.uploaded = true
                         dbHistoryEntity.updated = false
                         historyBox.put(dbHistoryEntity)
-
-
                     }
                 }
+            } else {
+                Log.d("UpdateHistoryWorker", response.message() + response.code())
             }
         }
-
-
-
         DentalApp.cancelNotification(applicationContext, 1001)
 
     }

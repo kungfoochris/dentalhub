@@ -83,7 +83,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
         Log.d("encounterId", encounterId.toString())
-        println("Encounter with edit mode :  $encounterId")
+//        println("Encounter with edit mode :  $encounterId")
 
         if (encounterId == "0".toLong()) {
             action = "new"

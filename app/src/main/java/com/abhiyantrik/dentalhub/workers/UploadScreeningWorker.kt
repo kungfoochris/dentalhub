@@ -30,7 +30,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
             ).build().findFirst()!!
             val dbEncounterEntity =
                 encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
-            saveScreeningToServer(dbEncounterEntity!!.remote_id, tempScreening)
+            saveScreeningToServer(dbEncounterEntity, tempScreening)
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
@@ -38,7 +38,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
         }
     }
 
-    private fun saveScreeningToServer(encounterId: String, screening: Screening) {
+    private fun saveScreeningToServer(encounter: Encounter?, screening: Screening) {
         DentalApp.displayNotification(
             applicationContext,
             1001,
@@ -53,7 +53,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
         if(!screening.uploaded){
             val call = panelService.addScreening(
                 "JWT $token",
-                encounterId,
+                encounter!!.remote_id,
                 screening.carries_risk,
                 screening.decayed_primary_teeth,
                 screening.decayed_permanent_teeth,
@@ -76,7 +76,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                         val tempScreening = response.body() as ScreeningModel
                         val dbScreeningEntity = screeningBox.query().equal(
                             Screening_.encounterId,
-                            encounterId
+                            encounter!!.id
                         ).build().findFirst()!!
                         dbScreeningEntity.remote_id = tempScreening.id
                         dbScreeningEntity.uploaded = true
@@ -90,7 +90,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
         }else if(screening.updated){
             val call = panelService.updateScreening(
                 "JWT $token",
-                encounterId,
+                encounter!!.remote_id,
                 screening.carries_risk,
                 screening.decayed_primary_teeth,
                 screening.decayed_permanent_teeth,
@@ -112,7 +112,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                     200, 201 -> {
                         val dbScreeningEntity = screeningBox.query().equal(
                             Screening_.encounterId,
-                            encounterId
+                            encounter!!.id
                         ).build().findFirst()!!
                         dbScreeningEntity.uploaded = true
                         dbScreeningEntity.updated = false

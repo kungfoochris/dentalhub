@@ -1,5 +1,5 @@
 <resources>
-    <string name="api_url">http://104.155.163.124:6061/api/v1/</string>
+    <string name="api_url">http://app.abhiyantrik.com:6061/api/v1/</string>
 <!--    <string name="api_url">http://192.168.1.69:6061/api/v1/</string>-->
     <string name="app_name">Dental Hub</string>
     <string name="submit">Submit</string>
@@ -56,7 +56,7 @@
     <string name="need_sealant">Need Sealant</string>
     <string name="need_sdf">Need SDF</string>
     <string name="need_extraction">Need Extraction</string>
-    <string name="caries_risk">Caries Risk</string>
+    <string name="carries_risk">Carries Risk</string>
     <string name="decayed_primary_teeth">No. of Decayed Primary Teeth</string>
     <string name="decayed_permanent_teeth">No. of Decayed Permanent Teeth</string>
     <string name="save">Save</string>
@@ -147,6 +147,6 @@
     <string name="uploading_referral">Uploading referral ...</string>
     <string name="uploading_screening">Uploading screening ...</string>
     <string name="uploading_treatment">Uploading treatment ...</string>
-    <string name="geography">Geography</string>
     <string name="activity">Activity</string>
+    <string name="geography">Geography</string>
 </resources>

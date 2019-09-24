@@ -145,8 +145,8 @@ class SetupActivity : AppCompatActivity() {
                                             val newWard = Ward()
                                             newWard.remote_id = ward.id
                                             newWard.ward = ward.ward
-                                            newWard.name =
-                                                dbMunicipality!!.name + "-" + ward.ward.toString() + ", " + dbDistrict!!.name
+                                            newWard.name = ward.name
+//                                                dbMunicipality!!.name + "-" + ward.ward.toString() + ", " + dbDistrict!!.name
                                             newWard.municipality?.target = dbMunicipality
                                             wardsBox.put(newWard)
                                         }
