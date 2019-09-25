@@ -4,10 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -169,6 +166,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            android.R.id.home -> {
+                Log.d("onOptionsItemSelected", "Back button pressed.")
+                saveEncounter()
+            }
             R.id.viewPatient -> {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
                 val inflate: LayoutInflater = layoutInflater
@@ -445,6 +446,40 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     }
 
     override fun onBackPressed() {
+
+        saveEncounter()
+
+        finish()
+        super.onBackPressed()
+    }
+
+    override fun goBack() {
+        if (pager.currentItem == 0) {
+            pager.currentItem = 3
+        } else {
+            pager.currentItem -= 1
+        }
+
+    }
+
+    override fun goForward() {
+        if (pager.currentItem == 3) {
+            pager.currentItem = 0
+            onBackPressed()
+        } else {
+            pager.currentItem += 1
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            saveEncounter()
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    fun saveEncounter() {
+
         val data = Data.Builder().putLong("ENCOUNTER_ID", encounter.id)
             .putLong("PATIENT_ID", patient.id)
 
@@ -500,27 +535,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                     .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
                     .enqueue()
             }
-        }
-
-        finish()
-        super.onBackPressed()
-    }
-
-    override fun goBack() {
-        if (pager.currentItem == 0) {
-            pager.currentItem = 3
-        } else {
-            pager.currentItem -= 1
-        }
-
-    }
-
-    override fun goForward() {
-        if (pager.currentItem == 3) {
-            pager.currentItem = 0
-            onBackPressed()
-        } else {
-            pager.currentItem += 1
         }
     }
 }
