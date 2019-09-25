@@ -204,11 +204,6 @@ class MainActivity : AppCompatActivity() {
         }
         fabBtnSync.setOnClickListener {
             Log.d(TAG, "startSync")
-            if (!DentalApp.downloadSyncRunning) {
-                startService(Intent(this, SyncDownloadService::class.java))
-            }
-            patientsBox =
-                ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Patient::class.java)
 
             val downloadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
                 .setInitialDelay(100, TimeUnit.MILLISECONDS)
