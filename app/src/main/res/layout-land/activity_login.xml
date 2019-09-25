@@ -14,11 +14,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="8dp"
-                android:gravity="center"
-                android:layout_gravity="center"
                 tools:context=".LoginActivity">
 
             <ImageView
+                    android:layout_marginTop="96dp"
                     android:src="@drawable/banner"
                     android:contentDescription="@string/app_name"
                     android:layout_gravity="center"
@@ -85,7 +84,7 @@
                     android:text="@string/login"
                     android:textSize="18sp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="80dp"
+                    android:layout_marginBottom="180dp"
                     />
 
             <ProgressBar
