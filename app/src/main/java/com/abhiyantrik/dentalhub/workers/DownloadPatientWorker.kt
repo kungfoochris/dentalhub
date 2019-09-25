@@ -54,20 +54,24 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                         val existingPatient = patientsBox.query().equal(
                             Patient_.remote_id,
                             patient.id
-                        ).build().findFirst()
-                        if (existingPatient != null) {
-                            Log.d("DownloadPatientWorker", existingPatient.fullName() + " already exists.")
+                        ).build().count()
+                        if (existingPatient > 0) {
+                            Log.d("DownloadPatientWorker",  "Patient already exists.")
                             //tvMessage.text = tvMessage.text.toString() + existingPatient.fullName()+" already exists.\n"
 
-                            loadEncounterData(existingPatient.remote_id)
+                            val existingPatientEncounter = patientsBox.query().equal(
+                                Patient_.remote_id,
+                                patient.id
+                            ).build().findFirst()!!
+                            loadEncounterData(existingPatientEncounter.remote_id)
 
-                            DentalApp.displayNotification(
-                                applicationContext,
-                                1001,
-                                applicationContext.resources.getString(R.string.sync_ticker),
-                                existingPatient.fullName(),
-                                applicationContext.resources.getString(R.string.already_exists)
-                            )
+//                            DentalApp.displayNotification(
+//                                applicationContext,
+//                                1001,
+//                                applicationContext.resources.getString(R.string.sync_ticker),
+//                                "Patient",
+//                                applicationContext.resources.getString(R.string.already_exists)
+//                            )
                         } else {
                             val patientEntity = com.abhiyantrik.dentalhub.entities.Patient()
                             patientEntity.remote_id = patient.id

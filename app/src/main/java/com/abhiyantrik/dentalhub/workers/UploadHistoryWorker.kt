@@ -83,6 +83,9 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                         dbHistoryEntity.updated = false
                         historyBox.put(dbHistoryEntity)
                     }
+                    else -> {
+                    Log.d("UploadHistoryWorker", response.message() + response.code())
+                }
                 }
             } else {
                 Log.d("UploadHistoryWorker", response.message() + response.code())
