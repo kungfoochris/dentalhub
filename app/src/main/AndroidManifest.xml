@@ -65,6 +65,7 @@
                 android:label="@string/app_name"/>
         <activity
                 android:name=".ViewPatientActivity"
+                android:configChanges="orientation"
                 android:label="@string/app_name"/>
         <activity
                 android:name=".ViewEncounterActivity"
