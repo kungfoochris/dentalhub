@@ -195,7 +195,7 @@ class SyncDownloadService : Service() {
                                     encounterEntity.encounter_type = encounter.encounter_type
                                     encounterEntity.created_at = encounter.created_at
                                     encounterEntity.updated_at = encounter.updated_at!!
-                                    encounterEntity.other_problem = encounter.other_detail!!
+                                    encounterEntity.other_problem = encounter.other_problem!!
                                     encounterEntity.remote_id = encounter.id
                                     encounterEntity.patient?.target = dbPatientEntity
                                     encounterEntity.uploaded = true
