@@ -172,6 +172,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 }
                             } else{
                                 var newHistory = History()
+                                newHistory.encounter?.target = dbEncounterEntity
                                 historyBox.put(newHistory)
                             }
 
@@ -231,6 +232,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 }
                             } else {
                                 var newScreening = Screening()
+                                newScreening.encounter?.target = dbEncounterEntity
                                 screeningBox.put(newScreening)
                             }
 
@@ -337,6 +339,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 }
                             } else {
                                 var newTreatment = Treatment()
+                                newTreatment.encounter?.target = dbEncounterEntity
                                 treatmentsBox.put(newTreatment)
                             }
 
@@ -382,6 +385,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 }
                             } else {
                                 var newReferral = Referral()
+                                newReferral.encounter?.target = dbEncounterEntity
                                 referralsBox.put(newReferral)
                             }
                         }
