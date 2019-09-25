@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
@@ -25,13 +27,16 @@ import com.abhiyantrik.dentalhub.services.SyncDownloadService
 import com.abhiyantrik.dentalhub.services.SyncService
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
+import com.abhiyantrik.dentalhub.workers.DownloadPatientWorker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
 import io.objectbox.query.Query
+import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 
@@ -199,12 +204,17 @@ class MainActivity : AppCompatActivity() {
         }
         fabBtnSync.setOnClickListener {
             Log.d(TAG, "startSync")
-            if (!DentalApp.uploadSyncRunning) {
-                startService(Intent(this, SyncService::class.java))
-            }
             if (!DentalApp.downloadSyncRunning) {
                 startService(Intent(this, SyncDownloadService::class.java))
             }
+            patientsBox =
+                ObjectBox.boxStore.boxFor(com.abhiyantrik.dentalhub.entities.Patient::class.java)
+
+            val downloadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
+                .setInitialDelay(100, TimeUnit.MILLISECONDS)
+                .setConstraints(DentalApp.downloadConstraints)
+                .build()
+            WorkManager.getInstance(applicationContext).enqueue(downloadPatientWorkRequest)
             //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
         }
 
@@ -331,7 +341,12 @@ class MainActivity : AppCompatActivity() {
                 val tempPatient =
                     patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
 
-                var recallDate = tempPatient.recall_date
+                var recallDate = ""
+                try {
+                    recallDate = tempPatient.recall_date!!
+                }catch(e: NullPointerException){
+                    recallDate = ""
+                }
                 when (item) {
                     0 -> {
                         //calendar.add(Calendar.DAY_OF_YEAR,7)

@@ -72,7 +72,11 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             val patientEntity = com.abhiyantrik.dentalhub.entities.Patient()
                             patientEntity.remote_id = patient.id
                             patientEntity.first_name = patient.first_name
-                            patientEntity.middle_name = patient.middle_name
+                            try {
+                                patientEntity.middle_name = patient.middle_name!!
+                            } catch (e: java.lang.Exception) {
+                                patientEntity.middle_name = ""
+                            }
                             patientEntity.last_name = patient.last_name
                             patientEntity.gender = patient.gender
                             patientEntity.dob = patient.dob
@@ -96,6 +100,7 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                                 patientEntity.recall_date = ""
                             }
                             patientEntity.recall_geography = patient.recall_geography
+
                             patientEntity.uploaded = true
                             patientEntity.updated = false
                             patientEntity.recall = null

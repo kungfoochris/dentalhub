@@ -106,7 +106,7 @@ class SyncDownloadService : Service() {
                                     val patientEntity = Patient()
                                     patientEntity.remote_id = patient.id
                                     patientEntity.first_name = patient.first_name
-                                    patientEntity.middle_name = patient.middle_name
+                                    patientEntity.middle_name = patient.middle_name!!
                                     patientEntity.last_name = patient.last_name
                                     patientEntity.gender = patient.gender
                                     patientEntity.dob = patient.dob

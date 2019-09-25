@@ -2,7 +2,6 @@ package com.abhiyantrik.dentalhub.interfaces
 
 import android.content.Context
 import com.abhiyantrik.dentalhub.R
-import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.models.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -24,10 +23,8 @@ interface DjangoInterface {
     @POST("token/obtain")
     fun login(@Field("username") username: String, @Field("password") password: String): Call<LoginResponse>
 
-//    For all patients url is '/patients'
-//    For geography restricted users url is '/accesspatients'
     @FormUrlEncoded
-    @POST("accesspatients")
+    @POST("patients")
     fun addPatient(
         @Header("Authorization") token: String,
         @Field("id") id: Long,
@@ -82,7 +79,10 @@ interface DjangoInterface {
         @Field("updated_at") updatedAt: String?
     ): Call<PatientModel>
 
-    @GET("patients")
+
+//    For all patients url is '/patients'
+//    For geography restricted users url is '/accesspatients'
+    @GET("accesspatients")
     fun getPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
 
     @GET("patients/{patientId}/encounters")
@@ -372,7 +372,7 @@ interface DjangoInterface {
     ): Call<ReferralModel>
 
     @GET("patients")
-    fun searchPatient(@Query("s") s: String): Call<List<Patient>>
+    fun searchPatient(@Query("s") s: String): Call<List<PatientModel>>
 
     @GET("patients")
     fun listPatients(@Header("Authorization") token: String): Call<List<PatientModel>>

@@ -8,9 +8,9 @@ import java.util.*
 class Patient(
     var id: String,
     var author: String,
-    var updated_by: String?,
+    var updated_by: String? = "",
     var first_name: String,
-    var middle_name: String,
+    var middle_name: String? = "",
     var last_name: String,
     var gender: String,
     var dob: String,
@@ -22,13 +22,12 @@ class Patient(
     var latitude: String,
     var longitude: String,
     var geography: Int,
-    var recall_time: String?,
-    var recall_date: String?,
-    var recall_geography: Int,
+    var recall_time: String? = "",
+    var recall_date: String? = "",
+    var recall_geography: Int = 0,
     var activity_area: String,
-    var created_at: String?,
-    var updated_at: String?,
-    var uploaded: Boolean
+    var created_at: String? = "",
+    var updated_at: String? = ""
 ) : Parcelable {
     fun address(): String {
         return "$municipality $ward, $district"

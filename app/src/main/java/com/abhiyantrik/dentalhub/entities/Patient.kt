@@ -34,8 +34,8 @@ class Patient : Parcelable {
     var longitude: String = ""
     var geography_id: Int = 0
     var activityarea_id: String = ""
-    var recall_date: String = ""
-    var recall_time: String = "00:00:01"
+    var recall_date: String? = ""
+    var recall_time: String? = "00:00:01"
     var recall_geography: Int = 0
     var created_at: String? = ""
     var updated_at: String? = ""
@@ -54,7 +54,7 @@ class Patient : Parcelable {
 
 
     fun referall(): String {
-        return if (recall_date.isEmpty()) {
+        return if (recall_date!!.isEmpty()) {
             DateHelper.getCurrentDate()
         } else {
             "$recall_date $recall_time"

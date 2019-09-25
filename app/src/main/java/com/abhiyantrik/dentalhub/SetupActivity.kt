@@ -15,6 +15,7 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 
 class SetupActivity : AppCompatActivity() {
@@ -212,7 +213,11 @@ class SetupActivity : AppCompatActivity() {
                                     val patientEntity = Patient()
                                     patientEntity.remote_id = patient.id
                                     patientEntity.first_name = patient.first_name
-                                    patientEntity.middle_name = patient.middle_name
+                                    try {
+                                        patientEntity.middle_name = patient.middle_name!!
+                                    } catch (e: Exception) {
+                                        patientEntity.middle_name = ""
+                                    }
                                     patientEntity.last_name = patient.last_name
                                     patientEntity.gender = patient.gender
                                     patientEntity.dob = patient.dob
