@@ -6,16 +6,20 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.District
 import com.abhiyantrik.dentalhub.models.Profile
 import com.abhiyantrik.dentalhub.utils.DateHelper
+import com.abhiyantrik.dentalhub.workers.DownloadPatientWorker
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 
 class SetupActivity : AppCompatActivity() {
@@ -45,6 +49,14 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun loadProfile() {
+        Log.d(TAG, "startSync")
+
+        val downloadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
+            .setInitialDelay(100, TimeUnit.MILLISECONDS)
+            .setConstraints(DentalApp.downloadConstraints)
+            .build()
+        WorkManager.getInstance(applicationContext).enqueue(downloadPatientWorkRequest)
+
         tvMessage.append("Loading profile...\n")
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
