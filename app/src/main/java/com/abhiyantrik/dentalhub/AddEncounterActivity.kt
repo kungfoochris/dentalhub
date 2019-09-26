@@ -219,7 +219,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         patient.recall_time = recallTime
         patient.recall_geography = DentalApp.geography_id
         patient.updated = true
-        patient.updated_at = DateHelper.getCurrentDate()
+        patient.updated_at = DateHelper.getCurrentNepaliDate()
         patient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
         patientBox.put(patient)
 
