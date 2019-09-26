@@ -651,7 +651,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
                         )
                     )
                     btnSMART.background =
-                        ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart, null)
+                        ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_without_border, null)
                     checkBoxSDFWholeMouth.visibility = View.GONE
                     tvSDFWholeMouth.visibility = View.GONE
                 }
