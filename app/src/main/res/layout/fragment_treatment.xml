@@ -27,48 +27,49 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/treatment_sdf_outline"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"/>
             <Button
                     android:id="@+id/btnSEAL"
                     android:text="SEAL"
                     android:layout_margin="5dp"
                     android:background="@drawable/treatment_seal_outline"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"/>
             <Button
                     android:id="@+id/btnART"
                     android:text="ART"
                     android:layout_margin="5dp"
                     android:background="@drawable/treatment_art_outline"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"/>
             <Button
                     android:id="@+id/btnEXO"
                     android:text="EXO"
                     android:layout_margin="5dp"
                     android:background="@drawable/treatment_exo_outline"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"/>
             <Button
                     android:id="@+id/btnSMART"
                     android:text="SMART"
                     android:layout_margin="5dp"
                     android:background="@drawable/treatment_smart_outline"
+                    android:src="@drawable/treatment_smart_applied"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"/>
             <Button
                     android:id="@+id/btnUNTR"
                     android:text="UNTR"
                     android:layout_margin="5dp"
                     android:background="@drawable/treatment_untr_outline"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"/>
         </LinearLayout>
         </HorizontalScrollView>
 
