@@ -20,10 +20,7 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
-import com.abhiyantrik.dentalhub.entities.Encounter_
-import com.abhiyantrik.dentalhub.entities.Patient
-import com.abhiyantrik.dentalhub.entities.Patient_
-import com.abhiyantrik.dentalhub.entities.Recall
+import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
 import com.abhiyantrik.dentalhub.services.SyncDownloadService
 import com.abhiyantrik.dentalhub.services.SyncService
@@ -60,6 +57,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var dividerItemDecoration: DividerItemDecoration
     private lateinit var allPatients: List<Patient>
+
+    private var encountersBox: Box<Encounter> =  ObjectBox.boxStore.boxFor(Encounter::class.java)
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var patientsQuery: Query<Patient>
@@ -209,7 +208,6 @@ class MainActivity : AppCompatActivity() {
         fabBtnSync.setOnClickListener {
             Log.d(TAG, "startSync")
 
-            // download all patients
             val downloadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
                 .setInitialDelay(100, TimeUnit.MILLISECONDS)
                 .setConstraints(DentalApp.downloadConstraints)
@@ -218,7 +216,7 @@ class MainActivity : AppCompatActivity() {
 
             // upload all patients
             val dbAllPatient =
-                patientsBox.query().equal(Patient_.uploaded, false).build().find()
+                patientsBox.query().build().find()
 
             for (patient in dbAllPatient) {
                 val data = Data.Builder().putLong("PATIENT_ID", patient.id)
@@ -227,6 +225,25 @@ class MainActivity : AppCompatActivity() {
                     .setConstraints(DentalApp.uploadConstraints)
                     .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
                 WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+
+                val allEncounters =
+                    encountersBox.query().equal(Encounter_.patientId, patient.id).and().equal(Encounter_.uploaded, false).build().find()
+                for (eachEncounter in allEncounters) {
+                    if (!eachEncounter.uploaded) {
+                        val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)
+                            .putLong("PATIENT_ID", patient.id)
+                        val uploadEncounterWorkerRequest =
+                            OneTimeWorkRequestBuilder<UploadEncounterWorker>()
+                                .setInputData(data.build())
+                                .setConstraints(DentalApp.uploadConstraints)
+                                .setInitialDelay(
+                                    100,
+                                    TimeUnit.MILLISECONDS
+                                ).build()
+                        WorkManager.getInstance(applicationContext)
+                            .enqueue(uploadEncounterWorkerRequest)
+                    }
+                }
 
             }
             //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
