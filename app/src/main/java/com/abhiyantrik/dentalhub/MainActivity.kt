@@ -16,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
+import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.entities.Recall
@@ -28,6 +30,8 @@ import com.abhiyantrik.dentalhub.services.SyncService
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.abhiyantrik.dentalhub.workers.DownloadPatientWorker
+import com.abhiyantrik.dentalhub.workers.UploadEncounterWorker
+import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
@@ -205,11 +209,26 @@ class MainActivity : AppCompatActivity() {
         fabBtnSync.setOnClickListener {
             Log.d(TAG, "startSync")
 
+            // download all patients
             val downloadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
                 .setInitialDelay(100, TimeUnit.MILLISECONDS)
                 .setConstraints(DentalApp.downloadConstraints)
                 .build()
             WorkManager.getInstance(applicationContext).enqueue(downloadPatientWorkRequest)
+
+            // upload all patients
+            val dbAllPatient =
+                patientsBox.query().equal(Patient_.uploaded, false).build().find()
+
+            for (patient in dbAllPatient) {
+                val data = Data.Builder().putLong("PATIENT_ID", patient.id)
+                val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
+                    .setInputData(data.build())
+                    .setConstraints(DentalApp.uploadConstraints)
+                    .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+
+            }
             //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
         }
 
