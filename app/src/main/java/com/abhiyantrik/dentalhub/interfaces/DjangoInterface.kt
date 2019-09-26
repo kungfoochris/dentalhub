@@ -105,7 +105,7 @@ interface DjangoInterface {
         @Field("geography_id") geography_id: Int,
         @Field("activityarea_id") activitarea_id: String,
         @Field("encounter_type") encounterType: String,
-        @Field("other_detail") otherDetail: String,
+        @Field("other_problem") other_problem: String,
         @Field("author") author: String,
         @Field("created_at") created_at: String,
         @Field("updated_at") updated_at: String,
