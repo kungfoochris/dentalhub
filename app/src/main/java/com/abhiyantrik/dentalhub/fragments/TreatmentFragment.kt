@@ -23,6 +23,7 @@ import com.abhiyantrik.dentalhub.entities.Treatment
 import com.abhiyantrik.dentalhub.entities.Treatment_
 import com.abhiyantrik.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import io.objectbox.Box
+import kotlinx.android.synthetic.main.single_patient.view.*
 
 class TreatmentFragment : Fragment(), View.OnClickListener {
 
