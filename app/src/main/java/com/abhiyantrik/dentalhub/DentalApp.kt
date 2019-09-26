@@ -56,7 +56,6 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         var location: Location = Location("0", "0")
 
         var geography_id: Int = 0
-        var ward_id: Int = 0
         var ward_name: String = ""
         var activity_id: String = ""
         var activity_name: String = ""

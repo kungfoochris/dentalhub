@@ -312,7 +312,7 @@ class AddPatientActivity : AppCompatActivity() {
         val ward = dbWard.remote_id
         val municipality = dbMunicipality.remote_id
         val district = dbDistrict.remote_id
-        val geography = DentalApp.ward_id
+        val geography = DentalApp.geography_id
         val activity = DentalApp.activity_id
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
@@ -332,7 +332,7 @@ class AddPatientActivity : AppCompatActivity() {
             patient!!.district = district
             patient!!.latitude = latitude
             patient!!.longitude = longitude
-            patient!!.geography_id = DentalApp.ward_id
+            patient!!.geography_id = DentalApp.geography_id
             patient!!.activityarea_id = DentalApp.activity_id
             patient!!.created_at = date
             patient!!.updated_at = date

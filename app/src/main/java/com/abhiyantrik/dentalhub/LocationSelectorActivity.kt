@@ -165,7 +165,6 @@ class LocationSelectorActivity : AppCompatActivity() {
                         Constants.PREF_SELECTED_LOCATION_NAME,
                         geography.name
                     )
-                    DentalApp.ward_id = geography.ward
                     DentalApp.ward_name = geography.name
                     DentalApp.geography_id = geography.id
                     startActivity(Intent(context, ActivitySelectorActivity::class.java))

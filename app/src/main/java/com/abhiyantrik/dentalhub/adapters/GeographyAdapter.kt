@@ -37,7 +37,7 @@ class GeographyAdapter(
 
         holder.itemView.setOnClickListener {
             Log.d("EncounterAdapter", "itemView clicked")
-            DentalApp.ward_id = selectedGeography.id
+            DentalApp.geography_id = selectedGeography.id
             geographyClickListener.onGeographyClick(selectedGeography)
         }
         holder.bindEncounter(selectedGeography)

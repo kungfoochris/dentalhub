@@ -57,7 +57,7 @@ class SplashActivity : Activity() {
                             Constants.PREF_PROFILE_FULL_NAME,
                             ""
                         )
-                        DentalApp.ward_id = selectedLocationId
+                        DentalApp.geography_id = selectedLocationId
                         DentalApp.ward_name = selectedLocationName
                         DentalApp.activity_id = selectedActivityId
                         DentalApp.activity_name = selectedActivityName
