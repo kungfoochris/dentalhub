@@ -268,7 +268,7 @@ class MainActivity : AppCompatActivity() {
         try {
             allPatients =
                 patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id.toLong())
-                    .orderDesc(Patient_.created_at).build().find()
+                    .orderDesc(Patient_.created_at).orderDesc(Patient_.id).build().find()
             setupAdapter(allPatients)
         } catch (e: DbException) {
             Log.d("DBException", e.printStackTrace().toString())
