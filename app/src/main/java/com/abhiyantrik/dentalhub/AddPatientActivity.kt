@@ -173,6 +173,8 @@ class AddPatientActivity : AppCompatActivity() {
         }
         btnAddPatient.setOnClickListener {
             if (isFormValid()) {
+                DentalApp.lastMunicipalityIndex = spinnerMunicipality.selectedItemPosition
+                DentalApp.lastWardIndex = spinnerWard.selectedItemPosition
                 savePatient()
             }
         }
@@ -184,19 +186,27 @@ class AddPatientActivity : AppCompatActivity() {
             Log.d("Selected Municipality: ", spinnerMunicipality.selectedItem.toString())
             Log.d("Municipality Position: ", spinnerMunicipality.selectedItemPosition.toString())
             var selectedWardIndex = 0
+
             val dbWards =
                 wardsBox.query().equal(Ward_.municipalityId, dbMunicipality.id).build().find()
             val wards = mutableListOf<String>()
             allWards = dbWards
-            for ((count, ward) in dbWards.withIndex()) {
-                if (selectedWard == ward.remote_id) {
-                    selectedWardIndex = count
+
+            if(selectedWard == 0){
+                for ((count, ward) in dbWards.withIndex()) {
+                    wards.add(ward.ward.toString())
                 }
-                wards.add(ward.ward.toString())
+                selectedWardIndex = DentalApp.lastWardIndex
+            }else{
+                for ((count, ward) in dbWards.withIndex()) {
+                    if (selectedWard == ward.remote_id) {
+                        selectedWardIndex = count
+                    }
+                    wards.add(ward.ward.toString())
+                }
             }
             spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
             spinnerWard.setSelection(selectedWardIndex)
-
 
         } else {
             Toast.makeText(context, "Municipality not found.", Toast.LENGTH_LONG).show()
@@ -206,16 +216,26 @@ class AddPatientActivity : AppCompatActivity() {
     private fun setupMunicipalities(selectedMunicipality: Int) {
         Log.d("Selected District", spinnerDistrict.selectedItem.toString())
         Log.d("District Position", spinnerDistrict.selectedItemPosition.toString())
+
         var selectedMunicipalityIndex = 0
+
         val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
         allMunicipalities =
             municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
         val municipalitiesList = mutableListOf<String>()
-        for ((count, municipality) in allMunicipalities.withIndex()) {
-            if (selectedMunicipality == municipality.remote_id) {
-                selectedMunicipalityIndex = count
+
+        if(selectedMunicipality==0){
+            for ((count, municipality) in allMunicipalities.withIndex()) {
+                municipalitiesList.add(municipality.name.capitalize())
             }
-            municipalitiesList.add(municipality.name.capitalize())
+            selectedMunicipalityIndex = DentalApp.lastMunicipalityIndex
+        }else{
+            for ((count, municipality) in allMunicipalities.withIndex()) {
+                if (selectedMunicipality == municipality.remote_id) {
+                    selectedMunicipalityIndex = count
+                }
+                municipalitiesList.add(municipality.name.capitalize())
+            }
         }
         spinnerMunicipality.adapter =
             AdapterHelper.createAdapter(context, municipalitiesList.toList())
@@ -229,6 +249,7 @@ class AddPatientActivity : AppCompatActivity() {
     }
 
     private fun setupDistricts(selectedDistrict: Int) {
+
         allDistricts = districtsBox.query().build().find()
         val districtsList = mutableListOf<String>()
         var selectedDistrictIndex = 0
@@ -299,6 +320,8 @@ class AddPatientActivity : AppCompatActivity() {
         val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
         val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
         val dbWard = allWards[spinnerWard.selectedItemPosition]
+
+
 
 
         val id: Long = 0
