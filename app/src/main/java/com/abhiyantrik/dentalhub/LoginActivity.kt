@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -49,6 +50,14 @@ class LoginActivity : Activity() {
         btnLogin = findViewById(R.id.btnLogin)
         loading = findViewById(R.id.loading)
         tvErrorMessage = findViewById(R.id.tvErrorMessage)
+
+        if (Build.VERSION.SDK_INT>22){
+            etEmail.background = getDrawable(R.drawable.auth_fields)
+            etPassword.background = getDrawable(R.drawable.auth_fields)
+        }else{
+            etEmail.background = getDrawable(R.drawable.auth_fields_fallback)
+            etPassword.background = getDrawable(R.drawable.auth_fields_fallback)
+        }
 
         btnLogin.setOnClickListener {
             tvErrorMessage.visibility = View.GONE
