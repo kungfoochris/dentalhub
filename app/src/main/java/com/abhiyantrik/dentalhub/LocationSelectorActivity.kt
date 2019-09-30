@@ -59,7 +59,10 @@ class LocationSelectorActivity : AppCompatActivity() {
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
         permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-        permissions.add(Manifest.permission.CALL_PHONE)
+        if(DentalApp.canMakeCall(context)){
+            permissions.add(Manifest.permission.CALL_PHONE)
+        }
+
         permissionsToRequest = permissionsToRequest(permissions)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissionsToRequest!!.size > 0) {
