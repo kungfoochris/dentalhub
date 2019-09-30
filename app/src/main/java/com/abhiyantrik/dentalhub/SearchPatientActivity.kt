@@ -120,9 +120,13 @@ class SearchPatientActivity : AppCompatActivity() {
                 }
 
                 override fun onCallPatientClick(patient: Patient) {
-                    val call = Intent(Intent.ACTION_DIAL)
-                    call.data = Uri.parse("tel:" + patient.phone)
-                    startActivity(call)
+                    if(DentalApp.canMakeCall(context)){
+                        val call = Intent(Intent.ACTION_DIAL)
+                        call.data = Uri.parse("tel:" + patient.phone)
+                        startActivity(call)
+                    }else{
+                        Toast.makeText(context, getString(R.string.telephony_serivce_unavailable), Toast.LENGTH_LONG).show()
+                    }
                 }
 
                 override fun onDelayPatientClick(patient: Patient) {

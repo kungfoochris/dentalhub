@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -301,9 +302,14 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onCallPatientClick(patient: Patient) {
-                        val call = Intent(Intent.ACTION_DIAL)
-                        call.data = Uri.parse("tel:" + patient.phone)
-                        startActivity(call)
+                        if(DentalApp.canMakeCall(context)){
+                            val call = Intent(Intent.ACTION_DIAL)
+                            call.data = Uri.parse("tel:" + patient.phone)
+                            startActivity(call)
+                        }else{
+                            Toast.makeText(context, getString(R.string.telephony_serivce_unavailable), Toast.LENGTH_LONG).show()
+                        }
+
                     }
 
                     override fun onViewPatientDetailClick(position: Int,patient: Patient) {
