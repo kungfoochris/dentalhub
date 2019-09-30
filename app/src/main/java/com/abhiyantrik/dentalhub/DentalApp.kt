@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -98,6 +99,11 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
             val editor = sharedPreferences.edit()
             editor.putString(preferenceName, preferenceValue)
             editor.apply()
+        }
+
+        fun canMakeCall(context: Context): Boolean{
+            val pm = context.packageManager
+            return pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
         }
 
         fun saveIntToPreference(context: Context, preferenceName: String, preferenceValue: Int) {
