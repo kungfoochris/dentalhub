@@ -149,4 +149,5 @@
     <string name="uploading_treatment">Uploading treatment ...</string>
     <string name="activity">Activity</string>
     <string name="geography">Geography</string>
+    <string name="telephony_serivce_unavailable">Telephony service not available on this device.</string>
 </resources>
