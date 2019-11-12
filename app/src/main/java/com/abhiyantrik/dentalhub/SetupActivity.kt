@@ -14,6 +14,7 @@ import com.abhiyantrik.dentalhub.models.District
 import com.abhiyantrik.dentalhub.models.Profile
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.DownloadPatientWorker
+import com.abhiyantrik.dentalhub.workers.DownloadUsersWorker
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,6 +51,11 @@ class SetupActivity : AppCompatActivity() {
 
     private fun loadProfile() {
         Log.d(TAG, "startSync")
+
+        val downloadUsersWorkRequest = OneTimeWorkRequestBuilder<DownloadUsersWorker>()
+            .setConstraints(DentalApp.downloadConstraints)
+            .build()
+        WorkManager.getInstance(applicationContext).enqueue(downloadUsersWorkRequest)
 
         val downloadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
             .setInitialDelay(100, TimeUnit.MILLISECONDS)
@@ -111,7 +117,7 @@ class SetupActivity : AppCompatActivity() {
         call.enqueue(object : Callback<List<District>> {
             override fun onFailure(call: Call<List<District>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
-                tvMessage.append("Failed to load adresses\n")
+                tvMessage.append("Failed to load addresses \n")
                 Log.d(TAG, t.toString())
             }
 
