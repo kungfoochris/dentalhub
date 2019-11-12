@@ -30,8 +30,6 @@
                 />
     </RelativeLayout>
 
-
-
     <TextView
             android:id="@+id/tvEncounterDate"
             android:text="@string/app_name"
