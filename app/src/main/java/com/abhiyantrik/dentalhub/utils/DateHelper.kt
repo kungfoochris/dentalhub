@@ -10,9 +10,32 @@ import java.util.*
 
 class DateHelper {
     companion object {
+
         fun getCurrentDate(): String {
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
             return sdf.format(Date())
+        }
+
+        fun getReadableNepaliDate(date: String): String{
+            var day = date.substring(8, 10).toInt()
+            var month = date.substring(5, 7).toInt()
+            var year = date.substring(0, 4).toInt()
+            var monthName = "Baisakh"
+            when(month){
+                1 -> monthName = "Baisakh"
+                2 -> monthName = "Jestha"
+                3 -> monthName = "Ashar"
+                4 -> monthName = "Shrawan"
+                5 -> monthName = "Bhadra"
+                6 -> monthName = "Ashoj"
+                7 -> monthName = "Kartik"
+                8 -> monthName = "Mangsir"
+                9 -> monthName = "Poush"
+                10 -> monthName = "Magh"
+                11 -> monthName = "Falgun"
+                12 -> monthName = "Chaitra"
+            }
+            return "$year-$monthName-$day"
         }
 
         fun getCurrentNepaliDate(): String {

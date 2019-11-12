@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.abhiyantrik.dentalhub.*
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.fragments.interfaces.ReferralFormCommunicator
+import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_referral.*
@@ -40,6 +41,8 @@ class ReferralFragment : Fragment() {
 
     private lateinit var etRecallDate: EditText
     private lateinit var etRecallTime: EditText
+
+    private var recallDateOriginal = DentalApp.lastRecallDate
 
     private lateinit var activitiesBox: Box<Activity>
     private lateinit var patientBox: Box<Patient>
@@ -82,7 +85,10 @@ class ReferralFragment : Fragment() {
         etRecallDate = view.findViewById(R.id.etRecallDate)
         etRecallTime = view.findViewById(R.id.etRecallTime)
 
-        etRecallDate.setText(DentalApp.lastRecallDate)
+        if(DentalApp.lastRecallDate.isNotEmpty()){
+            etRecallDate.setText(DateHelper.getReadableNepaliDate(DentalApp.lastRecallDate))
+        }
+
         etRecallTime.setText(DentalApp.lastRecallTime)
 
         rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
@@ -164,7 +170,10 @@ class ReferralFragment : Fragment() {
                         ).format(dayToday)
                 }
             }
-            etRecallDate.setText(recallDate)
+            recallDateOriginal = recallDate
+            if(recallDate.isNotEmpty()){
+                etRecallDate.setText(DateHelper.getReadableNepaliDate(recallDate))
+            }
         }
 
         etRecallDate.setOnFocusChangeListener { _, b ->
@@ -174,7 +183,11 @@ class ReferralFragment : Fragment() {
                     com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
                         val month = DecimalFormat("00").format(monthOfYear + 1).toString()
                         val day = DecimalFormat("00").format(dayOfMonth).toString()
-                        etRecallDate.setText("$year-$month-$day")
+                        val recallDate = "$year-$month-$day"
+                        recallDateOriginal = recallDate
+                        if(recallDate.isNotEmpty()){
+                            etRecallDate.setText(DateHelper.getReadableNepaliDate(recallDate))
+                        }
                     }
                 dpd.setMinDate(nepaliDateConverter.todayNepaliDate)
                 dpd.show(fragmentManager, "RecallDate")
@@ -238,7 +251,7 @@ class ReferralFragment : Fragment() {
                     otherDetails
                 )
 
-                val recallDate = etRecallDate.text.toString()
+                val recallDate = recallDateOriginal
                 val recallTime = etRecallTime.text.toString()
                 DentalApp.lastRecallDate = recallDate
                 DentalApp.lastRecallTime = recallTime
@@ -265,7 +278,6 @@ class ReferralFragment : Fragment() {
 
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
-
             patient = patientBox.query().equal(
                 Patient_.id,
                 DentalApp.readIntFromPreference(
@@ -276,7 +288,6 @@ class ReferralFragment : Fragment() {
             referral = referralBox.query()
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
-
 
             val radioButtonMap = mapOf(
                 radioNoReferral to referral.no_referral,
@@ -293,9 +304,11 @@ class ReferralFragment : Fragment() {
                     break
                 }
             }
-
-            if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
-            etRecallDate.setText(patient.recall_date)
+        if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
+            recallDateOriginal = patient.recall_date!!
+            if(patient.recall_date!!.isNotEmpty()){
+                etRecallDate.setText(DateHelper.getReadableNepaliDate(patient.recall_date!!))
+            }
             etRecallTime.setText(patient.recall_time)
         }
     }
