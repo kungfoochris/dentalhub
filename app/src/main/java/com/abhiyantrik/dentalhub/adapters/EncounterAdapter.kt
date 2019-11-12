@@ -11,10 +11,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.AddEncounterActivity
+import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Encounter
 import com.abhiyantrik.dentalhub.entities.Patient
+import com.abhiyantrik.dentalhub.entities.User
+import com.abhiyantrik.dentalhub.entities.User_
 import com.abhiyantrik.dentalhub.utils.DateHelper
+import io.objectbox.Box
 import kotlinx.android.synthetic.main.single_encounter.view.*
 
 
@@ -26,6 +30,7 @@ class EncounterAdapter(
 ) :
     RecyclerView.Adapter<EncounterAdapter.EncounterViewHolder>() {
 
+    private lateinit var userBox: Box<User>
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var encounterClickListener: EncounterClickListener = listener
 
@@ -63,9 +68,12 @@ class EncounterAdapter(
 
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
+        private var tvAuthorName: TextView = itemView.findViewById(R.id.tvAuthorName)
         private var ibEdit: ImageButton = itemView.findViewById(R.id.ibEdit)
 
         fun bindEncounter(encounter: Encounter) {
+            userBox = ObjectBox.boxStore.boxFor(User::class.java)
+            val author = userBox.query().equal(User_.remote_id, encounter.author).build().findFirst()!!
             val encounterType: String = context.getString(R.string.other_problem)
             if (encounter.encounter_type == encounterType) {
                 tvEncounterName.text = encounter.encounter_type + " - " + encounter.other_problem
@@ -73,6 +81,7 @@ class EncounterAdapter(
                 tvEncounterName.text = encounter.encounter_type
             }
             tvEncounterDate.text = DateHelper.formatNepaliDate(context, encounter.created_at)
+            tvAuthorName.text = author.full_name()
             if (encounter.isEditable()) {
                 ibEdit.visibility = View.VISIBLE
             } else {
