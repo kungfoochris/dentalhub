@@ -13,6 +13,7 @@ import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
 import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
+import com.abhiyantrik.dentalhub.models.User as UserModel
 import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
@@ -376,6 +377,9 @@ interface DjangoInterface {
 
     @GET("patients")
     fun listPatients(@Header("Authorization") token: String): Call<List<PatientModel>>
+
+    @GET("users")
+    fun listUsers(@Header("Authorization") token:String): Call<List<UserModel>>
 
     @GET("addresses")
     fun listAddresses(): Call<List<District>>
