@@ -7,6 +7,14 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-class User(
-    @Id var id: Long
-) : Parcelable
+class User: Parcelable{
+    @Id var id: Long = 0
+    var remote_id: String = ""
+    var first_name: String = ""
+    var middle_name: String =""
+    var last_name: String = ""
+
+    fun full_name():String{
+        return "$first_name $middle_name $last_name"
+    }
+}
