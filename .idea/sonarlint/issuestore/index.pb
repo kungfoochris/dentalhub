@@ -14,8 +14,6 @@ y
 Iapp/src/main/java/com/abhiyantrik/dentalhub/interfaces/DjangoInterface.kt,e/a/eadc3e683a1e0b6200176d70ff2fe792edcc82c0
 s
 Capp/src/main/java/com/abhiyantrik/dentalhub/services/SyncService.kt,a/b/ab5435c8028371c57405b93d217f3adee086bf6a
-;
-app/app.iml,7/c/7c1d2a1927c01fa75a9b4c74ea8addcc06b327ae
 q
 Aapp/src/main/java/com/abhiyantrik/dentalhub/entities/Treatment.kt,b/2/b2e7fda22836afe9352bb0ad86beff300c63f328
 m

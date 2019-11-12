@@ -9,6 +9,7 @@
 /.idea/assetWizardSettings.xml
 /.idea/sonarlint
 /.idea/codeStyles/Project.xml
+/.idea/sonarlint/issuestore/index.pb
 .DS_Store
 /build
 /captures
