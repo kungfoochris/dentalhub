@@ -159,6 +159,5 @@ class Patient : Parcelable {
             Log.d("Patient", "Could not calculate date")
             return "-"
         }
-
     }
 }
