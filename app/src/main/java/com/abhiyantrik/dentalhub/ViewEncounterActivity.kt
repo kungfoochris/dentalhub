@@ -258,8 +258,8 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvWardName = findViewById(R.id.tvWardName)
         tvActivity = findViewById(R.id.tvActivity)
 
-        var wardID = Ward()
-        var activityID = Activity()
+        var wardID: Ward
+        var activityID: Activity
 
         if (encounter.ward_id != 0){
             wardID = wardBox.query().equal(Ward_.remote_id, encounter.ward_id.toLong()).build().findFirst()!!
@@ -287,6 +287,9 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvHepatitisBOrCTitle = findViewById(R.id.tvHepatitisBOrCTitle)
         tvHIVTitle = findViewById(R.id.tvHIVTitle)
         tvOtherTitle = findViewById(R.id.tvOtherTitle)
+        tvHighBPTitle = findViewById(R.id.tvHighBPTitle)
+        tvLowBPTitle = findViewById(R.id.tvLowBPTitle)
+        tvThyroidDisorderTitle = findViewById(R.id.tvThyroidDisorderTitle)
         tvNoUnderlyingMedicalConditionTitle = findViewById(R.id.tvNoUnderlyingMedicalConditionTitle)
         tvNotTakingAnyMedicationsTitle = findViewById(R.id.tvNotTakingAnyMedicationsTitle)
         tvAllergiesTitle = findViewById(R.id.tvAllergiesTitle)
@@ -300,6 +303,9 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvHepatitisBOrC = findViewById(R.id.tvHepatitisBOrC)
         tvHIV = findViewById(R.id.tvHIV)
         tvOther = findViewById(R.id.tvOther)
+        tvHighBP = findViewById(R.id.tvHighBP)
+        tvLowBP = findViewById(R.id.tvLowBP)
+        tvThyroidDisorder = findViewById(R.id.tvThyroidDisorder)
         tvNoUnderlyingMedicalCondition = findViewById(R.id.tvNoUnderlyingMedicalCondition)
         tvNotTakingAnyMedications = findViewById(R.id.tvNotTakingAnyMedications)
         tvAllergies = findViewById(R.id.tvAllergies)
@@ -316,6 +322,9 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideBoolean(history.hepatitis_b_or_c, tvHepatitisBOrCTitle, tvHepatitisBOrC)
         hideBoolean(history.hiv, tvHIVTitle, tvHIV)
         hideString(history.other, tvOtherTitle, tvOther)
+        hideBoolean(history.high_blood_pressure, tvHighBPTitle, tvHighBP)
+        hideBoolean(history.low_blood_pressure, tvLowBPTitle, tvLowBP)
+        hideBoolean(history.thyroid_disorder, tvThyroidDisorderTitle, tvThyroidDisorder)
         hideBoolean(
             history.no_underlying_medical_condition,
             tvNoUnderlyingMedicalConditionTitle,
@@ -331,7 +340,7 @@ class ViewEncounterActivity : AppCompatActivity() {
             tvNotTakingAnyMedications.text = history.medications
         }
         // hideBoolean(history.not_taking_any_medications, tvNotTakingAnyMedicationsTitle, tvNotTakingAnyMedications)
-        // since alleragies is little different i.e. if no_allergies is True show allergies(String) else don't show both no_allergies(Int) and allergies(String)
+        // since allergies is little different i.e. if no_allergies is True show allergies(String) else don't show both no_allergies(Int) and allergies(String)
         if (history.no_allergies) {
             tvAllergiesTitle.text = "No Allergies"
             tvAllergies.text = "Yes"
@@ -353,9 +362,6 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNeedSDFTitle = findViewById(R.id.tvNeedSDFTitle)
         tvNeedExtractionTitle = findViewById(R.id.tvNeedExtractionTitle)
         tvActiveInfectionTitle = findViewById(R.id.tvActiveInfectionTitle)
-        tvHighBPTitle = findViewById(R.id.tvHighBPTitle)
-        tvLowBPTitle = findViewById(R.id.tvLowBPTitle)
-        tvThyroidDisorderTitle = findViewById(R.id.tvThyroidDisorderTitle)
 
         // Screening Data TextView
         tvCarriesRisk = findViewById(R.id.tvCarriesRisk)
@@ -369,9 +375,6 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNeedSDF = findViewById(R.id.tvNeedSDF)
         tvNeedExtraction = findViewById(R.id.tvNeedExtraction)
         tvActiveInfection = findViewById(R.id.tvActiveInfection)
-        tvHighBP = findViewById(R.id.tvHighBP)
-        tvLowBP = findViewById(R.id.tvLowBP)
-        tvThyroidDisorder = findViewById(R.id.tvThyroidDisorder)
 
         // to hide if screening items are unchecked while adding encounter
         hideString(screening.carries_risk, tvCarriesRiskTitle, tvCarriesRisk)
@@ -401,9 +404,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideBoolean(screening.need_sdf, tvNeedSDFTitle, tvNeedSDF)
         hideBoolean(screening.need_extraction, tvNeedExtractionTitle, tvNeedExtraction)
         hideBoolean(screening.active_infection, tvActiveInfectionTitle, tvActiveInfection)
-        hideBoolean(screening.high_blood_pressure, tvHighBPTitle, tvHighBP)
-        hideBoolean(screening.low_blood_pressure, tvLowBPTitle, tvLowBP)
-        hideBoolean(screening.thyroid_disorder, tvThyroidDisorderTitle, tvThyroidDisorder)
+
 
         // treatment
 

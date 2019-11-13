@@ -218,12 +218,6 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                             encounter.screening!!.need_extraction
                                         screeningEntity.active_infection =
                                             encounter.screening!!.active_infection
-                                        screeningEntity.high_blood_pressure =
-                                            encounter.screening!!.high_blood_pressure
-                                        screeningEntity.low_blood_pressure =
-                                            encounter.screening!!.low_blood_pressure
-                                        screeningEntity.thyroid_disorder =
-                                            encounter.screening!!.thyroid_disorder
                                         screeningEntity.updated = false
                                         screeningEntity.uploaded = true
                                     }

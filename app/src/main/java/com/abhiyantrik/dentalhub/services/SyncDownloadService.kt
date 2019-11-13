@@ -231,6 +231,12 @@ class SyncDownloadService : Service() {
                                                 encounter.history!!.hepatitis_b_or_c
                                             historyEntity.hiv = encounter.history!!.hiv
                                             historyEntity.other = encounter.history!!.other
+                                            historyEntity.high_blood_pressure =
+                                                encounter.history!!.high_blood_pressure
+                                            historyEntity.low_blood_pressure =
+                                                encounter.history!!.low_blood_pressure
+                                            historyEntity.thyroid_disorder =
+                                                encounter.history!!.thyroid_disorder
                                             historyEntity.no_underlying_medical_condition =
                                                 encounter.history!!.no_underlying_medical_condition
                                             historyEntity.medications =
@@ -281,12 +287,7 @@ class SyncDownloadService : Service() {
                                                 encounter.screening!!.need_extraction
                                             screeningEntity.active_infection =
                                                 encounter.screening!!.active_infection
-                                            screeningEntity.high_blood_pressure =
-                                                encounter.screening!!.high_blood_pressure
-                                            screeningEntity.low_blood_pressure =
-                                                encounter.screening!!.low_blood_pressure
-                                            screeningEntity.thyroid_disorder =
-                                                encounter.screening!!.thyroid_disorder
+
                                         }
                                         screeningBox.put(screeningEntity)
                                     }

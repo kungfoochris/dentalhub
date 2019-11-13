@@ -73,7 +73,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                         val tempScreening = response.body() as ScreeningModel
                         val dbScreeningEntity = screeningBox.query().equal(
                             Screening_.encounterId,
-                            encounter!!.id
+                            encounter.id
                         ).build().findFirst()!!
                         dbScreeningEntity.remote_id = tempScreening.id
                         dbScreeningEntity.uploaded = true
@@ -106,13 +106,11 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                     200, 201 -> {
                         val dbScreeningEntity = screeningBox.query().equal(
                             Screening_.encounterId,
-                            encounter!!.id
+                            encounter.id
                         ).build().findFirst()!!
                         dbScreeningEntity.uploaded = true
                         dbScreeningEntity.updated = false
                         screeningBox.put(dbScreeningEntity)
-
-
                     }
                 }
             }

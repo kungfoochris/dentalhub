@@ -151,6 +151,9 @@ class SyncService : Service(){
             history.no_allergies,
             history.allergies,
             history.other,
+            history.high_blood_pressure,
+            history.low_blood_pressure,
+            history.thyroid_disorder,
             history.medications,
             history.no_underlying_medical_condition,
             history.not_taking_any_medications
@@ -201,10 +204,7 @@ class SyncService : Service(){
             screening.need_sealant,
             screening.need_sdf,
             screening.need_extraction,
-            screening.active_infection,
-            screening.high_blood_pressure,
-            screening.low_blood_pressure,
-            screening.thyroid_disorder
+            screening.active_infection
         )
 
         call.enqueue(object : Callback<ScreeningModel> {
@@ -237,7 +237,7 @@ class SyncService : Service(){
     }
 
 
-    private fun saveReferralToServer(remoteId: String, referral: Referral, recall: Recall) {
+    private fun saveReferralToServer(remoteId: String, referral: Referral) {
         Log.d("SyncService", "saveReferralToServer()")
         Log.d("saveReferralToServer", referral.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -368,12 +368,12 @@ class SyncService : Service(){
                                     Referral_.encounterId,
                                     encounterId
                                 ).build().findFirst()!!
-                            val tempRecall =
-                                recallBox.query().equal(
-                                    Recall_.encounterId,
-                                    encounterId
-                                ).build().findFirst()!!
-                            saveReferralToServer(remoteId, tempReferral, tempRecall)
+//                            val tempRecall =
+//                                recallBox.query().equal(
+//                                    Recall_.encounterId,
+//                                    encounterId
+//                                ).build().findFirst()!!
+                            saveReferralToServer(remoteId, tempReferral)
                         }
                     }
                 }

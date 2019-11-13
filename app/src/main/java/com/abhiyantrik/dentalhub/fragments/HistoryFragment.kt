@@ -116,6 +116,7 @@ class HistoryFragment : Fragment() {
                 checkBoxHepatitisBOrC.isChecked = false
                 checkBoxHIV.isChecked = false
                 etOther.setText("")
+                etOther.setText("")
                 etOther.visibility = View.GONE
                 tvOther.visibility = View.GONE
             } else {
@@ -126,6 +127,7 @@ class HistoryFragment : Fragment() {
 
         checkBoxNotTakingAnyMedications.setOnCheckedChangeListener { compoundButton, _ ->
             if (!compoundButton.isChecked) {
+                etMedications.setText("")
                 etMedications.visibility = View.VISIBLE
                 tvMedications.visibility = View.VISIBLE
             } else {
@@ -136,6 +138,7 @@ class HistoryFragment : Fragment() {
 
         checkBoxNoAllergies.setOnCheckedChangeListener { compoundButton, _ ->
             if (!compoundButton.isChecked) {
+                etAllergies.setText("")
                 etAllergies.visibility = View.VISIBLE
                 tvAllergies.visibility = View.VISIBLE
             } else {
