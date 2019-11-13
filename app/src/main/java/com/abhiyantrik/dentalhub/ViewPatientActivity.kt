@@ -117,7 +117,9 @@ class ViewPatientActivity : AppCompatActivity() {
             finish()
         }
         val allEnCounters =
-            encounterBox.query().equal(Encounter_.patientId, patientId).orderDesc(Encounter_.id)
+            encounterBox.query().equal(Encounter_.patientId, patientId)
+                .orderDesc(Encounter_.created_at)
+                .orderDesc(Encounter_.id)
                 .build().find()
 
         patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
