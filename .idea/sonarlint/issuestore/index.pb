@@ -170,3 +170,7 @@ w
 Gapp/src/main/java/com/abhiyantrik/dentalhub/fragments/TickerFragment.kt,9/6/96cc5679c1adc031ecfa3db3f38a701234a541cf
 †
 Vapp/src/main/java/com/abhiyantrik/dentalhub/workers/UpdateIndividualEncounterWorker.kt,1/3/13be4a4bfb1c159b9a41b031aaadc645753abca2
+j
+:app/src/main/java/com/abhiyantrik/dentalhub/models/User.kt,3/c/3c4ab44e003df8585308f23f54fd4124bfb7f1b5
+z
+Japp/src/main/java/com/abhiyantrik/dentalhub/workers/DownloadUsersWorker.kt,7/c/7c37e84a3ebaaa5285dcee081fc2323513b74b42
