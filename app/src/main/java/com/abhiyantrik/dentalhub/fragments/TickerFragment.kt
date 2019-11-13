@@ -33,7 +33,6 @@ class TickerFragment : Fragment() {
             "Training" -> {
                 view.setBackgroundColor(resources.getColor(R.color.black))
             }
-
         }
         return view
     }
