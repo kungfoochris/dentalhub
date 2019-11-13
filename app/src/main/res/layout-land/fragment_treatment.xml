@@ -24,48 +24,48 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/treatment_sdf_outline"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"/>
             <Button
                     android:id="@+id/btnSEAL"
                     android:text="SEAL"
                     android:layout_margin="5dp"
                     android:background="@drawable/treatment_seal_outline"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"/>
             <Button
                     android:id="@+id/btnART"
                     android:text="ART"
                     android:layout_margin="5dp"
                     android:background="@color/grey_500"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp" />
             <Button
                     android:id="@+id/btnEXO"
                     android:text="EXO"
                     android:layout_margin="5dp"
                     android:background="@color/grey_500"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp" />
             <Button
                     android:id="@+id/btnSMART"
                     android:text="SMART"
                     android:layout_margin="5dp"
                     android:background="@color/grey_500"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp" />
             <Button
                     android:id="@+id/btnUNTR"
                     android:text="UNTR"
                     android:layout_margin="5dp"
                     android:background="@color/grey_500"
                     android:textColor="@color/treatment_button_default_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="96dp"
+                    android:layout_height="48dp" />
         </LinearLayout>
 
         <HorizontalScrollView
@@ -78,9 +78,15 @@
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    android:background="@drawable/odontogram_bg"
             >
-                <LinearLayout android:orientation="horizontal"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp">
 
                     <Button
                             android:id="@+id/btnId18"
@@ -129,13 +135,15 @@
                             android:text="11"
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
-                            android:layout_height="48dp"/>
+                            android:layout_height="48dp"
+                            android:layout_marginRight="16dp" />
                     <Button
                             android:id="@+id/btnId21"
                             android:text="21"
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
-                            android:layout_height="48dp"/>
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="16dp"/>
                     <Button
                             android:id="@+id/btnId22"
                             android:text="22"
@@ -181,8 +189,14 @@
 
 
                 </LinearLayout>
-                <LinearLayout android:orientation="horizontal"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <LinearLayout
+                        android:orientation="horizontal"
+                              android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginBottom="24dp">
 
 
                     <Button
@@ -214,13 +228,15 @@
                             android:text="51"
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
-                            android:layout_height="48dp"/>
+                            android:layout_height="48dp"
+                            android:layout_marginRight="16dp" />
                     <Button
                             android:id="@+id/btnId61"
                             android:text="61"
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
-                            android:layout_height="48dp"/>
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="16dp"/>
                     <Button
                             android:id="@+id/btnId62"
                             android:text="62"
@@ -247,8 +263,14 @@
                             android:layout_height="48dp"/>
 
                 </LinearLayout>
-                <LinearLayout android:orientation="horizontal"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="8dp">
 
 
                     <Button
@@ -280,13 +302,15 @@
                             android:text="81"
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
-                            android:layout_height="48dp"/>
+                            android:layout_height="48dp"
+                            android:layout_marginRight="16dp" />
                     <Button
                             android:id="@+id/btnId71"
                             android:text="71"
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
-                            android:layout_height="48dp"/>
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="16dp"/>
                     <Button
                             android:id="@+id/btnId72"
                             android:text="72"
@@ -313,8 +337,11 @@
                             android:layout_height="48dp"/>
 
                 </LinearLayout>
-                <LinearLayout android:orientation="horizontal"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp">
 
                     <Button
                             android:id="@+id/btnId48"
@@ -363,13 +390,15 @@
                             android:text="41"
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
-                            android:layout_height="48dp"/>
+                            android:layout_height="48dp"
+                            android:layout_marginRight="16dp"/>
                     <Button
                             android:id="@+id/btnId31"
                             android:text="31"
                             android:background="@drawable/treatment_none"
                             android:layout_width="48dp"
-                            android:layout_height="48dp"/>
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="16dp"/>
                     <Button
                             android:id="@+id/btnId32"
                             android:text="32"
