@@ -213,6 +213,60 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
+                        android:id="@+id/tvHighBPTitle"
+                        android:layout_marginEnd="16dp"
+                        android:textStyle="bold"
+                        android:text="@string/high_bp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:id="@+id/tvHighBP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tvLowBPTitle"
+                        android:layout_marginEnd="16dp"
+                        android:textStyle="bold"
+                        android:text="@string/low_bp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:id="@+id/tvLowBP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tvThyroidDisorderTitle"
+                        android:layout_marginEnd="16dp"
+                        android:textStyle="bold"
+                        android:text="@string/thyroid_disorder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:id="@+id/tvThyroidDisorder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
                         android:id="@+id/tvNoUnderlyingMedicalConditionTitle"
                         android:layout_marginEnd="16dp"
                         android:textStyle="bold"
@@ -448,60 +502,6 @@
                         />
                 <TextView
                         android:id="@+id/tvNeedExtraction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <TextView
-                        android:id="@+id/tvHighBPTitle"
-                        android:layout_marginEnd="16dp"
-                        android:textStyle="bold"
-                        android:text="@string/high_bp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                <TextView
-                        android:id="@+id/tvHighBP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <TextView
-                        android:id="@+id/tvLowBPTitle"
-                        android:layout_marginEnd="16dp"
-                        android:textStyle="bold"
-                        android:text="@string/low_bp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                <TextView
-                        android:id="@+id/tvLowBP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <TextView
-                        android:id="@+id/tvThyroidDisorderTitle"
-                        android:layout_marginEnd="16dp"
-                        android:textStyle="bold"
-                        android:text="@string/thyroid_disorder"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                <TextView
-                        android:id="@+id/tvThyroidDisorder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         />
