@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -105,8 +106,12 @@ class HistoryFragment : Fragment() {
         uncheckNoUnderlyingMedicalCon(checkBoxSeizuresOrEpilepsy)
         uncheckNoUnderlyingMedicalCon(checkBoxHepatitisBOrC)
         uncheckNoUnderlyingMedicalCon(checkBoxHIV)
+        uncheckNoUnderlyingMedicalCon(checkBoxHighBP)
+        uncheckNoUnderlyingMedicalCon(checkBoxLowBP)
+        uncheckNoUnderlyingMedicalCon(checkBoxThyroidDisorder)
 
         checkBoxNoUnderlyingMedicalCondition.setOnCheckedChangeListener { compoundButton, _ ->
+            etOther.setText("")
             if (compoundButton.isChecked) {
                 checkBoxBloodDisorderOrBleedingProblem.isChecked = false
                 checkBoxDiabetes.isChecked = false
@@ -115,8 +120,9 @@ class HistoryFragment : Fragment() {
                 checkBoxSeizuresOrEpilepsy.isChecked = false
                 checkBoxHepatitisBOrC.isChecked = false
                 checkBoxHIV.isChecked = false
-                etOther.setText("")
-                etOther.setText("")
+                checkBoxHighBP.isChecked = false
+                checkBoxLowBP.isChecked = false
+                checkBoxThyroidDisorder.isChecked = false
                 etOther.visibility = View.GONE
                 tvOther.visibility = View.GONE
             } else {
@@ -126,8 +132,8 @@ class HistoryFragment : Fragment() {
         }
 
         checkBoxNotTakingAnyMedications.setOnCheckedChangeListener { compoundButton, _ ->
+            etMedications.setText("")
             if (!compoundButton.isChecked) {
-                etMedications.setText("")
                 etMedications.visibility = View.VISIBLE
                 tvMedications.visibility = View.VISIBLE
             } else {
@@ -137,8 +143,8 @@ class HistoryFragment : Fragment() {
         }
 
         checkBoxNoAllergies.setOnCheckedChangeListener { compoundButton, _ ->
+            etAllergies.setText("")
             if (!compoundButton.isChecked) {
-                etAllergies.setText("")
                 etAllergies.visibility = View.VISIBLE
                 tvAllergies.visibility = View.VISIBLE
             } else {
@@ -148,7 +154,14 @@ class HistoryFragment : Fragment() {
         }
 
         checkBoxHighBP.setOnCheckedChangeListener { compoundButton, b ->
-            if (b && checkBoxLowBP.isChecked) {
+            if (checkBoxNoUnderlyingMedicalCondition.isChecked) {
+                compoundButton.isChecked = false
+                Toast.makeText(
+                    activity,
+                    "Please uncheck the Not underlying medical condition.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else if(b && checkBoxLowBP.isChecked) {
                 compoundButton.isChecked = false
                 Toast.makeText(
                     context,
@@ -158,7 +171,14 @@ class HistoryFragment : Fragment() {
             }
         }
         checkBoxLowBP.setOnCheckedChangeListener { compoundButton, b ->
-            if (b && checkBoxHighBP.isChecked) {
+            if (checkBoxNoUnderlyingMedicalCondition.isChecked) {
+                compoundButton.isChecked = false
+                Toast.makeText(
+                    activity,
+                    "Please uncheck the Not underlying medical condition.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else if(b && checkBoxHighBP.isChecked) {
                 compoundButton.isChecked = false
                 Toast.makeText(
                     context,
@@ -169,10 +189,20 @@ class HistoryFragment : Fragment() {
         }
 
         btnNext.setOnClickListener {
+            val view = this.view!!.rootView
+            if (view != null) {
+                val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             saveHistoryData()
             fragmentCommunicator.goForward()
         }
         btnSave.setOnClickListener {
+            val view = this.view!!.rootView
+            if (view != null) {
+                val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             saveHistoryData()
             fragmentCommunicator.goBack()
         }
@@ -257,8 +287,13 @@ class HistoryFragment : Fragment() {
             if (history.high_blood_pressure) checkBoxHighBP.isChecked = true
             if (history.thyroid_disorder) checkBoxThyroidDisorder.isChecked = true
 
-            if (history.no_underlying_medical_condition) checkBoxNoUnderlyingMedicalCondition.isChecked =
-                true
+            if (history.no_underlying_medical_condition){
+                checkBoxNoUnderlyingMedicalCondition.isChecked = true
+                etOther.visibility = View.GONE
+                tvOther.visibility = View.GONE
+            }else{
+                etOther.setText(history.other)
+            }
             etMedications.setText(history.medications)
             if (history.not_taking_any_medications) checkBoxNotTakingAnyMedications.isChecked = true
 

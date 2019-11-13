@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Spinner
@@ -98,6 +99,11 @@ class ScreeningFragment : Fragment() {
         setupUI(activity as Context)
 
         btnNext.setOnClickListener {
+            val view = this.view!!.rootView
+            if (view != null) {
+                val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             val carriesRisk = spinnerRisk.selectedItem.toString()
             val noOfdecayedPrimaryTeeth = spinnerNoOfDecayedPrimaryTeeth.selectedItem.toString()
             val noOfdecayedPermanentTeeth = spinnerNoOfDecayedPermanentTeeth.selectedItem.toString()
@@ -129,6 +135,11 @@ class ScreeningFragment : Fragment() {
 
 
         btnBack.setOnClickListener {
+            val view = this.view!!.rootView
+            if (view != null) {
+                val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             fragmentCommunicator.goBack()
         }
 

@@ -139,6 +139,7 @@
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:text="@string/hiv"
+                        android:textSize="@dimen/default_font_size"
                         android:labelFor="@+id/checkBoxHIV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>

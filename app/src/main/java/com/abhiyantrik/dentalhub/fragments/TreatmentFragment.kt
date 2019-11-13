@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -293,6 +294,11 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
         setupUI(activity as Context)
 
         btnNext.setOnClickListener {
+            val view = this.view!!.rootView
+            if (view != null) {
+                val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             val notes = etNotes.text.toString()
             val sdfWholeMouth = checkBoxSDFWholeMouth.isChecked
             val fvApplied = checkBoxFVApplied.isChecked
@@ -313,6 +319,11 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             fragmentCommunicator.goForward()
         }
         btnBack.setOnClickListener {
+            val view = this.view!!.rootView
+            if (view != null) {
+                val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             val notes = etNotes.text.toString()
             val sdfWholeMouth = checkBoxSDFWholeMouth.isChecked
             val fvApplied = checkBoxFVApplied.isChecked

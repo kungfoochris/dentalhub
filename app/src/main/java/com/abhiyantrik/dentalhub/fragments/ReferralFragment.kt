@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.abhiyantrik.dentalhub.*
@@ -232,6 +233,11 @@ class ReferralFragment : Fragment() {
         setupUI(activity as Context)
 
         btnNext.setOnClickListener {
+            val view = this.view!!.rootView
+            if (view != null) {
+                val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             if (isFormValid()) {
                 val noReferral = radioNoReferral.isChecked
                 val healthPost = radioHealthPost.isChecked
@@ -265,6 +271,11 @@ class ReferralFragment : Fragment() {
             }
         }
         btnBack.setOnClickListener {
+            val view = this.view!!.rootView
+            if (view != null) {
+                val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             fragmentCommunicator.goBack()
         }
     }
