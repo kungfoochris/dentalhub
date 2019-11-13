@@ -20,6 +20,9 @@ class History : Parcelable {
     var seizuers_or_epilepsy: Boolean = false
     var hepatitis_b_or_c: Boolean = false
     var hiv: Boolean = false
+    var high_blood_pressure: Boolean = false
+    var low_blood_pressure: Boolean = false
+    var thyroid_disorder: Boolean = false
     var other: String = ""
     var no_underlying_medical_condition: Boolean = false
     var medications: String = ""

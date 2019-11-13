@@ -42,6 +42,10 @@ class HistoryFragment : Fragment() {
     private lateinit var checkBoxNotTakingAnyMedications: CheckBox
     private lateinit var checkBoxNoAllergies: CheckBox
 
+    private lateinit var checkBoxLowBP: CheckBox
+    private lateinit var checkBoxHighBP: CheckBox
+    private lateinit var checkBoxThyroidDisorder: CheckBox
+
     private lateinit var etOther: EditText
     private lateinit var etMedications: EditText
     private lateinit var etAllergies: EditText
@@ -72,6 +76,10 @@ class HistoryFragment : Fragment() {
             view.findViewById(R.id.checkBoxNoUnderlyingMedicalCondition)
         checkBoxNotTakingAnyMedications = view.findViewById(R.id.checkBoxNotTakingAnyMedications)
         checkBoxNoAllergies = view.findViewById(R.id.checkBoxNoAllergies)
+
+        checkBoxLowBP = view.findViewById(R.id.checkBoxLowBP)
+        checkBoxHighBP = view.findViewById(R.id.checkBoxHighBP)
+        checkBoxThyroidDisorder = view.findViewById(R.id.checkBoxThyroidDisorder)
 
         etOther = view.findViewById(R.id.etOther)
         etMedications = view.findViewById(R.id.etMedications)
@@ -136,6 +144,27 @@ class HistoryFragment : Fragment() {
             }
         }
 
+        checkBoxHighBP.setOnCheckedChangeListener { compoundButton, b ->
+            if (b && checkBoxLowBP.isChecked) {
+                compoundButton.isChecked = false
+                Toast.makeText(
+                    context,
+                    resources.getString(R.string.low_bp_is_checked),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+        checkBoxLowBP.setOnCheckedChangeListener { compoundButton, b ->
+            if (b && checkBoxHighBP.isChecked) {
+                compoundButton.isChecked = false
+                Toast.makeText(
+                    context,
+                    resources.getString(R.string.high_bp_is_checked),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
         btnNext.setOnClickListener {
             saveHistoryData()
             fragmentCommunicator.goForward()
@@ -162,6 +191,10 @@ class HistoryFragment : Fragment() {
         val noAllergies = checkBoxNoAllergies.isChecked
         val allergies = etAllergies.text.toString()
 
+        val highBP = checkBoxHighBP.isChecked
+        val lowBP = checkBoxLowBP.isChecked
+        val thyroidDisorder = checkBoxThyroidDisorder.isChecked
+
         historyFormCommunicator.updateHistory(
             bloodDisorders,
             diabetes,
@@ -171,6 +204,9 @@ class HistoryFragment : Fragment() {
             hepatitisBOrC,
             hiv,
             other,
+            highBP,
+            lowBP,
+            thyroidDisorder,
             noUnderlyingMedicalCondition,
             medications,
             notTakingAnyMedications,
@@ -213,6 +249,11 @@ class HistoryFragment : Fragment() {
             if (history.hepatitis_b_or_c) checkBoxHepatitisBOrC.isChecked = true
             if (history.hiv) checkBoxHIV.isChecked = true
             etOther.setText(history.other)
+
+            if (history.low_blood_pressure) checkBoxLowBP.isChecked = true
+            if (history.high_blood_pressure) checkBoxHighBP.isChecked = true
+            if (history.thyroid_disorder) checkBoxThyroidDisorder.isChecked = true
+
             if (history.no_underlying_medical_condition) checkBoxNoUnderlyingMedicalCondition.isChecked =
                 true
             etMedications.setText(history.medications)

@@ -234,8 +234,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun updateHistory(
         bloodDisorders: Boolean, diabetes: Boolean, liverProblem: Boolean,
         rheumaticFever: Boolean, seizuresOrEpilepsy: Boolean, hepatitisBOrC: Boolean,
-        hiv: Boolean, other: String, noUnderlyingMedicalCondition: Boolean, medications: String,
-        notTakingAnyMedications: Boolean, noAllergies: Boolean, allergies: String
+        hiv: Boolean, other: String,highBloodPressure: Boolean,
+        lowBloodPressure: Boolean, thyroidDisorder: Boolean, noUnderlyingMedicalCondition: Boolean,
+        medications: String, notTakingAnyMedications: Boolean, noAllergies: Boolean, allergies: String
     ) {
 
         history =
@@ -252,6 +253,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         history.hepatitis_b_or_c = hepatitisBOrC
         history.hiv = hiv
         history.other = other
+        history.high_blood_pressure = highBloodPressure
+        history.low_blood_pressure = lowBloodPressure
+        history.thyroid_disorder = thyroidDisorder
         history.medications = medications
         history.no_underlying_medical_condition = noUnderlyingMedicalCondition
         history.not_taking_any_medications = notTakingAnyMedications
@@ -272,10 +276,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         needSealant: Boolean,
         needSDF: Boolean,
         needExtraction: Boolean,
-        activeInfection: Boolean,
-        highBloodPressure: Boolean,
-        lowBloodPressure: Boolean,
-        thyroidDisorder: Boolean
+        activeInfection: Boolean
     ) {
 
         screening = screeningBox.query().equal(
@@ -303,9 +304,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         screening.need_sdf = needSDF
         screening.reversible_pulpitis = reversiblePulpitis
         screening.need_extraction = needExtraction
-        screening.high_blood_pressure = highBloodPressure
-        screening.low_blood_pressure = lowBloodPressure
-        screening.thyroid_disorder = thyroidDisorder
         screening.updated = true
 
         screeningBox.put(screening)

@@ -34,9 +34,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
         } catch (e: Exception) {
             Log.d("UploadPatientWorkerEx", e.printStackTrace().toString())
             Result.failure()
-
         }
-
     }
 
     private fun savePatientToServer(patient: Patient) {
@@ -96,8 +94,6 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
                         patientsBox.put(dbPatient)
 
                         DentalApp.cancelNotification(applicationContext, 1001)
-
-
                     }
                 }
             } else {
@@ -106,30 +102,8 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             }
         }
         createOutputData(dbPatient!!.id)
-
-//        val allEncounters =
-//            encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
-//        Log.d(patient.fullName(), allEncounters.size.toString())
-//        for (eachEncounter in allEncounters) {
-//            if (!eachEncounter.uploaded) {
-//                Thread.sleep(500L)
-//                val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)
-//                    .putLong("PATIENT_ID", dbPatient!!.id)
-//                val uploadEncounterWorkerRequest =
-//                    OneTimeWorkRequestBuilder<UploadEncounterWorker>()
-//                        .setInputData(data.build())
-//                        .setConstraints(DentalApp.uploadConstraints)
-//                        .setInitialDelay(
-//                            100,
-//                            TimeUnit.MILLISECONDS
-//                        ).build()
-//                WorkManager.getInstance(applicationContext)
-//                    .enqueue(uploadEncounterWorkerRequest)
-//            }
-//        }
-
-
     }
+
     private fun createOutputData(patientId: Long):Data{
         return Data.Builder().putLong("PATIENT_ID",patientId).build()
     }

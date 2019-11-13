@@ -64,10 +64,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                 screening.need_sealant,
                 screening.need_sdf,
                 screening.need_extraction,
-                screening.active_infection,
-                screening.high_blood_pressure,
-                screening.low_blood_pressure,
-                screening.thyroid_disorder
+                screening.active_infection
             )
             val response = call.execute()
             if (response.isSuccessful) {
@@ -101,10 +98,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                 screening.need_sealant,
                 screening.need_sdf,
                 screening.need_extraction,
-                screening.active_infection,
-                screening.high_blood_pressure,
-                screening.low_blood_pressure,
-                screening.thyroid_disorder
+                screening.active_infection
             )
             val response = call.execute()
             if (response.isSuccessful) {

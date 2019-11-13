@@ -145,6 +145,69 @@
 
             </LinearLayout>
             <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin">
+                <CheckBox
+                        android:id="@+id/checkBoxHighBP"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:layout_weight="1"
+                        android:text="@string/high_bp"
+                        android:textSize="@dimen/default_font_size"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    >
+                <CheckBox
+                        android:id="@+id/checkBoxLowBP"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:layout_weight="1"
+                        android:text="@string/low_bp"
+                        android:textSize="@dimen/default_font_size"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin">
+                <CheckBox
+                        android:id="@+id/checkBoxThyroidDisorder"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:layout_weight="1"
+                        android:textSize="@dimen/default_font_size"
+                        android:text="@string/thyroid_disorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/fieldTopMargin"

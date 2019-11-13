@@ -129,6 +129,9 @@ interface DjangoInterface {
         @Field("no_allergies") no_allergies: Boolean,
         @Field("allergies") allergies: String,
         @Field("other") other: String,
+        @Field("high_blood_pressure") high_blood_pressure: Boolean,
+        @Field("low_blood_pressure") low_blood_pressure: Boolean,
+        @Field("thyroid_disorder") thyroid_disorder: Boolean,
         @Field("medications") medications: String,
         @Field("no_underlying_medical_condition") no_underlying_medical_condition: Boolean,
         @Field("not_taking_any_medications") not_taking_any_medications: Boolean
@@ -150,6 +153,9 @@ interface DjangoInterface {
         @Field("no_allergies") no_allergies: Boolean,
         @Field("allergies") allergies: String,
         @Field("other") other: String,
+        @Field("high_blood_pressure") high_blood_pressure: Boolean,
+        @Field("low_blood_pressure") low_blood_pressure: Boolean,
+        @Field("thyroid_disorder") thyroid_disorder: Boolean,
         @Field("medications") medications: String,
         @Field("no_underlying_medical_condition") no_underlying_medical_condition: Boolean,
         @Field("not_taking_any_medications") not_taking_any_medications: Boolean
@@ -170,10 +176,8 @@ interface DjangoInterface {
         @Field("need_art_filling") need_art_filling: Boolean,
         @Field("need_extraction") need_extraction: Boolean,
         @Field("need_sdf") need_sdf: Boolean,
-        @Field("active_infection") active_infection: Boolean,
-        @Field("high_blood_pressure") high_blood_pressure: Boolean,
-        @Field("low_blood_pressure") low_blood_pressure: Boolean,
-        @Field("thyroid_disorder") thyroid_disorder: Boolean
+        @Field("active_infection") active_infection: Boolean
+
     ): Call<ScreeningModel>
 
     @FormUrlEncoded
@@ -191,10 +195,7 @@ interface DjangoInterface {
         @Field("need_sealant") need_sealant: Boolean,
         @Field("need_sdf") need_sdf: Boolean,
         @Field("need_extraction") need_extraction: Boolean,
-        @Field("active_infection") active_infection: Boolean,
-        @Field("high_blood_pressure") high_blood_pressure: Boolean,
-        @Field("low_blood_pressure") low_blood_pressure: Boolean,
-        @Field("thyroid_disorder") thyroid_disorder: Boolean
+        @Field("active_infection") active_infection: Boolean
     ): Call<ScreeningModel>
 
     @FormUrlEncoded

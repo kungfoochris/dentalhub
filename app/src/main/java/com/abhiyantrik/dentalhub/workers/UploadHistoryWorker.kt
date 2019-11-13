@@ -65,6 +65,9 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                 history.no_allergies,
                 history.allergies,
                 history.other,
+                history.high_blood_pressure,
+                history.low_blood_pressure,
+                history.thyroid_disorder,
                 history.medications,
                 history.no_underlying_medical_condition,
                 history.not_taking_any_medications
@@ -106,6 +109,9 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                 history.no_allergies,
                 history.allergies,
                 history.other,
+                history.high_blood_pressure,
+                history.low_blood_pressure,
+                history.thyroid_disorder,
                 history.medications,
                 history.no_underlying_medical_condition,
                 history.not_taking_any_medications
