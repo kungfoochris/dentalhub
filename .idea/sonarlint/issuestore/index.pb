@@ -174,3 +174,5 @@ j
 :app/src/main/java/com/abhiyantrik/dentalhub/models/User.kt,3/c/3c4ab44e003df8585308f23f54fd4124bfb7f1b5
 z
 Japp/src/main/java/com/abhiyantrik/dentalhub/workers/DownloadUsersWorker.kt,7/c/7c37e84a3ebaaa5285dcee081fc2323513b74b42
+‹
+[app/src/main/java/com/abhiyantrik/dentalhub/fragments/interfaces/HistoryFormCommunicator.kt,d/6/d683d0bdcddfb990b44d5ffc709514384cfef8c3
