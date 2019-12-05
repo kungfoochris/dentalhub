@@ -34,8 +34,7 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         editableDuration = firebaseConfig.fetchEditableTime()
 
         activitySuggestions =
-            DentalApp.readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS)
-                .toMutableSet()
+            DentalApp.readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS)!!.toMutableSet()
 
         NotificationHelper.createNotificationChannel(
             this,
@@ -124,7 +123,7 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
             editor.apply()
         }
 
-        fun readStringSetFromPreference(context: Context, preferenceName: String): Set<String> {
+        fun readStringSetFromPreference(context: Context, preferenceName: String): MutableSet<String>? {
             val prefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             return prefs.getStringSet(preferenceName, emptySet())
         }
