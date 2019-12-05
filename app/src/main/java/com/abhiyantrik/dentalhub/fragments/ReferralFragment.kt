@@ -191,7 +191,7 @@ class ReferralFragment : Fragment() {
                         }
                     }
                 dpd.setMinDate(nepaliDateConverter.todayNepaliDate)
-                dpd.show(fragmentManager, "RecallDate")
+                fragmentManager?.let { dpd.show(it, "RecallDate") }
 
             }
         }
