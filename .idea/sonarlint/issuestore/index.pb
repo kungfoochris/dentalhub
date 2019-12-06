@@ -176,3 +176,5 @@ z
 Japp/src/main/java/com/abhiyantrik/dentalhub/workers/DownloadUsersWorker.kt,7/c/7c37e84a3ebaaa5285dcee081fc2323513b74b42
 ‹
 [app/src/main/java/com/abhiyantrik/dentalhub/fragments/interfaces/HistoryFormCommunicator.kt,d/6/d683d0bdcddfb990b44d5ffc709514384cfef8c3
+F
+app/proguard-rules.pro,9/e/9e08934d811afe28fbc77aaa3c0d747b94348db9
