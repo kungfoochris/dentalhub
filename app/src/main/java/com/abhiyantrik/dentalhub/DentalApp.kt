@@ -24,17 +24,18 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         super.onCreate()
         ObjectBox.init(this)
 
-
         defaultChannelId =
             applicationContext.packageName + applicationContext.getString(R.string.app_name)
         syncChannelId =
             applicationContext.packageName + applicationContext.getString(R.string.app_name) + "-sync"
 
-        val firebaseConfig: FirebaseConfig = FirebaseConfig()
+        val firebaseConfig = FirebaseConfig()
         editableDuration = firebaseConfig.fetchEditableTime()
 
-        activitySuggestions =
-            DentalApp.readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS)!!.toMutableSet()
+        if(readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS) != null){
+            activitySuggestions = readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS)!!.toMutableSet()
+        }
+
 
         NotificationHelper.createNotificationChannel(
             this,
@@ -72,7 +73,6 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         var lastDobMonthIndex = 0
         var lastDobDayIndex = 0
 
-        var lastDistrictIndex = 0
         var lastMunicipalityIndex = 0
         var lastWardIndex = 0
 

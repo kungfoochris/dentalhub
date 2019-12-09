@@ -109,7 +109,11 @@ class LoginActivity : Activity() {
                                 Constants.PREF_AUTH_TOKEN,
                                 loginResponse.token
                             )
-                            DentalApp.saveToPreference(context, Constants.PREF_AUTH_EMAIL, email)
+                            DentalApp.saveToPreference(
+                                context,
+                                Constants.PREF_AUTH_EMAIL,
+                                email
+                            )
                             DentalApp.saveToPreference(
                                 context,
                                 Constants.PREF_AUTH_PASSWORD,
@@ -141,13 +145,12 @@ class LoginActivity : Activity() {
                         tvErrorMessage.visibility = View.VISIBLE
                         loading.visibility = View.GONE
                     }
-                    Log.d("response CODE", response.code().toString())
-                    Log.d("response BODY", response.errorBody().toString())
-//                    loading.visibility = View.GONE
-//                    val gson = Gson()
-//                    val errorResponse = gson.fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-//                    tvErrorMessage.text = errorResponse.non_field_errors[0]
-//                    tvErrorMessage.visibility = View.VISIBLE
+
+                    if(BuildConfig.DEBUG){
+                        Log.d("response CODE", response.code().toString())
+                        Log.d("response BODY", response.errorBody().toString())
+                    }
+
 
                 }
             }
