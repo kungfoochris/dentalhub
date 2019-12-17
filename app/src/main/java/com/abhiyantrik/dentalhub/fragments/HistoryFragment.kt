@@ -2,6 +2,7 @@ package com.abhiyantrik.dentalhub.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -194,8 +195,13 @@ class HistoryFragment : Fragment() {
                 val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
-            saveHistoryData()
-            fragmentCommunicator.goForward()
+//          to check the validation conditions
+            if (historyValidate() == false) {
+                Log.d("HistoryFragment", "History fragment is invalid.")
+            } else {
+                saveHistoryData()
+                fragmentCommunicator.goForward()
+            }
         }
         btnSave.setOnClickListener {
             val view = this.view!!.rootView
@@ -203,8 +209,14 @@ class HistoryFragment : Fragment() {
                 val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
-            saveHistoryData()
-            fragmentCommunicator.goBack()
+//          to check the validation conditions
+            if (historyValidate() == false) {
+                Log.d("HistoryFragment", "History fragment is invalid.")
+            } else {
+                Log.d("HistoryFragment", "History fragment is valid.")
+                saveHistoryData()
+                fragmentCommunicator.goBack()
+            }
         }
     }
 
@@ -246,6 +258,30 @@ class HistoryFragment : Fragment() {
             noAllergies,
             allergies
         )
+    }
+
+    private fun historyValidate(): Boolean {
+        if (checkBoxNoUnderlyingMedicalCondition.isChecked == false && (checkBoxDiabetes.isChecked == false &&
+                    checkBoxLiverProblem.isChecked == false && checkBoxRheumaticFever.isChecked == false &&
+                    checkBoxSeizuresOrEpilepsy.isChecked == false && checkBoxHepatitisBOrC.isChecked == false &&
+                    checkBoxHIV.isChecked == false && checkBoxHighBP.isChecked == false &&
+                    checkBoxLowBP.isChecked == false && checkBoxThyroidDisorder.isChecked == false) &&
+            etOther.text.toString().trim().length < 1) {
+            Log.d("HistoryFragment()", "Checkbox of not underlying medical condition is not checked.")
+            Toast.makeText(context, "Fill underlying medical condition details.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (checkBoxNotTakingAnyMedications.isChecked == false && etMedications.text.toString().trim().length < 1) {
+            Log.d("HistoryFragment()", "Checkbox of medicine is not checked.")
+            Toast.makeText(context, "Fill medication details.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (checkBoxNoAllergies.isChecked == false && etAllergies.text.toString().trim().length < 1) {
+            Log.d("HistoryFragment()", "Checkbox of allergies is not checked.")
+            Toast.makeText(context, "Fill allergies details.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     private fun uncheckNoUnderlyingMedicalCon(checkbox: CheckBox) {
