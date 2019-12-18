@@ -261,6 +261,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun historyValidate(): Boolean {
+//        for no underlying medical condition
         if (checkBoxNoUnderlyingMedicalCondition.isChecked == false && (checkBoxDiabetes.isChecked == false &&
                     checkBoxLiverProblem.isChecked == false && checkBoxRheumaticFever.isChecked == false &&
                     checkBoxSeizuresOrEpilepsy.isChecked == false && checkBoxHepatitisBOrC.isChecked == false &&
@@ -271,11 +272,13 @@ class HistoryFragment : Fragment() {
             Toast.makeText(context, "Fill underlying medical condition details.", Toast.LENGTH_SHORT).show()
             return false
         }
+//        for not taking any medications
         if (checkBoxNotTakingAnyMedications.isChecked == false && etMedications.text.toString().trim().length < 1) {
             Log.d("HistoryFragment()", "Checkbox of medicine is not checked.")
             Toast.makeText(context, "Fill medication details.", Toast.LENGTH_SHORT).show()
             return false
         }
+//        for no allergies
         if (checkBoxNoAllergies.isChecked == false && etAllergies.text.toString().trim().length < 1) {
             Log.d("HistoryFragment()", "Checkbox of allergies is not checked.")
             Toast.makeText(context, "Fill allergies details.", Toast.LENGTH_SHORT).show()
