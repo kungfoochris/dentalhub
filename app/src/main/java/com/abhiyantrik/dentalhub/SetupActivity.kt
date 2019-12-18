@@ -37,8 +37,6 @@ class SetupActivity : AppCompatActivity() {
     private lateinit var context: Context
     var profileLoadComplete = false
     var dataLoadComplete = false
-    var patientDataLoadComplete = false
-    var downloadedPatients = mutableListOf<PatientModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,48 +128,7 @@ class SetupActivity : AppCompatActivity() {
                     when (response.code()) {
                         200 -> {
                             allDistricts = response.body() as List<District>
-
-                            for (district in allDistricts) {
-                                if (districtsBox.query().equal(
-                                        District_.name,
-                                        district.name
-                                    ).build().count() == 0.toLong()
-                                ) {
-                                    val newDistrict = District()
-                                    newDistrict.remote_id = district.id
-                                    newDistrict.name = district.name
-                                    districtsBox.put(newDistrict)
-                                }
-
-
-                                for (municipality in district.municipalities) {
-                                    val dbDistrict =
-                                        districtsBox.query().orderDesc(District_.id).build()
-                                            .findFirst()
-                                    if (municipalitiesBox.query().equal(
-                                            Municipality_.name,
-                                            municipality.name
-                                        ).build().count() == 0.toLong()
-                                    ) {
-                                        val newMunicipality = Municipality()
-                                        newMunicipality.remote_id = municipality.id
-                                        newMunicipality.name = municipality.name
-                                        newMunicipality.district?.target = dbDistrict
-                                        municipalitiesBox.put(newMunicipality)
-                                        for (ward in municipality.wards) {
-                                            val dbMunicipality = municipalitiesBox.query()
-                                                .orderDesc(Municipality_.id).build().findFirst()
-                                            val newWard = Ward()
-                                            newWard.remote_id = ward.id
-                                            newWard.ward = ward.ward
-                                            newWard.name = ward.name
-//                                                dbMunicipality!!.name + "-" + ward.ward.toString() + ", " + dbDistrict!!.name
-                                            newWard.municipality?.target = dbMunicipality
-                                            wardsBox.put(newWard)
-                                        }
-                                    }
-                                }
-                            }
+                            storeDistricts(allDistricts)
                             tvMessage.append("Loading address complete\n")
                             DentalApp.saveToPreference(
                                 context,
@@ -179,7 +136,6 @@ class SetupActivity : AppCompatActivity() {
                                 "true"
                             )
                             dataLoadComplete = true
-                            //loadPatientData()
                             startActivity(Intent(context, LocationSelectorActivity::class.java))
                             finish()
                         }
@@ -191,13 +147,49 @@ class SetupActivity : AppCompatActivity() {
         })
     }
 
-    private fun loadEncounterData() {
-        tvMessage.append("Loading encounter data...\n")
-        startActivity(Intent(context, LocationSelectorActivity::class.java))
-        finish()
+    private fun storeDistricts(allDistricts: List<District>) {
+        for (district in allDistricts) {
+            if (districtsBox.query().equal(
+                    District_.name,
+                    district.name
+                ).build().count() == 0.toLong()
+            ) {
+                val newDistrict = District()
+                newDistrict.remote_id = district.id
+                newDistrict.name = district.name
+                districtsBox.put(newDistrict)
+            }
 
+
+            for (municipality in district.municipalities) {
+                val dbDistrict =
+                    districtsBox.query().orderDesc(District_.id).build()
+                        .findFirst()
+                if (municipalitiesBox.query().equal(
+                        Municipality_.name,
+                        municipality.name
+                    ).build().count() == 0.toLong()
+                ) {
+                    val newMunicipality = Municipality()
+                    newMunicipality.remote_id = municipality.id
+                    newMunicipality.name = municipality.name
+                    newMunicipality.district?.target = dbDistrict
+                    municipalitiesBox.put(newMunicipality)
+                    for (ward in municipality.wards) {
+                        val dbMunicipality = municipalitiesBox.query()
+                            .orderDesc(Municipality_.id).build().findFirst()
+                        val newWard = Ward()
+                        newWard.remote_id = ward.id
+                        newWard.ward = ward.ward
+                        newWard.name = ward.name
+//                                                dbMunicipality!!.name + "-" + ward.ward.toString() + ", " + dbDistrict!!.name
+                        newWard.municipality?.target = dbMunicipality
+                        wardsBox.put(newWard)
+                    }
+                }
+            }
+        }
     }
-
 
     private fun initUI() {
         tvMessage = findViewById(R.id.tvMessage)

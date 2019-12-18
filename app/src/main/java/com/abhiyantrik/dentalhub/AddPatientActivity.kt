@@ -19,6 +19,7 @@ import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
 import com.google.firebase.perf.metrics.AddTrace
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
+import java.lang.Exception
 import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit
 
@@ -133,7 +134,9 @@ class AddPatientActivity : AppCompatActivity() {
 
         spinnerDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                /**
+                 * If nothing is selected we dont have to do any other operation
+                 */
             }
 
             override fun onItemSelected(
@@ -173,6 +176,7 @@ class AddPatientActivity : AppCompatActivity() {
         }
         btnAddPatient.setOnClickListener {
             if (isFormValid()) {
+                DentalApp.lastDistrictIndex = spinnerDistrict.selectedItemPosition+1
                 DentalApp.lastMunicipalityIndex = spinnerMunicipality.selectedItemPosition
                 DentalApp.lastWardIndex = spinnerWard.selectedItemPosition
                 savePatient()
@@ -193,7 +197,7 @@ class AddPatientActivity : AppCompatActivity() {
             allWards = dbWards
 
             if(selectedWard == 0){
-                for ((count, ward) in dbWards.withIndex()) {
+                for ((_, ward) in dbWards.withIndex()) {
                     wards.add(ward.ward.toString())
                 }
                 selectedWardIndex = DentalApp.lastWardIndex
@@ -206,7 +210,12 @@ class AddPatientActivity : AppCompatActivity() {
                 }
             }
             spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
-            spinnerWard.setSelection(selectedWardIndex)
+            try {
+                spinnerWard.setSelection(selectedWardIndex)
+            }catch (e: IndexOutOfBoundsException){
+                spinnerWard.setSelection(0)
+            }
+
 
         } else {
             Toast.makeText(context, "Municipality not found.", Toast.LENGTH_LONG).show()
@@ -225,7 +234,7 @@ class AddPatientActivity : AppCompatActivity() {
         val municipalitiesList = mutableListOf<String>()
 
         if(selectedMunicipality==0){
-            for ((count, municipality) in allMunicipalities.withIndex()) {
+            for ((_, municipality) in allMunicipalities.withIndex()) {
                 municipalitiesList.add(municipality.name.capitalize())
             }
             selectedMunicipalityIndex = DentalApp.lastMunicipalityIndex
@@ -239,7 +248,12 @@ class AddPatientActivity : AppCompatActivity() {
         }
         spinnerMunicipality.adapter =
             AdapterHelper.createAdapter(context, municipalitiesList.toList())
-        spinnerMunicipality.setSelection(selectedMunicipalityIndex)
+        try {
+            spinnerMunicipality.setSelection(selectedMunicipalityIndex)
+        }catch (e: IndexOutOfBoundsException){
+            spinnerMunicipality.setSelection(0)
+        }
+
         if (patient != null) {
             setupWards(patient!!.ward)
         } else {
@@ -260,7 +274,12 @@ class AddPatientActivity : AppCompatActivity() {
             districtsList.add(district.name.capitalize())
         }
         spinnerDistrict.adapter = AdapterHelper.createAdapter(context, districtsList.toList())
-        spinnerDistrict.setSelection(selectedDistrictIndex)
+        try {
+            spinnerDistrict.setSelection(selectedDistrictIndex)
+        }catch (e: IndexOutOfBoundsException){
+            spinnerDistrict.setSelection(0)
+        }
+
         if (patient != null) {
             setupMunicipalities(patient!!.municipality)
         } else {
@@ -299,7 +318,7 @@ class AddPatientActivity : AppCompatActivity() {
             spinnerDobDay.setSelection(DentalApp.lastDobDayIndex)
             spinnerDobMonth.setSelection(DentalApp.lastDobMonthIndex)
             spinnerDobYear.setSelection(DentalApp.lastDobYearIndex)
-            setupDistricts(35) // set default as kaski 35 is remote_id of Kaski District
+            setupDistricts(DentalApp.lastDistrictIndex) // set default as kaski 35 is remote_id of Kaski District
         }
     }
 
@@ -320,9 +339,6 @@ class AddPatientActivity : AppCompatActivity() {
         val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
         val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
         val dbWard = allWards[spinnerWard.selectedItemPosition]
-
-
-
 
         val id: Long = 0
         val firstName = etFirstName.text.toString()
@@ -488,8 +504,6 @@ class AddPatientActivity : AppCompatActivity() {
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-//        val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
-//        val dbWard = allWards[spinnerWard.selectedItemPosition]
         return true
     }
 
