@@ -11,6 +11,9 @@ class Constants {
         val CONTENT_TYPE_VIDEO = "video/*"
 
         @JvmStatic
+        val DEFAULT_SELECTED_DISTRICT = 35 // id of Kaski
+
+        @JvmStatic
         val PREF_AUTH_TOKEN = "AUTH-TOKEN"
         @JvmStatic
         val PREF_AUTH_EMAIL = "AUTH-EMAIL"

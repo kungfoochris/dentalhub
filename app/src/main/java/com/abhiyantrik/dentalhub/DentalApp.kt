@@ -73,6 +73,7 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         var lastDobMonthIndex = 0
         var lastDobDayIndex = 0
 
+        var lastDistrictIndex = Constants.DEFAULT_SELECTED_DISTRICT
         var lastMunicipalityIndex = 0
         var lastWardIndex = 0
 
