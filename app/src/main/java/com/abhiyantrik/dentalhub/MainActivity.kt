@@ -301,13 +301,14 @@ class MainActivity : AppCompatActivity() {
         if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
                 treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
             Log.d(TAG, "all patient uploaded.")
-            fabBtnSync.setBackgroundResource(R.color.green_A200)
         } else {
             Log.d(TAG, "Left to upload patient.")
+//            fabBtnSync.drawable.mutate().setTint(resources.getColor(R.color.red_A200))
+            fabBtnSync.background.mutate().setTint(resources.getColor(R.color.green_A200))
 //            fabBtnSync.backgroundTintList = ColorStateList.valueOf((Color.parseColor())
 //            fabBtnSync.backgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_A200)))
 //            fabBtnSync.setColorFilter(R.color.red_100)
-            fabBtnSync.backgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.red_A200)))
+//            fabBtnSync.backgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.red_A200)))
         }
 
     }
