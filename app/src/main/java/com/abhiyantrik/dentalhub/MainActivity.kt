@@ -1,5 +1,6 @@
 package com.abhiyantrik.dentalhub
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -7,6 +8,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -192,6 +194,8 @@ class MainActivity : AppCompatActivity() {
         btnAddPatient = findViewById(R.id.btnAddNewPatient)
         fabBtnAddPatient = findViewById(R.id.fabAddPatient)
         fabBtnSync = findViewById(R.id.fabSync)
+        fabBtnSync.setBackgroundResource(R.color.blue_100)
+
 
         tvLocation = findViewById(R.id.tvLocation)
         tvActivity = findViewById(R.id.tvActivity)
@@ -266,18 +270,16 @@ class MainActivity : AppCompatActivity() {
             //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
         }
 
-        // create a daemon thread
-        val timer = Timer("SyncScheduleStatusTimer", true);
-
-        // schedule at a fixed rate
-        timer.scheduleAtFixedRate(object : TimerTask() {
+        val handler = Handler()
+        val run = object : Runnable {
             override fun run() {
-                Log.d(TAG, "Task running in time interval.")
                 checkAllUpdated()
+                handler.postDelayed(this, 2000)
             }
-        }, 2000, 2000) /* 120000 2 minute delay */
-
+        }
+        handler.postDelayed(run, 5000)
     }
+
 
     private fun checkAllUpdated() {
         val patient = patientsBox.query().equal(Patient_.uploaded, false).build().find()
@@ -301,14 +303,14 @@ class MainActivity : AppCompatActivity() {
         if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
                 treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
             Log.d(TAG, "all patient uploaded.")
+            fabBtnSync.background.setTint(resources.getColor(R.color.green_A200))
+//            fabBtnSync.background.mutate().setTint(resources.getColor(R.color.green_A200))
+
+//        fabBtnSync.backgroundTintList = resources.getColorStateList(R.color.blue_100)
         } else {
-            Log.d(TAG, "Left to upload patient.")
+            Log.d(TAG, "Left to upload patient details.")
+            fabBtnSync.background.setTint(resources.getColor(R.color.red_A200))
 //            fabBtnSync.drawable.mutate().setTint(resources.getColor(R.color.red_A200))
-            fabBtnSync.background.mutate().setTint(resources.getColor(R.color.green_A200))
-//            fabBtnSync.backgroundTintList = ColorStateList.valueOf((Color.parseColor())
-//            fabBtnSync.backgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_A200)))
-//            fabBtnSync.setColorFilter(R.color.red_100)
-//            fabBtnSync.backgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.red_A200)))
         }
 
     }
