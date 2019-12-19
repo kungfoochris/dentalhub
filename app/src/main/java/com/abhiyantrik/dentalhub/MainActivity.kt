@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -16,6 +17,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -67,6 +70,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var patientsQuery: Query<Patient>
     private lateinit var recallBox: Box<Recall>
 //    private lateinit var recallQuery: Query<Recall>
+    private lateinit var encounterBox: Box<Encounter>
+    private lateinit var historyBox: Box<History>
+    private lateinit var screeningBox: Box<Screening>
+    private lateinit var treatmentBox: Box<Treatment>
+    private lateinit var referralBox: Box<Referral>
+
 
     private lateinit var allPatientRecall: MutableList<Patient>
 
@@ -191,6 +200,11 @@ class MainActivity : AppCompatActivity() {
         title = getString(R.string.dashboard)
 
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
+        encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+        historyBox = ObjectBox.boxStore.boxFor(History::class.java)
+        screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
+        treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
+        referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
         patientsQuery = patientsBox.query().build()
 
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
@@ -266,9 +280,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAllUpdated() {
-        val notSyncedPatient = patientsBox.query().equal(Patient_.uploaded, false).build().find()
-        if (notSyncedPatient == null) {
-            Log.d(TAG, "Not uploaded.")
+        val patient = patientsBox.query().equal(Patient_.uploaded, false).build().find()
+        val encounter = encounterBox.query().equal(Encounter_.uploaded, false).build().find()
+
+        val history = historyBox.query().equal(History_.uploaded, false).build().find()
+        val screening =
+            screeningBox.query().equal(Screening_.uploaded, false).build().find()
+        val treatment =
+            treatmentBox.query().equal(Treatment_.uploaded, false).build().find()
+        val referral =
+            referralBox.query().equal(Referral_.uploaded, false).build().find()
+
+        Log.d(TAG, "Patient : " + patient.toString())
+        Log.d(TAG, "encounter : " + encounter.toString())
+        Log.d(TAG, "history : " + history.toString())
+        Log.d(TAG, "screening : " + screening.toString())
+        Log.d(TAG, "treatment : " + treatment.toString())
+        Log.d(TAG, "referral : " + referral.toString())
+
+        if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
+                treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
+            Log.d(TAG, "all patient uploaded.")
+            fabBtnSync.setBackgroundResource(R.color.green_A200)
+        } else {
+            Log.d(TAG, "Left to upload patient.")
+//            fabBtnSync.backgroundTintList = ColorStateList.valueOf((Color.parseColor())
+//            fabBtnSync.backgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_A200)))
+//            fabBtnSync.setColorFilter(R.color.red_100)
+            fabBtnSync.backgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.red_A200)))
         }
 
     }

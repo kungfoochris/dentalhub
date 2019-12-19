@@ -8,6 +8,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/Library/Android/sdk/platforms/android-29/android.jar!/android/view/View.class">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../MyFirstKotlinApp/app/build.gradle">
           <value>
             <set />
@@ -1103,12 +1108,12 @@
             <set />
           </value>
         </entry>
-        <entry key="$USER_HOME$/StudioProjects/transit-points/app/src/main/java/com/abhiyantrik/transitpoints/MainActivity.kt">
+        <entry key="$PROJECT_DIR$/../transit-points/app/src/main/java/com/abhiyantrik/transitpoints/MainActivity.kt">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$USER_HOME$/StudioProjects/transit-points/app/src/main/res/layout/activity_main.xml">
+        <entry key="$PROJECT_DIR$/../transit-points/app/src/main/res/layout/activity_main.xml">
           <value>
             <set />
           </value>
