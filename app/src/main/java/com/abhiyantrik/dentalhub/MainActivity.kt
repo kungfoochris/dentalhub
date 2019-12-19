@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -290,11 +292,40 @@ class MainActivity : AppCompatActivity() {
                 displayDelayAndRemoveBtn,
                 object : PatientAdapter.PatientClickListener {
                     override fun onRemovePatientClick(patient: Patient) {
-                        val tempPatient =
-                            patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
-                        tempPatient.recall_date = ""
-                        patientsBox.put(tempPatient)
-                        listPatients()
+
+                        // Initialize a new instance of
+                        val builder = AlertDialog.Builder(this@MainActivity)
+
+                        // Set the alert dialog title
+                        builder.setTitle("Remove patient recall.")
+
+                        // Display a message on alert dialog
+                        builder.setMessage("Are you want to remove recall?")
+
+                        // Set a positive button and its click listener on alert dialog
+                        builder.setPositiveButton("YES"){dialog, which ->
+                            // Do something when user press the positive button
+                            Toast.makeText(applicationContext,"Patient recall is removed.",Toast.LENGTH_SHORT).show()
+                            val tempPatient =
+                                patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
+                            tempPatient.recall_date = ""
+                            patientsBox.put(tempPatient)
+                            listPatients()
+                        }
+
+
+                        // Display a negative button on alert dialog
+                        builder.setNegativeButton("No"){dialog,which ->
+//                            Toast.makeText(applicationContext,"You are not agree.",Toast.LENGTH_SHORT).show()
+                        }
+
+                        // Finally, make the alert dialog using builder
+                        val dialog: AlertDialog = builder.create()
+
+                        // Display the alert dialog on app interface
+                        dialog.show()
+
+
                     }
 
                     override fun onDelayPatientClick(patient: Patient) {
