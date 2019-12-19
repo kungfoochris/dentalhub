@@ -174,11 +174,13 @@ class AddPatientActivity : AppCompatActivity() {
             }
 
         }
+
         btnAddPatient.setOnClickListener {
             if (isFormValid()) {
                 DentalApp.lastDistrictIndex = spinnerDistrict.selectedItemPosition+1
                 DentalApp.lastMunicipalityIndex = spinnerMunicipality.selectedItemPosition
                 DentalApp.lastWardIndex = spinnerWard.selectedItemPosition
+                DentalApp.lastEducationLevel = spinnerEducationLevel.selectedItemPosition
                 savePatient()
             }
         }
@@ -319,6 +321,8 @@ class AddPatientActivity : AppCompatActivity() {
             spinnerDobMonth.setSelection(DentalApp.lastDobMonthIndex)
             spinnerDobYear.setSelection(DentalApp.lastDobYearIndex)
             setupDistricts(DentalApp.lastDistrictIndex) // set default as kaski 35 is remote_id of Kaski District
+//            spinnerEducationLevel.setSelection(())
+            spinnerEducationLevel.setSelection(DentalApp.lastEducationLevel)
         }
     }
 

@@ -77,6 +77,8 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         var lastMunicipalityIndex = 0
         var lastWardIndex = 0
 
+        var lastEducationLevel = 0
+
 
         var uploadSyncRunning = false
         var downloadSyncRunning = false
