@@ -252,6 +252,25 @@ class MainActivity : AppCompatActivity() {
             //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
         }
 
+        // create a daemon thread
+        val timer = Timer("SyncScheduleStatusTimer", true);
+
+        // schedule at a fixed rate
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                Log.d(TAG, "Task running in time interval.")
+                checkAllUpdated()
+            }
+        }, 2000, 2000) /* 120000 2 minute delay */
+
+    }
+
+    private fun checkAllUpdated() {
+        val notSyncedPatient = patientsBox.query().equal(Patient_.uploaded, false).build().find()
+        if (notSyncedPatient == null) {
+            Log.d(TAG, "Not uploaded.")
+        }
+
     }
 
 
