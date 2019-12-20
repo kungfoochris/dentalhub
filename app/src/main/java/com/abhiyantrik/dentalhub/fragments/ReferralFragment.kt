@@ -36,7 +36,6 @@ class ReferralFragment : Fragment() {
 //    private lateinit var radioButtonGeneralPhysician: RadioButton
 //    private lateinit var radioButtonOther: RadioButton
     private lateinit var tvRecallDateReferral: TextView
-    private lateinit var rgReferrals: RadioGroup
     private lateinit var rgRecalls: RadioGroup
     private lateinit var etOtherDetails: EditText
 
@@ -76,12 +75,8 @@ class ReferralFragment : Fragment() {
 //        radioButtonGeneralPhysician = view.findViewById(R.id.radioGeneralPhysician)
 //        radioButtonOther = view.findViewById(R.id.radioOther)
         tvRecallDateReferral = view.findViewById(R.id.tvRecallDateReferral)
-        rgReferrals = view.findViewById(R.id.rgReferrals)
         rgRecalls = view.findViewById(R.id.rgRecalls)
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
-
-
-        rgReferrals.check(R.id.radioHealthPost)
 
         etRecallDate = view.findViewById(R.id.etRecallDate)
         etRecallTime = view.findViewById(R.id.etRecallTime)
@@ -92,26 +87,29 @@ class ReferralFragment : Fragment() {
 
         etRecallTime.setText(DentalApp.lastRecallTime)
 
-        rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
-            if (i == R.id.radioOther) {
-                etOtherDetails.setText("")
-                etOtherDetails.visibility = View.VISIBLE
-            } else {
-                etOtherDetails.visibility = View.GONE
-            }
-            if (i == R.id.radioHealthPost) {
-                etRecallDate.setText("")
-                tvRecallDateReferral.visibility = View.VISIBLE
-                etRecallDate.visibility = View.VISIBLE
-                rgRecalls.visibility = View.VISIBLE
-                etRecallTime.visibility = View.VISIBLE
-            } else {
-                tvRecallDateReferral.visibility = View.GONE
-                rgRecalls.visibility = View.GONE
-                etRecallDate.visibility = View.GONE
-                etRecallTime.visibility = View.GONE
-            }
-        }
+//        rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
+//            if (i == R.id.radioOther) {
+//                etOtherDetails.setText("")
+//                etOtherDetails.visibility = View.VISIBLE
+//            } else {
+//                etOtherDetails.visibility = View.GONE
+//            }
+//            if (i == R.id.radioHealthPost) {
+//                etRecallDate.setText("")
+//                tvRecallDateReferral.visibility = View.VISIBLE
+//                etRecallDate.visibility = View.VISIBLE
+//                rgRecalls.visibility = View.VISIBLE
+//                etRecallTime.visibility = View.VISIBLE
+//            } else {
+//                tvRecallDateReferral.visibility = View.GONE
+//                rgRecalls.visibility = View.GONE
+//                etRecallDate.visibility = View.GONE
+//                etRecallTime.visibility = View.GONE
+//            }
+//        }
+
+
+
         rgRecalls.setOnCheckedChangeListener { radioGroup, i ->
             var recallDate = ""
             val nepaliCalender = DateConverter()
@@ -238,37 +236,40 @@ class ReferralFragment : Fragment() {
                 val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
-            if (isFormValid()) {
-                val noReferral = radioNoReferral.isChecked
-                val healthPost = radioHealthPost.isChecked
-                val hygienist = radioHygienist.isChecked
-                val dentist = radioDentist.isChecked
-                val generalPhysician = radioGeneralPhysician.isChecked
-                val other = radioOther.isChecked
-                val otherDetails = etOtherDetails.text.toString()
-
-                referralFormCommunicator.updateReferral(
-                    noReferral,
-                    healthPost,
-                    hygienist,
-                    dentist,
-                    generalPhysician,
-                    other,
-                    otherDetails
-                )
-
-                val recallDate = recallDateOriginal
-                val recallTime = etRecallTime.text.toString()
-                DentalApp.lastRecallDate = recallDate
-                DentalApp.lastRecallTime = recallTime
-                //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
-                referralFormCommunicator.updateRecallDate(recallDate, recallTime)
-
-                fragmentCommunicator.goForward()
-
-            } else {
-                // form is not valid
-            }
+//            if (isFormValid()) {
+////                from here
+////                val noReferral = radioNoReferral.isChecked
+////                val healthPost = radioHealthPost.isChecked
+////                val hygienist = radioHygienist.isChecked
+////                val dentist = radioDentist.isChecked
+////                val generalPhysician = radioGeneralPhysician.isChecked
+////                val other = radioOther.isChecked
+//                val otherDetails = etOtherDetails.text.toString()
+//
+////                referralFormCommunicator.updateReferral(
+////                    noReferral,
+////                    healthPost,
+////                    hygienist,
+////                    dentist,
+////                    generalPhysician,
+////                    other,
+////                    otherDetails
+////                )
+//
+//                val recallDate = recallDateOriginal
+//                val recallTime = etRecallTime.text.toString()
+////                if (radioHealthPost.isChecked) {
+////                    DentalApp.lastRecallDate = recallDate
+////                    DentalApp.lastRecallTime = recallTime
+////                }
+//                //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
+//                referralFormCommunicator.updateRecallDate(recallDate, recallTime)
+//
+//                fragmentCommunicator.goForward()
+//
+//            } else {
+//                // form is not valid
+//            }
         }
         btnBack.setOnClickListener {
             val view = this.view!!.rootView
@@ -300,21 +301,22 @@ class ReferralFragment : Fragment() {
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
 
-            val radioButtonMap = mapOf(
-                radioNoReferral to referral.no_referral,
-                radioHealthPost to referral.health_post,
-                radioHygienist to referral.hygienist,
-                radioDentist to referral.dentist,
-                radioGeneralPhysician to referral.general_physician,
-                radioOther to referral.other
-            )
+//            from here
+//            val radioButtonMap = mapOf(
+//                radioNoReferral to referral.no_referral,
+//                radioHealthPost to referral.health_post,
+//                radioHygienist to referral.hygienist,
+//                radioDentist to referral.dentist,
+//                radioGeneralPhysician to referral.general_physician,
+//                radioOther to referral.other
+//            )
 
-            for (radioButton in radioButtonMap) {
-                if (radioButton.value) {
-                    radioButton.key.isChecked = true
-                    break
-                }
-            }
+//            for (radioButton in radioButtonMap) {
+//                if (radioButton.value) {
+//                    radioButton.key.isChecked = true
+//                    break
+//                }
+//            }
         if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
             recallDateOriginal = patient.recall_date!!
             if(patient.recall_date!!.isNotEmpty()){
@@ -324,29 +326,31 @@ class ReferralFragment : Fragment() {
         }
     }
 
-    private fun isFormValid(): Boolean {
-        var status = false
 
-        if ((radioOther.isChecked && etOtherDetails.text.toString().isNotEmpty()) || (!radioOther.isChecked) && etOtherDetails.text.isEmpty()) {
-            status = true
-        }
-
-        // For checking if any radio button is clicked or not
-        if (rgReferrals.checkedRadioButtonId == -1) {
-            Toast.makeText(activity, "Radio button is not selected", Toast.LENGTH_SHORT).show()
-            status = false
-        }
-
-        if (radioHealthPost.isChecked) {
-            if (etRecallDate.text.isNullOrBlank()) { // || etRecallTime.text.isNullOrBlank()
-                Toast.makeText(
-                    activity,
-                    "Recall Date and Time should be specified.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                status = false
-            }
-        }
-        return status
-    }
+//      from here
+//    private fun isFormValid(): Boolean {
+//        var status = false
+//
+//        if ((radioOther.isChecked && etOtherDetails.text.toString().isNotEmpty()) || (!radioOther.isChecked) && etOtherDetails.text.isEmpty()) {
+//            status = true
+//        }
+//
+//        // For checking if any radio button is clicked or not
+//        if (rgReferrals.checkedRadioButtonId == -1) {
+//            Toast.makeText(activity, "Radio button is not selected", Toast.LENGTH_SHORT).show()
+//            status = false
+//        }
+//
+//        if (radioHealthPost.isChecked) {
+//            if (etRecallDate.text.isNullOrBlank()) { // || etRecallTime.text.isNullOrBlank()
+//                Toast.makeText(
+//                    activity,
+//                    "Recall Date and Time should be specified.",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                status = false
+//            }
+//        }
+//        return status
+//    }
 }
