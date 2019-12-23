@@ -125,6 +125,15 @@
                     android:layout_height="wrap_content"/>
 
         </LinearLayout>
+            <EditText
+                    android:visibility="gone"
+                    android:id="@+id/etOtherDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fieldTopMargin"
+                    android:layout_marginBottom="@dimen/fieldBottomMargin"
+                    android:hint="@string/other"
+                    android:inputType="text"/>
 <!--        <RadioGroup android:id="@+id/rgReferrals"-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="wrap_content"-->
@@ -159,16 +168,6 @@
 <!--                    android:layout_height="wrap_content"-->
 <!--                    android:text="@string/other"/>-->
 <!--        </RadioGroup>-->
-        <EditText
-                android:visibility="gone"
-                android:id="@+id/etOtherDetails"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:hint="@string/other"
-                android:inputType="text"
-                android:layout_marginTop="@dimen/fieldTopMargin"
-                android:layout_marginBottom="@dimen/fieldBottomMargin"
-                />
         <TextView
                 android:id="@+id/tvRecallDateReferral"
                 android:text="@string/recall_date"

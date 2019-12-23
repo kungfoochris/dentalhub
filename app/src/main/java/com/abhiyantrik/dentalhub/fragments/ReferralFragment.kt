@@ -125,6 +125,60 @@ class ReferralFragment : Fragment() {
                 checkBoxGeneralPhysician.isChecked = false
                 checkBoxOther.isChecked = false
                 etOtherDetails.setText("")
+                etOtherDetails.visibility = View.GONE
+
+                tvRecallDateReferral.visibility = View.GONE
+                rgRecalls.visibility = View.GONE
+                etRecallDate.visibility = View.GONE
+                etRecallTime.visibility = View.GONE
+            }
+        }
+
+        uncheckNoReferral(checkboxHealthPost)
+        uncheckNoReferral(checkboxHygienist)
+        uncheckNoReferral(checkboxDentist)
+        uncheckNoReferral(checkboxGeneralPhysician)
+        uncheckNoReferral(checkboxOther)
+
+        checkboxHealthPost.setOnCheckedChangeListener { compoundButton, b ->
+
+            if (checkboxNoReferral.isChecked) {
+                Toast.makeText(
+                    activity,
+                    "Please uncheck the No Referral.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                checkboxHealthPost.isChecked = false
+            }
+
+            if (compoundButton.isChecked) {
+                tvRecallDateReferral.visibility = View.VISIBLE
+                etRecallDate.visibility = View.VISIBLE
+                rgRecalls.visibility = View.VISIBLE
+                etRecallTime.visibility = View.VISIBLE
+            } else {
+                tvRecallDateReferral.visibility = View.GONE
+                rgRecalls.visibility = View.GONE
+                etRecallDate.visibility = View.GONE
+                etRecallTime.visibility = View.GONE
+            }
+        }
+
+        checkboxOther.setOnCheckedChangeListener { compoundButton, b ->
+
+            if (checkboxNoReferral.isChecked) {
+                Toast.makeText(
+                    activity,
+                    "Please uncheck the No Referral.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                checkboxOther.isChecked = false
+            } else {
+                if (compoundButton.isChecked) {
+                    etOtherDetails.visibility = View.VISIBLE
+                } else {
+                    etOtherDetails.visibility = View.GONE
+                }
             }
         }
 
@@ -241,6 +295,19 @@ class ReferralFragment : Fragment() {
         return view
     }
 
+    private fun uncheckNoReferral(checkbox : CheckBox) {
+        checkbox.setOnCheckedChangeListener { compoundButton, _ ->
+            if (checkboxNoReferral.isChecked) {
+                compoundButton.isChecked = false
+                Toast.makeText(
+                    activity,
+                    "Please uncheck the No Referral.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
@@ -254,40 +321,39 @@ class ReferralFragment : Fragment() {
                 val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
-//            if (isFormValid()) {
-////                from here
-////                val noReferral = radioNoReferral.isChecked
-////                val healthPost = radioHealthPost.isChecked
-////                val hygienist = radioHygienist.isChecked
-////                val dentist = radioDentist.isChecked
-////                val generalPhysician = radioGeneralPhysician.isChecked
-////                val other = radioOther.isChecked
-//                val otherDetails = etOtherDetails.text.toString()
-//
-////                referralFormCommunicator.updateReferral(
-////                    noReferral,
-////                    healthPost,
-////                    hygienist,
-////                    dentist,
-////                    generalPhysician,
-////                    other,
-////                    otherDetails
-////                )
-//
-//                val recallDate = recallDateOriginal
-//                val recallTime = etRecallTime.text.toString()
-////                if (radioHealthPost.isChecked) {
-////                    DentalApp.lastRecallDate = recallDate
-////                    DentalApp.lastRecallTime = recallTime
-////                }
-//                //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
-//                referralFormCommunicator.updateRecallDate(recallDate, recallTime)
-//
-//                fragmentCommunicator.goForward()
-//
-//            } else {
-//                // form is not valid
-//            }
+            if (isFormValid()) {
+                val noReferral = checkboxNoReferral.isChecked
+                val healthPost = checkboxHealthPost.isChecked
+                val hygienist = checkboxHygienist.isChecked
+                val dentist = checkboxDentist.isChecked
+                val generalPhysician = checkboxGeneralPhysician.isChecked
+                val other = checkboxOther.isChecked
+                val otherDetails = etOtherDetails.text.toString()
+
+                referralFormCommunicator.updateReferral(
+                    noReferral,
+                    healthPost,
+                    hygienist,
+                    dentist,
+                    generalPhysician,
+                    other,
+                    otherDetails
+                )
+
+                val recallDate = recallDateOriginal
+                val recallTime = etRecallTime.text.toString()
+//                if (radioHealthPost.isChecked) {
+//                    DentalApp.lastRecallDate = recallDate
+//                    DentalApp.lastRecallTime = recallTime
+//                }
+                //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
+                referralFormCommunicator.updateRecallDate(recallDate, recallTime)
+
+                fragmentCommunicator.goForward()
+
+            } else {
+                // form is not valid
+            }
         }
         btnBack.setOnClickListener {
             val view = this.view!!.rootView
@@ -319,22 +385,20 @@ class ReferralFragment : Fragment() {
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
 
-//            from here
-//            val radioButtonMap = mapOf(
-//                radioNoReferral to referral.no_referral,
-//                radioHealthPost to referral.health_post,
-//                radioHygienist to referral.hygienist,
-//                radioDentist to referral.dentist,
-//                radioGeneralPhysician to referral.general_physician,
-//                radioOther to referral.other
-//            )
+            val checkboxMap = mapOf(
+                checkboxNoReferral to referral.no_referral,
+                checkboxHealthPost to referral.health_post,
+                checkboxHygienist to referral.hygienist,
+                checkboxDentist to referral.dentist,
+                checkboxGeneralPhysician to referral.general_physician,
+                checkboxOther to referral.other
+            )
 
-//            for (radioButton in radioButtonMap) {
-//                if (radioButton.value) {
-//                    radioButton.key.isChecked = true
-//                    break
-//                }
-//            }
+            for (checkbox in checkboxMap) {
+                if (checkbox.value) {
+                    checkbox.key.isChecked = true
+                }
+            }
         if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
             recallDateOriginal = patient.recall_date!!
             if(patient.recall_date!!.isNotEmpty()){
@@ -345,30 +409,27 @@ class ReferralFragment : Fragment() {
     }
 
 
-//      from here
-//    private fun isFormValid(): Boolean {
-//        var status = false
-//
-//        if ((radioOther.isChecked && etOtherDetails.text.toString().isNotEmpty()) || (!radioOther.isChecked) && etOtherDetails.text.isEmpty()) {
-//            status = true
-//        }
-//
-//        // For checking if any radio button is clicked or not
-//        if (rgReferrals.checkedRadioButtonId == -1) {
-//            Toast.makeText(activity, "Radio button is not selected", Toast.LENGTH_SHORT).show()
-//            status = false
-//        }
-//
-//        if (radioHealthPost.isChecked) {
-//            if (etRecallDate.text.isNullOrBlank()) { // || etRecallTime.text.isNullOrBlank()
-//                Toast.makeText(
-//                    activity,
-//                    "Recall Date and Time should be specified.",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//                status = false
-//            }
-//        }
-//        return status
-//    }
+
+    private fun isFormValid(): Boolean {
+        var status = true
+
+        // For checking if any checkbox button is clicked or not
+        if (!(checkboxNoReferral.isChecked) && !(checkboxHealthPost.isChecked) && !(checkboxHygienist.isChecked) &&
+            !(checkboxDentist.isChecked) && !(checkboxGeneralPhysician.isChecked) && !(checkboxOther.isChecked)) {
+            Toast.makeText(activity, "Checkbox is not selected", Toast.LENGTH_SHORT).show()
+            status = false
+        }
+
+        if (checkboxHealthPost.isChecked) {
+            if (etRecallDate.text.isNullOrBlank()) { // || etRecallTime.text.isNullOrBlank()
+                Toast.makeText(
+                    activity,
+                    "Recall Date and Time should be specified.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                status = false
+            }
+        }
+        return status
+    }
 }
