@@ -340,12 +340,14 @@ class ReferralFragment : Fragment() {
                     otherDetails
                 )
 
-                val recallDate = recallDateOriginal
-                val recallTime = etRecallTime.text.toString()
-//                if (radioHealthPost.isChecked) {
-//                    DentalApp.lastRecallDate = recallDate
-//                    DentalApp.lastRecallTime = recallTime
-//                }
+                var recallDate = ""
+                var recallTime = ""
+                if (healthPost) {
+                    recallDate = recallDateOriginal
+                    recallTime = etRecallTime.text.toString()
+                    DentalApp.lastRecallDate = recallDate
+                    DentalApp.lastRecallTime = recallTime
+                }
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
                 referralFormCommunicator.updateRecallDate(recallDate, recallTime)
 
