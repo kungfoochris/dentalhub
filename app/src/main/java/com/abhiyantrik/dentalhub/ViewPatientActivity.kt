@@ -75,19 +75,19 @@ class ViewPatientActivity : AppCompatActivity() {
         listEncounters()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.patient_delete, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.deletePatient -> {
-                Toast.makeText(context, "Patient delete requested.", Toast.LENGTH_SHORT).show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.patient_delete, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.deletePatient -> {
+//                Toast.makeText(context, "Patient delete requested.", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
     private fun initUI() {
