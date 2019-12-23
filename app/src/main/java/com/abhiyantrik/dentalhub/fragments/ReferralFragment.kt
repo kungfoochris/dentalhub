@@ -29,12 +29,13 @@ class ReferralFragment : Fragment() {
     private lateinit var referralBox: Box<Referral>
     private var referral = Referral()
 
-    //    private lateinit var radioButtonNoReferral: RadioButton
-//    private lateinit var radioButtonHealthPost: RadioButton
-//    private lateinit var radioButtonHygienist: RadioButton
-//    private lateinit var radioButtonDentist: RadioButton
-//    private lateinit var radioButtonGeneralPhysician: RadioButton
-//    private lateinit var radioButtonOther: RadioButton
+    private lateinit var checkboxNoReferral : CheckBox
+    private lateinit var checkboxHealthPost : CheckBox
+    private lateinit var checkboxHygienist : CheckBox
+    private lateinit var checkboxDentist : CheckBox
+    private lateinit var checkboxGeneralPhysician : CheckBox
+    private lateinit var checkboxOther : CheckBox
+
     private lateinit var tvRecallDateReferral: TextView
     private lateinit var rgRecalls: RadioGroup
     private lateinit var etOtherDetails: EditText
@@ -65,6 +66,14 @@ class ReferralFragment : Fragment() {
         patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
+
+
+        checkboxNoReferral = view.findViewById(R.id.checkBoxNoReferral)
+        checkboxHealthPost = view.findViewById(R.id.checkBoxHealthPost)
+        checkboxHygienist = view.findViewById(R.id.checkBoxHygienist)
+        checkboxDentist = view.findViewById(R.id.checkBoxDentist)
+        checkboxGeneralPhysician = view.findViewById(R.id.checkBoxGeneralPhysician)
+        checkboxOther = view.findViewById(R.id.checkBoxOther)
 
 //        activitiesQuery = activitiesBox.query().build()
 
@@ -108,7 +117,16 @@ class ReferralFragment : Fragment() {
 //            }
 //        }
 
-
+        checkboxNoReferral.setOnCheckedChangeListener { compoundButton, b ->
+            if (compoundButton.isChecked) {
+                checkBoxHealthPost.isChecked = false
+                checkBoxHygienist.isChecked = false
+                checkBoxDentist.isChecked = false
+                checkBoxGeneralPhysician.isChecked = false
+                checkBoxOther.isChecked = false
+                etOtherDetails.setText("")
+            }
+        }
 
         rgRecalls.setOnCheckedChangeListener { radioGroup, i ->
             var recallDate = ""
