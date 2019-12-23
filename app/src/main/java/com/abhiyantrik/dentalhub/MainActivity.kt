@@ -303,7 +303,7 @@ class MainActivity : AppCompatActivity() {
         if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
                 treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
             Log.d(TAG, "all patient uploaded.")
-            fabBtnSync.background.setTint(resources.getColor(R.color.green_A200))
+            fabBtnSync.background.setTint(resources.getColor(R.color.colorART))
 //            fabBtnSync.background.mutate().setTint(resources.getColor(R.color.green_A200))
 
 //        fabBtnSync.backgroundTintList = resources.getColorStateList(R.color.blue_100)
