@@ -423,7 +423,7 @@ class ReferralFragment : Fragment() {
         }
 
         if (checkboxHealthPost.isChecked) {
-            if (etRecallDate.text.isNullOrBlank()) { // || etRecallTime.text.isNullOrBlank()
+            if (etRecallDate.text.isNullOrBlank() || etRecallTime.text.isNullOrBlank()) {
                 Toast.makeText(
                     activity,
                     "Recall Date and Time should be specified.",
