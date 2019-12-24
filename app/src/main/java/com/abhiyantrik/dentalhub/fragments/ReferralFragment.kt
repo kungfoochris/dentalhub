@@ -156,9 +156,17 @@ class ReferralFragment : Fragment() {
                 etRecallDate.visibility = View.VISIBLE
                 rgRecalls.visibility = View.VISIBLE
                 etRecallTime.visibility = View.VISIBLE
+
+                tvRecallDateReferral.visibility = View.VISIBLE
+                etRecallDate.visibility = View.VISIBLE
+                etRecallTime.visibility = View.VISIBLE
             } else {
                 tvRecallDateReferral.visibility = View.GONE
                 rgRecalls.visibility = View.GONE
+                etRecallDate.visibility = View.GONE
+                etRecallTime.visibility = View.GONE
+
+                tvRecallDateReferral.visibility = View.GONE
                 etRecallDate.visibility = View.GONE
                 etRecallTime.visibility = View.GONE
             }
