@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -72,7 +73,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         context = this
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         patientId = intent.getLongExtra("PATIENT_ID", 0.toLong())
         patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
 
@@ -168,6 +169,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         when (item.itemId) {
             android.R.id.home -> {
                 Log.d("onOptionsItemSelected", "Back button pressed.")
+//                todohere
                 saveEncounter()
             }
             R.id.viewPatient -> {
@@ -471,7 +473,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Toast.makeText(context, "Please complete encounter to exit.", Toast.LENGTH_SHORT).show()
             saveEncounter()
+            return false
         }
         return super.onKeyDown(keyCode, event)
     }
