@@ -13,10 +13,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -368,10 +365,9 @@ class MainActivity : AppCompatActivity() {
                         builder.setPositiveButton("YES"){dialog, which ->
                             // Do something when user press the positive button
                             Toast.makeText(applicationContext,"Patient recall is removed.",Toast.LENGTH_SHORT).show()
-                            val tempPatient =
-                                patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
-                            tempPatient.recall_date = ""
-                            patientsBox.put(tempPatient)
+                            patient.recall_date = ""
+                            patient.called = false
+                            patientsBox.put(patient)
                             listPatients()
                         }
 
@@ -386,8 +382,6 @@ class MainActivity : AppCompatActivity() {
 
                         // Display the alert dialog on app interface
                         dialog.show()
-
-
                     }
 
                     override fun onDelayPatientClick(patient: Patient) {
@@ -395,12 +389,19 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onCallPatientClick(patient: Patient) {
-                        if(DentalApp.canMakeCall(context)){
-                            val call = Intent(Intent.ACTION_DIAL)
-                            call.data = Uri.parse("tel:" + patient.phone)
-                            startActivity(call)
-                        }else{
-                            Toast.makeText(context, getString(R.string.telephony_serivce_unavailable), Toast.LENGTH_LONG).show()
+                        if (!patient.called) {
+                            if(DentalApp.canMakeCall(context)){
+                                val call = Intent(Intent.ACTION_DIAL)
+                                call.data = Uri.parse("tel:" + patient.phone)
+                                startActivity(call)
+                                patient.called = true
+                                patientsBox.put(patient)
+//                                callBtn.setBackgroundColor(resources.getColor(R.color.colorART))
+                            }else{
+                                Toast.makeText(context, getString(R.string.telephony_serivce_unavailable), Toast.LENGTH_LONG).show()
+                            }
+                        } else {
+                            Toast.makeText(context, "Already called the patient.", Toast.LENGTH_LONG).show()
                         }
 
                     }

@@ -355,6 +355,9 @@ class ReferralFragment : Fragment() {
                     recallTime = etRecallTime.text.toString()
                     DentalApp.lastRecallDate = recallDate
                     DentalApp.lastRecallTime = recallTime
+                } else {
+                    patient.called = false
+                    patientBox.put(patient)
                 }
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
                 referralFormCommunicator.updateRecallDate(recallDate, recallTime)

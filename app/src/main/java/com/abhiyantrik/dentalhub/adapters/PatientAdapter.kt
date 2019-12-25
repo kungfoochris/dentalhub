@@ -1,6 +1,7 @@
 package com.abhiyantrik.dentalhub.adapters
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -90,6 +91,12 @@ class PatientAdapter(
                     patientClickListener.onRemovePatientClick(patient)
                 }
                 if (displayDelay) {
+//                    since this is for the recall patient only
+                    if (patient.called) {
+                        btnCall.isClickable = false
+                        btnCall.setBackgroundResource(R.drawable.called_patient)
+                    }
+
                     recallInfo.visibility = View.VISIBLE
                     btnDelay.visibility = View.VISIBLE
                     btnDelete.visibility = View.VISIBLE
