@@ -31,9 +31,7 @@ import com.abhiyantrik.dentalhub.services.SyncDownloadService
 import com.abhiyantrik.dentalhub.services.SyncService
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
-import com.abhiyantrik.dentalhub.workers.DownloadPatientWorker
-import com.abhiyantrik.dentalhub.workers.UploadEncounterWorker
-import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
+import com.abhiyantrik.dentalhub.workers.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
@@ -79,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var allPatientRecall: MutableList<Patient>
 
     private val TAG = "MainActivity"
+    private var fabButtonPressTime = false
 
 
     @AddTrace(name = "onCreateMainActivity", enabled = true /* optional */)
@@ -225,47 +224,114 @@ class MainActivity : AppCompatActivity() {
         }
         fabBtnSync.setOnClickListener {
             Log.d(TAG, "startSync")
+            if (!fabButtonPressTime) {
 
-            val downloadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
-                .setInitialDelay(100, TimeUnit.MILLISECONDS)
-                .setConstraints(DentalApp.downloadConstraints)
-                .build()
-            WorkManager.getInstance(applicationContext).enqueue(downloadPatientWorkRequest)
+                Log.d("TAG", "5 minuted countdown starts now.")
 
-            // upload all patients
-            val dbAllPatient =
-                patientsBox.query().build().find()
+//                after 5 minute this method will be pressed. 300000
+                Handler().postDelayed({
+                    fabButtonPressTime = false
+                    Log.d("TAG","5 min completed.")
+                }, 300000)
 
-            for (patient in dbAllPatient) {
-                val data = Data.Builder().putLong("PATIENT_ID", patient.id)
-                val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
-                    .setInputData(data.build())
-                    .setConstraints(DentalApp.uploadConstraints)
-                    .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-                WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+                fabButtonPressTime = true
 
-                val allEncounters =
-                    encountersBox.query().equal(Encounter_.patientId, patient.id).and().equal(Encounter_.uploaded, false).build().find()
-                for (eachEncounter in allEncounters) {
-                    if (!eachEncounter.uploaded) {
+
+                val downloadPatientWorkRequest = OneTimeWorkRequestBuilder<DownloadPatientWorker>()
+                    .setInitialDelay(100, TimeUnit.MILLISECONDS)
+                    .setConstraints(DentalApp.downloadConstraints)
+                    .build()
+                WorkManager.getInstance(applicationContext).enqueue(downloadPatientWorkRequest)
+
+                // upload all patients
+                val dbAllPatient =
+                    patientsBox.query().build().find()
+
+                for (patient in dbAllPatient) {
+                    val data = Data.Builder().putLong("PATIENT_ID", patient.id)
+                    val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
+                        .setInputData(data.build())
+                        .setConstraints(DentalApp.uploadConstraints)
+                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                    WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+
+                    val allEncounters =
+                        encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
+                    for (eachEncounter in allEncounters) {
+
                         val data = Data.Builder().putLong("ENCOUNTER_ID", eachEncounter.id)
                             .putLong("PATIENT_ID", patient.id)
-                        val uploadEncounterWorkerRequest =
-                            OneTimeWorkRequestBuilder<UploadEncounterWorker>()
-                                .setInputData(data.build())
-                                .setConstraints(DentalApp.uploadConstraints)
-                                .setInitialDelay(
-                                    100,
-                                    TimeUnit.MILLISECONDS
-                                ).build()
-                        WorkManager.getInstance(applicationContext)
-                            .enqueue(uploadEncounterWorkerRequest)
+
+                        if (!eachEncounter.uploaded) {
+                            val uploadEncounterWorkerRequest =
+                                OneTimeWorkRequestBuilder<UploadEncounterWorker>()
+                                    .setInputData(data.build())
+                                    .setConstraints(DentalApp.uploadConstraints)
+                                    .setInitialDelay(
+                                        100,
+                                        TimeUnit.MILLISECONDS
+                                    ).build()
+                            WorkManager.getInstance(applicationContext)
+                                .enqueue(uploadEncounterWorkerRequest)
+                        } else {
+                            val unuploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().find()
+                            val unuploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).build().find()
+                            val unuploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).build().find()
+                            val unuploadedReferral = referralBox.query().equal(Referral_.uploaded, false).build().find()
+
+
+                            Log.d("Fab sync History", unuploadedHistory.toString())
+                            Log.d("Fab sync eachScreening", unuploadedScreening.toString())
+                            Log.d("Fab sync eachTreatment", unuploadedTreatment.toString())
+                            Log.d("Fab sync eachReferral", unuploadedReferral.toString())
+
+                            if (unuploadedHistory.isNotEmpty()) {
+                                val uploadHistoryWorkerRequest =
+                                    OneTimeWorkRequestBuilder<UploadHistoryWorker>()
+                                        .setInputData(data.build())
+                                        .setConstraints(DentalApp.uploadConstraints)
+                                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+
+                                WorkManager.getInstance(applicationContext)
+                                    .enqueue(uploadHistoryWorkerRequest)
+                            }
+                            if (unuploadedScreening.isNotEmpty()) {
+                                val uploadScreeningWorkerRequest =
+                                    OneTimeWorkRequestBuilder<UploadScreeningWorker>()
+                                        .setInputData(data.build())
+                                        .setConstraints(DentalApp.uploadConstraints)
+                                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                                WorkManager.getInstance(applicationContext)
+                                    .enqueue(uploadScreeningWorkerRequest)
+                            }
+
+                            if (unuploadedTreatment.isNotEmpty()) {
+                                val uploadTreatmentWorkerRequest =
+                                    OneTimeWorkRequestBuilder<UploadTreatmentWorker>()
+                                        .setInputData(data.build())
+                                        .setConstraints(DentalApp.uploadConstraints)
+                                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                                WorkManager.getInstance(applicationContext)
+                                    .enqueue(uploadTreatmentWorkerRequest)
+                            }
+
+                            if (unuploadedReferral.isNotEmpty()) {
+                                val uploadReferralWorkerRequest =
+                                    OneTimeWorkRequestBuilder<UploadReferralWorker>()
+                                        .setInputData(data.build())
+                                        .setConstraints(DentalApp.uploadConstraints)
+                                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                                WorkManager.getInstance(applicationContext)
+                                    .enqueue(uploadReferralWorkerRequest)
+                            }
+                        }
                     }
+
                 }
 
+                //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
             }
 
-            //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
         }
 
         val handler = Handler()
