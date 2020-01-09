@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub.fragments
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_referral.*
+import java.lang.Exception
 import java.text.DecimalFormat
 import java.util.*
 
@@ -356,8 +358,14 @@ class ReferralFragment : Fragment() {
                     DentalApp.lastRecallDate = recallDate
                     DentalApp.lastRecallTime = recallTime
                 } else {
-                    patient.called = false
-                    patientBox.put(patient)
+                    try {
+                        if (patient != null) {
+                            patient.called = false
+                            patientBox.put(patient)
+                        }
+                    } catch (e: Exception) {
+                        Log.d("Referral Fragment", "patient not found i.e. not initialized.")
+                    }
                 }
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
                 referralFormCommunicator.updateRecallDate(recallDate, recallTime)

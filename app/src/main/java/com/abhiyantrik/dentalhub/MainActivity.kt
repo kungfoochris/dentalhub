@@ -248,12 +248,15 @@ class MainActivity : AppCompatActivity() {
                     patientsBox.query().build().find()
 
                 for (patient in dbAllPatient) {
-                    val data = Data.Builder().putLong("PATIENT_ID", patient.id)
-                    val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
-                        .setInputData(data.build())
-                        .setConstraints(DentalApp.uploadConstraints)
-                        .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-                    WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+
+                    if (!patient.uploaded) {
+                        val data = Data.Builder().putLong("PATIENT_ID", patient.id)
+                        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
+                            .setInputData(data.build())
+                            .setConstraints(DentalApp.uploadConstraints)
+                            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+                        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+                    }
 
                     val allEncounters =
                         encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
@@ -275,10 +278,9 @@ class MainActivity : AppCompatActivity() {
                                 .enqueue(uploadEncounterWorkerRequest)
                         } else {
                             val unuploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().find()
-                            val unuploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).build().find()
-                            val unuploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).build().find()
-                            val unuploadedReferral = referralBox.query().equal(Referral_.uploaded, false).build().find()
-
+                            val unuploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().find()
+                            val unuploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().find()
+                            val unuploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().find()
 
                             Log.d("Fab sync History", unuploadedHistory.toString())
                             Log.d("Fab sync eachScreening", unuploadedScreening.toString())
@@ -286,6 +288,8 @@ class MainActivity : AppCompatActivity() {
                             Log.d("Fab sync eachReferral", unuploadedReferral.toString())
 
                             if (unuploadedHistory.isNotEmpty()) {
+                                Log.d("Fab sync History", unuploadedHistory[0].id.toString())
+
                                 val uploadHistoryWorkerRequest =
                                     OneTimeWorkRequestBuilder<UploadHistoryWorker>()
                                         .setInputData(data.build())
@@ -296,6 +300,8 @@ class MainActivity : AppCompatActivity() {
                                     .enqueue(uploadHistoryWorkerRequest)
                             }
                             if (unuploadedScreening.isNotEmpty()) {
+                                Log.d("Fab sync History", unuploadedScreening[0].id.toString())
+
                                 val uploadScreeningWorkerRequest =
                                     OneTimeWorkRequestBuilder<UploadScreeningWorker>()
                                         .setInputData(data.build())
@@ -306,6 +312,8 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             if (unuploadedTreatment.isNotEmpty()) {
+                                Log.d("Fab sync History", unuploadedTreatment[0].id.toString())
+
                                 val uploadTreatmentWorkerRequest =
                                     OneTimeWorkRequestBuilder<UploadTreatmentWorker>()
                                         .setInputData(data.build())
@@ -316,6 +324,8 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             if (unuploadedReferral.isNotEmpty()) {
+                                Log.d("Fab sync History", unuploadedReferral[0].id.toString())
+
                                 val uploadReferralWorkerRequest =
                                     OneTimeWorkRequestBuilder<UploadReferralWorker>()
                                         .setInputData(data.build())
