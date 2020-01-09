@@ -503,7 +503,10 @@ class AddPatientActivity : AppCompatActivity() {
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
-        if (!DateValidator.isValid(dob)) {
+        val dobYear = spinnerDobYear.selectedItem.toString()
+        val dobMonth = (spinnerDobMonth.selectedItemPosition).toString()
+        val dobDay = (spinnerDobDay.selectedItem).toString()
+        if (!DateValidator.isValid(dobYear.toInt(), dobMonth.toInt(), dobDay.toInt())) {
             tvErrorMessage.text = resources.getString(R.string.valid_date_is_required)
             tvErrorMessage.visibility = View.VISIBLE
             return false
