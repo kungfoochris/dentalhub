@@ -11,7 +11,7 @@ P
 o
 ?app/src/main/java/com/abhiyantrik/dentalhub/models/Encounter.kt,0/a/0a690eb3004592e8308d0780e5beeb024a82bb29
 y
-Iapp/src/main/java/com/abhiyantrik/dentalhub/interfaces/DjangoInterface.kt,e/a/eadc3e683a1e0b6200176d70ff2fe792edcc82c0
+Iapp/src/main/java/com/abhiyantrik/dentalhub/interfaces/DjangoInterface.kt,e\a\eadc3e683a1e0b6200176d70ff2fe792edcc82c0
 s
 Capp/src/main/java/com/abhiyantrik/dentalhub/services/SyncService.kt,a/b/ab5435c8028371c57405b93d217f3adee086bf6a
 q
@@ -57,7 +57,7 @@ Gapp/src/main/java/com/abhiyantrik/dentalhub/LocationSelectorActivity.kt,7/d/7d
 l
 <app/src/main/java/com/abhiyantrik/dentalhub/LoginActivity.kt,d/7/d703489808d1490fd00a60991c2ebcb20006e1c4
 l
-<app/src/main/java/com/abhiyantrik/dentalhub/SetupActivity.kt,c/9/c966b6fa60328b045df2a3a541d3b8a4c5d68e39
+<app/src/main/java/com/abhiyantrik/dentalhub/SetupActivity.kt,c\9\c966b6fa60328b045df2a3a541d3b8a4c5d68e39
 w
 Gapp/src/main/java/com/abhiyantrik/dentalhub/ActivitySelectorActivity.kt,6/4/6439b6950656c1b202fb71f30488ad3124b8a78b
 z
@@ -89,9 +89,9 @@ Happ/src/main/java/com/abhiyantrik/dentalhub/adapters/GeographyAdapter.kt,e/8/e
 h
 8app/src/main/java/com/abhiyantrik/dentalhub/Constants.kt,e/0/e0838e9906e20f1bd0e35dbc72c0145b4318beae
 y
-Iapp/src/main/java/com/abhiyantrik/dentalhub/fragments/ReferralFragment.kt,4/e/4ebb3ec04ae6a336ff384207a1bd82c38994b954
+Iapp/src/main/java/com/abhiyantrik/dentalhub/fragments/ReferralFragment.kt,4\e\4ebb3ec04ae6a336ff384207a1bd82c38994b954
 q
-Aapp/src/main/java/com/abhiyantrik/dentalhub/entities/Encounter.kt,1/5/15d0887adf7e0cdb14590c3bca7a8732ddadaeee
+Aapp/src/main/java/com/abhiyantrik/dentalhub/entities/Encounter.kt,1\5\15d0887adf7e0cdb14590c3bca7a8732ddadaeee
 p
 @app/src/main/java/com/abhiyantrik/dentalhub/entities/District.kt,7/9/79095ef49a9edc0c73a5fcbfe0f99c445d54edbd
 u
@@ -125,7 +125,7 @@ Bapp/src/main/java/com/abhiyantrik/dentalhub/utils/AdapterHelper.kt,b/f/bf9cadf
 x
 Happ/src/main/java/com/abhiyantrik/dentalhub/services/BootstrapService.kt,9/0/909ab9155984218eddda6d366825e4afffb160c3
 x
-Happ/src/main/java/com/abhiyantrik/dentalhub/adapters/EncounterAdapter.kt,f/4/f40257e0a54ccd77b4c04ed2dc2906fceac49a95
+Happ/src/main/java/com/abhiyantrik/dentalhub/adapters/EncounterAdapter.kt,f\4\f40257e0a54ccd77b4c04ed2dc2906fceac49a95
 o
 ?app/src/main/java/com/abhiyantrik/dentalhub/utils/DateHelper.kt,c/d/cd8ba4ec97e60f685ee43da28943b5d65c3bece1
 }
@@ -135,7 +135,7 @@ Mapp/src/androidTest/java/com/abhiyantrik/dentalhub/ExampleInstrumentedTest.kt,
 7
 gradlew,5/b/5bbfa66edb4db3c7c33c5181f43510990d3307f9
 l
-<app/src/main/java/com/abhiyantrik/dentalhub/entities/User.kt,e/e/ee0d3197088ad87d8e74e2682b4cca9ea43013c3
+<app/src/main/java/com/abhiyantrik/dentalhub/entities/User.kt,e\e\ee0d3197088ad87d8e74e2682b4cca9ea43013c3
 {
 Kapp/src/main/java/com/abhiyantrik/dentalhub/workers/UploadReferralWorker.kt,0/a/0a7e9234a5867c961f9976e44aae56f030544241
 z
@@ -171,9 +171,9 @@ Gapp/src/main/java/com/abhiyantrik/dentalhub/fragments/TickerFragment.kt,9/6/96
 †
 Vapp/src/main/java/com/abhiyantrik/dentalhub/workers/UpdateIndividualEncounterWorker.kt,1/3/13be4a4bfb1c159b9a41b031aaadc645753abca2
 j
-:app/src/main/java/com/abhiyantrik/dentalhub/models/User.kt,3/c/3c4ab44e003df8585308f23f54fd4124bfb7f1b5
+:app/src/main/java/com/abhiyantrik/dentalhub/models/User.kt,3\c\3c4ab44e003df8585308f23f54fd4124bfb7f1b5
 z
-Japp/src/main/java/com/abhiyantrik/dentalhub/workers/DownloadUsersWorker.kt,7/c/7c37e84a3ebaaa5285dcee081fc2323513b74b42
+Japp/src/main/java/com/abhiyantrik/dentalhub/workers/DownloadUsersWorker.kt,7\c\7c37e84a3ebaaa5285dcee081fc2323513b74b42
 ‹
 [app/src/main/java/com/abhiyantrik/dentalhub/fragments/interfaces/HistoryFormCommunicator.kt,d/6/d683d0bdcddfb990b44d5ffc709514384cfef8c3
 F

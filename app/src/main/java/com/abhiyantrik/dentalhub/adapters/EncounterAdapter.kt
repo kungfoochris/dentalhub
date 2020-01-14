@@ -10,7 +10,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.AddEncounterActivity
+import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Encounter
@@ -18,8 +21,10 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.User
 import com.abhiyantrik.dentalhub.entities.User_
 import com.abhiyantrik.dentalhub.utils.DateHelper
+import com.abhiyantrik.dentalhub.workers.DownloadUsersWorker
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.single_encounter.view.*
+import java.lang.NullPointerException
 
 
 class EncounterAdapter(
@@ -73,7 +78,17 @@ class EncounterAdapter(
 
         fun bindEncounter(encounter: Encounter) {
             userBox = ObjectBox.boxStore.boxFor(User::class.java)
-            val author = userBox.query().equal(User_.remote_id, encounter.author).build().findFirst()!!
+            try {
+                val author = userBox.query().equal(User_.remote_id, encounter.author).build().findFirst()!!
+                tvAuthorName.text = author.full_name()
+            } catch (e: NullPointerException) {
+                Log.d("EncounterAdapater", "Author not found.")
+                val downloadUsersWorkRequest = OneTimeWorkRequestBuilder<DownloadUsersWorker>()
+                    .setConstraints(DentalApp.downloadConstraints)
+                    .build()
+                WorkManager.getInstance(context).enqueue(downloadUsersWorkRequest)
+                tvAuthorName.text = "--"
+            }
             val encounterType: String = context.getString(R.string.other_problem)
             if (encounter.encounter_type == encounterType) {
                 tvEncounterName.text = encounter.encounter_type + " - " + encounter.other_problem
@@ -81,7 +96,7 @@ class EncounterAdapter(
                 tvEncounterName.text = encounter.encounter_type
             }
             tvEncounterDate.text = DateHelper.formatNepaliDate(context, encounter.created_at)
-            tvAuthorName.text = author.full_name()
+
             if (encounter.isEditable()) {
                 ibEdit.visibility = View.VISIBLE
             } else {

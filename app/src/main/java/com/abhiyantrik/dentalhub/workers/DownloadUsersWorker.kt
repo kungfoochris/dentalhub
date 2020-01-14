@@ -12,6 +12,8 @@ import com.abhiyantrik.dentalhub.entities.User
 import com.abhiyantrik.dentalhub.entities.User_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
+import retrofit2.Call
+import retrofit2.Callback
 import java.lang.Exception
 import com.abhiyantrik.dentalhub.models.User as UserModel
 
@@ -36,19 +38,21 @@ class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(c
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.listUsers("JWT $token")
 
-
         val response = call.execute()
         if (response.isSuccessful) {
             when (response.code()) {
                 200 -> {
                     val allUsers = response.body() as List<UserModel>
+                    Log.d("DownloadUserWorkers", response.body().toString())
                     for(user in allUsers){
+                        Log.d("DownloadUserWorkers", user.first_name + " " + user.middle_name + " " + user.last_name)
                         val existingUserCount = usersBox.query().equal(
                             User_.remote_id,
                             user.id
                         ).build().count()
                         if(existingUserCount<1){
                             val userEntity = User()
+                            Log.d("DownloadUserWorkers", user.first_name + " " + user.middle_name + " " + user.last_name)
                             userEntity.remote_id = user.id
                             userEntity.first_name = user.first_name
                             userEntity.middle_name = user.middle_name
