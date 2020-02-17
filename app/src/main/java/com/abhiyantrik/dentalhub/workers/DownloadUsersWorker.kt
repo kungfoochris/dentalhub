@@ -51,7 +51,9 @@ class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(c
                             val userEntity = User()
                             userEntity.remote_id = user.id
                             userEntity.first_name = user.first_name
-                            userEntity.middle_name = user.middle_name
+                            if (user.middle_name != null) {
+                                userEntity.middle_name = user.middle_name
+                            }
                             userEntity.last_name = user.last_name
                             usersBox.put(userEntity)
                         }else{
