@@ -98,6 +98,13 @@ class ReferralFragment : Fragment() {
 
         etRecallTime.setText(DentalApp.lastRecallTime)
 
+        checkboxNoReferral.isChecked = false
+        checkboxHealthPost.isChecked = false
+        checkboxHygienist.isChecked = false
+        checkboxDentist.isChecked = false
+        checkboxGeneralPhysician.isChecked = false
+        checkboxOther.isChecked = false
+
 //        rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
 //            if (i == R.id.radioOther) {
 //                etOtherDetails.setText("")

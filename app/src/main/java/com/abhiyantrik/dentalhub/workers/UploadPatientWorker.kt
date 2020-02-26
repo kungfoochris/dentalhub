@@ -25,9 +25,11 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
             encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
 
+
             val patientId = inputData.getLong("PATIENT_ID", 0)
             val dbPatientEntity =
                 patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
+            Log.d("UploadPatientWorker", "Patient detail is ${dbPatientEntity?.fullName()}")
             savePatientToServer(dbPatientEntity!!)
             Result.success()
 
@@ -90,15 +92,17 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
                         dbPatient!!.remote_id = tempPatient!!.id
                         dbPatient.uploaded = true
                         dbPatient.updated = false
-                        println("Patient uid is ${tempPatient.id}")
+
                         patientsBox.put(dbPatient)
 
                         DentalApp.cancelNotification(applicationContext, 1001)
                     }
                 }
+                Log.d("UploadPatientWorker", "other than 200, 201 " + response.message().toString())
             } else {
                 Log.d("UploadPatientWorker", response.message())
-                Log.d("UploadPatientWorker", response.errorBody().toString())
+                Log.d("UploadPatientWorker", response.code().toString())
+                Log.d("UploadPatientWorker", "Error body " + response.errorBody().toString())
             }
         }
         createOutputData(dbPatient!!.id)
