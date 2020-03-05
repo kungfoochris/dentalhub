@@ -1,11 +1,8 @@
 package com.abhiyantrik.dentalhub
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -13,11 +10,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,24 +25,24 @@ import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
-import com.abhiyantrik.dentalhub.services.SyncDownloadService
-import com.abhiyantrik.dentalhub.services.SyncService
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.abhiyantrik.dentalhub.workers.*
+import com.crashlytics.android.Crashlytics
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
 import io.objectbox.query.Query
-import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.math.abs
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var loading: ProgressBar
     private lateinit var btnAddPatient: Button
@@ -89,6 +87,10 @@ class MainActivity : AppCompatActivity() {
         context = this
 
         startService(Intent(this, LocationTrackerService::class.java))
+
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        Crashlytics.log(Log.INFO, TAG, "Message From OnCreate")
 
         setupUI()
 
@@ -191,7 +193,6 @@ class MainActivity : AppCompatActivity() {
         fabBtnAddPatient = findViewById(R.id.fabAddPatient)
         fabBtnSync = findViewById(R.id.fabSync)
         fabBtnSync.setBackgroundResource(R.color.blue_100)
-
 
         tvLocation = findViewById(R.id.tvLocation)
         tvActivity = findViewById(R.id.tvActivity)
