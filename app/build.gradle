@@ -83,6 +83,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation 'com.google.firebase:firebase-analytics:17.2.3' // Recommended: Add the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01' // Add the Firebase SDK for Crashlytics.
+
 //    for the Nepali date time picker
     implementation 'com.github.keyrunHORNET:date_picker_converter:3.0-beta'
 
@@ -93,4 +96,5 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt' // if using Kotlin
 apply plugin: 'io.objectbox' // apply last
+apply plugin: 'com.google.firebase.crashlytics' // Apply the Crashlytics Gradle plugin
 
