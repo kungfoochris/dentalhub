@@ -12,6 +12,7 @@ import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.crashlytics.android.Crashlytics
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
@@ -89,11 +90,17 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
                     200, 201 -> {
                         val tempPatient = response.body()
 
-                        dbPatient!!.remote_id = tempPatient!!.id
-                        dbPatient.uploaded = true
-                        dbPatient.updated = false
+                        if ( tempPatient?.id == null ) {
+                            dbPatient!!.remote_id = tempPatient!!.id
+                            dbPatient.uploaded = true
+                            dbPatient.updated = false
 
-                        patientsBox.put(dbPatient)
+                            patientsBox.put(dbPatient)
+                            Crashlytics.log(Log.INFO, "UploadPatientWorker", "Patient uploaded.")
+                        } else {
+                            Crashlytics.log(Log.INFO, "UploadPatientWorker", "Patient uploaded but id not revieved ${patient.fullName()}.")
+                            Crashlytics.getInstance().crash()
+                        }
 
                         DentalApp.cancelNotification(applicationContext, 1001)
                     }
