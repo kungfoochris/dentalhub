@@ -75,7 +75,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         loadActivityId()
         loadActivitySuggestions()
 
-        Log.d("Suggestions", DentalApp.activitySuggestions.toString())
+        Log.d(TAG, DentalApp.activitySuggestions.toString())
 
         arrayAdapter = ArrayAdapter<String>(
             this,
@@ -211,7 +211,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         val call = panelService.listActivityEvents("JWT $token")
         call.enqueue(object : Callback<List<ActivityModel>> {
             override fun onFailure(call: Call<List<ActivityModel>>, t: Throwable) {
-                Log.d("loadActivityId()", "onFailure")
+                Log.d(TAG, "onFailure loadActivityId(): ${t}")
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
                 } else {
@@ -229,7 +229,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
             ) {
                 when (response.code()) {
                     200 -> {
-                        println("Activity list is ${response.body()}")
+                        Log.d(TAG, "response  ${response.body()}")
                         allAPIActivities = response.body() as List<ActivityModel>
                         for (eachActivity in allAPIActivities) {
                             when (eachActivity.name) {
@@ -251,12 +251,12 @@ class ActivitySelectorActivity : AppCompatActivity() {
                         progressBar.visibility = View.GONE
                     }
                     400 -> {
-                        Log.d("loadActivityId()", "400 error found.")
+                        Log.d(TAG, "400 error found.")
                         progressBar.visibility = View.GONE
                         Toast.makeText(context, "Failed to fetch.", Toast.LENGTH_SHORT).show()
                     }
                     else -> {
-                        Log.d("loadActivityId()", "Unhandled exception")
+                        Log.d(TAG, "Unhandled exception")
                         progressBar.visibility = View.GONE
                         Toast.makeText(context, "Failed to connect.", Toast.LENGTH_SHORT).show()
                     }
@@ -279,14 +279,14 @@ class ActivitySelectorActivity : AppCompatActivity() {
             )
         call.enqueue(object : Callback<ActivityModel> {
             override fun onFailure(call: Call<ActivityModel>, t: Throwable) {
-                Log.d("onFailure", t.toString())
+                Log.d(TAG, "on Failure() : ${t.toString()}")
             }
 
             override fun onResponse(
                 call: Call<ActivityModel>,
                 response: Response<ActivityModel>
             ) {
-                println("Response code is ${response.code()} and body is ${response.body()}")
+                Log.d(TAG, "Response code is ${response.code()} and body is ${response.body()}")
                 when (response.code()) {
                     200 -> {
                         val serverActivity = response.body() as ActivityModel
@@ -307,15 +307,16 @@ class ActivitySelectorActivity : AppCompatActivity() {
                             Constants.PREF_ACTIVITY_NAME,
                             selectedActivity
                         )
-                        println("Got the post method. ${serverActivity.id}")
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)
                     }
                     400 -> {
+                        Log.d(TAG, "On 400 error")
                         Toast.makeText(context, "Fail to create the activity.", Toast.LENGTH_SHORT)
                             .show()
                     }
                     else -> {
+                        Log.d(TAG, "On other status code.")
                         Toast.makeText(context, "Unknown problem faced.", Toast.LENGTH_SHORT).show()
                     }
                 }
