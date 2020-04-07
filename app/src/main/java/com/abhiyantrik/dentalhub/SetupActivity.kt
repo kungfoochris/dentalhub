@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -47,6 +48,13 @@ class SetupActivity : AppCompatActivity() {
 
     }
 
+    private fun logout() {
+        DentalApp.clearAuthDetails(context)
+        Toast.makeText(context, "Failed to load data. Please try again.", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(context, LoginActivity::class.java))
+        finish()
+    }
+
     private fun loadProfile() {
         Log.d(TAG, "startSync")
 
@@ -73,6 +81,7 @@ class SetupActivity : AppCompatActivity() {
                 } else {
                     tvMessage.append("Failed to load profile\n")
                 }
+                logout()
             }
 
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
@@ -96,10 +105,13 @@ class SetupActivity : AppCompatActivity() {
                             profileLoadComplete = true
                             tvMessage.append("Loading profile complete\n")
                             loadData()
+                        } else -> {
+                            logout()
                         }
                     }
                 } else {
                     Log.d("SetupActivity", "response failed")
+                    logout()
                 }
             }
 
@@ -117,6 +129,7 @@ class SetupActivity : AppCompatActivity() {
                 Log.d(TAG, "onFailure()")
                 tvMessage.append("Failed to load addresses \n")
                 Log.d(TAG, t.toString())
+                logout()
             }
 
             override fun onResponse(
@@ -138,10 +151,13 @@ class SetupActivity : AppCompatActivity() {
                             dataLoadComplete = true
                             startActivity(Intent(context, LocationSelectorActivity::class.java))
                             finish()
+                        } else -> {
+                            logout()
                         }
                     }
                 } else {
                     Log.d(TAG, response.code().toString())
+                    logout()
                 }
             }
         })
