@@ -80,7 +80,6 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             patient.created_at,
             patient.updated_at
         )
-        print("Response before")
         val dbPatient =
             patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
         if(!patient.uploaded){
@@ -90,7 +89,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
                     200, 201 -> {
                         val tempPatient = response.body()
 
-                        if ( tempPatient?.id == null ) {
+                        if ( tempPatient?.id != null ) {
                             dbPatient!!.remote_id = tempPatient!!.id
                             dbPatient.uploaded = true
                             dbPatient.updated = false
