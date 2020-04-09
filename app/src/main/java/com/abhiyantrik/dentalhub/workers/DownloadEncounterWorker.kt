@@ -96,7 +96,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                             encounterEntity.remote_id = encounter.id
                             encounterEntity.patient?.target = dbPatientEntity
                             encounterEntity.ward_id = encounter.ward_id
-                            encounterEntity.activityarea_id = encounter.activityarea_id
+                            encounterEntity.activityarea_id = encounter.activity_area
                             encounterEntity.author = encounter.author
                             if(encounterEntity.updated_by==null){
                                 encounterEntity.updated_by = encounter.author
