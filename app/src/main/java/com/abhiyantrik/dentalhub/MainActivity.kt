@@ -200,6 +200,11 @@ class MainActivity : AppCompatActivity() {
 
         title = getString(R.string.dashboard)
 
+        if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
+            Log.d(TAG,"Activity is not been selected.")
+            logout()
+        }
+
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         historyBox = ObjectBox.boxStore.boxFor(History::class.java)
@@ -353,6 +358,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         handler.postDelayed(run, 5000)
+    }
+
+    private fun logout() {
+        DentalApp.clearAuthDetails(context)
+        Toast.makeText(context, "Failed to load data. Please try again.", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(context, LoginActivity::class.java))
+        finish()
     }
 
 

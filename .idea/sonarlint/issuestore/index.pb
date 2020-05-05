@@ -59,11 +59,11 @@ l
 l
 <app/src/main/java/com/abhiyantrik/dentalhub/SetupActivity.kt,c\9\c966b6fa60328b045df2a3a541d3b8a4c5d68e39
 w
-Gapp/src/main/java/com/abhiyantrik/dentalhub/ActivitySelectorActivity.kt,6/4/6439b6950656c1b202fb71f30488ad3124b8a78b
+Gapp/src/main/java/com/abhiyantrik/dentalhub/ActivitySelectorActivity.kt,6\4\6439b6950656c1b202fb71f30488ad3124b8a78b
 z
 Japp/src/main/java/com/abhiyantrik/dentalhub/fragments/TreatmentFragment.kt,1/f/1f25ad8fa293184b75e4f81e74e3229c5c0928a5
 h
-8app/src/main/java/com/abhiyantrik/dentalhub/DentalApp.kt,7/d/7dde297ba2b5387e52e7a15c3c4425ebbb1c245f
+8app/src/main/java/com/abhiyantrik/dentalhub/DentalApp.kt,7\d\7dde297ba2b5387e52e7a15c3c4425ebbb1c245f
 k
 ;app/src/main/java/com/abhiyantrik/dentalhub/MainActivity.kt,9\8\984cc034552b07b440a7da8c1682dcf118059dfc
 q
@@ -81,7 +81,7 @@ Dapp/src/main/java/com/abhiyantrik/dentalhub/ViewEncounterActivity.kt,2/2/22b2a
 v
 Fapp/src/main/java/com/abhiyantrik/dentalhub/adapters/PatientAdapter.kt,4/c/4cd60ea1f0568e3953c166a2a708600b6d88f768
 r
-Bapp/src/main/java/com/abhiyantrik/dentalhub/ViewPatientActivity.kt,f/2/f2f47352693ede84bcc7b2415562ee0df30dcf38
+Bapp/src/main/java/com/abhiyantrik/dentalhub/ViewPatientActivity.kt,f\2\f2f47352693ede84bcc7b2415562ee0df30dcf38
 t
 Dapp/src/main/java/com/abhiyantrik/dentalhub/SearchPatientActivity.kt,4/3/4331ca93eb41c8d632783d7a2a29479ac0406580
 x
