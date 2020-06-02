@@ -173,48 +173,55 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                 saveEncounter()
             }
             R.id.viewPatient -> {
-                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                val inflate: LayoutInflater = layoutInflater
-                val view: View = inflate.inflate(R.layout.popup_view_patient, null)
-
-                // to get all id of the textView
-                val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
-                val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
-                val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
-                val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
-                val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
-                val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
-                val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
-                val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
-                val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
-                val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
-                val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
-
-                // to set the details of the patient on Alert Dialog i.e. View Patient
-                tvFirstNameView.text = patient.first_name
-                tvMiddleNameView.text = patient.middle_name
-                tvLastNameView.text = patient.last_name
-                tvGenderpopupView.text = patient.gender.capitalize()
-                tvDateofBirthView.text = DateHelper.formatNepaliDate(context, patient.dob)
-                tvPhonepopupView.text = patient.phone
-                tvWardView.text = patient.wardNumber()
-                tvMunicipalityView.text = patient.municipalityName()
-                tvDistrictView.text = patient.districtName()
-                tvEducationLevelView.text = patient.education.capitalize()
-
-
-                builder.setView(view)
-                val dialog: Dialog = builder.create()
-                dialog.show()
-
-                btnCloseDialog.setOnClickListener {
-                    dialog.dismiss()
-                }
-
+                AddEncounterDialog()
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+// Dialog started.
+    private fun AddEncounterDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflate: LayoutInflater = layoutInflater
+        val view: View = inflate.inflate(R.layout.popup_view_patient, null)
+
+        // to get all id of the textView
+        val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
+        val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
+        val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
+        val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
+        val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
+        val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
+        val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
+        val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
+        val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
+        val tvEducationLevelView = view.findViewById<TextView>(R.id.tvEducationLevelView)
+        val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
+
+        // to set the details of the patient on Alert Dialog i.e. View Patient
+        tvFirstNameView.text = patient.first_name
+        tvMiddleNameView.text = patient.middle_name
+        tvLastNameView.text = patient.last_name
+        tvGenderpopupView.text = patient.gender.capitalize()
+        tvDateofBirthView.text = DateHelper.formatNepaliDate(context, patient.dob)
+        tvPhonepopupView.text = patient.phone
+        tvWardView.text = patient.wardNumber()
+        tvMunicipalityView.text = patient.municipalityName()
+        tvDistrictView.text = patient.districtName()
+        tvEducationLevelView.text = patient.education.capitalize()
+
+
+        builder.setView(view)
+        val dialog: Dialog = builder.create()
+        dialog.show()
+
+        btnCloseDialog.setOnClickListener {
+            dialog.dismiss()
+        }
+
+    }
+
+// Dialog ended
 
     override fun updateRecallDate(recallDate: String, recallTime: String) {
         patient.recall_date = recallDate
