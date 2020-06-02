@@ -155,6 +155,10 @@ class ViewPatientActivity : AppCompatActivity() {
                         startActivity(encounterDetailIntent)
                     }
 
+                    override fun onModificationFlagClick() {
+                        displayModificationTypePopup()
+                    }
+
                 })
         recyclerView.adapter = encounterAdapter
         encounterAdapter.notifyDataSetChanged()
@@ -259,6 +263,33 @@ class ViewPatientActivity : AppCompatActivity() {
                 Toast.makeText(this, "Radio button is not selected", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun displayModificationTypePopup() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater: LayoutInflater = layoutInflater
+        val view: View = inflater.inflate(R.layout.popup_modification_flag_choose, null)
+
+        val tvModifyEncounter = view.findViewById<TextView>(R.id.tvModifyEncounter)
+        val tvDeleteEncounter = view.findViewById<TextView>(R.id.tvDeleteEncounter)
+        val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnModifyEncounterCloseDialog)
+
+        builder.setView(view)
+        val dialog: Dialog = builder.create()
+        dialog.show()
+
+        tvModifyEncounter.setOnClickListener {
+            Log.d(TAG, "Modify iv clicked.")
+        }
+
+        tvDeleteEncounter.setOnClickListener {
+            Log.d(TAG, "Delete iv clicked.")
+        }
+
+        btnCloseDialog.setOnClickListener {
+            dialog.dismiss()
+        }
+
     }
 
     override fun onResume() {

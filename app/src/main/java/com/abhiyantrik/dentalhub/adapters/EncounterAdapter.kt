@@ -41,6 +41,7 @@ class EncounterAdapter(
 
     interface EncounterClickListener {
         fun onEncounterClick(encounter: Encounter)
+        fun onModificationFlagClick()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EncounterViewHolder {
@@ -62,6 +63,9 @@ class EncounterAdapter(
         holder.itemView.setOnClickListener {
             Log.d("EncounterAdapter", "itemView clicked")
             encounterClickListener.onEncounterClick(encounterItem)
+        }
+        holder.itemView.ibModificationFlag.setOnClickListener {
+            encounterClickListener.onModificationFlagClick()
         }
         holder.bindEncounter(encounterItem)
     }

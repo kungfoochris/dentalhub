@@ -7,7 +7,7 @@
         android:orientation="vertical">
 
     <ImageButton
-            android:id="@+id/btnCloseDialog"
+            android:id="@+id/btnModifyEncounterCloseDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="6dp"
@@ -16,6 +16,7 @@
             android:src="@android:drawable/ic_delete" />
 
     <TextView
+            android:id="@+id/tvModifyEncounter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -23,6 +24,7 @@
             android:textSize="24sp" />
 
     <TextView
+            android:id="@+id/tvDeleteEncounter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
