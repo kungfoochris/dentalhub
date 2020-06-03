@@ -157,4 +157,5 @@
     <string name="description_of_the_reason_to_flag_the_encounter">Description of the reason to flag the encounter.</string>
     <string name="request_submitted_successfully">Request Submitted Successfully</string>
     <string name="exit">exit</string>
+    <string name="please_enter_your_password_for_verification">Please enter your password for verification.</string>
 </resources>
