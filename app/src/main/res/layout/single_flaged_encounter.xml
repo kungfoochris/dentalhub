@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
+
+    <TextView
+            android:id="@+id/tvPatientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient Name"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+            android:id="@+id/ibEdit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/edit"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/tvEncounterType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Encounter type"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientName" />
+
+    <TextView
+            android:id="@+id/tvFlagType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flag type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEncounterType" />
+
+    <TextView
+            android:id="@+id/tvFlagEncounterStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Flag Status"
+            app:layout_constraintStart_toEndOf="@+id/tvFlagType"
+            app:layout_constraintTop_toBottomOf="@+id/tvEncounterType" />
+
+    <TextView
+            android:id="@+id/tvFlagReasonDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description of the reason to flag the encounter."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFlagType" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
