@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/modify"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
     <EditText
             android:id="@+id/etModifyMessage"
