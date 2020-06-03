@@ -150,4 +150,9 @@
     <string name="activity">Activity</string>
     <string name="geography">Geography</string>
     <string name="telephony_serivce_unavailable">Telephony service not available on this device.</string>
+    <string name="patient_name">Patient Name</string>
+    <string name="encounter_type">Encounter type</string>
+    <string name="flag_type">Flag type</string>
+    <string name="flag_status">Flag Status</string>
+    <string name="description_of_the_reason_to_flag_the_encounter">Description of the reason to flag the encounter.</string>
 </resources>
