@@ -159,4 +159,7 @@
     <string name="exit">exit</string>
     <string name="please_enter_your_password_for_verification">Please enter your password for verification.</string>
     <string name="delete">Delete</string>
+    <string name="need_to_modify">Need to modify</string>
+    <string name="modify">Modify</string>
+    <string name="request_modify">Request Modify</string>
 </resources>
