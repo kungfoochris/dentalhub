@@ -41,7 +41,7 @@ android {
 
 configurations {
     cleanedAnnotations
-    compile.exclude group: 'org.jetbrains' , module:'annotations'
+    compile.exclude group: 'org.jetbrains', module: 'annotations'
 }
 
 dependencies {
@@ -67,7 +67,6 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
 
-
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
@@ -85,7 +84,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.google.firebase:firebase-analytics:17.2.3' // Recommended: Add the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-analytics:17.2.3'
+    // Recommended: Add the Firebase SDK for Google Analytics.
 
 //    for the Nepali date time picker
     implementation 'com.github.keyrunHORNET:date_picker_converter:3.0-beta'
