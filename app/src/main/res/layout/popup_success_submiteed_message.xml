@@ -18,10 +18,11 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="40dp"
-            android:paddingBottom="40dp"
-            android:text="Request Submitted Successfully"
+            android:paddingTop="28dp"
+            android:paddingBottom="80dp"
+            android:text="@string/request_submitted_successfully"
             android:gravity="center"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="20sp" />
 
 </LinearLayout>
