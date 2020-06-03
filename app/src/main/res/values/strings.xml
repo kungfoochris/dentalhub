@@ -158,4 +158,5 @@
     <string name="request_submitted_successfully">Request Submitted Successfully</string>
     <string name="exit">exit</string>
     <string name="please_enter_your_password_for_verification">Please enter your password for verification.</string>
+    <string name="delete">Delete</string>
 </resources>

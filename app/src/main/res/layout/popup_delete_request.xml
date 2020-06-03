@@ -23,28 +23,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Delete"
-                android:textSize="24sp" />
+                android:text="@string/delete"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Accidental Entry" />
+                android:text="Accidental Entry"
+                android:textSize="16sp"/>
+
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:text="Duplicate Encounter" />
+                android:text="Duplicate Encounter"
+                android:textSize="16sp"/>
+
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:text="Incorrect Patient" />
+                android:text="Incorrect Patient"
+                android:textSize="16sp"/>
+
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:text="Incorrect User" />
+                android:text="Incorrect User"
+                android:textSize="16sp"/>
+
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:text="Other" />
+                android:text="Other"
+                android:textSize="16sp"/>
 
         <EditText
                 android:id="@+id/etDeleteMessage"
