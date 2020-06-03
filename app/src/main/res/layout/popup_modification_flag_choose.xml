@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Modify"
+            android:text="@string/modify"
             android:textSize="24sp" />
 
     <TextView
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textSize="24sp" />
 
 </LinearLayout>
