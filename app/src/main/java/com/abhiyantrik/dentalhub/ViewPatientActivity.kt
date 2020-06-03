@@ -21,6 +21,7 @@ import com.abhiyantrik.dentalhub.entities.Encounter
 import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
+import com.abhiyantrik.dentalhub.ui.flagencounterview.ActivityFlagEncounterView
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -118,10 +119,11 @@ class ViewPatientActivity : AppCompatActivity() {
             displayEncounterTypeSelectorPopUp()
         }
         fabEditPatient.setOnClickListener {
-            val addPatientIntent = Intent(this, AddPatientActivity::class.java)
-            addPatientIntent.putExtra("PATIENT_ID", patientId)
-            addPatientIntent.putExtra("ACTION", "edit")
-            startActivity(addPatientIntent)
+//            val addPatientIntent = Intent(this, AddPatientActivity::class.java)
+//            addPatientIntent.putExtra("PATIENT_ID", patientId)
+//            addPatientIntent.putExtra("ACTION", "edit")
+//            startActivity(addPatientIntent)
+            startActivity(Intent(this, ActivityFlagEncounterView::class.java))
         }
     }
 

@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.adapters.FlagAdapter
 import com.abhiyantrik.dentalhub.models.FlagEncounter
+import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import kotlinx.android.synthetic.main.activity_flag_encounter_view.*
 
-class FlagEncounterView : AppCompatActivity() {
+class ActivityFlagEncounterView : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,5 +26,7 @@ class FlagEncounterView : AppCompatActivity() {
         val adapter = FlagAdapter(this, flagEcounterList)
         rvFlagEncounter.adapter = adapter
         rvFlagEncounter.layoutManager = LinearLayoutManager(this)
+        val divider = RecyclerViewItemSeparator(10)
+        rvFlagEncounter.addItemDecoration(divider)
     }
 }
