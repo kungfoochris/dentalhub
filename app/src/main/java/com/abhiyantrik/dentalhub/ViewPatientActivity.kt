@@ -280,16 +280,90 @@ class ViewPatientActivity : AppCompatActivity() {
 
         tvModifyEncounter.setOnClickListener {
             Log.d(TAG, "Modify iv clicked.")
+            displayModifyPopup()
+            dialog.dismiss()
         }
 
         tvDeleteEncounter.setOnClickListener {
             Log.d(TAG, "Delete iv clicked.")
+            displayDeletePopup()
+            dialog.dismiss()
         }
 
         btnCloseDialog.setOnClickListener {
             dialog.dismiss()
         }
 
+    }
+
+    private fun displayModifyPopup() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater: LayoutInflater = layoutInflater
+        val view: View = inflater.inflate(R.layout.popup_modify_request, null)
+
+        val etModifyMessage = view.findViewById<EditText>(R.id.etModifyMessage)
+        val btnRequestModify = view.findViewById<Button>(R.id.btnRequestModify)
+        val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnModifyCloseDialog)
+
+        builder.setView(view)
+        val dialog: Dialog = builder.create()
+        dialog.show()
+
+        btnRequestModify.setOnClickListener {
+            Log.d(TAG, "Request Modify button clicked.")
+            displayPasswordVerifyPopup()
+            dialog.dismiss()
+        }
+
+        btnCloseDialog.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    private fun displayDeletePopup() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater: LayoutInflater = layoutInflater
+        val view: View = inflater.inflate(R.layout.popup_delete_request, null)
+
+        val btnRequestDelete = view.findViewById<Button>(R.id.btnRequestDelete)
+        val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnDeleteEncounterCloseDialog)
+
+        builder.setView(view)
+        val dialog: Dialog = builder.create()
+        dialog.show()
+
+        btnRequestDelete.setOnClickListener {
+            Log.d(TAG, "Request Delete button clicked.")
+            displayPasswordVerifyPopup()
+            dialog.dismiss()
+        }
+
+        btnCloseDialog.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    private fun displayPasswordVerifyPopup() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater: LayoutInflater = layoutInflater
+        val view: View = inflater.inflate(R.layout.popup_password_verify, null)
+
+        val btnVerifyPassword = view.findViewById<Button>(R.id.btnVerifyPassword)
+        val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnPasswordVerifyCloseDialog)
+
+        builder.setView(view)
+        val dialog: Dialog = builder.create()
+        dialog.show()
+
+        btnVerifyPassword.setOnClickListener {
+            Log.d(TAG, "Password verified.")
+            Toast.makeText(this, "Successfully submitted.", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+
+        btnCloseDialog.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     override fun onResume() {
