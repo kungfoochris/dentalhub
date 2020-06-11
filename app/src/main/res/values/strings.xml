@@ -83,6 +83,7 @@
     <string name="treatment">Treatment</string>
     <string name="referral">Referral</string>
     <string name="sync_ticker">Syncing</string>
+    <string name="synchronization">Synchronization</string>
     <string name="recall">Recall</string>
     <string name="recall_date">Recall Date</string>
     <string name="recall_time">Recall Time</string>

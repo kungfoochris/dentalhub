@@ -25,6 +25,7 @@ import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
+import com.abhiyantrik.dentalhub.ui.synchronization.SynchronizationActivity
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.abhiyantrik.dentalhub.workers.*
@@ -522,6 +523,10 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.search -> {
                 startActivity(Intent(context, SearchPatientActivity::class.java))
+            }
+
+            R.id.menuSync -> {
+                startActivity(Intent(context, SynchronizationActivity::class.java))
             }
 
             R.id.logout -> {

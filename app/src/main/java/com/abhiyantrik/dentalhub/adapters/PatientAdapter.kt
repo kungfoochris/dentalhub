@@ -46,7 +46,6 @@ class PatientAdapter(
         } catch (e: NumberFormatException) {
             Log.d("PatientAdapter", "invalid position")
         }
-
     }
 
     override fun getItemCount() = data.size

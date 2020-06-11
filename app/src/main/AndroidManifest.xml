@@ -26,10 +26,11 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.flagencounterview.ActivityFlagEncounterView"></activity>
+        <activity android:name=".ui.synchronization.SynchronizationActivity"></activity>
+        <activity android:name=".ui.flagencounterview.ActivityFlagEncounterView" />
         <activity
                 android:name=".SetupActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"></activity>
+                android:configChanges="orientation|keyboardHidden|screenSize" />
 
         <meta-data
                 android:name="android.app.default_searchable"
