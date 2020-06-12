@@ -26,7 +26,9 @@ class SyncronizationAdapter(
             tvEncounterType.text = syncItem.encounter_type
             tvCreatedDate.text = syncItem.created_date
             if (!syncItem.uploaded) {
-                ivSyncStatus.setColorFilter(resources.getColor(R.color.black))
+                ivSyncStatus.setColorFilter(resources.getColor(R.color.colorSDF))
+            } else {
+                ivSyncStatus.setColorFilter(resources.getColor(R.color.green_700))
             }
         }
     }
