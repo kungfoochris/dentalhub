@@ -119,11 +119,11 @@ class ViewPatientActivity : AppCompatActivity() {
             displayEncounterTypeSelectorPopUp()
         }
         fabEditPatient.setOnClickListener {
-//            val addPatientIntent = Intent(this, AddPatientActivity::class.java)
-//            addPatientIntent.putExtra("PATIENT_ID", patientId)
-//            addPatientIntent.putExtra("ACTION", "edit")
-//            startActivity(addPatientIntent)
-            startActivity(Intent(this, ActivityFlagEncounterView::class.java))
+            val addPatientIntent = Intent(this, AddPatientActivity::class.java)
+            addPatientIntent.putExtra("PATIENT_ID", patientId)
+            addPatientIntent.putExtra("ACTION", "edit")
+            startActivity(addPatientIntent)
+//            startActivity(Intent(this, ActivityFlagEncounterView::class.java))
         }
     }
 

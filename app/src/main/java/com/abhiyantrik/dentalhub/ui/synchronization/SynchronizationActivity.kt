@@ -25,6 +25,8 @@ class SynchronizationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_synchronization)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         progressBarSync.visibility = View.VISIBLE
 
         val sync1 = Sync("MIlan", "Ghimire", "1231", true)
@@ -41,6 +43,11 @@ class SynchronizationActivity : AppCompatActivity() {
         rvSync.addItemDecoration(divider)
 
         populateRecyclerView(synList)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 
     private fun populateRecyclerView(syncList: MutableList<Sync>) {
