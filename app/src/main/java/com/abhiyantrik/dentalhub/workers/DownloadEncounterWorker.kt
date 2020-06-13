@@ -230,7 +230,6 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 screeningBox.put(newScreening)
                             }
 
-
                             if (encounter.treatment != null) {
                                 // save treatment
                                 if (treatmentsBox.query().equal(
@@ -238,7 +237,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.treatment!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("Screening", "Already downloaded")
+                                    Log.d("Treatment", "Already downloaded")
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -337,14 +336,14 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 treatmentsBox.put(newTreatment)
                             }
 
-                            if (encounter.history != null) {
+                            if (encounter.referral != null) {
                                 // save referral
                                 if (referralsBox.query().equal(
                                         Referral_.remote_id,
-                                        encounter.treatment!!.id.toString()
+                                        encounter.referral!!.id.toString()
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("Screening", "Already downloaded")
+                                    Log.d("Referral", "Already downloaded")
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -377,14 +376,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     }
                                     referralsBox.put(referralEntity)
                                 }
-                            } else {
+                            }
+                            else {
                                 var newReferral = Referral()
                                 newReferral.encounter?.target = dbEncounterEntity
                                 referralsBox.put(newReferral)
                             }
                         }
-
-
                     }
                 }
             }

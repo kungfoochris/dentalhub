@@ -409,6 +409,7 @@ class SyncDownloadService : Service() {
                                                 encounter.referral!!.other_details
 
                                         }
+                                        // ToDo Here
                                         referralsBox.put(referralEntity)
                                     }
 

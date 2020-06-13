@@ -2,6 +2,7 @@ package com.abhiyantrik.dentalhub.ui.synchronization
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abhiyantrik.dentalhub.ObjectBox
@@ -68,9 +69,9 @@ class SynchronizationActivity : AppCompatActivity() {
                 var allNotUploadedData = mutableListOf<Sync>()
 
                 if (patient.uploaded) {
-                    allUploadedData.add(Sync(patient.fullName(), "Patient not uploaded.", patient.created_at.toString(), true))
+                    allUploadedData.add(Sync(patient.fullName(), "Patient", patient.created_at.toString(), true))
                 } else {
-                    allNotUploadedData.add(Sync(patient.fullName(), "Patient not uploaded.", patient.created_at.toString(), false))
+                    allNotUploadedData.add(Sync(patient.fullName(), "Patient", patient.created_at.toString(), false))
                 }
 
                 val notSyncedEncounter = encounterBox.query().equal(Encounter_.patientId, patient.id).orderDesc(Encounter_.id).build().find()
@@ -121,8 +122,12 @@ class SynchronizationActivity : AppCompatActivity() {
                     }
                 } // encounter
 
-                syncList.addAll(allNotUploadedData)
+                allNotUploadedData.forEach {
+                    Log.d("NotUploaded", "${it.patient_name}, ${it.encounter_type}")
+                }
+
                 syncList.addAll(allUploadedData)
+                syncList.addAll(0, allNotUploadedData)
 
             }// patient
 
@@ -134,3 +139,4 @@ class SynchronizationActivity : AppCompatActivity() {
         } // coroutineScope
     }
 }
+
