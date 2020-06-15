@@ -10,7 +10,7 @@ import com.abhiyantrik.dentalhub.models.FlagEncounter
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import kotlinx.android.synthetic.main.activity_flag_encounter_view.*
 
-class ActivityFlagEncounterView : AppCompatActivity() {
+class FlagEncounterViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

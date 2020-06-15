@@ -163,4 +163,5 @@
     <string name="need_to_modify">Need to modify</string>
     <string name="modify">Modify</string>
     <string name="request_modify">Request Modify</string>
+    <string name="flag">Flag</string>
 </resources>

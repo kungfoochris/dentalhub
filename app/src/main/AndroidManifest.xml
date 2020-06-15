@@ -27,7 +27,7 @@
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.synchronization.SynchronizationActivity"></activity>
-        <activity android:name=".ui.flagencounterview.ActivityFlagEncounterView" />
+        <activity android:name=".ui.flagencounterview.FlagEncounterViewActivity" />
         <activity
                 android:name=".SetupActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize" />
