@@ -1,9 +1,8 @@
 package com.abhiyantrik.dentalhub.ui.flagencounterview
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.adapters.FlagAdapter
 import com.abhiyantrik.dentalhub.models.FlagEncounter
@@ -21,9 +20,9 @@ class FlagEncounterViewActivity : AppCompatActivity() {
         val flag3 = FlagEncounter("3", "Ghana Shyam", "Checkup and screening", "Delete", "Pending", "This is the testing of the flag")
         val flag4 = FlagEncounter("4", "Prabin", "Checkup and screening", "modify", "Approved", "This is the testing of the flag")
 
-        val flagEcounterList = mutableListOf<FlagEncounter>(flag1, flag2, flag3, flag4)
+        val flagEncounterList = mutableListOf<FlagEncounter>(flag1, flag2, flag3, flag4)
 
-        val adapter = FlagAdapter(this, flagEcounterList)
+        val adapter = FlagAdapter(this, flagEncounterList)
         rvFlagEncounter.adapter = adapter
         rvFlagEncounter.layoutManager = LinearLayoutManager(this)
         val divider = RecyclerViewItemSeparator(10)

@@ -41,7 +41,7 @@ class EncounterAdapter(
 
     interface EncounterClickListener {
         fun onEncounterClick(encounter: Encounter)
-        fun onModificationFlagClick()
+        fun onModificationFlagClick(encounterId: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EncounterViewHolder {
@@ -65,7 +65,7 @@ class EncounterAdapter(
             encounterClickListener.onEncounterClick(encounterItem)
         }
         holder.itemView.ibModificationFlag.setOnClickListener {
-            encounterClickListener.onModificationFlagClick()
+            encounterClickListener.onModificationFlagClick(encounterItem.remote_id)
         }
         holder.bindEncounter(encounterItem)
     }

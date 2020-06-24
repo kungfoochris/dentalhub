@@ -16,6 +16,7 @@
             android:src="@android:drawable/ic_delete" />
 
     <RadioGroup
+            android:id="@+id/rgDeleteRequest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -28,37 +29,42 @@
                 android:textStyle="bold" />
 
         <RadioButton
+                android:id="@+id/rbDeleteAccidentalEntry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Accidental Entry"
                 android:textSize="16sp"/>
 
         <RadioButton
+                android:id="@+id/rbDeleteDuplicateEncounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Duplicate Encounter"
                 android:textSize="16sp"/>
 
         <RadioButton
+                android:id="@+id/rbDeleteIncorrectPatient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Incorrect Patient"
                 android:textSize="16sp"/>
 
         <RadioButton
+                android:id="@+id/rbDeleteIncorrectUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Incorrect User"
                 android:textSize="16sp"/>
 
         <RadioButton
+                android:id="@+id/rbDeleteOtherReason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Other"
                 android:textSize="16sp"/>
 
         <EditText
-                android:id="@+id/etDeleteMessage"
+                android:id="@+id/etDeleteOtherReasonMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"

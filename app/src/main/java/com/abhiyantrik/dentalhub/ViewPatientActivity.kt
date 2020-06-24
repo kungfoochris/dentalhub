@@ -51,6 +51,10 @@ class ViewPatientActivity : AppCompatActivity() {
     private lateinit var patientBox: Box<Patient>
     var patientId: Long = 0
 
+    private var modifyDeleteReason: String = ""
+    private var modifyDeleteOtherReason: String = ""
+    private var modifyDeleteEncounterId: String = ""
+
     val TAG = "ViewPatientActivity"
 
     @AddTrace(name = "onCreateViewPatientActivity", enabled = true /* optional */)
@@ -154,10 +158,10 @@ class ViewPatientActivity : AppCompatActivity() {
                         startActivity(encounterDetailIntent)
                     }
 
-                    override fun onModificationFlagClick() {
+                    override fun onModificationFlagClick(encounterId: String) {
+                        modifyDeleteEncounterId = encounterId
                         displayModificationTypePopup()
                     }
-
                 })
         recyclerView.adapter = encounterAdapter
         encounterAdapter.notifyDataSetChanged()
@@ -309,7 +313,12 @@ class ViewPatientActivity : AppCompatActivity() {
         dialog.show()
 
         btnRequestModify.setOnClickListener {
+            if (etModifyMessage.text.toString().isBlank()) {
+                Toast.makeText(this, "Enter reason to modify.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Log.d(TAG, "Request Modify button clicked.")
+            modifyDeleteReason = etModifyMessage.text.toString()
             displayPasswordVerifyPopup()
             dialog.dismiss()
         }
@@ -324,6 +333,13 @@ class ViewPatientActivity : AppCompatActivity() {
         val inflater: LayoutInflater = layoutInflater
         val view: View = inflater.inflate(R.layout.popup_delete_request, null)
 
+        val rgDeleteRequest = view.findViewById<RadioGroup>(R.id.rgDeleteRequest)
+        val rbDeleteAccidentalEntry = view.findViewById<RadioButton>(R.id.rbDeleteAccidentalEntry)
+        val rbDeleteDuplicateEncounter = view.findViewById<RadioButton>(R.id.rbDeleteDuplicateEncounter)
+        val rbDeleteIncorrectPatient = view.findViewById<RadioButton>(R.id.rbDeleteIncorrectPatient)
+        val rbDeleteIncorrectUser = view.findViewById<RadioButton>(R.id.rbDeleteIncorrectUser)
+        val rbDeleteOtherReason = view.findViewById<RadioButton>(R.id.rbDeleteOtherReason)
+        val etDeleteOtherReasonMessage = view.findViewById<EditText>(R.id.etDeleteOtherReasonMessage)
         val btnRequestDelete = view.findViewById<Button>(R.id.btnRequestDelete)
         val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnDeleteEncounterCloseDialog)
 
@@ -332,7 +348,20 @@ class ViewPatientActivity : AppCompatActivity() {
         dialog.show()
 
         btnRequestDelete.setOnClickListener {
+            if (rgDeleteRequest.checkedRadioButtonId == -1) {
+                Toast.makeText(this, "Select one option.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (rbDeleteOtherReason.isChecked && etDeleteOtherReasonMessage.text.toString().isBlank()) {
+                Toast.makeText(this, "Enter the reason.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Log.d(TAG, "Request Delete button clicked.")
+            if (rbDeleteAccidentalEntry.isChecked) modifyDeleteReason = "accidental_entry"
+            if (rbDeleteDuplicateEncounter.isChecked) modifyDeleteReason = "duplicate_encounter"
+            if (rbDeleteIncorrectPatient.isChecked) modifyDeleteReason = "incorrect_patient"
+            if (rbDeleteIncorrectUser.isChecked) modifyDeleteReason = "incorrect_user"
+            if (rbDeleteOtherReason.isChecked) modifyDeleteReason = "other"
             displayPasswordVerifyPopup()
             dialog.dismiss()
         }
@@ -349,15 +378,29 @@ class ViewPatientActivity : AppCompatActivity() {
 
         val btnVerifyPassword = view.findViewById<Button>(R.id.btnVerifyPassword)
         val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnPasswordVerifyCloseDialog)
+        val etConfirmPassword = view.findViewById<EditText>(R.id.etConfirmPassword)
 
         builder.setView(view)
         val dialog: Dialog = builder.create()
         dialog.show()
 
         btnVerifyPassword.setOnClickListener {
-            Log.d(TAG, "Password verified.")
-            Toast.makeText(this, "Successfully submitted.", Toast.LENGTH_SHORT).show()
-            dialog.dismiss()
+            if (etConfirmPassword.text.toString().isBlank()) {
+                Toast.makeText(this, "Enter password.", Toast.LENGTH_SHORT).show()
+            }
+            if (etConfirmPassword.text.toString() ==
+                DentalApp.readFromPreference(
+                    this@ViewPatientActivity,
+                    Constants.PREF_AUTH_PASSWORD,
+                    ""
+                )
+            ) {
+                Log.d(TAG, "Password verified.")
+                Toast.makeText(this, "Successfully submitted.", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            } else {
+                Toast.makeText(this, "Wrong password.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btnCloseDialog.setOnClickListener {
