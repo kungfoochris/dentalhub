@@ -391,13 +391,40 @@ interface DjangoInterface {
     @GET("activities")
     fun listActivities(): Call<List<ActivitySuggestion>>
 
-
     @GET("profile")
     fun fetchProfile(@Header("Authorization") token: String): Call<Profile>
 
     // to get all activity list
     @GET("events")
     fun listActivityEvents(@Header("Authorization") token: String): Call<List<ActivityModel>>
+
+    @FormUrlEncoded
+    @POST("modifydelete")
+    fun modifyEncounterFlag(
+        @Header("Authorization")
+        token: String,
+        @Field("encounter")
+        encounterId: String,
+        @Field("reason_for_modification")
+        reasonForModification: String,
+        @Field("flag")
+        flag: String
+    ): Call<FlagResponse>
+
+    @FormUrlEncoded
+    @POST("modifydelete")
+    fun deleteEncounterFlag(
+        @Header("Authorization")
+        token: String,
+        @Field("encounter")
+        encounterId: String,
+        @Field("reason_for_deletion")
+        reasonForDeletion: String,
+        @Field("other_reason_for_deletion")
+        otherReasonForDeletion: String,
+        @Field("flag")
+        flag: String
+    ): Call<FlagResponse>
 
     companion object Factory {
         fun create(context: Context): DjangoInterface {

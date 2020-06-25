@@ -19,12 +19,21 @@ import com.abhiyantrik.dentalhub.entities.Encounter
 import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
+import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.abhiyantrik.dentalhub.models.FlagResponse
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ViewPatientActivity : AppCompatActivity() {
@@ -319,7 +328,7 @@ class ViewPatientActivity : AppCompatActivity() {
             }
             Log.d(TAG, "Request Modify button clicked.")
             modifyDeleteReason = etModifyMessage.text.toString()
-            displayPasswordVerifyPopup()
+            displayPasswordVerifyPopup(isModify = true)
             dialog.dismiss()
         }
 
@@ -362,7 +371,7 @@ class ViewPatientActivity : AppCompatActivity() {
             if (rbDeleteIncorrectPatient.isChecked) modifyDeleteReason = "incorrect_patient"
             if (rbDeleteIncorrectUser.isChecked) modifyDeleteReason = "incorrect_user"
             if (rbDeleteOtherReason.isChecked) modifyDeleteReason = "other"
-            displayPasswordVerifyPopup()
+            displayPasswordVerifyPopup(isModify = false)
             dialog.dismiss()
         }
 
@@ -371,7 +380,7 @@ class ViewPatientActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayPasswordVerifyPopup() {
+    private fun displayPasswordVerifyPopup(isModify: Boolean) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflater: LayoutInflater = layoutInflater
         val view: View = inflater.inflate(R.layout.popup_password_verify, null)
@@ -396,7 +405,50 @@ class ViewPatientActivity : AppCompatActivity() {
                 )
             ) {
                 Log.d(TAG, "Password verified.")
-                Toast.makeText(this, "Successfully submitted.", Toast.LENGTH_SHORT).show()
+                // ToDo patient flag send to server.
+                GlobalScope.launch(Dispatchers.IO) {
+                    val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
+                    val panelService = DjangoInterface.create(context)
+                    var call = Any()
+                    if (isModify) {
+                        call = panelService.modifyEncounterFlag(
+                            "JWT $token",
+                            modifyDeleteEncounterId,
+                            modifyDeleteReason,
+                            "modify"
+                        )
+                    } else {
+                        call = panelService.deleteEncounterFlag(
+                            "JWT $token",
+                            modifyDeleteEncounterId,
+                            modifyDeleteReason,
+                            modifyDeleteOtherReason,
+                            "delete"
+                        )
+                    }
+                    call = panelService.modifyEncounterFlag(
+                        "JWT $token",
+                        modifyDeleteEncounterId,
+                        modifyDeleteReason,
+                        "modify"
+                    )
+                    val response = call.execute()
+                    if (response.isSuccessful) {
+                        if (response.code() == 200) {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(this@ViewPatientActivity, "Successfully submitted..", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(this@ViewPatientActivity, "Failed. Try again.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@ViewPatientActivity, "Failed. Try again.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
                 dialog.dismiss()
             } else {
                 Toast.makeText(this, "Wrong password.", Toast.LENGTH_SHORT).show()
