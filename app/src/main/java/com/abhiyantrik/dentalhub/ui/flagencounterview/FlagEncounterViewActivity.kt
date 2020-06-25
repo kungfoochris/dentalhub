@@ -26,6 +26,8 @@ class FlagEncounterViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flag_encounter_view)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 //        val flag1 = FlagEncounter("1", "Milan", "Checkup and screening", "modify", "Pending", "This is the testing of the flag")
 //        val flag2 = FlagEncounter("2", "Paras Nath Chaudhary", "Relif of pain", "modify", "Expired", "This is the testing of the flag")
 //        val flag3 = FlagEncounter("3", "Ghana Shyam", "Checkup and screening", "Delete", "Pending", "This is the testing of the flag")
@@ -57,7 +59,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                                     eachFlagData.encounter.encounter_type,
                                     eachFlagData.flag,
                                     eachFlagData.delete_status,
-                                    eachFlagData.other_reason_for_deletion
+                                    "${eachFlagData.reason_for_deletion}  ${eachFlagData.other_reason_for_deletion}"
                                 )
                             )
                         } else {
@@ -68,7 +70,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                                     eachFlagData.encounter.encounter_type,
                                     eachFlagData.flag,
                                     eachFlagData.modify_status,
-                                    eachFlagData.other_reason_for_deletion
+                                    eachFlagData.reason_for_modification
                                 )
                             )
                         }
@@ -79,5 +81,10 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 }

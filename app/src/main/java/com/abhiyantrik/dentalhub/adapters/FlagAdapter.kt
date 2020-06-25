@@ -1,6 +1,8 @@
 package com.abhiyantrik.dentalhub.adapters
 
 import android.content.Context
+import android.graphics.Color
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,9 +30,23 @@ class FlagAdapter(
         holder.itemView.apply {
             tvPatientName.text = flagEncounter.patient_name
             tvEncounterType.text = flagEncounter.encounter_type
-            tvFlagType.text = flagEncounter.flag_type
+            val input = flagEncounter.flag_type
+            val capitalizedWord = input.substring(0, 1).toUpperCase() + input.substring(1);
+            tvFlagType.text = capitalizedWord
             tvFlagEncounterStatus.text = flagEncounter.flag_status
             tvFlagReasonDescription.text = flagEncounter.description
+            when (flagEncounter.flag_status) {
+                "approved" -> {
+                    ibEdit.visibility = View.VISIBLE
+                    tvFlagEncounterStatus.setTextColor(Color.GREEN)
+                }
+                "pending" -> {
+                    tvFlagEncounterStatus.setTextColor(Color.YELLOW)
+                }
+                "expired" -> {
+                    tvFlagEncounterStatus.setTextColor(Color.RED)
+                }
+            }
         }
     }
 

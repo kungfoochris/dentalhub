@@ -30,13 +30,13 @@ class SynchronizationActivity : AppCompatActivity() {
 
         progressBarSync.visibility = View.VISIBLE
 
-        val sync1 = Sync("MIlan", "Ghimire", "1231", true)
-        val sync2 = Sync("Ghana", "Chimire", "1231", false)
-        val sync3 = Sync("Prabin", "Mirmire", "1231", false)
-        val sync4 = Sync("paras", "Ghimire", "1231", true)
+//        val sync1 = Sync("MIlan", "Ghimire", "1231", true)
+//        val sync2 = Sync("Ghana", "Chimire", "1231", false)
+//        val sync3 = Sync("Prabin", "Mirmire", "1231", false)
+//        val sync4 = Sync("paras", "Ghimire", "1231", true)
 
         val synList = mutableListOf<Sync>() //(sync1, sync2, sync3, sync4)
-        
+
         adapter = SyncronizationAdapter(synList)
         rvSync.adapter = adapter
         rvSync.layoutManager = LinearLayoutManager(this)
@@ -65,8 +65,8 @@ class SynchronizationActivity : AppCompatActivity() {
 
             notSyncedPatient.forEach { patient ->
 
-                var allUploadedData = mutableListOf<Sync>()
-                var allNotUploadedData = mutableListOf<Sync>()
+                val allUploadedData = mutableListOf<Sync>()
+                val allNotUploadedData = mutableListOf<Sync>()
 
                 if (patient.uploaded) {
                     allUploadedData.add(Sync(patient.fullName(), "Patient", patient.created_at.toString(), true))

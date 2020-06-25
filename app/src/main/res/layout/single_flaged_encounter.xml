@@ -32,6 +32,7 @@
 
         <ImageButton
                 android:id="@+id/ibEdit"
+                android:visibility="invisible"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:contentDescription="@string/edit"
@@ -65,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/flag_status"
+                android:textAllCaps="true"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toTopOf="@+id/tvFlagReasonDescription"
                 app:layout_constraintStart_toEndOf="@+id/tvFlagType"
