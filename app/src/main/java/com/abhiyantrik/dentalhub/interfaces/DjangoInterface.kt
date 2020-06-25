@@ -426,6 +426,12 @@ interface DjangoInterface {
         flag: String
     ): Call<FlagResponse>
 
+    @GET("modifydelete")
+    fun listFlagedData(
+        @Header("Authorization")
+        token: String
+    ): Call<List<FlagModifyDelete>>
+
     companion object Factory {
         fun create(context: Context): DjangoInterface {
             val gson: Gson = GsonBuilder().create()

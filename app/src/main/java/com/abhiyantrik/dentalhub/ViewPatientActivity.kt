@@ -405,7 +405,6 @@ class ViewPatientActivity : AppCompatActivity() {
                 )
             ) {
                 Log.d(TAG, "Password verified.")
-                // ToDo patient flag send to server.
                 GlobalScope.launch(Dispatchers.IO) {
                     val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
                     val panelService = DjangoInterface.create(context)
