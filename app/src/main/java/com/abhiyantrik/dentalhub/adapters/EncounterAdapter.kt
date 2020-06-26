@@ -2,12 +2,12 @@ package com.abhiyantrik.dentalhub.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.OneTimeWorkRequestBuilder
@@ -24,7 +24,6 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.DownloadUsersWorker
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.single_encounter.view.*
-import java.lang.NullPointerException
 
 
 class EncounterAdapter(
@@ -78,6 +77,7 @@ class EncounterAdapter(
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
         private var tvAuthorName: TextView = itemView.findViewById(R.id.tvAuthorName)
+        private var ivEncounterSyncStatus: ImageView = itemView.findViewById(R.id.ivEncounterSyncStatus)
         private var ibEdit: ImageButton = itemView.findViewById(R.id.ibEdit)
 
         fun bindEncounter(encounter: Encounter) {
@@ -100,6 +100,12 @@ class EncounterAdapter(
                 tvEncounterName.text = encounter.encounter_type
             }
             tvEncounterDate.text = DateHelper.formatNepaliDate(context, encounter.created_at)
+
+            if (!encounter.uploaded) {
+                ivEncounterSyncStatus.setColorFilter(context.resources.getColor(R.color.colorSDF))
+            } else {
+                ivEncounterSyncStatus.setColorFilter(context.resources.getColor(R.color.green_700))
+            }
 
             if (encounter.isEditable()) {
                 ibEdit.visibility = View.VISIBLE

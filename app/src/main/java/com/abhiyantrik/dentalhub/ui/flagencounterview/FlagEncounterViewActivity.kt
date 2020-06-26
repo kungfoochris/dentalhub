@@ -27,6 +27,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_flag_encounter_view)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = getString(R.string.flag)
 
 //        val flag1 = FlagEncounter("1", "Milan", "Checkup and screening", "modify", "Pending", "This is the testing of the flag")
 //        val flag2 = FlagEncounter("2", "Paras Nath Chaudhary", "Relif of pain", "modify", "Expired", "This is the testing of the flag")

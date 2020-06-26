@@ -19,6 +19,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+    <ImageView
+            android:id="@+id/ivEncounterSyncStatus"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_lens"
+            app:layout_constraintStart_toEndOf="@+id/tvEncounterName"
+            app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
             android:id="@+id/tvAuthorName"
             android:layout_width="wrap_content"
