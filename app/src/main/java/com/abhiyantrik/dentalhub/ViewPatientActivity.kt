@@ -356,6 +356,15 @@ class ViewPatientActivity : AppCompatActivity() {
         val dialog: Dialog = builder.create()
         dialog.show()
 
+        rgDeleteRequest.setOnCheckedChangeListener { _, i ->
+            if (i == R.id.rbDeleteOtherReason) {
+                etDeleteOtherReasonMessage.visibility = View.VISIBLE
+            } else {
+                etDeleteOtherReasonMessage.setText("")
+                etDeleteOtherReasonMessage.visibility = View.INVISIBLE
+            }
+        }
+
         btnRequestDelete.setOnClickListener {
             if (rgDeleteRequest.checkedRadioButtonId == -1) {
                 Toast.makeText(this, "Select one option.", Toast.LENGTH_SHORT).show()
@@ -388,6 +397,12 @@ class ViewPatientActivity : AppCompatActivity() {
         val btnVerifyPassword = view.findViewById<Button>(R.id.btnVerifyPassword)
         val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnPasswordVerifyCloseDialog)
         val etConfirmPassword = view.findViewById<EditText>(R.id.etConfirmPassword)
+
+        if (isModify) {
+            btnVerifyPassword.text = "Request Modify"
+        } else {
+            btnVerifyPassword.text = "Request Delete"
+        }
 
         builder.setView(view)
         val dialog: Dialog = builder.create()
@@ -425,26 +440,32 @@ class ViewPatientActivity : AppCompatActivity() {
                             "delete"
                         )
                     }
-                    call = panelService.modifyEncounterFlag(
-                        "JWT $token",
-                        modifyDeleteEncounterId,
-                        modifyDeleteReason,
-                        "modify"
-                    )
-                    val response = call.execute()
-                    if (response.isSuccessful) {
-                        if (response.code() == 200) {
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(this@ViewPatientActivity, "Successfully submitted..", Toast.LENGTH_SHORT).show()
+//                    call = panelService.modifyEncounterFlag(
+//                        "JWT $token",
+//                        modifyDeleteEncounterId,
+//                        modifyDeleteReason,
+//                        "modify"
+//                    )
+                    try {
+                        val response = call.execute()
+                        if (response.isSuccessful) {
+                            if (response.code() == 200) {
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(this@ViewPatientActivity, "Successfully submitted..", Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(this@ViewPatientActivity, "Failed. Try again.", Toast.LENGTH_SHORT).show()
+                                }
                             }
                         } else {
                             withContext(Dispatchers.Main) {
                                 Toast.makeText(this@ViewPatientActivity, "Failed. Try again.", Toast.LENGTH_SHORT).show()
                             }
                         }
-                    } else {
+                    } catch (ex: Exception) {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(this@ViewPatientActivity, "Failed. Try again.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ViewPatientActivity, "Failed. Try again. ${ex.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
