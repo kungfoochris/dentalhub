@@ -17,7 +17,9 @@
     <color name="cardBg">#f3f3f3</color>
     <color name="btnDelay">#f18787</color>
 
-
+    <color name="flag_pending_yellow">#FFC641</color>
+    <color name="flag_approved_green">#29A76A</color>
+    <color name="flag_expired_red">#F20303</color>
 
     <!-- Red -->
     <color name="red_50">#FFEBEE</color>
@@ -34,22 +36,6 @@
     <color name="red_A200">#FF5252</color>
     <color name="red_A400">#FF1744</color>
     <color name="red_A700">#D50000</color>
-
-
-
-    <!-- Red -->
-
-    <!-- Pink -->
-    <!-- Pink -->
-
-    <!-- Purple -->
-    <!-- Purple -->
-
-    <!-- Deep Purple -->
-    <!-- Deep Purple -->
-
-    <!-- Indigo -->
-    <!-- Indigo -->
 
     <!-- Blue -->
     <color name="blue_50">#E3F2FD</color>

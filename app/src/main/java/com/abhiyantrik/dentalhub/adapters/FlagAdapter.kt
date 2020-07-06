@@ -38,13 +38,13 @@ class FlagAdapter(
             when (flagEncounter.flag_status) {
                 "approved" -> {
                     ibEdit.visibility = View.VISIBLE
-                    tvFlagEncounterStatus.setTextColor(Color.GREEN)
+                    tvFlagEncounterStatus.setTextColor(resources.getColor(R.color.flag_approved_green))
                 }
                 "pending" -> {
-                    tvFlagEncounterStatus.setTextColor(Color.YELLOW)
+                    tvFlagEncounterStatus.setTextColor(resources.getColor(R.color.flag_pending_yellow))
                 }
                 "expired" -> {
-                    tvFlagEncounterStatus.setTextColor(Color.RED)
+                    tvFlagEncounterStatus.setTextColor(resources.getColor(R.color.flag_expired_red))
                 }
             }
         }
