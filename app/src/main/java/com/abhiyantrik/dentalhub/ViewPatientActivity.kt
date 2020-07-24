@@ -34,6 +34,8 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ViewPatientActivity : AppCompatActivity() {
@@ -497,11 +499,21 @@ class ViewPatientActivity : AppCompatActivity() {
                 Log.d("DBException", e.printStackTrace().toString())
             }
         }
-
     }
 
     private fun openAddEncounter(encounterType: String, otherProblem: String) {
         val date = DateHelper.getCurrentNepaliDate()
+
+        val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(date)
+        if (currentDate == null) {
+            Toast.makeText(context, "There is problem in Encounter date so please contact to Abhiyantrik or Saroj Dhakal.", Toast.LENGTH_LONG).show()
+        }
+        Log.d("CheckingDate", currentDate.toString())
+        val currentDateTime = Calendar.getInstance().getTime()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        Log.d("CheckingDate", dateFormat.format(currentDate))
+        Log.d("CheckingDate", dateFormat.format(currentDate))
+        val modifiedNewDate = dateFormat.format(currentDate).substring(0, 10) + dateFormat.format(currentDateTime).substring(10)
 
         val encounter = Encounter()
         encounter.id = 0
@@ -509,7 +521,7 @@ class ViewPatientActivity : AppCompatActivity() {
         encounter.other_problem = otherProblem
         encounter.activityarea_id = DentalApp.activity_id
         encounter.ward_id = DentalApp.geography_id
-        encounter.created_at = date
+        encounter.created_at = modifiedNewDate
         encounter.updated_at = date
         encounter.author =
             DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")

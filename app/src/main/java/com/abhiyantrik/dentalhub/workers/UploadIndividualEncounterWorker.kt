@@ -12,6 +12,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
+import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -49,6 +50,16 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
         remoteId: String,
         dbEncounterEntity: Encounter?
     ) {
+        Log.d("EncounterDateCreated", dbEncounterEntity?.id.toString() + " " + dbEncounterEntity?.created_at!!.length)
+        var correctDate = String()
+        if (dbEncounterEntity.created_at.length == 10) {
+            Log.d("EncounterDateCreated", dbEncounterEntity.id.toString())
+            val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(dbEncounterEntity.created_at)
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            correctDate = dateFormat.format(currentDate)
+        } else {
+            correctDate = dbEncounterEntity.created_at
+        }
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addEncounter(
@@ -60,7 +71,7 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             dbEncounterEntity.encounter_type,
             dbEncounterEntity.other_problem,
             dbEncounterEntity.author,
-            dbEncounterEntity.created_at,
+            correctDate,
             dbEncounterEntity.updated_at,
             dbEncounterEntity.updated_by!!
         )
