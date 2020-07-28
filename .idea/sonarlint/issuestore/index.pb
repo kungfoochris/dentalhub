@@ -1,8 +1,8 @@
 
 P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 @
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 :
@@ -43,7 +43,7 @@ p
 o
 ?app/src/main/java/com/abhiyantrik/dentalhub/models/Treatment.kt,8/b/8bdce22cf9e7f304fbf10f275f2a763d180d8c1a
 o
-?app/src/main/java/com/abhiyantrik/dentalhub/entities/Patient.kt,7/6/763b6ec08e1c0368d4eddd1be3530dc69fd472d7
+?app/src/main/java/com/abhiyantrik/dentalhub/entities/Patient.kt,7\6\763b6ec08e1c0368d4eddd1be3530dc69fd472d7
 m
 =app/src/main/java/com/abhiyantrik/dentalhub/models/Patient.kt,d/a/da33819087897376efb7b72815e09af4936b7f53
 n
@@ -87,7 +87,7 @@ Dapp/src/main/java/com/abhiyantrik/dentalhub/SearchPatientActivity.kt,4/3/4331c
 x
 Happ/src/main/java/com/abhiyantrik/dentalhub/adapters/GeographyAdapter.kt,e/8/e884934022ee57f67b13a8bff8ae7ca22b8b63c6
 h
-8app/src/main/java/com/abhiyantrik/dentalhub/Constants.kt,e/0/e0838e9906e20f1bd0e35dbc72c0145b4318beae
+8app/src/main/java/com/abhiyantrik/dentalhub/Constants.kt,e\0\e0838e9906e20f1bd0e35dbc72c0145b4318beae
 y
 Iapp/src/main/java/com/abhiyantrik/dentalhub/fragments/ReferralFragment.kt,4\e\4ebb3ec04ae6a336ff384207a1bd82c38994b954
 q
@@ -119,7 +119,7 @@ m
 m
 =app/src/main/java/com/abhiyantrik/dentalhub/models/Profile.kt,7/5/75f2e211501feaf3fb669386e6ea80fea42cd921
 x
-Happ/src/main/java/com/abhiyantrik/dentalhub/fragments/HistoryFragment.kt,7/b/7baa6e9e4a645d745e4276fc3eabf8673e2003bd
+Happ/src/main/java/com/abhiyantrik/dentalhub/fragments/HistoryFragment.kt,7\b\7baa6e9e4a645d745e4276fc3eabf8673e2003bd
 r
 Bapp/src/main/java/com/abhiyantrik/dentalhub/utils/AdapterHelper.kt,b/f/bf9cadf15bed7275540182c0c70aaa7f9267edd7
 x
@@ -178,3 +178,15 @@ Japp/src/main/java/com/abhiyantrik/dentalhub/workers/DownloadUsersWorker.kt,7\c
 [app/src/main/java/com/abhiyantrik/dentalhub/fragments/interfaces/HistoryFormCommunicator.kt,d/6/d683d0bdcddfb990b44d5ffc709514384cfef8c3
 F
 app/proguard-rules.pro,9/e/9e08934d811afe28fbc77aaa3c0d747b94348db9
+‰
+Yapp/src/main/java/com/abhiyantrik/dentalhub/ui/synchronization/SynchronizationActivity.kt,2\0\20c3bf291e676803d618f78dad049eeb285a082c
+}
+Mapp/src/main/java/com/abhiyantrik/dentalhub/adapters/SyncronizationAdapter.kt,9\7\9747184f62271dd3278f8ad82824b73cb6d7cfa0
+
+]app/src/main/java/com/abhiyantrik/dentalhub/ui/flagencounterview/FlagEncounterViewActivity.kt,6\0\606b4b5388e7b43a39a20d8da674a9e4c5232c8b
+s
+Capp/src/main/java/com/abhiyantrik/dentalhub/models/FlagEncounter.kt,a\c\ac3b6ac19cc16557a2e70d781e489e7323bf272d
+s
+Capp/src/main/java/com/abhiyantrik/dentalhub/adapters/FlagAdapter.kt,d\6\d645a2dee997fa735d513a706e0411bb01827b01
+\
+,app/src/main/res/layout/single_encounter.xml,7\c\7cb72e19c56bdb7478505ed3f1f5d87ee8cf6549

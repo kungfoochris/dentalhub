@@ -450,6 +450,7 @@ class ViewPatientActivity : AppCompatActivity() {
 //                    )
                     try {
                         val response = call.execute()
+                        Log.d("FlagResponse", response.code().toString())
                         if (response.isSuccessful) {
                             if (response.code() == 200) {
                                 withContext(Dispatchers.Main) {

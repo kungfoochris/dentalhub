@@ -56,6 +56,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                             flagEncounterList.add(
                                 FlagEncounter(
                                     eachFlagData.id.toString(),
+                                    eachFlagData.encounter.id,
                                     eachFlagData.encounter.patient.full_name,
                                     eachFlagData.encounter.encounter_type,
                                     eachFlagData.flag,
@@ -67,6 +68,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                             flagEncounterList.add(
                                 FlagEncounter(
                                     eachFlagData.id.toString(),
+                                    eachFlagData.encounter.id,
                                     eachFlagData.encounter.patient.full_name,
                                     eachFlagData.encounter.encounter_type,
                                     eachFlagData.flag,
