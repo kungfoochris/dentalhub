@@ -20,7 +20,6 @@ class FlagAdapter(
     val data: List<FlagEncounter>
     ) : RecyclerView.Adapter<FlagAdapter.FlagAdapterViewHolder>() {
 
-    val patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
     val encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlagAdapterViewHolder {

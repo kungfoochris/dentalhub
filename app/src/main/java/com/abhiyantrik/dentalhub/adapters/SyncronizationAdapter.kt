@@ -24,7 +24,7 @@ class SyncronizationAdapter(
         holder.itemView.apply {
             tvPatientName.text = syncItem.patient_name
             tvEncounterType.text = syncItem.encounter_type
-            tvCreatedDate.text = syncItem.created_date
+            tvCreatedDate.text = syncItem.created_date.substring(0, 10)
             if (!syncItem.uploaded) {
                 ivSyncStatus.setColorFilter(resources.getColor(R.color.colorSDF))
             } else {
