@@ -84,7 +84,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                     }
                 }
             }
-        }else if(screening.updated){
+        } else if (screening.updated){
             val call = panelService.updateScreening(
                 "JWT $token",
                 encounter!!.remote_id,

@@ -69,8 +69,6 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
                             TimeUnit.MILLISECONDS
                             ).build()
 
-
-
                     WorkManager.getInstance(applicationContext).beginWith(uploadIndividualEncounterWorkerRequest)
                         .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
                         .enqueue()
