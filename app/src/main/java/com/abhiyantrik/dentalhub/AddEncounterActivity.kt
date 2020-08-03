@@ -20,11 +20,15 @@ import com.abhiyantrik.dentalhub.fragments.interfaces.HistoryFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.ReferralFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.ScreeningFormCommunicator
 import com.abhiyantrik.dentalhub.fragments.interfaces.TreatmentFormCommunicator
+import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.*
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 
@@ -53,6 +57,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private var referral = Referral()
     private var recall = Recall()
     private var encounter = Encounter()
+    var encounterFlagId: Long = 0
     var encounterId: Long = 0
     var patientId: Long = 0
 
@@ -80,6 +85,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         title = patient.fullName()
 
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
+        encounterFlagId = intent.getLongExtra("MODIFY_DELETE", "0".toLong())
         Log.d("encounterId", encounterId.toString())
 //        println("Encounter with edit mode :  $encounterId")
 
@@ -544,6 +550,17 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                     .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
                     .enqueue()
 
+                if (encounterFlagId != 0.toLong()) {
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
+                        val panelService = DjangoInterface.create(context)
+                        var call = panelService.changeFlagToModified(
+                            "JWT $token",
+                            encounterFlagId,
+                            "modified"
+                        )
+                    }
+                }
             }
         }
     }
