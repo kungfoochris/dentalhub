@@ -533,6 +533,7 @@ class ViewPatientActivity : AppCompatActivity() {
         val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
         addEncounterIntent.putExtra("PATIENT_ID", patientId)
         addEncounterIntent.putExtra("ENCOUNTER_ID", "0".toLong())
+        addEncounterIntent.putExtra("MODIFY_DELETE", "0".toLong())
         startActivity(addEncounterIntent)
     }
 }

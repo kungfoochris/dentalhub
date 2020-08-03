@@ -543,6 +543,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                 WorkManager.getInstance(applicationContext).beginWith(updateIndividualEncounterWorkerRequest)
                     .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
                     .enqueue()
+
             }
         }
     }

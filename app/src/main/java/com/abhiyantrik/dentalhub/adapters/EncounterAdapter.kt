@@ -57,6 +57,7 @@ class EncounterAdapter(
             val addEncounterActivityIntent = Intent(context, AddEncounterActivity::class.java)
             addEncounterActivityIntent.putExtra("ENCOUNTER_ID", encounterItem.id)
             addEncounterActivityIntent.putExtra("PATIENT_ID", patient.id)
+            addEncounterActivityIntent.putExtra("MODIFY_DELETE", "0".toLong())
             context.startActivity(addEncounterActivityIntent)
         }
         holder.itemView.setOnClickListener {
