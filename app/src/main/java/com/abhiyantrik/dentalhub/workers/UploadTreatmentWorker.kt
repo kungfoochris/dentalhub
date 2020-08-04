@@ -210,10 +210,12 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
             if (response.isSuccessful) {
                 when (response.code()) {
                     200, 201 -> {
+                        val tempTreatment = response.body() as com.abhiyantrik.dentalhub.models.Treatment
                         val dbTreatmentEntity = treatmentBox.query().equal(
                             Treatment_.encounterId,
                             encounter!!.id
                         ).build().findFirst()!!
+                        dbTreatmentEntity.remote_id = tempTreatment.id
                         dbTreatmentEntity.uploaded = true
                         dbTreatmentEntity.updated = false
                         treatmentBox.put(dbTreatmentEntity)

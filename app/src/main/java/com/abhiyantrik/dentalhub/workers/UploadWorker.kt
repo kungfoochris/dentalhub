@@ -8,7 +8,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
-class UploadWorker (context: Context, params: WorkerParameters) : Worker(context, params) {
+class UploadWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
     val patientsBox: Box<Patient> = ObjectBox.boxStore.boxFor(Patient::class.java)
 
     override fun doWork(): Result {

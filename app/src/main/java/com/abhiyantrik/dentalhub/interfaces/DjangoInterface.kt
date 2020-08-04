@@ -412,6 +412,17 @@ interface DjangoInterface {
     ): Call<FlagResponse>
 
     @FormUrlEncoded
+    @PUT("flagdead/{flagId}")
+    fun changeFlagToModified(
+        @Header("Authorization")
+        token: String,
+        @Path("flagId")
+        flagId: Long,
+        @Field("modify_status")
+        modifyStatus: String
+    )
+
+    @FormUrlEncoded
     @POST("modifydelete")
     fun deleteEncounterFlag(
         @Header("Authorization")

@@ -13,7 +13,6 @@ import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import io.objectbox.Box
 import java.text.SimpleDateFormat
-import java.util.concurrent.TimeUnit
 
 class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
     private lateinit var patientsBox: Box<Patient>
@@ -86,8 +85,6 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
                     dbEncounter!!.remote_id = tempEncounter.id
                     dbEncounter.uploaded = true
                     encountersBox.put(dbEncounter)
-
-
                 }
             }
         }
