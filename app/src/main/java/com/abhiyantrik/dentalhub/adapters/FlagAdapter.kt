@@ -41,6 +41,7 @@ class FlagAdapter(
             tvFlagType.text = capitalizedWord
             tvFlagEncounterStatus.text = flagEncounter.flag_status
             tvFlagReasonDescription.text = flagEncounter.description
+            ibEdit.visibility = View.INVISIBLE
             when (flagEncounter.flag_status) {
                 "approved" -> {
                     ibEdit.visibility = View.VISIBLE
