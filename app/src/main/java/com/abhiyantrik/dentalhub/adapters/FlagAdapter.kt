@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.*
 import com.abhiyantrik.dentalhub.entities.Encounter
 import com.abhiyantrik.dentalhub.entities.Encounter_
-import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.models.FlagEncounter
 import kotlinx.android.synthetic.main.single_flaged_encounter.view.*
 

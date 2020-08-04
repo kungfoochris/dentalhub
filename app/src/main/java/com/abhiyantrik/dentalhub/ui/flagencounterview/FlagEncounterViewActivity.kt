@@ -2,6 +2,7 @@ package com.abhiyantrik.dentalhub.ui.flagencounterview
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abhiyantrik.dentalhub.Constants
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class FlagEncounterViewActivity : AppCompatActivity() {
 
@@ -42,48 +44,86 @@ class FlagEncounterViewActivity : AppCompatActivity() {
         val divider = RecyclerViewItemSeparator(10)
         rvFlagEncounter.addItemDecoration(divider)
 
-        GlobalScope.launch(Dispatchers.IO) {
-            val token = DentalApp.readFromPreference(this@FlagEncounterViewActivity, Constants.PREF_AUTH_TOKEN, "")
-            val panelService = DjangoInterface.create(this@FlagEncounterViewActivity)
-            val call = panelService.listFlagedData("JWT $token")
-            val response = call.execute()
-            if (response.isSuccessful) {
-                if (response.code() == 200) {
-                    val data = response.body() as List<FlagModifyDelete>
-                    Log.d(TAG, "Received data are $data")
-                    data.forEach { eachFlagData ->
-                        if (eachFlagData.flag == "delete") {
-                            flagEncounterList.add(
-                                FlagEncounter(
-                                    eachFlagData.id.toString(),
-                                    eachFlagData.encounter.id,
-                                    eachFlagData.encounter.patient.full_name,
-                                    eachFlagData.encounter.encounter_type,
-                                    eachFlagData.flag,
-                                    eachFlagData.delete_status,
-                                    "${eachFlagData.reason_for_deletion}  ${eachFlagData.other_reason_for_deletion}"
-                                )
-                            )
-                        } else {
-                            flagEncounterList.add(
-                                FlagEncounter(
-                                    eachFlagData.id.toString(),
-                                    eachFlagData.encounter.id,
-                                    eachFlagData.encounter.patient.full_name,
-                                    eachFlagData.encounter.encounter_type,
-                                    eachFlagData.flag,
-                                    eachFlagData.modify_status,
-                                    eachFlagData.reason_for_modification
-                                )
-                            )
+        try {
+            GlobalScope.launch(Dispatchers.IO) {
+                val token = DentalApp.readFromPreference(this@FlagEncounterViewActivity, Constants.PREF_AUTH_TOKEN, "")
+                val panelService = DjangoInterface.create(this@FlagEncounterViewActivity)
+                val call = panelService.listFlagedData("JWT $token")
+                val response = call.execute()
+                if (response.isSuccessful) {
+                    if (response.code() == 200) {
+                        val data = response.body() as List<FlagModifyDelete>
+                        Log.d(TAG, "Received data are $data")
+                        data.forEach { eachFlagData ->
+                            Log.d("FlagData", eachFlagData.toString())
+                            if (eachFlagData.flag.isNotEmpty()) {
+                                if (eachFlagData.flag == "delete") {
+                                    flagEncounterList.add(
+                                        FlagEncounter(
+                                            eachFlagData.id.toString(),
+                                            eachFlagData.encounter.id,
+                                            eachFlagData.encounter.patient.full_name,
+                                            eachFlagData.encounter.encounter_type,
+                                            eachFlagData.flag,
+                                            eachFlagData.delete_status,
+                                            "${eachFlagData.reason_for_deletion}  ${eachFlagData.other_reason_for_deletion}"
+                                        )
+                                    )
+                                } else {
+                                    flagEncounterList.add(
+                                        FlagEncounter(
+                                            eachFlagData.id.toString(),
+                                            eachFlagData.encounter.id,
+                                            eachFlagData.encounter.patient.full_name,
+                                            eachFlagData.encounter.encounter_type,
+                                            eachFlagData.flag,
+                                            eachFlagData.modify_status,
+                                            eachFlagData.reason_for_modification
+                                        )
+                                    )
+                                }
+                            } else {
+                                if (eachFlagData.modify_status != "") {
+                                    flagEncounterList.add(
+                                        FlagEncounter(
+                                            eachFlagData.id.toString(),
+                                            eachFlagData.encounter.id,
+                                            eachFlagData.encounter.patient.full_name,
+                                            eachFlagData.encounter.encounter_type,
+                                            "modify",
+                                            eachFlagData.modify_status,
+                                            eachFlagData.reason_for_modification
+                                        )
+                                    )
+                                } else {
+                                    flagEncounterList.add(
+                                        FlagEncounter(
+                                            eachFlagData.id.toString(),
+                                            eachFlagData.encounter.id,
+                                            eachFlagData.encounter.patient.full_name,
+                                            eachFlagData.encounter.encounter_type,
+                                            "delete",
+                                            eachFlagData.delete_status,
+                                            eachFlagData.reason_for_modification
+                                        )
+                                    )
+                                }
+
+                            } // eachFlagData.flag == ""
+                        } // end of Foreach
+                        withContext(Dispatchers.Main) {
+                            adapter.notifyDataSetChanged()
                         }
-                    } // end of Foreach
-                    withContext(Dispatchers.Main) {
-                        adapter.notifyDataSetChanged()
                     }
                 }
             }
+        } catch (ex : Exception) {
+            Log.d(TAG, "Error Please try again.")
+            Toast.makeText(this, "Error occured please try again.", Toast.LENGTH_SHORT).show()
         }
+
+
+        Log.d("FlagData", flagEncounterList.toString())
     }
 
     override fun onSupportNavigateUp(): Boolean {

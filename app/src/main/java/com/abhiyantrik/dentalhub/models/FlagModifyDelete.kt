@@ -8,7 +8,7 @@ data class FlagModifyDelete(
     val reason_for_deletion: String,
     val other_reason_for_deletion: String,
     val delete_status: String,
-    val flag: String,
+    val flag: String = "",
     val modify_approved_at: String
 )
 
