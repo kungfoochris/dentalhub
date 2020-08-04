@@ -29,6 +29,8 @@ import io.objectbox.Box
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 
@@ -550,15 +552,33 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                     .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
                     .enqueue()
 
+                Log.d("FlagTest", "Edit found.")
                 if (encounterFlagId != 0.toLong()) {
-                    GlobalScope.launch(Dispatchers.IO) {
-                        val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
-                        val panelService = DjangoInterface.create(context)
-                        var call = panelService.changeFlagToModified(
-                            "JWT $token",
-                            encounterFlagId,
-                            "modified"
-                        )
+                    Log.d("FlagTest", "Flag Id found as ${encounterFlagId}.")
+                    try {
+                        GlobalScope.launch(Dispatchers.IO) {
+                            val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
+                            val panelService = DjangoInterface.create(context)
+                            val call = panelService.changeFlagToModified(
+                                "JWT $token",
+                                encounterFlagId,
+                                "modified"
+                            )
+                            val response = call.execute()
+                            if (response.isSuccessful) {
+                                if (response.code() == 200) {
+                                    Log.d("FlagTest", "Encounter modified successfully.")
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(this@AddEncounterActivity, "Encounter modified successfully.", Toast.LENGTH_SHORT).show()
+                                    }
+                                } else {
+                                    Log.d("FlagTest", "Encounter modify failed.")
+                                    Toast.makeText(context, "Encounter modify failed.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "IMPORTANT: Encounter modify failed.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

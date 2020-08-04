@@ -420,7 +420,7 @@ interface DjangoInterface {
         flagId: Long,
         @Field("modify_status")
         modifyStatus: String
-    )
+    ): Call<FlagEncounterModifiedSubmit>
 
     @FormUrlEncoded
     @POST("modifydelete")

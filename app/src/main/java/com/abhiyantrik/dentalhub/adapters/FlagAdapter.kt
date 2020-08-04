@@ -66,6 +66,7 @@ class FlagAdapter(
                     val addEncounterActivityIntent = Intent(context, AddEncounterActivity::class.java)
                     addEncounterActivityIntent.putExtra("ENCOUNTER_ID", queryResult.id)
                     addEncounterActivityIntent.putExtra("PATIENT_ID", queryResult.patient?.targetId)
+                    addEncounterActivityIntent.putExtra("MODIFY_DELETE", flagEncounter.id.toLong())
                     context.startActivity(addEncounterActivityIntent)
                 } else {
                     Toast.makeText(context, "Encounter not found.", Toast.LENGTH_SHORT).show()
