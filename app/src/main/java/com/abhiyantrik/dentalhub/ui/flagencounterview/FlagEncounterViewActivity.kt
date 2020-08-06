@@ -119,7 +119,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
             }
         } catch (ex : Exception) {
             Log.d(TAG, "Error Please try again.")
-            Toast.makeText(this, "Error occured please try again.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error occurred please try again.", Toast.LENGTH_SHORT).show()
         }
 
 

@@ -159,6 +159,11 @@ class ViewPatientActivity : AppCompatActivity() {
                 patient,
                 allEnCounters,
                 object : EncounterAdapter.EncounterClickListener {
+                    override fun onModificationFlagClick(encounterId: String, isModifyable: Boolean) {
+                        modifyDeleteEncounterId = encounterId
+                        displayModificationTypePopup(isModifyable)
+                    }
+
                     override fun onEncounterClick(encounter: Encounter) {
                         // start the encounter view
                         Log.d("View PatientActivity", "show encounter detail")
@@ -167,11 +172,6 @@ class ViewPatientActivity : AppCompatActivity() {
                         encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id)
                         encounterDetailIntent.putExtra("PATIENT_ID", patientId)
                         startActivity(encounterDetailIntent)
-                    }
-
-                    override fun onModificationFlagClick(encounterId: String) {
-                        modifyDeleteEncounterId = encounterId
-                        displayModificationTypePopup()
                     }
                 })
         recyclerView.adapter = encounterAdapter
@@ -279,7 +279,7 @@ class ViewPatientActivity : AppCompatActivity() {
         }
     }
 
-    fun displayModificationTypePopup() {
+    fun displayModificationTypePopup(isModify: Boolean) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflater: LayoutInflater = layoutInflater
         val view: View = inflater.inflate(R.layout.popup_modification_flag_choose, null)
@@ -291,6 +291,10 @@ class ViewPatientActivity : AppCompatActivity() {
         builder.setView(view)
         val dialog: Dialog = builder.create()
         dialog.show()
+
+        if (isModify) {
+            tvModifyEncounter.visibility = View.GONE
+        }
 
         tvModifyEncounter.setOnClickListener {
             Log.d(TAG, "Modify iv clicked.")
