@@ -51,7 +51,7 @@ n
 n
 >app/src/main/java/com/abhiyantrik/dentalhub/entities/Recall.kt,7/d/7d47f213a38a4c456280476e944c2a7a0c09e2c5
 m
-=app/src/main/java/com/abhiyantrik/dentalhub/SplashActivity.kt,6/b/6b700d826b896d717b6ff5e75e6b6f120e436b81
+=app/src/main/java/com/abhiyantrik/dentalhub/SplashActivity.kt,6\b\6b700d826b896d717b6ff5e75e6b6f120e436b81
 w
 Gapp/src/main/java/com/abhiyantrik/dentalhub/LocationSelectorActivity.kt,7/d/7d5b6cb02e8fc025b6977a5c5f717bcc66d731cb
 l
@@ -77,7 +77,7 @@ Capp/src/main/java/com/abhiyantrik/dentalhub/AddEncounterActivity.kt,3\4\3447b9
 z
 Japp/src/main/java/com/abhiyantrik/dentalhub/fragments/ScreeningFragment.kt,f\f\ffbcd9c6628d42bf3957c7073319eca751aabd38
 t
-Dapp/src/main/java/com/abhiyantrik/dentalhub/ViewEncounterActivity.kt,2/2/22b2ac741df302ed241f21423e3a734d91ad27b9
+Dapp/src/main/java/com/abhiyantrik/dentalhub/ViewEncounterActivity.kt,2\2\22b2ac741df302ed241f21423e3a734d91ad27b9
 v
 Fapp/src/main/java/com/abhiyantrik/dentalhub/adapters/PatientAdapter.kt,4/c/4cd60ea1f0568e3953c166a2a708600b6d88f768
 r
@@ -157,7 +157,7 @@ Japp/src/main/java/com/abhiyantrik/dentalhub/workers/UploadPatientWorker.kt,8\0
 z
 Japp/src/main/java/com/abhiyantrik/dentalhub/workers/UpdatePatientWorker.kt,e/0/e06cebc4c5ae5ec91b9fa8921114310a03772904
 †
-Vapp/src/main/java/com/abhiyantrik/dentalhub/workers/UploadIndividualEncounterWorker.kt,b/d/bd0c967239a4d328f88ed67284ee30ee78f5b99f
+Vapp/src/main/java/com/abhiyantrik/dentalhub/workers/UploadIndividualEncounterWorker.kt,b\d\bd0c967239a4d328f88ed67284ee30ee78f5b99f
 s
 Capp/src/main/java/com/abhiyantrik/dentalhub/workers/UploadWorker.kt,2/7/27c13a25d0d57b2565463f214ccce2a889ea8418
 Q
@@ -196,3 +196,5 @@ v
 Fapp/src/main/java/com/abhiyantrik/dentalhub/models/FlagModifyDelete.kt,0\5\05f038328bfc6ca2915be9ae96c647149dda8c27
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+r
+Bapp/src/main/java/com/abhiyantrik/dentalhub/models/FlagResponse.kt,0\a\0a3f9ded0d48381b33cfb654a8e8567735ec61b6
