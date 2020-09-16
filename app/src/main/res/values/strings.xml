@@ -1,5 +1,5 @@
 <resources>
-<!--    <string name="api_url">http://app.abhiyantrik.com:6061/api/v1/</string>-->
+    <!--    <string name="api_url">http://app.abhiyantrik.com:6061/api/v1/</string>-->
     <string name="api_url">http://app.abhiyantrik.com:6061/api/v1/</string>
     <!--    <string name="api_url">http://192.168.1.105:6061/api/v1/</string>-->
     <string name="app_name">Dental Hub</string>
@@ -85,6 +85,7 @@
     <string name="referral">Referral</string>
     <string name="sync_ticker">Syncing</string>
     <string name="synchronization">Synchronization</string>
+    <string name="asynchronous">Asynchronous</string>
     <string name="recall">Recall</string>
     <string name="recall_date">Recall Date</string>
     <string name="recall_time">Recall Time</string>
@@ -165,4 +166,6 @@
     <string name="modify">Modify</string>
     <string name="request_modify">Request Modify</string>
     <string name="flag">Flag</string>
+    <string name="upload">Upload</string>
+    <string name="download">Download</string>
 </resources>

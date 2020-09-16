@@ -25,6 +25,7 @@ import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.services.LocationTrackerService
+import com.abhiyantrik.dentalhub.ui.asyncronus.AsyncActivity
 import com.abhiyantrik.dentalhub.ui.flagencounterview.FlagEncounterViewActivity
 import com.abhiyantrik.dentalhub.ui.synchronization.SynchronizationActivity
 import com.abhiyantrik.dentalhub.utils.DateHelper
@@ -356,10 +357,10 @@ class MainActivity : AppCompatActivity() {
         val run = object : Runnable {
             override fun run() {
                 checkAllUpdated()
-                handler.postDelayed(this, 2000)
+                handler.postDelayed(this, 10000)
             }
         }
-        handler.postDelayed(run, 5000)
+        handler.postDelayed(run, 10000)
     }
 
     private fun logout() {
@@ -382,12 +383,12 @@ class MainActivity : AppCompatActivity() {
         val referral =
             referralBox.query().equal(Referral_.uploaded, false).build().find()
 
-        Log.d(TAG, "Patient : " + patient.toString())
-        Log.d(TAG, "encounter : " + encounter.toString())
-        Log.d(TAG, "history : " + history.toString())
-        Log.d(TAG, "screening : " + screening.toString())
-        Log.d(TAG, "treatment : " + treatment.toString())
-        Log.d(TAG, "referral : " + referral.toString())
+//        Log.d(TAG, "Patient : " + patient.toString())
+//        Log.d(TAG, "encounter : " + encounter.toString())
+//        Log.d(TAG, "history : " + history.toString())
+//        Log.d(TAG, "screening : " + screening.toString())
+//        Log.d(TAG, "treatment : " + treatment.toString())
+//        Log.d(TAG, "referral : " + referral.toString())
 
         if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
                 treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
@@ -532,6 +533,10 @@ class MainActivity : AppCompatActivity() {
 
             R.id.menuSync -> {
                 startActivity(Intent(context, SynchronizationActivity::class.java))
+            }
+
+            R.id.menuAsync -> {
+                startActivity(Intent(context, AsyncActivity::class.java))
             }
 
             R.id.logout -> {

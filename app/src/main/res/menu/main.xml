@@ -16,6 +16,10 @@
             android:icon="@android:drawable/ic_secure"
             android:title="@string/synchronization" />
     <item
+            android:id="@+id/menuAsync"
+            android:icon="@android:drawable/ic_secure"
+            android:title="@string/asynchronous" />
+    <item
             android:id="@+id/logout"
             android:icon="@android:drawable/ic_secure"
             android:title="@string/logout" />

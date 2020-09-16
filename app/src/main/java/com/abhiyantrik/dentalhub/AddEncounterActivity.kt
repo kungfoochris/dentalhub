@@ -245,7 +245,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             .setInputData(data.build())
             .setConstraints(DentalApp.uploadConstraints)
             .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+        // to test aync upload
+//        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
     }
 
     override fun updateHistory(
@@ -534,10 +535,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                         ).build()
 
 
-
-                WorkManager.getInstance(applicationContext).beginWith(uploadIndividualEncounterWorkerRequest)
-                    .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
-                    .enqueue()
+//                checking async status
+//                WorkManager.getInstance(applicationContext).beginWith(uploadIndividualEncounterWorkerRequest)
+//                    .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
+//                    .enqueue()
             }
             "edit" -> {
                 val updateIndividualEncounterWorkerRequest =
@@ -548,9 +549,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                             100,
                             TimeUnit.MILLISECONDS
                         ).build()
-                WorkManager.getInstance(applicationContext).beginWith(updateIndividualEncounterWorkerRequest)
-                    .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
-                    .enqueue()
+//                checking async status
+//                WorkManager.getInstance(applicationContext).beginWith(updateIndividualEncounterWorkerRequest)
+//                    .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
+//                    .enqueue()
 
                 Log.d("FlagTest", "Edit found.")
                 if (encounterFlagId != 0.toLong()) {
