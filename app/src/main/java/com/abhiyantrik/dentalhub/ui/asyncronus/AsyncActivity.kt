@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub.ui.asyncronus
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
@@ -20,7 +21,10 @@ import java.text.SimpleDateFormat
 
 class AsyncActivity : AppCompatActivity() {
 
-    val TAG = "AsyncActivity"
+    private val TAG = "AsyncActivity"
+
+    private var patientUploading = false
+    private var encounterUploading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +42,21 @@ class AsyncActivity : AppCompatActivity() {
 
     private fun setupOnClickListeners() {
         btnUpload.setOnClickListener {
-            uploadPatientData()
+            if (patientUploading || patientUploading) {
+                Toast.makeText(this, "Uploading in progress", Toast.LENGTH_SHORT).show()
+            } else {
+                tvStatus.text = ""
+                uploadPatientData()
+            }
         }
 
         btnUploadEncounter.setOnClickListener {
-            uploadEncounterData()
+            if (patientUploading || patientUploading) {
+                Toast.makeText(this, "Uploading in progress", Toast.LENGTH_SHORT).show()
+            } else {
+                tvStatus.text = ""
+                uploadEncounterData()
+            }
         }
 
         btnDownload.setOnClickListener {
@@ -52,6 +66,7 @@ class AsyncActivity : AppCompatActivity() {
 
     private fun uploadEncounterData() {
         GlobalScope.launch(Dispatchers.IO) {
+            encounterUploading = true
             val encountersBox: Box<Encounter> =  ObjectBox.boxStore.boxFor(Encounter::class.java)
             val historyBox = ObjectBox.boxStore.boxFor(History::class.java)
             val screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
@@ -75,59 +90,72 @@ class AsyncActivity : AppCompatActivity() {
             val limit = 50.toLong()
             val offset = 0.toLong()
             val allEncounters = encountersBox.query().equal(Encounter_.uploaded, false).orderDesc(Encounter_.id).build().find(offset, limit)
+            Log.d(TAG, "patient upload to 50 count ${allEncounters.count()}")
             for (eachEncounter in allEncounters) {
 
                 val patientRemoteId = eachEncounter.patient!!.target.remote_id
-                if (!eachEncounter.uploaded && patientRemoteId.isNotEmpty()) {
-                    if (uploadEncounter(eachEncounter, patientRemoteId, encountersBox)) {
-                        withContext(Dispatchers.Main) {
-                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " encounter uploaded.\n")
+                Log.d(TAG, "patient remote Id ${patientRemoteId}")
+
+                if (patientRemoteId.isEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        tvStatus.append(eachEncounter.patient!!.target.fullName() + " should be uploaded first to upload encounters.\n")
+                    }
+                } else {
+                    if (!eachEncounter.uploaded && patientRemoteId.isNotEmpty()) {
+                        if (uploadEncounter(eachEncounter, patientRemoteId, encountersBox)) {
+                            withContext(Dispatchers.Main) {
+                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " encounter uploaded.\n")
+                            }
+                        }
+                    }
+
+
+                    val unUploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().findFirst()
+                    val unUploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().findFirst()
+                    val unUploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().findFirst()
+                    val unUploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().findFirst()
+
+                    if (unUploadedHistory != null && patientRemoteId.isNotEmpty()) {
+                        if (uploadHistory(unUploadedHistory, historyBox, eachEncounter.remote_id)) {
+                            withContext(Dispatchers.Main) {
+                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " History uploaded.\n")
+                            }
+                        }
+                    }
+
+                    if (unUploadedScreening != null && patientRemoteId.isNotEmpty()) {
+                        if (uploadScreening(unUploadedScreening, screeningBox, eachEncounter.remote_id)) {
+                            withContext(Dispatchers.Main) {
+                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " Screening uploaded.\n")
+                            }
+                        }
+                    }
+
+                    if (unUploadedTreatment != null && patientRemoteId.isNotEmpty()) {
+                        if (uploadTreatment(unUploadedTreatment, treatmentBox, eachEncounter.remote_id)) {
+                            withContext(Dispatchers.Main) {
+                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " Treatment uploaded.\n")
+                            }
+                        }
+                    }
+
+                    if (unUploadedReferral != null && patientRemoteId.isNotEmpty()) {
+                        if (uploadReferral(unUploadedReferral, referralBox, eachEncounter.remote_id)) {
+                            withContext(Dispatchers.Main) {
+                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " Referral uploaded.\n")
+                            }
                         }
                     }
                 }
 
-                val unUploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().findFirst()
-                val unUploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().findFirst()
-                val unUploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().findFirst()
-                val unUploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().findFirst()
-
-                if (unUploadedHistory != null && patientRemoteId.isNotEmpty()) {
-                    if (uploadHistory(unUploadedHistory, historyBox, eachEncounter.remote_id)) {
-                        withContext(Dispatchers.Main) {
-                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " History uploaded.\n")
-                        }
-                    }
-                }
-
-                if (unUploadedScreening != null && patientRemoteId.isNotEmpty()) {
-                    if (uploadScreening(unUploadedScreening, screeningBox, eachEncounter.remote_id)) {
-                        withContext(Dispatchers.Main) {
-                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " Screening uploaded.\n")
-                        }
-                    }
-                }
-
-                if (unUploadedTreatment != null && patientRemoteId.isNotEmpty()) {
-                    if (uploadTreatment(unUploadedTreatment, treatmentBox, eachEncounter.remote_id)) {
-                        withContext(Dispatchers.Main) {
-                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " Treatment uploaded.\n")
-                        }
-                    }
-                }
-
-                if (unUploadedReferral != null && patientRemoteId.isNotEmpty()) {
-                    if (uploadReferral(unUploadedReferral, referralBox, eachEncounter.remote_id)) {
-                        withContext(Dispatchers.Main) {
-                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " Referral uploaded.\n")
-                        }
-                    }
-                }
             }
+            encounterUploading = false
         }
     }
 
     private fun uploadPatientData() {
         GlobalScope.launch(Dispatchers.IO) {
+            patientUploading = true
 
             val patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
 
@@ -141,6 +169,8 @@ class AsyncActivity : AppCompatActivity() {
                 tvStatus.append("Found Total ${allPatient.count()} patient to upload.\n")
             }
 
+            Log.d(TAG, "patient upload to 50 count ${allPatient.count()}")
+
             for (patient in dbAllPatient) {
 
                 if (!patient.uploaded) {
@@ -151,6 +181,7 @@ class AsyncActivity : AppCompatActivity() {
                     }
                 }
             }
+            patientUploading = false
         }
     }
 

@@ -440,9 +440,8 @@ class AddPatientActivity : AppCompatActivity() {
                 .setInputData(data.build())
                 .setConstraints(DentalApp.uploadConstraints)
                 .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-            // to test aync upload
-//            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
 
+            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
 
             viewPatientIntent.putExtra("PATIENT_ID", dbPatientEntity.id)
             startActivity(viewPatientIntent)
@@ -453,8 +452,8 @@ class AddPatientActivity : AppCompatActivity() {
                 .setInputData(data.build())
                 .setConstraints(DentalApp.uploadConstraints)
                 .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-            // to test aync upload
-//            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+
+            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
             finish()
         }
     }
