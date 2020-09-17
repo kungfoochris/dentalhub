@@ -166,6 +166,7 @@
     <string name="modify">Modify</string>
     <string name="request_modify">Request Modify</string>
     <string name="flag">Flag</string>
-    <string name="upload">Upload</string>
     <string name="download">Download</string>
+    <string name="upload_patient">Upload Patient</string>
+    <string name="upload_encounter">Upload Encounter</string>
 </resources>

@@ -19,6 +19,9 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 
 class AsyncActivity : AppCompatActivity() {
+
+    val TAG = "AsyncActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_async)
@@ -28,9 +31,18 @@ class AsyncActivity : AppCompatActivity() {
         setupOnClickListeners()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
+
     private fun setupOnClickListeners() {
         btnUpload.setOnClickListener {
             uploadPatientData()
+        }
+
+        btnUploadEncounter.setOnClickListener {
+            uploadEncounterData()
         }
 
         btnDownload.setOnClickListener {
@@ -38,19 +50,14 @@ class AsyncActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadPatientData() {
+    private fun uploadEncounterData() {
         GlobalScope.launch(Dispatchers.IO) {
-
-            val patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
             val encountersBox: Box<Encounter> =  ObjectBox.boxStore.boxFor(Encounter::class.java)
             val historyBox = ObjectBox.boxStore.boxFor(History::class.java)
             val screeningBox = ObjectBox.boxStore.boxFor(Screening::class.java)
             val treatmentBox = ObjectBox.boxStore.boxFor(Treatment::class.java)
             val referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
 
-            val dbAllPatient = patientBox.query().build().find()
-
-            val allPatient = patientBox.query().equal(Patient_.uploaded, false).build().find()
             val allEncounter = encountersBox.query().equal(Encounter_.uploaded, false).build().find()
             val allHistory = historyBox.query().equal(History_.uploaded, false).build().find()
             val allScreening = screeningBox.query().equal(Screening_.uploaded, false).build().find()
@@ -58,12 +65,80 @@ class AsyncActivity : AppCompatActivity() {
             val allReferral = referralBox.query().equal(Referral_.uploaded, false).build().find()
 
             withContext(Dispatchers.Main) {
-                tvStatus.append("Found Total ${allPatient.count()} patient to upload.\n")
                 tvStatus.append("Found Total ${allEncounter.count()} encounters to upload.\n")
                 tvStatus.append("Found Total ${allHistory.count()} history to upload.\n")
                 tvStatus.append("Found Total ${allScreening.count()} screening to upload.\n")
                 tvStatus.append("Found Total ${allTreatment.count()} treatment to upload.\n")
                 tvStatus.append("Found Total ${allReferral.count()} referral to upload.\n")
+            }
+
+            val limit = 50.toLong()
+            val offset = 0.toLong()
+            val allEncounters = encountersBox.query().equal(Encounter_.uploaded, false).orderDesc(Encounter_.id).build().find(offset, limit)
+            for (eachEncounter in allEncounters) {
+
+                val patientRemoteId = eachEncounter.patient!!.target.remote_id
+                if (!eachEncounter.uploaded && patientRemoteId.isNotEmpty()) {
+                    if (uploadEncounter(eachEncounter, patientRemoteId, encountersBox)) {
+                        withContext(Dispatchers.Main) {
+                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " encounter uploaded.\n")
+                        }
+                    }
+                }
+
+                val unUploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().findFirst()
+                val unUploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().findFirst()
+                val unUploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().findFirst()
+                val unUploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().findFirst()
+
+                if (unUploadedHistory != null && patientRemoteId.isNotEmpty()) {
+                    if (uploadHistory(unUploadedHistory, historyBox, eachEncounter.remote_id)) {
+                        withContext(Dispatchers.Main) {
+                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " History uploaded.\n")
+                        }
+                    }
+                }
+
+                if (unUploadedScreening != null && patientRemoteId.isNotEmpty()) {
+                    if (uploadScreening(unUploadedScreening, screeningBox, eachEncounter.remote_id)) {
+                        withContext(Dispatchers.Main) {
+                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " Screening uploaded.\n")
+                        }
+                    }
+                }
+
+                if (unUploadedTreatment != null && patientRemoteId.isNotEmpty()) {
+                    if (uploadTreatment(unUploadedTreatment, treatmentBox, eachEncounter.remote_id)) {
+                        withContext(Dispatchers.Main) {
+                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " Treatment uploaded.\n")
+                        }
+                    }
+                }
+
+                if (unUploadedReferral != null && patientRemoteId.isNotEmpty()) {
+                    if (uploadReferral(unUploadedReferral, referralBox, eachEncounter.remote_id)) {
+                        withContext(Dispatchers.Main) {
+                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " Referral uploaded.\n")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun uploadPatientData() {
+        GlobalScope.launch(Dispatchers.IO) {
+
+            val patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
+
+            val limit = 50.toLong()
+            val offset = 0.toLong()
+            val dbAllPatient = patientBox.query().orderDesc(Patient_.id).build().find(offset, limit)
+
+            val allPatient = patientBox.query().equal(Patient_.uploaded, false).build().find()
+
+            withContext(Dispatchers.Main) {
+                tvStatus.append("Found Total ${allPatient.count()} patient to upload.\n")
             }
 
             for (patient in dbAllPatient) {
@@ -75,56 +150,6 @@ class AsyncActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-                val allEncounters =
-                    encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
-                for (eachEncounter in allEncounters) {
-
-                    if (!eachEncounter.uploaded) {
-                        if (uploadEncounter(eachEncounter, patient.remote_id, encountersBox)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(patient.fullName() + " encounter uploaded.\n")
-                            }
-                        }
-                    }
-
-                    val unUploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().findFirst()
-                    val unUploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().findFirst()
-                    val unUploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().findFirst()
-                    val unUploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().findFirst()
-
-                    if (unUploadedHistory != null) {
-                        if (uploadHistory(unUploadedHistory, historyBox, eachEncounter.remote_id)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(patient.fullName() + " History uploaded.\n")
-                            }
-                        }
-                    }
-
-                    if (unUploadedScreening != null) {
-                        if (uploadScreening(unUploadedScreening, screeningBox, eachEncounter.remote_id)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(patient.fullName() + " Screening uploaded.\n")
-                            }
-                        }
-                    }
-
-                    if (unUploadedTreatment != null) {
-                        if (uploadTreatment(unUploadedTreatment, treatmentBox, eachEncounter.remote_id)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(patient.fullName() + " Treatment uploaded.\n")
-                            }
-                        }
-                    }
-
-                    if (unUploadedReferral != null) {
-                        if (uploadReferral(unUploadedReferral, referralBox, eachEncounter.remote_id)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(patient.fullName() + " Referral uploaded.\n")
-                            }
-                        }
-                    }
-                }
             }
         }
     }
@@ -133,6 +158,7 @@ class AsyncActivity : AppCompatActivity() {
         referral: Referral,
         referralBox: Box<Referral>,
         encounterRemoteId: String): Boolean {
+        Log.d(TAG, "Referral uploaded started.")
         var referralStatus = false
         DentalApp.displayNotification(
             applicationContext,
@@ -157,6 +183,7 @@ class AsyncActivity : AppCompatActivity() {
             referral.other_details
         )
         val response = call.execute()
+        Log.d(TAG, "Referral response ${response.code()} ${response.message()}")
         if (response.isSuccessful) {
             when (response.code()) {
                 200, 201 -> {
@@ -166,6 +193,7 @@ class AsyncActivity : AppCompatActivity() {
                     referral.updated = false
                     referralBox.put(referral)
                     referralStatus = true
+                    Log.d(TAG, "Referral uploaded successfully.")
                 }
             }
         }
@@ -178,6 +206,7 @@ class AsyncActivity : AppCompatActivity() {
         treatmentBox: Box<Treatment>,
         encounterRemoteId: String
     ): Boolean {
+        Log.d(TAG, "Treatment uploaded started.")
         var treatmentStatus = false
         DentalApp.displayNotification(
             applicationContext,
@@ -259,6 +288,7 @@ class AsyncActivity : AppCompatActivity() {
             treatment.notes
         )
         val response = call.execute()
+        Log.d(TAG, "Treatment response ${response.code()} ${response.message()}")
         if (response.isSuccessful) {
             when (response.code()) {
                 200, 201 -> {
@@ -268,6 +298,8 @@ class AsyncActivity : AppCompatActivity() {
                     treatment.updated = false
                     treatmentBox.put(treatment)
                     treatmentStatus = true
+                    Log.d(TAG, "Treatment uploaded successfully.")
+
                 }
             }
         }
@@ -280,6 +312,8 @@ class AsyncActivity : AppCompatActivity() {
         screeningBox: Box<Screening>,
         encounterRemoteId: String
     ): Boolean {
+        Log.d(TAG, "Screening uploaded started.")
+
         var screeningStatus = false
         DentalApp.displayNotification(
             applicationContext,
@@ -308,6 +342,7 @@ class AsyncActivity : AppCompatActivity() {
             screening.active_infection
         )
         val response = call.execute()
+        Log.d(TAG, "Screening response ${response.code()} ${response.message()}")
         if (response.isSuccessful) {
             when (response.code()) {
                 200, 201 -> {
@@ -317,6 +352,7 @@ class AsyncActivity : AppCompatActivity() {
                     screening.updated = false
                     screeningBox.put(screening)
                     screeningStatus = true
+                    Log.d(TAG, "Screening uploaded successfully.")
                 }
             }
         }
@@ -329,6 +365,7 @@ class AsyncActivity : AppCompatActivity() {
         historyBox: Box<History>,
         encounterRemoteId: String
     ) : Boolean {
+        Log.d(TAG, "History uploaded started.")
         var historyStatus = false
         DentalApp.displayNotification(
             applicationContext,
@@ -363,6 +400,7 @@ class AsyncActivity : AppCompatActivity() {
             history.not_taking_any_medications
         )
         val response = call.execute()
+        Log.d(TAG, "History response ${response.code()} ${response.message()}")
         if (response.isSuccessful) {
             when (response.code()) {
                 200, 201 -> {
@@ -372,6 +410,7 @@ class AsyncActivity : AppCompatActivity() {
                     history.updated = false
                     historyBox.put(history)
                     historyStatus = true
+                    Log.d(TAG, "History uploaded successfully.")
                 }
                 else -> {
                     Log.d("UploadHistoryWorker", response.message() + response.code())
@@ -389,6 +428,7 @@ class AsyncActivity : AppCompatActivity() {
         patientRemoteId: String,
         encountersBox: Box<Encounter>
     ) : Boolean {
+        Log.d(TAG, "Encounter uploaded started.")
         var encounterStatus = false
         Log.d("EncounterDateCreated", eachEncounter.id.toString() + " " + eachEncounter.created_at!!.length)
         var correctDate = String()
@@ -416,6 +456,7 @@ class AsyncActivity : AppCompatActivity() {
             eachEncounter.updated_by!!
         )
         val response = call.execute()
+        Log.d(TAG, "Encounter response ${response.code()} ${response.message()}")
         if (response.isSuccessful) {
             when (response.code()) {
                 200, 201 -> {
@@ -424,6 +465,7 @@ class AsyncActivity : AppCompatActivity() {
                     eachEncounter.uploaded = true
                     encountersBox.put(eachEncounter)
                     encounterStatus = true
+                    Log.d(TAG, "Encounter uploaded successfully.")
                 }
             }
         }
@@ -433,6 +475,8 @@ class AsyncActivity : AppCompatActivity() {
     private fun uploadPatient(
         patient: Patient,
         patientBox: Box<Patient>) : Boolean {
+        Log.d(TAG, "Patient uploaded started.")
+
         var responseStatus = false
         DentalApp.displayNotification(
             applicationContext,
@@ -475,6 +519,7 @@ class AsyncActivity : AppCompatActivity() {
         )
         if(!patient.uploaded) {
             val response = call.execute()
+            Log.d(TAG, "Patient response ${response.code()} ${response.message()}")
             if (response.isSuccessful) {
                 when (response.code()) {
                     200, 201 -> {
@@ -487,6 +532,7 @@ class AsyncActivity : AppCompatActivity() {
 
                             patientBox.put(patient)
                             responseStatus = true
+                            Log.d(TAG, "Patients uploaded successfully.")
                             Crashlytics.log(Log.INFO, "UploadPatientWorkAsync", "Patient uploaded.")
                         } else {
                             Crashlytics.log(Log.INFO, "UploadPatientWorkAsync", "Patient uploaded but id not revieved ${patient.fullName()}.")
