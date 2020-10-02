@@ -69,7 +69,7 @@ class AddPatientActivity : AppCompatActivity() {
         if (patientId != 0.toLong()) {
             patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()
         }
-        action = intent.getStringExtra("ACTION")
+        action = intent.getStringExtra("ACTION").toString()
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
