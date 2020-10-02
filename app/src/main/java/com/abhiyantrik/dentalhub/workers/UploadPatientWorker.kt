@@ -12,7 +12,7 @@ import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
@@ -90,15 +90,15 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
                         val tempPatient = response.body()
 
                         if ( tempPatient?.id != null ) {
-                            dbPatient!!.remote_id = tempPatient!!.id
+                            dbPatient!!.remote_id = tempPatient.id
                             dbPatient.uploaded = true
                             dbPatient.updated = false
 
                             patientsBox.put(dbPatient)
-                            Crashlytics.log(Log.INFO, "UploadPatientWorker", "Patient uploaded.")
+                            FirebaseCrashlytics.getInstance().log("UploadPatientWorker Patient uploaded.")
                         } else {
-                            Crashlytics.log(Log.INFO, "UploadPatientWorker", "Patient uploaded but id not revieved ${patient.fullName()}.")
-                            Crashlytics.getInstance().crash()
+                            FirebaseCrashlytics.getInstance().log("UploadPatientWorker: Patient uploaded but id not received ${patient.fullName()}.")
+                            FirebaseCrashlytics.getInstance().setCustomKey("patient_upload_status", false)
                         }
 
                         DentalApp.cancelNotification(applicationContext, 1001)
