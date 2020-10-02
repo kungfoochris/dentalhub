@@ -31,9 +31,9 @@ import com.abhiyantrik.dentalhub.ui.synchronization.SynchronizationActivity
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.abhiyantrik.dentalhub.workers.*
-import com.crashlytics.android.Crashlytics
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        Crashlytics.log(Log.INFO, TAG, "Message From OnCreate")
+        FirebaseCrashlytics.getInstance().log("$TAG: Message From OnCreate")
 
         setupUI()
 
