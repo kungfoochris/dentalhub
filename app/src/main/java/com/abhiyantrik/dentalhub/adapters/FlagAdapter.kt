@@ -55,7 +55,6 @@ class FlagAdapter(
             }
 
             ibEdit.setOnClickListener {
-//                Toast.makeText(context, "Encounter remote_id: ${flagEncounter.remote_id}", Toast.LENGTH_SHORT).show()
                 flagClickListner.onEditButtonClick(flagEncounter)
             }
         }

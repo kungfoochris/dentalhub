@@ -20,6 +20,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<Encounter>
+    private val ctx: Context = context
 
     override fun doWork(): Result {
         return try {
@@ -103,9 +104,15 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
 
                         DentalApp.cancelNotification(applicationContext, 1001)
                     }
+                    else -> {
+                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() HTTP Status code "+response.code())
+                    }
                 }
                 Log.d("UploadPatientWorker", "other than 200, 201 " + response.message().toString())
             } else {
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() Failed to add patient.")
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() "+response.code())
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() "+response.message())
                 Log.d("UploadPatientWorker", response.message())
                 Log.d("UploadPatientWorker", response.code().toString())
                 Log.d("UploadPatientWorker", "Error body " + response.errorBody().toString())

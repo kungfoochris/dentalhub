@@ -74,7 +74,6 @@ class EncounterAdapter(
 
     inner class EncounterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
         private var tvEncounterName: TextView = itemView.findViewById(R.id.tvEncounterName)
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
         private var tvAuthorName: TextView = itemView.findViewById(R.id.tvAuthorName)

@@ -8,9 +8,9 @@ import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.models.Sync
 import kotlinx.android.synthetic.main.single_syncronization.view.*
 
-class SyncronizationAdapter(
+class SynchronizationAdapter(
     val data: List<Sync>
-) : RecyclerView.Adapter<SyncronizationAdapter.SyncViewHolder>() {
+) : RecyclerView.Adapter<SynchronizationAdapter.SyncViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SyncViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.single_syncronization, parent, false)

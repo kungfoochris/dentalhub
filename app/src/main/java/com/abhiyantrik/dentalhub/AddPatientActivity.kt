@@ -321,7 +321,6 @@ class AddPatientActivity : AppCompatActivity() {
             spinnerDobMonth.setSelection(DentalApp.lastDobMonthIndex)
             spinnerDobYear.setSelection(DentalApp.lastDobYearIndex)
             setupDistricts(DentalApp.lastDistrictIndex) // set default as kaski 35 is remote_id of Kaski District
-//            spinnerEducationLevel.setSelection(())
             spinnerEducationLevel.setSelection(DentalApp.lastEducationLevel)
         }
     }
@@ -465,7 +464,6 @@ class AddPatientActivity : AppCompatActivity() {
         val firstName = etFirstName.text.toString()
         val lastName = etLastName.text.toString()
         val phone = etPhone.text.toString()
-        val dob = getFormattedDob()
 
         if (spinnerDistrict.selectedItem == null) {
             tvErrorMessage.text = "District is not selected."

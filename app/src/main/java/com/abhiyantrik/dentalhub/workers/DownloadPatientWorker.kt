@@ -11,12 +11,14 @@ import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Patient
 import com.abhiyantrik.dentalhub.utils.DateHelper
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
 class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private lateinit var patientsBox: Box<com.abhiyantrik.dentalhub.entities.Patient>
+    private val ctx: Context = context
 
     override fun doWork(): Result {
         return try {
@@ -57,21 +59,11 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                         ).build().count()
                         if (existingPatient > 0) {
                             Log.d("DownloadPatientWorker",  "Patient already exists.")
-                            //tvMessage.text = tvMessage.text.toString() + existingPatient.fullName()+" already exists.\n"
-
                             val existingPatientEncounter = patientsBox.query().equal(
                                 Patient_.remote_id,
                                 patient.id
                             ).build().findFirst()!!
                             loadEncounterData(existingPatientEncounter.remote_id)
-
-//                            DentalApp.displayNotification(
-//                                applicationContext,
-//                                1001,
-//                                applicationContext.resources.getString(R.string.sync_ticker),
-//                                "Patient",
-//                                applicationContext.resources.getString(R.string.already_exists)
-//                            )
                         } else {
                             val patientEntity = com.abhiyantrik.dentalhub.entities.Patient()
                             patientEntity.remote_id = patient.id
@@ -136,13 +128,18 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                                 applicationContext.resources.getString(R.string.downloading_patient_detail)
                             )
                             loadEncounterData(patient.id)
-                            //tvMessage.text = tvMessage.text.toString() + patient.fullName()+" downloaded.\n"
                         }
-
                     }
                 }
+                else -> {
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() HTTP Status code "+response.code())
+                }
             }
+
         } else {
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() Failed to download patients.")
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() HTTP Status code "+response.code())
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() "+response.message())
             Log.d("downloadPatients", response.message())
         }
 

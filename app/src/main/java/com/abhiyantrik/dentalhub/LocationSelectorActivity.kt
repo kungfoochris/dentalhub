@@ -18,6 +18,7 @@ import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Geography as GeographyModel
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Response
@@ -37,7 +38,6 @@ class LocationSelectorActivity : AppCompatActivity() {
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var dividerItemDecoration: DividerItemDecoration
     private lateinit var context: Context
-    //    var allGeographies = mutableListOf<Geography>()
     var allAPIGeographies = listOf<GeographyModel>()
     var activeGeographies = mutableListOf<GeographyModel>()
 
@@ -102,6 +102,7 @@ class LocationSelectorActivity : AppCompatActivity() {
         val call = panelService.listGeographies("JWT $token")
         call.enqueue(object : retrofit2.Callback<List<GeographyModel>> {
             override fun onFailure(call: Call<List<GeographyModel>>, t: Throwable) {
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " loadGeographyAPI " +t.message.toString())
                 Log.d(TAG, "onFaliure()")
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
@@ -130,7 +131,8 @@ class LocationSelectorActivity : AppCompatActivity() {
                             setupAdapter()
                         }
                         else -> {
-                            Log.d(TAG, "Unhandle exception.")
+                            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
+                            Log.d(TAG, "handle exception.")
                         }
                     }
                 }
@@ -140,13 +142,6 @@ class LocationSelectorActivity : AppCompatActivity() {
     }
 
     private fun listAddressess() {
-//        val allWards = wardsBox.query().build().find()
-//        for(ward in allWards){
-//            val geography = Geography(ward.id.toInt(),ward.name.split(' ').joinToString { it.capitalize()  })
-//            allGeographies.add(geography)
-//            setupAdapter()
-//        }
-
 
     }
 

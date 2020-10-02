@@ -89,7 +89,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
         encounterFlagId = intent.getLongExtra("MODIFY_DELETE", "0".toLong())
         Log.d("encounterId", encounterId.toString())
-//        println("Encounter with edit mode :  $encounterId")
 
         if (encounterId == "0".toLong()) {
             action = "new"
@@ -156,16 +155,13 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         pager = findViewById(R.id.pager)
         tabLayout = findViewById(R.id.tabLayout)
 
-        //pager.setOnTouchListener { _: View, _ -> true }
         pager.beginFakeDrag()
         val touchableList = tabLayout.touchables
         touchableList?.forEach { it.isEnabled = false }
 
-
         val fragmentAdapter = FormPageAdapter(supportFragmentManager)
         pager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(pager)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -177,7 +173,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         when (item.itemId) {
             android.R.id.home -> {
                 Log.d("onOptionsItemSelected", "Back button pressed.")
-//                todohere
                 saveEncounter()
             }
             R.id.viewPatient -> {
@@ -187,7 +182,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         return super.onOptionsItemSelected(item)
     }
 
-// Dialog started.
+    // Dialog started.
     private fun AddEncounterDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflate: LayoutInflater = layoutInflater
@@ -218,7 +213,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         tvDistrictView.text = patient.districtName()
         tvEducationLevelView.text = patient.education.capitalize()
 
-
         builder.setView(view)
         val dialog: Dialog = builder.create()
         dialog.show()
@@ -228,8 +222,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         }
 
     }
-
-// Dialog ended
+    // Dialog ended
 
     override fun updateRecallDate(recallDate: String, recallTime: String) {
         patient.recall_date = recallDate

@@ -45,7 +45,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var btnUNTR: Button
     private lateinit var btnSMART: Button
 
-
     private lateinit var checkBoxSDFWholeMouth: CheckBox
     private lateinit var tvSDFWholeMouth: TextView
     private lateinit var checkBoxFVApplied: CheckBox
@@ -53,7 +52,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var etNotes: EditText
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
-
 
     private lateinit var btnId18: Button
     private lateinit var btnId17: Button
@@ -71,7 +69,6 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var btnId26: Button
     private lateinit var btnId27: Button
     private lateinit var btnId28: Button
-
 
     private lateinit var btnId48: Button
     private lateinit var btnId47: Button
@@ -424,7 +421,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             if (treatment.sdf_whole_mouth) checkBoxSDFWholeMouth.isChecked = true
             if (treatment.fv_applied) checkBoxFVApplied.isChecked = true
             if (treatment.treatment_plan_complete) checkBoxTreatmentPlanComplete.isChecked = true
-            if (!treatment.notes.isNullOrEmpty()) etNotes.setText(treatment.notes)
+            if (!treatment.notes.isEmpty()) etNotes.setText(treatment.notes)
         }
     }
 

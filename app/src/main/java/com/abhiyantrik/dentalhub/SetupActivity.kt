@@ -16,6 +16,7 @@ import com.abhiyantrik.dentalhub.models.Profile
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.DownloadPatientWorker
 import com.abhiyantrik.dentalhub.workers.DownloadUsersWorker
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
@@ -81,6 +82,7 @@ class SetupActivity : AppCompatActivity() {
                 } else {
                     tvMessage.append("Failed to load profile\n")
                 }
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Failed to load profile")
                 logout()
             }
 
@@ -106,10 +108,12 @@ class SetupActivity : AppCompatActivity() {
                             tvMessage.append("Loading profile complete\n")
                             loadData()
                         } else -> {
+                            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
                             logout()
                         }
                     }
                 } else {
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No response while loading profile")
                     Log.d("SetupActivity", "response failed")
                     logout()
                 }
@@ -128,6 +132,7 @@ class SetupActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<District>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 tvMessage.append("Failed to load addresses \n")
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Failed to load addresses")
                 Log.d(TAG, t.toString())
                 logout()
             }
@@ -152,10 +157,12 @@ class SetupActivity : AppCompatActivity() {
                             startActivity(Intent(context, LocationSelectorActivity::class.java))
                             finish()
                         } else -> {
+                            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
                             logout()
                         }
                     }
                 } else {
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No response while loading profile")
                     Log.d(TAG, response.code().toString())
                     logout()
                 }
@@ -164,43 +171,46 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun storeDistricts(allDistricts: List<District>) {
-        for (district in allDistricts) {
-            if (districtsBox.query().equal(
-                    District_.name,
-                    district.name
-                ).build().count() == 0.toLong()
-            ) {
-                val newDistrict = District()
-                newDistrict.remote_id = district.id
-                newDistrict.name = district.name
-                districtsBox.put(newDistrict)
-            }
-
-
-            for (municipality in district.municipalities) {
-                val dbDistrict =
-                    districtsBox.query().orderDesc(District_.id).build()
-                        .findFirst()
-                if (municipalitiesBox.query().equal(
-                        Municipality_.name,
-                        municipality.name
+        if(allDistricts.isEmpty()){
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No districts loaded to add")
+        }else{
+            for (district in allDistricts) {
+                if (districtsBox.query().equal(
+                        District_.name,
+                        district.name
                     ).build().count() == 0.toLong()
                 ) {
-                    val newMunicipality = Municipality()
-                    newMunicipality.remote_id = municipality.id
-                    newMunicipality.name = municipality.name
-                    newMunicipality.district?.target = dbDistrict
-                    municipalitiesBox.put(newMunicipality)
-                    for (ward in municipality.wards) {
-                        val dbMunicipality = municipalitiesBox.query()
-                            .orderDesc(Municipality_.id).build().findFirst()
-                        val newWard = Ward()
-                        newWard.remote_id = ward.id
-                        newWard.ward = ward.ward
-                        newWard.name = ward.name
-//                                                dbMunicipality!!.name + "-" + ward.ward.toString() + ", " + dbDistrict!!.name
-                        newWard.municipality?.target = dbMunicipality
-                        wardsBox.put(newWard)
+                    val newDistrict = District()
+                    newDistrict.remote_id = district.id
+                    newDistrict.name = district.name
+                    districtsBox.put(newDistrict)
+                }
+
+
+                for (municipality in district.municipalities) {
+                    val dbDistrict =
+                        districtsBox.query().orderDesc(District_.id).build()
+                            .findFirst()
+                    if (municipalitiesBox.query().equal(
+                            Municipality_.name,
+                            municipality.name
+                        ).build().count() == 0.toLong()
+                    ) {
+                        val newMunicipality = Municipality()
+                        newMunicipality.remote_id = municipality.id
+                        newMunicipality.name = municipality.name
+                        newMunicipality.district?.target = dbDistrict
+                        municipalitiesBox.put(newMunicipality)
+                        for (ward in municipality.wards) {
+                            val dbMunicipality = municipalitiesBox.query()
+                                .orderDesc(Municipality_.id).build().findFirst()
+                            val newWard = Ward()
+                            newWard.remote_id = ward.id
+                            newWard.ward = ward.ward
+                            newWard.name = ward.name
+                            newWard.municipality?.target = dbMunicipality
+                            wardsBox.put(newWard)
+                        }
                     }
                 }
             }

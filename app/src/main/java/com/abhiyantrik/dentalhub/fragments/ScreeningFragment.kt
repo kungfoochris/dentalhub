@@ -32,7 +32,6 @@ class ScreeningFragment : Fragment() {
     private lateinit var screeningBox: Box<Screening>
     private var screening = Screening()
 
-
     private lateinit var spinnerRisk: Spinner
     private lateinit var spinnerNoOfDecayedPrimaryTeeth: Spinner
     private lateinit var spinnerNoOfDecayedPermanentTeeth: Spinner
@@ -46,10 +45,8 @@ class ScreeningFragment : Fragment() {
     private lateinit var checkBoxNeedExtraction: CheckBox
     private lateinit var checkBoxActiveInfection: CheckBox
 
-
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -160,11 +157,11 @@ class ScreeningFragment : Fragment() {
                 encounter.id
             ).orderDesc(Screening_.id).build().findFirst()!!
 
-            if (!screening.carries_risk.isNullOrEmpty()) {
+            if (screening.carries_risk.isNotEmpty()) {
                 val riskValue = resources.getStringArray(R.array.carries_risk).toList()
-                val indexofRisk = riskValue.indexOf(screening.carries_risk)
-                println("Carrier rist index is $indexofRisk and the value is ${screening.carries_risk}")
-                spinnerRisk.setSelection(indexofRisk)
+                val indexOfRisk = riskValue.indexOf(screening.carries_risk)
+                println("Carrier risk index is $indexOfRisk and the value is ${screening.carries_risk}")
+                spinnerRisk.setSelection(indexOfRisk)
             }
 
             if (screening.decayed_primary_teeth != 0) spinnerNoOfDecayedPrimaryTeeth

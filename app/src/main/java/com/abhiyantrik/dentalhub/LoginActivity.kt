@@ -178,10 +178,6 @@ class LoginActivity : Activity() {
             status = false
             tvErrorMessage.text = getString(R.string.username_is_required)
             tvErrorMessage.visibility = View.VISIBLE
-//        } else if (!EmailValidator.isEmailValid(etEmail.text.toString())) {
-//            status = false
-//            tvErrorMessage.text = getString(R.string.invalid_email)
-//            tvErrorMessage.visibility = View.VISIBLE
         } else if (etPassword.text.isBlank()) {
             status = false
             tvErrorMessage.text = getString(R.string.password_is_required)

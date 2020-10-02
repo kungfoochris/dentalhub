@@ -13,6 +13,7 @@ import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Activity_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.ActivitySuggestion
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,7 +39,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
     private lateinit var etOtherDetails: AutoCompleteTextView
     var selectedActivity = ""
     var selectedActivityId = ""
-    var activityOtherDetail = ""
     var healthpost_id = ""
     var school_seminar_id = ""
     var communityoutreach_id = ""
@@ -133,11 +133,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         btnGo.setOnClickListener {
             if (isFormValid()) {
-//                DentalApp.saveToPreference(
-//                    context,
-//                    Constants.PREF_ACTIVITY_REMARKS,
-//                    etOtherDetails.text.toString()
-//                )
 
                 DentalApp.activity_name = selectedActivity
                 DentalApp.addStringToPreference(context, etOtherDetails.text.toString())
@@ -184,6 +179,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         val call = panelService.listActivities()
         call.enqueue(object : Callback<List<ActivitySuggestion>> {
             override fun onFailure(call: Call<List<ActivitySuggestion>>, t: Throwable) {
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ "loadActivitySuggestions " +t.message.toString())
                 Log.d("loadActivityId()", "onFailure")
             }
 

@@ -1,7 +1,6 @@
 package com.abhiyantrik.dentalhub.adapters
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,23 +8,21 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.abhiyantrik.dentalhub.Constants
-import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.utils.DateHelper
 
 class PatientAdapter(
-    context: Context,
+    ctx: Context,
     private var data: List<Patient>,
     displayDelay: Boolean,
     listener: PatientClickListener
 ) :
     RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() {
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
+    private val inflater: LayoutInflater = LayoutInflater.from(ctx)
     private var patientClickListener: PatientClickListener = listener
-    private val displayDelay: Boolean = displayDelay
-    private val context: Context = context
+    private val displayDelayStatus: Boolean = displayDelay
+    private val context: Context = ctx
 
     interface PatientClickListener {
         fun onViewPatientDetailClick(position: Int, patient: Patient)
@@ -42,7 +39,7 @@ class PatientAdapter(
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
         try {
             val patientItem: Patient = data[position]
-            holder.bindPatient(context, position, patientItem, displayDelay)
+            holder.bindPatient(context, position, patientItem, displayDelayStatus)
         } catch (e: NumberFormatException) {
             Log.d("PatientAdapter", "invalid position")
         }
@@ -67,7 +64,7 @@ class PatientAdapter(
         private var patientHeaderTitle: TextView = itemView.findViewById(R.id.patientHeaderTitle)
 
 
-        fun bindPatient(context: Context, position:Int, patient: Patient, displayDelay: Boolean) {
+        fun bindPatient(context: Context, position:Int, patient: Patient, displayDelayStatus: Boolean) {
             if (patient.content == "patient") {
                 tvName.text = patient.fullName()
                 tvAddress.text = ""
@@ -89,8 +86,8 @@ class PatientAdapter(
                 btnDelete.setOnClickListener {
                     patientClickListener.onRemovePatientClick(patient)
                 }
-                if (displayDelay) {
-//                    since this is for the recall patient only
+                if (displayDelayStatus) {
+                    // since this is for the recall patient only
                     if (patient.called) {
                         btnCall.isClickable = false
                         btnCall.setBackgroundResource(R.drawable.called_patient)

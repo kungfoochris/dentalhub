@@ -47,12 +47,9 @@ class GeographyAdapter(
 
     inner class GeographyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
         private var tvLocation: TextView = itemView.findViewById(R.id.tvLocation)
 
-
         fun bindEncounter(geography: Geography) {
-//            tvLocation.text = geography.name
             tvLocation.text = geography.name
         }
 

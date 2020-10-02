@@ -11,12 +11,15 @@ import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import java.text.SimpleDateFormat
 
 class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
+
     private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<Encounter>
+    private val ctx: Context = context
 
     override fun doWork(): Result {
 
@@ -51,13 +54,13 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
     ) {
         Log.d("EncounterDateCreated", dbEncounterEntity?.id.toString() + " " + dbEncounterEntity?.created_at!!.length)
         var correctDate = String()
-        if (dbEncounterEntity.created_at.length == 10) {
+        correctDate = if (dbEncounterEntity.created_at.length == 10) {
             Log.d("EncounterDateCreated", dbEncounterEntity.id.toString())
             val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(dbEncounterEntity.created_at)
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            correctDate = dateFormat.format(currentDate)
+            dateFormat.format(currentDate)
         } else {
-            correctDate = dbEncounterEntity.created_at
+            dbEncounterEntity.created_at
         }
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
@@ -86,7 +89,15 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
                     dbEncounter.uploaded = true
                     encountersBox.put(dbEncounter)
                 }
+                else -> {
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addEncounter() HTTP Status code "+response.code())
+                }
             }
+        } else {
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addEncounter() Failed to add encounter.")
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addEncounter() " + response.code())
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addEncounter() " + response.message())
+            Log.d("saveEncounterToServer", response.message() + response.code())
         }
 
     }

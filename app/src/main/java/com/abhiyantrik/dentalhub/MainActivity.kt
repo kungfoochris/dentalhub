@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -16,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -67,7 +69,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var patientsBox: Box<Patient>
     private lateinit var patientsQuery: Query<Patient>
     private lateinit var recallBox: Box<Recall>
-//    private lateinit var recallQuery: Query<Recall>
     private lateinit var encounterBox: Box<Encounter>
     private lateinit var historyBox: Box<History>
     private lateinit var screeningBox: Box<Screening>
@@ -114,34 +115,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun listRecallPatients() {
         println("called once.")
-        var c = Calendar.getInstance().time
+        val c = Calendar.getInstance().time
         val df = SimpleDateFormat("yyyy-MM-dd")
-        val currentDate = df.format(c)
-//
-//        Log.d("LocalDate", currentDate.toString())
-//        // get all Address objects
-//        val builder = patientsBox.query()
-//        // ...which are linked from a Recall date "today"
-//        builder.link(Patient_.recall).equal(Recall_.date, currentDate.toString())
-//        var sesameStreetsWithElmo = builder.build().find()
-//        allPatientRecall = sesameStreetsWithElmo
-//
-//        for (eachDay in 1..10) {
-////            val days = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////                LocalDate.now().plusDays(eachDay.toLong())
-////            } else {
-////                // do something here
-////            }
-//            val days= 1;
-//            val builder = patientsBox.query()
-//            builder.link(Patient_.recall).equal(Recall_.date, days.toString())
-//            sesameStreetsWithElmo = builder.build().find()
-//            allPatientRecall.addAll(sesameStreetsWithElmo)
-//        }
-//
-//        for (recall in allPatientRecall) {
-//            println("Recall patient name is ${recall.fullName()}")
-//        }
+        df.format(c)
         allPatientRecall = mutableListOf()
         val today = DateHelper.getCurrentNepaliDate()
         val todayPatient = patientsBox.query().equal(Patient_.recall_date, today)
@@ -205,6 +181,7 @@ class MainActivity : AppCompatActivity() {
 
         if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
             Log.d(TAG,"Activity is not been selected.")
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
             logout()
         }
 
@@ -237,8 +214,8 @@ class MainActivity : AppCompatActivity() {
 
                 Log.d("TAG", "5 minuted countdown starts now.")
 
-//                after 5 minute this method will be pressed. 300000
-                Handler().postDelayed({
+                //after 5 minute this method will be pressed. 300000
+                Handler(Looper.getMainLooper()).postDelayed({
                     fabButtonPressTime = false
                     Log.d("TAG","5 min completed.")
                 }, 300000)
@@ -347,10 +324,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 }
-
-                //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
             }
-
         }
 
         val handler = Handler()
@@ -383,24 +357,13 @@ class MainActivity : AppCompatActivity() {
         val referral =
             referralBox.query().equal(Referral_.uploaded, false).build().find()
 
-//        Log.d(TAG, "Patient : " + patient.toString())
-//        Log.d(TAG, "encounter : " + encounter.toString())
-//        Log.d(TAG, "history : " + history.toString())
-//        Log.d(TAG, "screening : " + screening.toString())
-//        Log.d(TAG, "treatment : " + treatment.toString())
-//        Log.d(TAG, "referral : " + referral.toString())
-
         if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
                 treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
             Log.d(TAG, "all patient uploaded.")
-            fabBtnSync.background.setTint(resources.getColor(R.color.colorART))
-//            fabBtnSync.background.mutate().setTint(resources.getColor(R.color.green_A200))
-
-//        fabBtnSync.backgroundTintList = resources.getColorStateList(R.color.blue_100)
+            fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.colorART))
         } else {
             Log.d(TAG, "Left to upload patient details.")
-            fabBtnSync.background.setTint(resources.getColor(R.color.red_A200))
-//            fabBtnSync.drawable.mutate().setTint(resources.getColor(R.color.red_A200))
+            fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.red_A200))
         }
 
     }
@@ -425,6 +388,7 @@ class MainActivity : AppCompatActivity() {
                     .orderDesc(Patient_.created_at).orderDesc(Patient_.id).build().find()
             setupAdapter(allPatients)
         } catch (e: DbException) {
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ e.printStackTrace().toString())
             Log.d("DBException", e.printStackTrace().toString())
         }
 
