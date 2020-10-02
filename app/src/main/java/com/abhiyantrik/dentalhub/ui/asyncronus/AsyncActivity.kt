@@ -10,7 +10,7 @@ import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.activity_async.*
 import kotlinx.coroutines.Dispatchers
@@ -564,10 +564,11 @@ class AsyncActivity : AppCompatActivity() {
                             patientBox.put(patient)
                             responseStatus = true
                             Log.d(TAG, "Patients uploaded successfully.")
-                            Crashlytics.log(Log.INFO, "UploadPatientWorkAsync", "Patient uploaded.")
+                            FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Message From OnCreate")
                         } else {
-                            Crashlytics.log(Log.INFO, "UploadPatientWorkAsync", "Patient uploaded but id not revieved ${patient.fullName()}.")
-                            Crashlytics.getInstance().crash()
+                            FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
+                            //Crashlytics.getInstance().crash()
+                            FirebaseCrashlytics.getInstance().setCustomKey("patient_uploaded", false)
                         }
 
                         DentalApp.cancelNotification(applicationContext, 1001)
