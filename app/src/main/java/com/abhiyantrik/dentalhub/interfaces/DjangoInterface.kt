@@ -1,6 +1,8 @@
 package com.abhiyantrik.dentalhub.interfaces
 
 import android.content.Context
+import android.os.Build
+import com.abhiyantrik.dentalhub.BuildConfig
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.models.*
 import com.google.gson.Gson
@@ -446,9 +448,15 @@ interface DjangoInterface {
     companion object Factory {
         fun create(context: Context): DjangoInterface {
             val gson: Gson = GsonBuilder().create()
+            val baseURL = if(BuildConfig.DEBUG){
+                context.getString(R.string.test_api_url);
+            }else{
+                context.getString(R.string.prod_api_url);
+            }
             val retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl(context.getString(R.string.api_url))
+                .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create(gson)).build()
+
             return retrofit.create(DjangoInterface::class.java)
         }
 
