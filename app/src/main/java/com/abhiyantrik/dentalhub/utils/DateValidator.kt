@@ -1,11 +1,7 @@
 package com.abhiyantrik.dentalhub.utils
 
-import android.util.Log
 import com.hornet.dateconverter.DateConverter
-import com.hornet.dateconverter.Model
-import java.text.DecimalFormat
 import java.text.ParseException
-import java.text.SimpleDateFormat
 
 class DateValidator {
     companion object {
