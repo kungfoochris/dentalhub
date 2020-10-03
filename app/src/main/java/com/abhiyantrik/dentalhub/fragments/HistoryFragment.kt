@@ -269,19 +269,19 @@ class HistoryFragment : Fragment() {
                     !checkBoxLowBP.isChecked && !checkBoxThyroidDisorder.isChecked) &&
             etOther.text.toString().trim().isEmpty()
         ) {
-            Log.d("HistoryFragment()", "Checkbox of not underlying medical condition is not checked.")
+            Log.d(TAG, "Checkbox of not underlying medical condition is not checked.")
             Toast.makeText(context, "Fill underlying medical condition details.", Toast.LENGTH_SHORT).show()
             return false
         }
         // for not taking any medications
         if (!checkBoxNotTakingAnyMedications.isChecked && etMedications.text.toString().trim().isEmpty()) {
-            Log.d("HistoryFragment()", "Checkbox of medicine is not checked.")
+            Log.d(TAG, "Checkbox of medicine is not checked.")
             Toast.makeText(context, "Fill medication details.", Toast.LENGTH_SHORT).show()
             return false
         }
         // for no allergies
         if (!checkBoxNoAllergies.isChecked && etAllergies.text.toString().trim().isEmpty()) {
-            Log.d("HistoryFragment()", "Checkbox of allergies is not checked.")
+            Log.d(TAG, "Checkbox of allergies is not checked.")
             Toast.makeText(context, "Fill allergies details.", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -354,5 +354,8 @@ class HistoryFragment : Fragment() {
         } else {
             history = historyBox.query().orderDesc(History_.id).build().findFirst()!!
         }
+    }
+    companion object {
+        const val TAG: String= "HistoryFragment"
     }
 }

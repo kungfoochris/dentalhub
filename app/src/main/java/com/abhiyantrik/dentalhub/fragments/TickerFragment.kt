@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
@@ -13,6 +14,11 @@ import com.abhiyantrik.dentalhub.R
 
 class TickerFragment : Fragment() {
     private lateinit var textView: TextView
+    private lateinit var ctx: Context
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        ctx = context
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,16 +28,16 @@ class TickerFragment : Fragment() {
         textView = view.findViewById<TextView>(R.id.textView)
         when (DentalApp.activity_name) {
             "Health Post" -> {
-                view.setBackgroundColor(resources.getColor(R.color.blue_500))
+                view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.blue_500))
             }
             "School Seminar" -> {
-                view.setBackgroundColor(resources.getColor(R.color.red_500))
+                view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.red_500))
             }
             "Community Outreach" -> {
-                view.setBackgroundColor(resources.getColor(R.color.green_500))
+                view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.green_500))
             }
             "Training" -> {
-                view.setBackgroundColor(resources.getColor(R.color.black))
+                view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.black))
             }
         }
         return view
@@ -39,11 +45,12 @@ class TickerFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        textView.text = DentalApp.readFromPreference(
-            activity as Context,
-            Constants.PREF_PROFILE_FULL_NAME,
-            ""
+        val tickerText = DentalApp.readFromPreference(
+                activity as Context,
+        Constants.PREF_PROFILE_FULL_NAME,
+        ""
         ) + " | " + DentalApp.ward_name + " | " + DentalApp.activity_name
+        textView.text = tickerText
 
     }
 }
