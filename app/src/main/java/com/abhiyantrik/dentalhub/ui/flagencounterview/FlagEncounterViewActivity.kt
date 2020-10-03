@@ -33,11 +33,6 @@ class FlagEncounterViewActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.flag)
 
-//        val flag1 = FlagEncounter("1", "Milan", "Checkup and screening", "modify", "Pending", "This is the testing of the flag")
-//        val flag2 = FlagEncounter("2", "Paras Nath Chaudhary", "Relif of pain", "modify", "Expired", "This is the testing of the flag")
-//        val flag3 = FlagEncounter("3", "Ghana Shyam", "Checkup and screening", "Delete", "Pending", "This is the testing of the flag")
-//        val flag4 = FlagEncounter("4", "Prabin", "Checkup and screening", "modify", "Approved", "This is the testing of the flag")
-
         val flagEncounterList = mutableListOf<FlagEncounter>()
 
         val adapter = FlagAdapter(
