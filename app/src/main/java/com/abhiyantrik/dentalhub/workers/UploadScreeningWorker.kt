@@ -10,6 +10,8 @@ import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 
@@ -33,11 +35,13 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
             saveScreeningToServer(dbEncounterEntity, tempScreening)
             Result.success()
         } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            Log.d(TAG, e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "saveScreeningToServerFromUploadScreeningWorker", enabled = true /* optional */)
     private fun saveScreeningToServer(encounter: Encounter?, screening: Screening) {
         DentalApp.displayNotification(
             applicationContext,
@@ -79,8 +83,6 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                         dbScreeningEntity.uploaded = true
                         dbScreeningEntity.updated = false
                         screeningBox.put(dbScreeningEntity)
-
-
                     }
                 }
             }
@@ -115,9 +117,9 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
                 }
             }
         }
-
-
         DentalApp.cancelNotification(applicationContext, 1001)
-
+    }
+    companion object{
+        const val TAG = "UploadScreeningWorker"
     }
 }
