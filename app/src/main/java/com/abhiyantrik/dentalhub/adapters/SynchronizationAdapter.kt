@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.models.Sync
@@ -26,9 +27,9 @@ class SynchronizationAdapter(
             tvEncounterType.text = syncItem.encounter_type
             tvCreatedDate.text = syncItem.created_date.substring(0, 10)
             if (!syncItem.uploaded) {
-                ivSyncStatus.setColorFilter(resources.getColor(R.color.colorSDF))
+                ivSyncStatus.setColorFilter(ContextCompat.getColor(context, R.color.colorSDF))
             } else {
-                ivSyncStatus.setColorFilter(resources.getColor(R.color.green_700))
+                ivSyncStatus.setColorFilter(ContextCompat.getColor(context, R.color.green_700))
             }
         }
     }

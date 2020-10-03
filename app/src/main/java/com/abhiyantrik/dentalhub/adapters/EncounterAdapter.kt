@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -53,7 +54,7 @@ class EncounterAdapter(
         holder.itemView.isClickable = true
         holder.itemView.isFocusable = true
         holder.itemView.ibEdit.setOnClickListener {
-            Log.d("EncounterAdapter", "do the edit operation")
+            Log.d(TAG, "do the edit operation")
             val addEncounterActivityIntent = Intent(context, AddEncounterActivity::class.java)
             addEncounterActivityIntent.putExtra("ENCOUNTER_ID", encounterItem.id)
             addEncounterActivityIntent.putExtra("PATIENT_ID", patient.id)
@@ -61,7 +62,7 @@ class EncounterAdapter(
             context.startActivity(addEncounterActivityIntent)
         }
         holder.itemView.setOnClickListener {
-            Log.d("EncounterAdapter", "itemView clicked")
+            Log.d(TAG, "itemView clicked")
             encounterClickListener.onEncounterClick(encounterItem)
         }
         holder.itemView.ibModificationFlag.setOnClickListener {
@@ -84,9 +85,9 @@ class EncounterAdapter(
             userBox = ObjectBox.boxStore.boxFor(User::class.java)
             try {
                 val author = userBox.query().equal(User_.remote_id, encounter.author).build().findFirst()!!
-                tvAuthorName.text = author.full_name()
+                tvAuthorName.text = author.fullName()
             } catch (e: NullPointerException) {
-                Log.d("EncounterAdapater", "Author not found.")
+                Log.d(TAG, "Author not found.")
                 val downloadUsersWorkRequest = OneTimeWorkRequestBuilder<DownloadUsersWorker>()
                     .setConstraints(DentalApp.downloadConstraints)
                     .build()
@@ -102,9 +103,9 @@ class EncounterAdapter(
             tvEncounterDate.text = DateHelper.formatNepaliDate(context, encounter.created_at)
 
             if (!encounter.uploaded) {
-                ivEncounterSyncStatus.setColorFilter(context.resources.getColor(R.color.colorSDF))
+                ivEncounterSyncStatus.setColorFilter(ContextCompat.getColor(context, R.color.colorSDF))
             } else {
-                ivEncounterSyncStatus.setColorFilter(context.resources.getColor(R.color.green_700))
+                ivEncounterSyncStatus.setColorFilter(ContextCompat.getColor(context, R.color.green_700))
             }
 
             if (encounter.isEditable()) {
@@ -113,5 +114,8 @@ class EncounterAdapter(
                 ibEdit.visibility = View.INVISIBLE
             }
         }
+    }
+    companion object{
+        const val TAG = "EncounterAdapter"
     }
 }
