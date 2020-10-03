@@ -1,10 +1,6 @@
 package com.abhiyantrik.dentalhub.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-class Screening : Parcelable {
+class Screening{
     var id: String = ""
     var carries_risk: String = ""
     var decayed_primary_teeth: Int = 0

@@ -12,13 +12,5 @@ data class FlagModifyDelete(
     val modify_approved_at: String
 )
 
-data class ModifyEncounter(
-    val id: String,
-    val encounter_type: String,
-    val patient: ModifyPatient
-)
 
-data class ModifyPatient(
-    val id: String,
-    val full_name: String
-)
+

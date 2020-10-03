@@ -1,10 +1,6 @@
 package com.abhiyantrik.dentalhub.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-class Activity : Parcelable {
+class Activity{
     var id: String = ""
     var name: String = ""
 }
