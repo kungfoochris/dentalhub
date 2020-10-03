@@ -13,6 +13,8 @@ import androidx.work.NetworkType
 import com.abhiyantrik.dentalhub.models.Location
 import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 
 class DentalApp : MultiDexApplication(), Configuration.Provider {
@@ -33,9 +35,17 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         editableDuration = firebaseConfig.fetchEditableTime()
 
         if(readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS) != null){
-            activitySuggestions = readStringSetFromPreference(this, Constants.PREF_ACTIVITY_SUGGESTIONS)!!.toMutableSet()
+            activitySuggestions = readStringSetFromPreference(
+                this,
+                Constants.PREF_ACTIVITY_SUGGESTIONS
+            )!!.toMutableSet()
         }
 
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        } else {
+            Timber.plant(CrashReportingTree())
+        }
 
         NotificationHelper.createNotificationChannel(
             this,
@@ -51,6 +61,22 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
 
     }
 
+    /** A tree which logs important information for crash reporting.  */
+    private class CrashReportingTree : Timber.Tree() {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+            if (priority == Log.VERBOSE || priority == Log.DEBUG) {
+                return
+            }
+            FakeCrashLibrary.log(priority, tag, message)
+            if (t != null) {
+                if (priority == Log.ERROR) {
+                    FakeCrashLibrary.logError(t)
+                } else if (priority == Log.WARN) {
+                    FakeCrashLibrary.logWarning(t)
+                }
+            }
+        }
+    }
 
     companion object Factory {
         private const val PREF_FILE_NAME = "dentalhub"
