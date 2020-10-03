@@ -51,24 +51,10 @@ class Encounter : Parcelable {
         }
 
         val todayDate = createdDateEnglish.year.toString() + "-" + todayMonth + "-" + todayDay + " 00:01:00"
-//        println("This day is " + todayDate)
-
-//        val createdAt: String = if(created_at.isEmpty()){
-//            DateHelper.getCurrentDate()
-//        }else{
-//            created_at.plus(" 00:01:00")
-//        }
 
         val thisDay = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(todayDate)
         val date2 = Date()
-//        println("Date Today check" + date2)
-//            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(createdAt)
         val difference = abs(thisDay.time - date2.time)
-//        println("Date Today " + todayDate)
-//        println("Date 1" + thisDay.toString())
-//        println("Date 2" + date2.toString())
-//        println("Date Difference" + difference.toString())
-//        println("Date check " + ((difference / 1000.0) < DentalApp.editableDuration).toString())
         return (difference / 1000.0) < DentalApp.editableDuration
     }
 }
