@@ -5,12 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
+import android.os.Looper
 import com.google.firebase.perf.metrics.AddTrace
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class SplashActivity : Activity() {
     private lateinit var context: Context
@@ -21,9 +17,7 @@ class SplashActivity : Activity() {
         setContentView(R.layout.activity_splash)
         context = this
 
-        //startService(Intent(this, BootstrapService::class.java))
-
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             val token: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
             val email: String = DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL, "")
             val password: String =
@@ -50,10 +44,6 @@ class SplashActivity : Activity() {
                     val remarks =
                         DentalApp.readFromPreference(context, Constants.PREF_ACTIVITY_REMARKS, "")
 
-
-//                    if(DentalApp.geography.isEmpty() || DentalApp.activity.isEmpty()){
-//                        startActivity(Intent(this, LocationSelectorActivity::class.java))
-//                    }
                     if (selectedActivityName.isEmpty() || selectedLocationName.isEmpty()) {
                         startActivity(Intent(this, LocationSelectorActivity::class.java))
                     } else {
@@ -72,9 +62,7 @@ class SplashActivity : Activity() {
                 } else {
                     startActivity(Intent(this, SetupActivity::class.java))
                 }
-
             }
-
         }, 3000)
     }
 
@@ -82,6 +70,5 @@ class SplashActivity : Activity() {
         super.onPause()
         finish()
     }
-
 
 }

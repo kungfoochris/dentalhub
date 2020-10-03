@@ -2,24 +2,26 @@ package com.abhiyantrik.dentalhub.workers
 
 import android.content.Context
 import android.util.Log
-import androidx.work.*
+import androidx.work.Data
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Encounter
-import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
-import java.util.concurrent.TimeUnit
 
 class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private lateinit var patientsBox: Box<Patient>
     private lateinit var encountersBox: Box<Encounter>
+    private val ctx: Context = context
 
     override fun doWork(): Result {
         return try {
@@ -36,10 +38,12 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
 
         } catch (e: Exception) {
             Log.d("UploadPatientWorkerEx", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "savePatientToServerFromUploadPatientWorker", enabled = true /* optional */)
     private fun savePatientToServer(patient: Patient) {
         DentalApp.displayNotification(
             applicationContext,
@@ -90,22 +94,28 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
                         val tempPatient = response.body()
 
                         if ( tempPatient?.id != null ) {
-                            dbPatient!!.remote_id = tempPatient!!.id
+                            dbPatient!!.remote_id = tempPatient.id
                             dbPatient.uploaded = true
                             dbPatient.updated = false
 
                             patientsBox.put(dbPatient)
-                            Crashlytics.log(Log.INFO, "UploadPatientWorker", "Patient uploaded.")
+                            FirebaseCrashlytics.getInstance().log("UploadPatientWorker Patient uploaded.")
                         } else {
-                            Crashlytics.log(Log.INFO, "UploadPatientWorker", "Patient uploaded but id not revieved ${patient.fullName()}.")
-                            Crashlytics.getInstance().crash()
+                            FirebaseCrashlytics.getInstance().log("UploadPatientWorker: Patient uploaded but id not received ${patient.fullName()}.")
+                            FirebaseCrashlytics.getInstance().setCustomKey("patient_upload_status", false)
                         }
 
                         DentalApp.cancelNotification(applicationContext, 1001)
                     }
+                    else -> {
+                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() HTTP Status code "+response.code())
+                    }
                 }
                 Log.d("UploadPatientWorker", "other than 200, 201 " + response.message().toString())
             } else {
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() Failed to add patient.")
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() "+response.code())
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() "+response.message())
                 Log.d("UploadPatientWorker", response.message())
                 Log.d("UploadPatientWorker", response.code().toString())
                 Log.d("UploadPatientWorker", "Error body " + response.errorBody().toString())

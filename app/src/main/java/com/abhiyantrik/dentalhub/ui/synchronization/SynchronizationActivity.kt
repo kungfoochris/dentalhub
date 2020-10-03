@@ -1,13 +1,13 @@
 package com.abhiyantrik.dentalhub.ui.synchronization
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
-import com.abhiyantrik.dentalhub.adapters.SyncronizationAdapter
+import com.abhiyantrik.dentalhub.adapters.SynchronizationAdapter
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.models.Sync
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
@@ -16,11 +16,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
 
 class SynchronizationActivity : AppCompatActivity() {
 
-    private lateinit var adapter: SyncronizationAdapter
+    private lateinit var adapter: SynchronizationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,14 +30,9 @@ class SynchronizationActivity : AppCompatActivity() {
 
         progressBarSync.visibility = View.VISIBLE
 
-//        val sync1 = Sync("MIlan", "Ghimire", "1231", true)
-//        val sync2 = Sync("Ghana", "Chimire", "1231", false)
-//        val sync3 = Sync("Prabin", "Mirmire", "1231", false)
-//        val sync4 = Sync("paras", "Ghimire", "1231", true)
-
         val synList = mutableListOf<Sync>() //(sync1, sync2, sync3, sync4)
 
-        adapter = SyncronizationAdapter(synList)
+        adapter = SynchronizationAdapter(synList)
         rvSync.adapter = adapter
         rvSync.layoutManager = LinearLayoutManager(this)
         val divider = RecyclerViewItemSeparator(10)

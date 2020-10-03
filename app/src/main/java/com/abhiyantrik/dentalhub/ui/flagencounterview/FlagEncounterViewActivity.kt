@@ -1,5 +1,6 @@
 package com.abhiyantrik.dentalhub.ui.flagencounterview
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,29 +15,29 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.FlagEncounter
 import com.abhiyantrik.dentalhub.models.FlagModifyDelete
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
+import io.objectbox.Box
 import kotlinx.android.synthetic.main.activity_flag_encounter_view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class FlagEncounterViewActivity : AppCompatActivity() {
 
-    private val TAG: String = FlagEncounterViewActivity::class.java.simpleName
-    val encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
+    val encounterBox: Box<Encounter> = ObjectBox.boxStore.boxFor(Encounter::class.java)
+    private lateinit var context: Context
 
+    @AddTrace(name = "onCreateFlagEncounterViewActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flag_encounter_view)
 
+        context = this
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.flag)
-
-//        val flag1 = FlagEncounter("1", "Milan", "Checkup and screening", "modify", "Pending", "This is the testing of the flag")
-//        val flag2 = FlagEncounter("2", "Paras Nath Chaudhary", "Relif of pain", "modify", "Expired", "This is the testing of the flag")
-//        val flag3 = FlagEncounter("3", "Ghana Shyam", "Checkup and screening", "Delete", "Pending", "This is the testing of the flag")
-//        val flag4 = FlagEncounter("4", "Prabin", "Checkup and screening", "modify", "Approved", "This is the testing of the flag")
 
         val flagEncounterList = mutableListOf<FlagEncounter>()
 
@@ -47,7 +48,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                     val queryResult = encounterBox.query().equal(Encounter_.remote_id, flagEncounter.encounter_remote_id).build().findFirst()
                     if (queryResult != null) {
                         Toast.makeText(this@FlagEncounterViewActivity, "Encounter remote_id found with patient ID: ${queryResult.patient?.targetId}", Toast.LENGTH_SHORT).show()
-                        Log.d("EncounterAdapter", "do the edit operation")
+                        Log.d(TAG, "EncounterAdapter" +"do the edit operation")
                         val patientId = queryResult.patient?.targetId.toString()
                         DentalApp.saveIntToPreference(this@FlagEncounterViewActivity, Constants.PREF_SELECTED_PATIENT, patientId.toInt())
                         val addEncounterActivityIntent = Intent(this@FlagEncounterViewActivity, AddEncounterActivity::class.java)
@@ -71,7 +72,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
             GlobalScope.launch(Dispatchers.IO) {
                 val token = DentalApp.readFromPreference(this@FlagEncounterViewActivity, Constants.PREF_AUTH_TOKEN, "")
                 val panelService = DjangoInterface.create(this@FlagEncounterViewActivity)
-                val call = panelService.listFlagedData("JWT $token")
+                val call = panelService.listFlaggedData("JWT $token")
                 val response = call.execute()
                 if (response.isSuccessful) {
                     if (response.code() == 200) {
@@ -137,20 +138,30 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main) {
                             adapter.notifyDataSetChanged()
                         }
+                    }else{
+                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() HTTP Status code "+response.code())
                     }
+                }else{
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() Failed to list flagged data.")
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() HTTP Status code "+response.code())
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() "+response.message())
                 }
             }
         } catch (ex : Exception) {
             Log.d(TAG, "Error Please try again.")
             Toast.makeText(this, "Error occurred please try again.", Toast.LENGTH_SHORT).show()
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() Exception"+ ex.printStackTrace().toString())
         }
 
-
-        Log.d("FlagData", flagEncounterList.toString())
+        Log.d(TAG, "FlagData $flagEncounterList")
     }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
+    }
+
+    companion object{
+        const val TAG = "FlagEncounterViewAct"
     }
 }

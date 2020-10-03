@@ -1,16 +1,16 @@
 package com.abhiyantrik.dentalhub.ui.asyncronus
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.activity_async.*
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +18,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
+import java.util.*
 
 class AsyncActivity : AppCompatActivity() {
-
-    private val TAG = "AsyncActivity"
 
     private var patientUploading = false
     private var encounterUploading = false
@@ -42,7 +41,7 @@ class AsyncActivity : AppCompatActivity() {
 
     private fun setupOnClickListeners() {
         btnUpload.setOnClickListener {
-            if (patientUploading || patientUploading) {
+            if (patientUploading) {
                 Toast.makeText(this, "Uploading in progress", Toast.LENGTH_SHORT).show()
             } else {
                 tvStatus.text = ""
@@ -51,7 +50,7 @@ class AsyncActivity : AppCompatActivity() {
         }
 
         btnUploadEncounter.setOnClickListener {
-            if (patientUploading || patientUploading) {
+            if (patientUploading) {
                 Toast.makeText(this, "Uploading in progress", Toast.LENGTH_SHORT).show()
             } else {
                 tvStatus.text = ""
@@ -94,7 +93,7 @@ class AsyncActivity : AppCompatActivity() {
             for (eachEncounter in allEncounters) {
 
                 val patientRemoteId = eachEncounter.patient!!.target.remote_id
-                Log.d(TAG, "patient remote Id ${patientRemoteId}")
+                Log.d(TAG, "patient remote Id $patientRemoteId")
 
                 if (patientRemoteId.isEmpty()) {
                     withContext(Dispatchers.Main) {
@@ -461,22 +460,21 @@ class AsyncActivity : AppCompatActivity() {
     ) : Boolean {
         Log.d(TAG, "Encounter uploaded started.")
         var encounterStatus = false
-        Log.d("EncounterDateCreated", eachEncounter.id.toString() + " " + eachEncounter.created_at!!.length)
-        var correctDate = String()
-        if (eachEncounter.created_at.length == 10) {
-            Log.d("EncounterDateCreated", eachEncounter.id.toString())
+        Log.d("EncounterDateCreated", eachEncounter.id.toString() + " " + eachEncounter.created_at.length)
+        val correctDate = if (eachEncounter.created_at.length == 10) {
+            Log.d(TAG, "EncounterDateCreated" + eachEncounter.id.toString())
             val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(eachEncounter.created_at)
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            correctDate = dateFormat.format(currentDate)
+            dateFormat.format(currentDate as Date)
         } else {
-            correctDate = eachEncounter.created_at
+            eachEncounter.created_at
         }
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addEncounter(
             "JWT $token",
             patientRemoteId,
-            eachEncounter!!.id.toInt(),
+            eachEncounter.id.toInt(),
             eachEncounter.ward_id,
             eachEncounter.activityarea_id,
             eachEncounter.encounter_type,
@@ -564,10 +562,10 @@ class AsyncActivity : AppCompatActivity() {
                             patientBox.put(patient)
                             responseStatus = true
                             Log.d(TAG, "Patients uploaded successfully.")
-                            Crashlytics.log(Log.INFO, "UploadPatientWorkAsync", "Patient uploaded.")
+                            FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Message From OnCreate")
                         } else {
-                            Crashlytics.log(Log.INFO, "UploadPatientWorkAsync", "Patient uploaded but id not revieved ${patient.fullName()}.")
-                            Crashlytics.getInstance().crash()
+                            FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
+                            FirebaseCrashlytics.getInstance().setCustomKey("patient_uploaded", false)
                         }
 
                         DentalApp.cancelNotification(applicationContext, 1001)
@@ -583,6 +581,7 @@ class AsyncActivity : AppCompatActivity() {
         return responseStatus
     }
 
-
-
+    companion object{
+        const val TAG = "AsyncActivity"
+    }
 }

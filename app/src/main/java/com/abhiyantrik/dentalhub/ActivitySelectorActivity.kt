@@ -3,8 +3,6 @@ package com.abhiyantrik.dentalhub
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -13,6 +11,7 @@ import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Activity_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.ActivitySuggestion
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,7 +37,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
     private lateinit var etOtherDetails: AutoCompleteTextView
     var selectedActivity = ""
     var selectedActivityId = ""
-    var activityOtherDetail = ""
     var healthpost_id = ""
     var school_seminar_id = ""
     var communityoutreach_id = ""
@@ -46,8 +44,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
     var allAPIActivities = listOf<ActivityModel>()
 
     private lateinit var activityBox: Box<Activity>
-
-    var TAG = "ActivitySelectorActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,21 +81,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
         etOtherDetails.setAdapter(arrayAdapter)
         arrayAdapter.notifyDataSetChanged()
 
-        etOtherDetails.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-        })
-
         rgActivities.setOnCheckedChangeListener { _, i ->
             if (i == R.id.radioHealthPostActivity) {
                 etOtherDetails.setText("")
@@ -109,7 +90,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
             }
             when (i) {
                 R.id.radioHealthPostActivity -> {
-                    selectedActivity = "Health Post"
+                    selectedActivity = HEALTH_POST
                     selectedActivityId = healthpost_id
                     println("Selected Activity is $selectedActivity")
                 }
@@ -133,16 +114,11 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         btnGo.setOnClickListener {
             if (isFormValid()) {
-//                DentalApp.saveToPreference(
-//                    context,
-//                    Constants.PREF_ACTIVITY_REMARKS,
-//                    etOtherDetails.text.toString()
-//                )
 
                 DentalApp.activity_name = selectedActivity
                 DentalApp.addStringToPreference(context, etOtherDetails.text.toString())
 
-                if (selectedActivity == "Health Post") {
+                if (selectedActivity == HEALTH_POST) {
                     DentalApp.activity_id = selectedActivityId
                     DentalApp.activity_name = selectedActivity
                     DentalApp.saveToPreference(
@@ -184,6 +160,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         val call = panelService.listActivities()
         call.enqueue(object : Callback<List<ActivitySuggestion>> {
             override fun onFailure(call: Call<List<ActivitySuggestion>>, t: Throwable) {
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ "loadActivitySuggestions " +t.message.toString())
                 Log.d("loadActivityId()", "onFailure")
             }
 
@@ -333,5 +310,9 @@ class ActivitySelectorActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         finish()
+    }
+    companion object {
+        const val HEALTH_POST: String = "Health Post"
+        const val TAG = "ActivitySelectorAct"
     }
 }

@@ -17,7 +17,6 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_referral.*
-import java.lang.Exception
 import java.text.DecimalFormat
 import java.util.*
 
@@ -49,9 +48,6 @@ class ReferralFragment : Fragment() {
 
     private lateinit var activitiesBox: Box<Activity>
     private lateinit var patientBox: Box<Patient>
-//    private lateinit var activitiesQuery: Query<Activity>
-//    private lateinit var geographiesQuery: Query<Geography>
-
 
     private lateinit var patient: Patient
     private lateinit var btnNext: Button
@@ -77,14 +73,6 @@ class ReferralFragment : Fragment() {
         checkboxGeneralPhysician = view.findViewById(R.id.checkBoxGeneralPhysician)
         checkboxOther = view.findViewById(R.id.checkBoxOther)
 
-//        activitiesQuery = activitiesBox.query().build()
-
-//        radioButtonNoReferral = view.findViewById(R.id.radioNoReferral)
-//        radioButtonHealthPost = view.findViewById(R.id.radioHealthPost)
-//        radioButtonHygienist = view.findViewById(R.id.radioHygienist)
-//        radioButtonDentist = view.findViewById(R.id.radioDentist)
-//        radioButtonGeneralPhysician = view.findViewById(R.id.radioGeneralPhysician)
-//        radioButtonOther = view.findViewById(R.id.radioOther)
         tvRecallDateReferral = view.findViewById(R.id.tvRecallDateReferral)
         rgRecalls = view.findViewById(R.id.rgRecalls)
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
@@ -105,28 +93,7 @@ class ReferralFragment : Fragment() {
         checkboxGeneralPhysician.isChecked = false
         checkboxOther.isChecked = false
 
-//        rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
-//            if (i == R.id.radioOther) {
-//                etOtherDetails.setText("")
-//                etOtherDetails.visibility = View.VISIBLE
-//            } else {
-//                etOtherDetails.visibility = View.GONE
-//            }
-//            if (i == R.id.radioHealthPost) {
-//                etRecallDate.setText("")
-//                tvRecallDateReferral.visibility = View.VISIBLE
-//                etRecallDate.visibility = View.VISIBLE
-//                rgRecalls.visibility = View.VISIBLE
-//                etRecallTime.visibility = View.VISIBLE
-//            } else {
-//                tvRecallDateReferral.visibility = View.GONE
-//                rgRecalls.visibility = View.GONE
-//                etRecallDate.visibility = View.GONE
-//                etRecallTime.visibility = View.GONE
-//            }
-//        }
-
-        checkboxNoReferral.setOnCheckedChangeListener { compoundButton, b ->
+        checkboxNoReferral.setOnCheckedChangeListener { compoundButton, _ ->
             if (compoundButton.isChecked) {
                 checkBoxHealthPost.isChecked = false
                 checkBoxHygienist.isChecked = false
@@ -149,7 +116,7 @@ class ReferralFragment : Fragment() {
         uncheckNoReferral(checkboxGeneralPhysician)
         uncheckNoReferral(checkboxOther)
 
-        checkboxHealthPost.setOnCheckedChangeListener { compoundButton, b ->
+        checkboxHealthPost.setOnCheckedChangeListener { compoundButton, _ ->
 
             if (checkboxNoReferral.isChecked) {
                 Toast.makeText(
@@ -181,12 +148,11 @@ class ReferralFragment : Fragment() {
             }
         }
 
-        checkboxOther.setOnCheckedChangeListener { compoundButton, b ->
-
+        checkboxOther.setOnCheckedChangeListener { compoundButton, _ ->
             if (checkboxNoReferral.isChecked) {
                 Toast.makeText(
                     activity,
-                    "Please uncheck the No Referral.",
+                    UNCHECK_NO_REFERRAL,
                     Toast.LENGTH_SHORT
                 ).show()
                 checkboxOther.isChecked = false
@@ -199,7 +165,7 @@ class ReferralFragment : Fragment() {
             }
         }
 
-        rgRecalls.setOnCheckedChangeListener { radioGroup, i ->
+        rgRecalls.setOnCheckedChangeListener { _, i ->
             var recallDate = ""
             val nepaliCalender = DateConverter()
 
@@ -292,12 +258,11 @@ class ReferralFragment : Fragment() {
                 // Launch Time Picker Dialog
                 val timePickerDialog = TimePickerDialog(
                     activity,
-                    TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                        etRecallTime.setText(
-                            DecimalFormat("00").format(
-                                hourOfDay
-                            ) + ":" + DecimalFormat("00").format(minute)
-                        )
+                    { _, hourOfDay, minute ->
+                        val recallTime = DecimalFormat("00").format(
+                            hourOfDay
+                        ) + ":" + DecimalFormat("00").format(minute)
+                        etRecallTime.setText(recallTime)
                     },
                     mHour,
                     mMinute,
@@ -318,7 +283,7 @@ class ReferralFragment : Fragment() {
                 compoundButton.isChecked = false
                 Toast.makeText(
                     activity,
-                    "Please uncheck the No Referral.",
+                    UNCHECK_NO_REFERRAL,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -366,12 +331,10 @@ class ReferralFragment : Fragment() {
                     DentalApp.lastRecallTime = recallTime
                 } else {
                     try {
-                        if (patient != null) {
-                            patient.called = false
-                            patientBox.put(patient)
-                        }
+                        patient.called = false
+                        patientBox.put(patient)
                     } catch (e: Exception) {
-                        Log.d("Referral Fragment", "patient not found i.e. not initialized.")
+                        Log.d(TAG, "patient not found i.e. not initialized.")
                     }
                 }
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)
@@ -427,7 +390,7 @@ class ReferralFragment : Fragment() {
                     checkbox.key.isChecked = true
                 }
             }
-        if (!referral.other_details.isNullOrEmpty()) etOtherDetails.setText(referral.other_details)
+        if (referral.other_details.isNotEmpty()) etOtherDetails.setText(referral.other_details)
             recallDateOriginal = patient.recall_date!!
             if(patient.recall_date!!.isNotEmpty()){
                 etRecallDate.setText(DateHelper.getReadableNepaliDate(patient.recall_date!!))
@@ -448,16 +411,18 @@ class ReferralFragment : Fragment() {
             status = false
         }
 
-        if (checkboxHealthPost.isChecked) {
-            if (etRecallDate.text.isNullOrBlank() || etRecallTime.text.isNullOrBlank()) {
-                Toast.makeText(
-                    activity,
-                    "Recall Date and Time should be specified.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                status = false
-            }
+        if (checkboxHealthPost.isChecked && (etRecallDate.text.isNullOrBlank() || etRecallTime.text.isNullOrBlank())) {
+            Toast.makeText(
+                activity,
+                "Recall Date and Time should be specified.",
+                Toast.LENGTH_SHORT
+            ).show()
+            status = false
         }
         return status
+    }
+    companion object{
+        const val TAG = "ReferralFragment"
+        const val UNCHECK_NO_REFERRAL = "Please uncheck the No Referral."
     }
 }

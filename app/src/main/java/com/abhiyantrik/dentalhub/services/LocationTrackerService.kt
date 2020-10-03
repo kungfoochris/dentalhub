@@ -15,15 +15,12 @@ import com.google.android.gms.location.*
 class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener {
     override fun onConnected(p0: Bundle?) {
-        // location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
     }
 
     override fun onConnectionSuspended(p0: Int) {
-//
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
-//
     }
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient

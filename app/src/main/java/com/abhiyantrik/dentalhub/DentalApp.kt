@@ -181,7 +181,7 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
             val connManager =
                 context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-            return mWifi.isConnected
+            return mWifi!!.isConnected
 
         }
 

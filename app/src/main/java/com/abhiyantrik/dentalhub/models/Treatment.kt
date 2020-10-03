@@ -1,10 +1,6 @@
 package com.abhiyantrik.dentalhub.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-class Treatment : Parcelable {
+class Treatment {
     var id: String = ""
     var sdf_whole_mouth: Boolean = false
     var fv_applied: Boolean = false

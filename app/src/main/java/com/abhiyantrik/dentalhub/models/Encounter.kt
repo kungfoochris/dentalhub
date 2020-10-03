@@ -1,10 +1,6 @@
 package com.abhiyantrik.dentalhub.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-class Encounter : Parcelable {
+class Encounter{
     var id: String = ""
     var encounter_type: String = ""
     var other_problem: String? = ""

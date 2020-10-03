@@ -195,8 +195,8 @@ class HistoryFragment : Fragment() {
                 val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
-//          to check the validation conditions
-            if (historyValidate() == false) {
+            // to check the validation conditions
+            if (!historyValidate()) {
                 Log.d("HistoryFragment", "History fragment is invalid.")
             } else {
                 saveHistoryData()
@@ -209,8 +209,8 @@ class HistoryFragment : Fragment() {
                 val imm = (activity as Context).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
-//          to check the validation conditions
-            if (historyValidate() == false) {
+            // to check the validation conditions
+            if (!historyValidate()) {
                 Log.d("HistoryFragment", "History fragment is invalid.")
             } else {
                 Log.d("HistoryFragment", "History fragment is valid.")
@@ -261,26 +261,27 @@ class HistoryFragment : Fragment() {
     }
 
     private fun historyValidate(): Boolean {
-//        for no underlying medical condition
-        if (checkBoxNoUnderlyingMedicalCondition.isChecked == false && (checkBoxDiabetes.isChecked == false &&
-                    checkBoxLiverProblem.isChecked == false && checkBoxRheumaticFever.isChecked == false &&
-                    checkBoxSeizuresOrEpilepsy.isChecked == false && checkBoxHepatitisBOrC.isChecked == false &&
-                    checkBoxHIV.isChecked == false && checkBoxHighBP.isChecked == false &&
-                    checkBoxLowBP.isChecked == false && checkBoxThyroidDisorder.isChecked == false) &&
-            etOther.text.toString().trim().length < 1) {
-            Log.d("HistoryFragment()", "Checkbox of not underlying medical condition is not checked.")
+        // for no underlying medical condition
+        if (!checkBoxNoUnderlyingMedicalCondition.isChecked && (!checkBoxDiabetes.isChecked &&
+                    !checkBoxLiverProblem.isChecked && !checkBoxRheumaticFever.isChecked &&
+                    !checkBoxSeizuresOrEpilepsy.isChecked && !checkBoxHepatitisBOrC.isChecked &&
+                    !checkBoxHIV.isChecked && !checkBoxHighBP.isChecked &&
+                    !checkBoxLowBP.isChecked && !checkBoxThyroidDisorder.isChecked) &&
+            etOther.text.toString().trim().isEmpty()
+        ) {
+            Log.d(TAG, "Checkbox of not underlying medical condition is not checked.")
             Toast.makeText(context, "Fill underlying medical condition details.", Toast.LENGTH_SHORT).show()
             return false
         }
-//        for not taking any medications
-        if (checkBoxNotTakingAnyMedications.isChecked == false && etMedications.text.toString().trim().length < 1) {
-            Log.d("HistoryFragment()", "Checkbox of medicine is not checked.")
+        // for not taking any medications
+        if (!checkBoxNotTakingAnyMedications.isChecked && etMedications.text.toString().trim().isEmpty()) {
+            Log.d(TAG, "Checkbox of medicine is not checked.")
             Toast.makeText(context, "Fill medication details.", Toast.LENGTH_SHORT).show()
             return false
         }
-//        for no allergies
-        if (checkBoxNoAllergies.isChecked == false && etAllergies.text.toString().trim().length < 1) {
-            Log.d("HistoryFragment()", "Checkbox of allergies is not checked.")
+        // for no allergies
+        if (!checkBoxNoAllergies.isChecked && etAllergies.text.toString().trim().isEmpty()) {
+            Log.d(TAG, "Checkbox of allergies is not checked.")
             Toast.makeText(context, "Fill allergies details.", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -353,5 +354,8 @@ class HistoryFragment : Fragment() {
         } else {
             history = historyBox.query().orderDesc(History_.id).build().findFirst()!!
         }
+    }
+    companion object {
+        const val TAG: String= "HistoryFragment"
     }
 }

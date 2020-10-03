@@ -1,10 +1,7 @@
 package com.abhiyantrik.dentalhub.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-@Parcelize
 class Patient(
     var id: String,
     var author: String,
@@ -28,7 +25,7 @@ class Patient(
     var activity_area: String,
     var created_at: String? = "",
     var updated_at: String? = ""
-) : Parcelable {
+)  {
     fun address(): String {
         return "$municipality $ward, $district"
     }

@@ -8,7 +8,7 @@ import com.abhiyantrik.dentalhub.fragments.ReferralFragment
 import com.abhiyantrik.dentalhub.fragments.ScreeningFragment
 import com.abhiyantrik.dentalhub.fragments.TreatmentFragment
 
-class FormPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class FormPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         return when (position) {

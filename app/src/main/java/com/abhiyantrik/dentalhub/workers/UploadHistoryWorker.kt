@@ -10,14 +10,16 @@ import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
-import retrofit2.Call
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 
 class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private lateinit var historyBox: Box<History>
     private lateinit var encountersBox: Box<Encounter>
+    private val ctx: Context = context
 
     override fun doWork(): Result {
         return try {
@@ -34,10 +36,12 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "saveHistoryToServerFromUploadHistoryWorker", enabled = true /* optional */)
     private fun saveHistoryToServer(encounter: Encounter?, history: History) {
         DentalApp.displayNotification(
             applicationContext,
@@ -87,10 +91,14 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                         historyBox.put(dbHistoryEntity)
                     }
                     else -> {
-                    Log.d("UploadHistoryWorker", response.message() + response.code())
-                }
+                        Log.d("UploadHistoryWorker", response.message() + response.code())
+                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() HTTP Status code "+response.code())
+                    }
                 }
             } else {
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() Failed to download patients.")
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.code())
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.message())
                 Log.d("UploadHistoryWorker", response.message() + response.code())
             }
         }else if(history.updated){
@@ -128,12 +136,17 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                         dbHistoryEntity.updated = false
                         historyBox.put(dbHistoryEntity)
                     }
+                    else -> {
+                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() HTTP Status code "+response.code())
+                    }
                 }
             } else {
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() Failed to update history.")
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.code())
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.message())
                 Log.d("UpdateHistoryWorker", response.message() + response.code())
             }
         }
         DentalApp.cancelNotification(applicationContext, 1001)
-
     }
 }

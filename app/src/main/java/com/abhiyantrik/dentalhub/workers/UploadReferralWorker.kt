@@ -13,6 +13,8 @@ import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Referral
 import com.abhiyantrik.dentalhub.entities.Referral_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 
@@ -35,10 +37,12 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "saveReferralToServerFromUploadReferralWorker", enabled = true /* optional */)
     private fun saveReferralToServer(encounter: Encounter?, referral: Referral) {
         DentalApp.displayNotification(
             applicationContext,
@@ -106,9 +110,6 @@ class UploadReferralWorker(context: Context, params: WorkerParameters) : Worker(
                 }
             }
         }
-
-
         DentalApp.cancelNotification(applicationContext, 1001)
-
     }
 }

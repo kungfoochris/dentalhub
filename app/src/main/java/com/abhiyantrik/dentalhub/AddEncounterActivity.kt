@@ -24,13 +24,13 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.*
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 
@@ -89,7 +89,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
         encounterFlagId = intent.getLongExtra("MODIFY_DELETE", "0".toLong())
         Log.d("encounterId", encounterId.toString())
-//        println("Encounter with edit mode :  $encounterId")
 
         if (encounterId == "0".toLong()) {
             action = "new"
@@ -156,16 +155,13 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         pager = findViewById(R.id.pager)
         tabLayout = findViewById(R.id.tabLayout)
 
-        //pager.setOnTouchListener { _: View, _ -> true }
         pager.beginFakeDrag()
         val touchableList = tabLayout.touchables
         touchableList?.forEach { it.isEnabled = false }
 
-
         val fragmentAdapter = FormPageAdapter(supportFragmentManager)
         pager.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(pager)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -177,18 +173,17 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         when (item.itemId) {
             android.R.id.home -> {
                 Log.d("onOptionsItemSelected", "Back button pressed.")
-//                todohere
                 saveEncounter()
             }
             R.id.viewPatient -> {
-                AddEncounterDialog()
+                addEncounterDialog()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-// Dialog started.
-    private fun AddEncounterDialog() {
+    // Dialog started.
+    private fun addEncounterDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflate: LayoutInflater = layoutInflater
         val view: View = inflate.inflate(R.layout.popup_view_patient, null)
@@ -218,7 +213,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         tvDistrictView.text = patient.districtName()
         tvEducationLevelView.text = patient.education.capitalize()
 
-
         builder.setView(view)
         val dialog: Dialog = builder.create()
         dialog.show()
@@ -228,8 +222,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         }
 
     }
-
-// Dialog ended
+    // Dialog ended
 
     override fun updateRecallDate(recallDate: String, recallTime: String) {
         patient.recall_date = recallDate
@@ -307,11 +300,12 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             screening.decayed_primary_teeth = decayedPrimaryTeeth.toInt()
         } catch (e: NumberFormatException) {
             screening.decayed_primary_teeth = 0
+            FirebaseCrashlytics.getInstance().recordException(e)
         }
         try {
             screening.decayed_permanent_teeth = decayedPermanentTeeth.toInt()
         } catch (e: java.lang.NumberFormatException) {
-
+            FirebaseCrashlytics.getInstance().recordException(e)
             screening.decayed_permanent_teeth = 0
         }
         screening.cavity_permanent_posterior_teeth = cavityPermanentTooth
@@ -444,15 +438,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         selectedGeography: String,
         selectedActivity: String
     ) {
-//        recall =
-//            recallBox.query().equal(Recall_.encounterId, encounter.id).orderDesc(Recall_.id).build().findFirst()!!
-//
-//        recall.date = recallDate
-//        recall.time = recallTime
-//        recall.geography = selectedGeography
-//        recall.activity = selectedActivity
-//
-//        recallBox.put(recall)
     }
 
 
@@ -579,6 +564,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                             }
                         }
                     } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().recordException(e)
                         Toast.makeText(context, "IMPORTANT: Encounter modify failed.", Toast.LENGTH_SHORT).show()
                     }
                 }

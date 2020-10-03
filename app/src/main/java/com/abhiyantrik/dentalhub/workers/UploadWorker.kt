@@ -5,6 +5,7 @@ import androidx.work.*
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.entities.Patient
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
@@ -44,6 +45,7 @@ class UploadWorker(context: Context, params: WorkerParameters) : Worker(context,
             }
             Result.success()
         }catch (e: Exception){
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
 

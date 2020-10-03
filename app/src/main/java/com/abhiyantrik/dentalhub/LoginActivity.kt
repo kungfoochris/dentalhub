@@ -14,25 +14,23 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.abhiyantrik.dentalhub.entities.Ward
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.LoginResponse
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
-import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 class LoginActivity : Activity() {
+
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var tvErrorMessage: TextView
     private lateinit var loading: ProgressBar
     private lateinit var btnLogin: Button
     private lateinit var context: Context
-
-    private val TAG = "LoginActivity"
 
     @AddTrace(name = "onCreateTrace", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,14 +80,13 @@ class LoginActivity : Activity() {
 
     @AddTrace(name = "processLogin", enabled = true /* optional */)
     private fun processLogin() {
+        Log.d(TAG, "processLogin()")
         val view = this.currentFocus
         if (view != null) {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-
-        Log.d(TAG, "processLogin()")
         loading.visibility = View.VISIBLE
         tvErrorMessage.visibility = View.GONE
         val email = etEmail.text.toString()
@@ -99,7 +96,7 @@ class LoginActivity : Activity() {
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 Log.d(TAG, "onResponse()")
-                Log.d("Resp", response.toString())
+                Log.d(TAG, "response $response")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
@@ -141,22 +138,21 @@ class LoginActivity : Activity() {
                     loading.visibility = View.GONE
                 } else {
                     if (response.code() == 400) {
-                        tvErrorMessage.text = getString(R.string.username_password_dont_matched)
+                        tvErrorMessage.text = getString(R.string.username_password_do_not_match)
                         tvErrorMessage.visibility = View.VISIBLE
                         loading.visibility = View.GONE
                     }
 
                     if(BuildConfig.DEBUG){
-                        Log.d("response CODE", response.code().toString())
-                        Log.d("response BODY", response.errorBody().toString())
+                        Log.d(TAG, "response code" + response.code().toString())
+                        Log.d(TAG, "response body " + response.errorBody().toString())
                     }
-
-
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " login() " + t.message.toString())
                 if (BuildConfig.DEBUG) {
                     tvErrorMessage.text = t.message.toString()
                 } else {
@@ -165,31 +161,33 @@ class LoginActivity : Activity() {
                 tvErrorMessage.visibility = View.VISIBLE
                 loading.visibility = View.GONE
             }
-
         })
-
     }
 
     @AddTrace(name = "formIsValid", enabled = true /* optional */)
     private fun formIsValid(): Boolean {
         tvErrorMessage.visibility = View.GONE
-        var status = false
-        if (etEmail.text.isBlank()) {
-            status = false
-            tvErrorMessage.text = getString(R.string.username_is_required)
-            tvErrorMessage.visibility = View.VISIBLE
-//        } else if (!EmailValidator.isEmailValid(etEmail.text.toString())) {
-//            status = false
-//            tvErrorMessage.text = getString(R.string.invalid_email)
-//            tvErrorMessage.visibility = View.VISIBLE
-        } else if (etPassword.text.isBlank()) {
-            status = false
-            tvErrorMessage.text = getString(R.string.password_is_required)
-            tvErrorMessage.visibility = View.VISIBLE
-        } else {
-            status = true
+        val status: Boolean
+        when {
+            etEmail.text.isBlank() -> {
+                status = false
+                tvErrorMessage.text = getString(R.string.username_is_required)
+                tvErrorMessage.visibility = View.VISIBLE
+            }
+            etPassword.text.isBlank() -> {
+                status = false
+                tvErrorMessage.text = getString(R.string.password_is_required)
+                tvErrorMessage.visibility = View.VISIBLE
+            }
+            else -> {
+                status = true
+            }
         }
         return status
+    }
+
+    companion object{
+        const val TAG = "LoginActivity"
     }
 
 }

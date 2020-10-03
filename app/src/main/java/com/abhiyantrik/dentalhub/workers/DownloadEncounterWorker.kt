@@ -11,6 +11,8 @@ import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Encounter
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 
 class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
@@ -22,7 +24,8 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentsBox: Box<Treatment>
     private lateinit var referralsBox: Box<Referral>
-
+    private val alreadyDownloadedMessage = "Already downloaded"
+    private val ctx: Context = context
     override fun doWork(): Result {
         return try {
             patientsBox =
@@ -43,10 +46,12 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "downloadEncountersFromDownloadEncounterWorker", enabled = true /* optional */)
     private fun downloadEncounters(patientId: String) {
         DentalApp.displayNotification(
             applicationContext,
@@ -72,7 +77,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 encounter.id
                             ).build().find().size > 0
                         ) {
-                            Log.d("", "Encounter already downloaded.")
+                            Log.d("Encounter", alreadyDownloadedMessage)
                         } else {
 
                             Log.d("Encounter Download", "Encounter downloading of ${encounter.id}.")
@@ -119,7 +124,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.history!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("History", "History Already downloaded")
+                                    Log.d("History", alreadyDownloadedMessage)
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -171,11 +176,10 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     historyBox.put(historyEntity)
                                 }
                             } else{
-                                var newHistory = History()
+                                val newHistory = History()
                                 newHistory.encounter?.target = dbEncounterEntity
                                 historyBox.put(newHistory)
                             }
-
 
                             if (encounter.screening != null) {
                                 // save screening
@@ -184,7 +188,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.screening!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("Screening", "Already downloaded")
+                                    Log.d("Screening", alreadyDownloadedMessage)
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -195,7 +199,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     )
                                     val screeningEntity = Screening()
                                     if (encounter.screening != null) {
-                                        screeningEntity.remote_id = encounter.screening!!.id.toString()
+                                        screeningEntity.remote_id = encounter.screening!!.id
                                         screeningEntity.encounter?.target = dbEncounterEntity
                                         screeningEntity.carries_risk =
                                             encounter.screening!!.carries_risk
@@ -225,7 +229,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
 
                                 }
                             } else {
-                                var newScreening = Screening()
+                                val newScreening = Screening()
                                 newScreening.encounter?.target = dbEncounterEntity
                                 screeningBox.put(newScreening)
                             }
@@ -237,7 +241,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.treatment!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("Treatment", "Already downloaded")
+                                    Log.d("Treatment", alreadyDownloadedMessage)
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -331,7 +335,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                     treatmentsBox.put(treatmentEntity)
                                 }
                             } else {
-                                var newTreatment = Treatment()
+                                val newTreatment = Treatment()
                                 newTreatment.encounter?.target = dbEncounterEntity
                                 treatmentsBox.put(newTreatment)
                             }
@@ -340,10 +344,10 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 // save referral
                                 if (referralsBox.query().equal(
                                         Referral_.remote_id,
-                                        encounter.referral!!.id.toString()
+                                        encounter.referral!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("Referral", "Already downloaded")
+                                    Log.d("Referral", alreadyDownloadedMessage)
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -378,14 +382,21 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 }
                             }
                             else {
-                                var newReferral = Referral()
+                                val newReferral = Referral()
                                 newReferral.encounter?.target = dbEncounterEntity
                                 referralsBox.put(newReferral)
                             }
                         }
                     }
                 }
+                else -> {
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() HTTP Status code "+response.code())
+                }
             }
+        }else{
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() Failed to download encounters.")
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() HTTP Status code "+response.code())
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() "+response.message())
         }
 
         DentalApp.cancelNotification(applicationContext, 1001)

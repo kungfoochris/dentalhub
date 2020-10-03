@@ -3,14 +3,15 @@ package com.abhiyantrik.dentalhub.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.models.Sync
 import kotlinx.android.synthetic.main.single_syncronization.view.*
 
-class SyncronizationAdapter(
+class SynchronizationAdapter(
     val data: List<Sync>
-) : RecyclerView.Adapter<SyncronizationAdapter.SyncViewHolder>() {
+) : RecyclerView.Adapter<SynchronizationAdapter.SyncViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SyncViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.single_syncronization, parent, false)
@@ -26,9 +27,9 @@ class SyncronizationAdapter(
             tvEncounterType.text = syncItem.encounter_type
             tvCreatedDate.text = syncItem.created_date.substring(0, 10)
             if (!syncItem.uploaded) {
-                ivSyncStatus.setColorFilter(resources.getColor(R.color.colorSDF))
+                ivSyncStatus.setColorFilter(ContextCompat.getColor(context, R.color.colorSDF))
             } else {
-                ivSyncStatus.setColorFilter(resources.getColor(R.color.green_700))
+                ivSyncStatus.setColorFilter(ContextCompat.getColor(context, R.color.green_700))
             }
         }
     }

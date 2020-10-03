@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -16,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,9 +33,9 @@ import com.abhiyantrik.dentalhub.ui.synchronization.SynchronizationActivity
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.abhiyantrik.dentalhub.workers.*
-import com.crashlytics.android.Crashlytics
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
@@ -67,19 +69,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var patientsBox: Box<Patient>
     private lateinit var patientsQuery: Query<Patient>
     private lateinit var recallBox: Box<Recall>
-//    private lateinit var recallQuery: Query<Recall>
     private lateinit var encounterBox: Box<Encounter>
     private lateinit var historyBox: Box<History>
     private lateinit var screeningBox: Box<Screening>
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
 
-
     private lateinit var allPatientRecall: MutableList<Patient>
 
-    private val TAG = "MainActivity"
     private var fabButtonPressTime = false
-
 
     @AddTrace(name = "onCreateMainActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        Crashlytics.log(Log.INFO, TAG, "Message From OnCreate")
+        FirebaseCrashlytics.getInstance().log("$TAG: Message From OnCreate")
 
         setupUI()
 
@@ -112,36 +110,12 @@ class MainActivity : AppCompatActivity() {
         tvActivity.text = DentalApp.activity_name
     }
 
+    @AddTrace(name = "listRecallPatients", enabled = true /* optional */)
     private fun listRecallPatients() {
         println("called once.")
-        var c = Calendar.getInstance().time
+        val c = Calendar.getInstance().time
         val df = SimpleDateFormat("yyyy-MM-dd")
-        val currentDate = df.format(c)
-//
-//        Log.d("LocalDate", currentDate.toString())
-//        // get all Address objects
-//        val builder = patientsBox.query()
-//        // ...which are linked from a Recall date "today"
-//        builder.link(Patient_.recall).equal(Recall_.date, currentDate.toString())
-//        var sesameStreetsWithElmo = builder.build().find()
-//        allPatientRecall = sesameStreetsWithElmo
-//
-//        for (eachDay in 1..10) {
-////            val days = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////                LocalDate.now().plusDays(eachDay.toLong())
-////            } else {
-////                // do something here
-////            }
-//            val days= 1;
-//            val builder = patientsBox.query()
-//            builder.link(Patient_.recall).equal(Recall_.date, days.toString())
-//            sesameStreetsWithElmo = builder.build().find()
-//            allPatientRecall.addAll(sesameStreetsWithElmo)
-//        }
-//
-//        for (recall in allPatientRecall) {
-//            println("Recall patient name is ${recall.fullName()}")
-//        }
+        df.format(c)
         allPatientRecall = mutableListOf()
         val today = DateHelper.getCurrentNepaliDate()
         val todayPatient = patientsBox.query().equal(Patient_.recall_date, today)
@@ -205,6 +179,7 @@ class MainActivity : AppCompatActivity() {
 
         if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
             Log.d(TAG,"Activity is not been selected.")
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
             logout()
         }
 
@@ -237,8 +212,8 @@ class MainActivity : AppCompatActivity() {
 
                 Log.d("TAG", "5 minuted countdown starts now.")
 
-//                after 5 minute this method will be pressed. 300000
-                Handler().postDelayed({
+                //after 5 minute this method will be pressed. 300000
+                Handler(Looper.getMainLooper()).postDelayed({
                     fabButtonPressTime = false
                     Log.d("TAG","5 min completed.")
                 }, 300000)
@@ -291,10 +266,10 @@ class MainActivity : AppCompatActivity() {
                             val unuploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().find()
                             val unuploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().find()
 
-                            Log.d("Fab sync History", unuploadedHistory.toString())
-                            Log.d("Fab sync eachScreening", unuploadedScreening.toString())
-                            Log.d("Fab sync eachTreatment", unuploadedTreatment.toString())
-                            Log.d("Fab sync eachReferral", unuploadedReferral.toString())
+                            Log.d(TAG, "Fab sync History " +  unuploadedHistory.toString())
+                            Log.d(TAG, "Fab sync eachScreening "+ unuploadedScreening.toString())
+                            Log.d(TAG, "Fab sync eachTreatment " + unuploadedTreatment.toString())
+                            Log.d(TAG, "Fab sync eachReferral " + unuploadedReferral.toString())
 
                             if (unuploadedHistory.isNotEmpty()) {
                                 Log.d("Fab sync History", unuploadedHistory[0].id.toString())
@@ -347,13 +322,9 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 }
-
-                //Toast.makeText(context,"Work in progress", Toast.LENGTH_LONG).show()
             }
-
         }
-
-        val handler = Handler()
+        val handler = Handler(Looper.getMainLooper())
         val run = object : Runnable {
             override fun run() {
                 checkAllUpdated()
@@ -370,7 +341,6 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-
     private fun checkAllUpdated() {
         val patient = patientsBox.query().equal(Patient_.uploaded, false).build().find()
         val encounter = encounterBox.query().equal(Encounter_.uploaded, false).build().find()
@@ -383,26 +353,14 @@ class MainActivity : AppCompatActivity() {
         val referral =
             referralBox.query().equal(Referral_.uploaded, false).build().find()
 
-//        Log.d(TAG, "Patient : " + patient.toString())
-//        Log.d(TAG, "encounter : " + encounter.toString())
-//        Log.d(TAG, "history : " + history.toString())
-//        Log.d(TAG, "screening : " + screening.toString())
-//        Log.d(TAG, "treatment : " + treatment.toString())
-//        Log.d(TAG, "referral : " + referral.toString())
-
         if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
                 treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
             Log.d(TAG, "all patient uploaded.")
-            fabBtnSync.background.setTint(resources.getColor(R.color.colorART))
-//            fabBtnSync.background.mutate().setTint(resources.getColor(R.color.green_A200))
-
-//        fabBtnSync.backgroundTintList = resources.getColorStateList(R.color.blue_100)
+            fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.colorART))
         } else {
             Log.d(TAG, "Left to upload patient details.")
-            fabBtnSync.background.setTint(resources.getColor(R.color.red_A200))
-//            fabBtnSync.drawable.mutate().setTint(resources.getColor(R.color.red_A200))
+            fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.red_A200))
         }
-
     }
 
 
@@ -413,7 +371,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             listPatientsFromLocalDB()
         }
-
     }
 
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
@@ -425,6 +382,8 @@ class MainActivity : AppCompatActivity() {
                     .orderDesc(Patient_.created_at).orderDesc(Patient_.id).build().find()
             setupAdapter(allPatients)
         } catch (e: DbException) {
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Log.d("DBException", e.printStackTrace().toString())
         }
 
@@ -454,7 +413,7 @@ class MainActivity : AppCompatActivity() {
                         builder.setMessage("Are you want to remove recall?")
 
                         // Set a positive button and its click listener on alert dialog
-                        builder.setPositiveButton("YES"){dialog, which ->
+                        builder.setPositiveButton("YES"){ _, _ ->
                             // Do something when user press the positive button
                             Toast.makeText(applicationContext,"Patient recall is removed.",Toast.LENGTH_SHORT).show()
                             patient.recall_date = ""
@@ -465,8 +424,8 @@ class MainActivity : AppCompatActivity() {
 
 
                         // Display a negative button on alert dialog
-                        builder.setNegativeButton("No"){dialog,which ->
-//                            Toast.makeText(applicationContext,"You are not agree.",Toast.LENGTH_SHORT).show()
+                        builder.setNegativeButton("No"){ _, _ ->
+                                // Toast.makeText(applicationContext,"You are not agree.",Toast.LENGTH_SHORT).show()
                         }
 
                         // Finally, make the alert dialog using builder
@@ -490,7 +449,7 @@ class MainActivity : AppCompatActivity() {
                                 patientsBox.put(patient)
 //                                callBtn.setBackgroundColor(resources.getColor(R.color.colorART))
                             }else{
-                                Toast.makeText(context, getString(R.string.telephony_serivce_unavailable), Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, getString(R.string.telephony_service_unavailable), Toast.LENGTH_LONG).show()
                             }
                         } else {
                             Toast.makeText(context, "Already called the patient.", Toast.LENGTH_LONG).show()
@@ -555,6 +514,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(addPatientActivityIntent)
     }
 
+    @AddTrace(name = "displayDelayDialogFromMainActivity", enabled = true /* optional */)
     private fun displayDelayDialog(patient: Patient) {
         // delay recall of patient
         val grpName = arrayOf(
@@ -576,11 +536,12 @@ class MainActivity : AppCompatActivity() {
                 val tempPatient =
                     patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
 
-                var recallDate = ""
-                try {
-                    recallDate = tempPatient.recall_date!!
+                var recallDate: String
+                recallDate = try {
+                    tempPatient.recall_date!!
                 }catch(e: NullPointerException){
-                    recallDate = ""
+                    FirebaseCrashlytics.getInstance().recordException(e)
+                    ""
                 }
                 when (item) {
                     0 -> {
@@ -629,6 +590,9 @@ class MainActivity : AppCompatActivity() {
             })
         val alert = delayChooser.create()
         alert.show()
+    }
+    companion object{
+        const val TAG = "MainActivity"
     }
 
 }

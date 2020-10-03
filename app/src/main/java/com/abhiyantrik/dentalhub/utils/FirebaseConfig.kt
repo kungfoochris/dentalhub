@@ -5,16 +5,14 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
 class FirebaseConfig {
-    var mFirebaseRemoteConfig: FirebaseRemoteConfig
-    var configSettings: FirebaseRemoteConfigSettings
+    var mFirebaseRemoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+    var configSettings: FirebaseRemoteConfigSettings = FirebaseRemoteConfigSettings.Builder().build()
     var cacheExpiration: Long = 43200
-    var editatbleDuration: Long = 21600
+    var editableDuration: Long = 21600
 
     init {
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        configSettings = FirebaseRemoteConfigSettings.Builder().build()
         mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings)
-        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults)
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
     }
 
     fun fetchEditableTime(): Long {
@@ -22,9 +20,7 @@ class FirebaseConfig {
             mFirebaseRemoteConfig.fetchAndActivate()
         }
 
-        editatbleDuration = mFirebaseRemoteConfig.getLong("editable_duration")
-        return editatbleDuration
+        editableDuration = mFirebaseRemoteConfig.getLong("editable_duration")
+        return editableDuration
     }
-
-
 }

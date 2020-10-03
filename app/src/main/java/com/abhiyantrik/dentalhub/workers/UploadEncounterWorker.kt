@@ -10,15 +10,15 @@ import com.abhiyantrik.dentalhub.entities.Encounter
 import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
-import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
-import java.util.*
 import java.util.concurrent.TimeUnit
-import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 
 class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
+
     private var patientsBox: Box<Patient> = ObjectBox.boxStore.boxFor(Patient::class.java)
     private var encountersBox: Box<Encounter> =  ObjectBox.boxStore.boxFor(Encounter::class.java)
+    private val ctx: Context = context
 
     override fun doWork(): Result {
         return  try {
@@ -91,6 +91,8 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
 
             Result.success()
         }catch (e: Exception){
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " uploadEncounterWorker failure")
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }

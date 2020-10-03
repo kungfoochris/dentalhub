@@ -14,7 +14,7 @@ class User: Parcelable{
     var middle_name: String =""
     var last_name: String = ""
 
-    fun full_name():String{
+    fun fullName():String{
         return "$first_name $middle_name $last_name"
     }
 }

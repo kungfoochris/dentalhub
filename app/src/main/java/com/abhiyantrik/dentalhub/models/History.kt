@@ -1,10 +1,6 @@
 package com.abhiyantrik.dentalhub.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-class History : Parcelable {
+class History{
     var id: String = ""
     var blood_disorder: Boolean = false
     var diabetes: Boolean = false

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.models.FlagEncounter
@@ -44,18 +45,17 @@ class FlagAdapter(
             when (flagEncounter.flag_status) {
                 "approved" -> {
                     ibEdit.visibility = View.VISIBLE
-                    tvFlagEncounterStatus.setTextColor(resources.getColor(R.color.flag_approved_green))
+                    tvFlagEncounterStatus.setTextColor(ContextCompat.getColor(context, R.color.flag_approved_green))
                 }
                 "pending" -> {
-                    tvFlagEncounterStatus.setTextColor(resources.getColor(R.color.flag_pending_yellow))
+                    tvFlagEncounterStatus.setTextColor(ContextCompat.getColor(context, R.color.flag_pending_yellow))
                 }
                 "deleted" -> {
-                    tvFlagEncounterStatus.setTextColor(resources.getColor(R.color.flag_expired_red))
+                    tvFlagEncounterStatus.setTextColor(ContextCompat.getColor(context, R.color.flag_expired_red))
                 }
             }
 
             ibEdit.setOnClickListener {
-//                Toast.makeText(context, "Encounter remote_id: ${flagEncounter.remote_id}", Toast.LENGTH_SHORT).show()
                 flagClickListner.onEditButtonClick(flagEncounter)
             }
         }
