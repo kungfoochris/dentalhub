@@ -12,7 +12,6 @@ import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
-import retrofit2.Call
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 
 class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -146,6 +145,5 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
             }
         }
         DentalApp.cancelNotification(applicationContext, 1001)
-
     }
 }

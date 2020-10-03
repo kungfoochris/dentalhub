@@ -14,6 +14,7 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import java.text.SimpleDateFormat
+import java.util.*
 
 class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
@@ -22,7 +23,6 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
     private val ctx: Context = context
 
     override fun doWork(): Result {
-
         return try {
             patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
             encountersBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
@@ -30,12 +30,11 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             val patientId = inputData.getLong("PATIENT_ID", 0)
             val encounterId = inputData.getLong("ENCOUNTER_ID", 0)
 
-            Log.d("UploadEncounterWorker", "Upload encounter".plus(patientId).plus(" / ").plus(encounterId))
+            Log.d(TAG, "Upload encounter".plus(patientId).plus(" / ").plus(encounterId))
             val dbPatientEntity =
                 patientsBox.query().equal(Patient_.id, patientId).build().findFirst()
             val dbEncounterEntity =
                 encountersBox.query().equal(Encounter_.id, encounterId).build().findFirst()
-
 
             saveEncounterToServer(
                 dbPatientEntity!!.remote_id,
@@ -43,7 +42,7 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             )
             Result.success()
         } catch (e: Exception) {
-            Log.d("UploadEncounterWorkerEx", e.printStackTrace().toString())
+            Log.d(TAG, e.printStackTrace().toString())
             Result.failure()
         }
     }
@@ -53,12 +52,12 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
         dbEncounterEntity: Encounter?
     ) {
         Log.d("EncounterDateCreated", dbEncounterEntity?.id.toString() + " " + dbEncounterEntity?.created_at!!.length)
-        var correctDate = String()
+        val correctDate: String
         correctDate = if (dbEncounterEntity.created_at.length == 10) {
             Log.d("EncounterDateCreated", dbEncounterEntity.id.toString())
             val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(dbEncounterEntity.created_at)
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            dateFormat.format(currentDate)
+            dateFormat.format(currentDate as Date)
         } else {
             dbEncounterEntity.created_at
         }
@@ -67,7 +66,7 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
         val call = panelService.addEncounter(
             "JWT $token",
             remoteId,
-            dbEncounterEntity!!.id.toInt(),
+            dbEncounterEntity.id.toInt(),
             dbEncounterEntity.ward_id,
             dbEncounterEntity.activityarea_id,
             dbEncounterEntity.encounter_type,
@@ -99,6 +98,8 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addEncounter() " + response.message())
             Log.d("saveEncounterToServer", response.message() + response.code())
         }
-
+    }
+    companion object{
+        const val TAG = "UploadIndEncounterWork"
     }
 }
