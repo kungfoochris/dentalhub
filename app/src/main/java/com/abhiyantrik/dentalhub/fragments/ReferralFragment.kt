@@ -17,7 +17,6 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_referral.*
-import java.lang.Exception
 import java.text.DecimalFormat
 import java.util.*
 

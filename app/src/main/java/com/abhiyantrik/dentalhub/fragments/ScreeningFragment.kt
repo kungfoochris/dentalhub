@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox

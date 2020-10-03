@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.adapters.PatientAdapter
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
@@ -38,8 +39,6 @@ class SearchPatientActivity : AppCompatActivity() {
     private lateinit var manager: SearchManager
     private lateinit var searchView: SearchView
 
-    private val TAG = "SearchPatientActivity"
-
     @AddTrace(name = "onCreateSearchPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +57,6 @@ class SearchPatientActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-//        patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
-//        patientsQuery = patientsBox.query().build()
 
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         patientQuery = patientsBox.query().build()
@@ -70,10 +67,6 @@ class SearchPatientActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(context)
 
         recyclerView.layoutManager = layoutManager
-
-//        val recyclerAdapter = PatientAdapter()
-
-
     }
 
     override fun onResume() {
@@ -81,10 +74,9 @@ class SearchPatientActivity : AppCompatActivity() {
         listPatients()
         val lastSelectedPosition = DentalApp.readIntFromPreference(context, Constants.PREF_LAST_SELECTED_PATIENT_POSITION)
         recyclerView.scrollToPosition(lastSelectedPosition)
-        //manager.startSearch(null, false, componentName, null, false)
-//        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
     }
 
+    @AddTrace(name = "listPatientsFromSearchPatientActivity", enabled = true /* optional */)
     private fun listPatients() {
         try {
             patientsearchlist =
@@ -125,7 +117,7 @@ class SearchPatientActivity : AppCompatActivity() {
                         call.data = Uri.parse("tel:" + patient.phone)
                         startActivity(call)
                     }else{
-                        Toast.makeText(context, getString(R.string.telephony_serivce_unavailable), Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, getString(R.string.telephony_service_unavailable), Toast.LENGTH_LONG).show()
                     }
                 }
 
@@ -227,6 +219,8 @@ class SearchPatientActivity : AppCompatActivity() {
                         .build().find()
                 } catch (e: DbException) {
                     Log.d("DBException", e.printStackTrace().toString())
+                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " search patient db exception " + e.printStackTrace().toString())
+                    FirebaseCrashlytics.getInstance().recordException(e)
                 }
                 println("Query result is $patientsearchlist")
 
@@ -251,5 +245,9 @@ class SearchPatientActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
+    }
+
+    companion object{
+        const val TAG = "SearchPatientActivity"
     }
 }

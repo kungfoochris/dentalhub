@@ -96,7 +96,8 @@ class EncounterAdapter(
             }
             val encounterType: String = context.getString(R.string.other_problem)
             if (encounter.encounter_type == encounterType) {
-                tvEncounterName.text = encounter.encounter_type + " - " + encounter.other_problem
+                val encounterName = encounter.encounter_type + " - " + encounter.other_problem
+                tvEncounterName.text = encounterName
             } else {
                 tvEncounterName.text = encounter.encounter_type
             }

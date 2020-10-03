@@ -2,7 +2,6 @@ package com.abhiyantrik.dentalhub
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,10 +19,10 @@ import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.abhiyantrik.dentalhub.models.FlagResponse
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
@@ -31,9 +30,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,7 +39,6 @@ class ViewPatientActivity : AppCompatActivity() {
     private lateinit var context: Context
     private lateinit var patient: Patient
 
-    //    private lateinit var btnAddNewEncounter: Button
     private lateinit var fabAddNewEncounter: FloatingActionButton
     private lateinit var fabEditPatient: FloatingActionButton
     private lateinit var encounterAdapter: EncounterAdapter
@@ -88,20 +83,6 @@ class ViewPatientActivity : AppCompatActivity() {
         listEncounters()
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.patient_delete, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.deletePatient -> {
-//                Toast.makeText(context, "Patient delete requested.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
     private fun initUI() {
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
@@ -127,7 +108,6 @@ class ViewPatientActivity : AppCompatActivity() {
         getUpdatedPatient()
 
         fabAddNewEncounter.setOnClickListener {
-            //            displayEncounterTypeSelector()
             displayEncounterTypeSelectorPopUp()
         }
         fabEditPatient.setOnClickListener {
@@ -135,7 +115,6 @@ class ViewPatientActivity : AppCompatActivity() {
             addPatientIntent.putExtra("PATIENT_ID", patientId)
             addPatientIntent.putExtra("ACTION", "edit")
             startActivity(addPatientIntent)
-//            startActivity(Intent(this, ActivityFlagEncounterView::class.java))
         }
     }
 
@@ -184,10 +163,8 @@ class ViewPatientActivity : AppCompatActivity() {
         tvGender.text = patient.gender.capitalize()
         tvPhone.text = patient.phone
         tvEducation.text = patient.education.capitalize()
-//        val municipality =
         tvAddress.text = patient.address()
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -199,29 +176,6 @@ class ViewPatientActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    @AddTrace(name = "displaySearchDialogMainActivity", enabled = true /* optional */)
-    private fun displayEncounterTypeSelector() {
-
-        val grpName = arrayOf(
-            getString(R.string.checkup_screening),
-            getString(R.string.relief_of_pain),
-            getString(R.string.continuation_of_treatment_plan),
-            getString(R.string.other_problem)
-        )
-        val encounterTypeChooser = AlertDialog.Builder(this)
-        encounterTypeChooser.setTitle(getString(R.string.primary_reason_for_encounter))
-        encounterTypeChooser.setSingleChoiceItems(
-            grpName,
-            -1,
-            DialogInterface.OnClickListener { dialog, item ->
-                loading.visibility = View.VISIBLE
-                openAddEncounter(grpName[item], "")
-                dialog.dismiss()// dismiss the alert box after chose option
-            })
-        val alert = encounterTypeChooser.create()
-        alert.show()
-    }
-
     private fun displayEncounterTypeSelectorPopUp() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflate: LayoutInflater = layoutInflater
@@ -229,10 +183,6 @@ class ViewPatientActivity : AppCompatActivity() {
 
         // to get all id of the Button
         val rgAddEncounter = view.findViewById<RadioGroup>(R.id.rgAddEncounter)
-//        val rbCheckupScreening = view.findViewById<RadioButton>(R.id.rbCheckupScreening)
-//        val rbReliefOfPain = view.findViewById<RadioButton>(R.id.rbReliefOfPain)
-//        val rbContinuationOfTreatmentPlan =
-//            view.findViewById<RadioButton>(R.id.rbContinuationOfTreatmentPlan)
         val rbOtherProblem = view.findViewById<RadioButton>(R.id.rbOtherProblem)
         val etOtherProblem = view.findViewById<EditText>(R.id.etOtherProblemPopUp)
         val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
@@ -268,8 +218,6 @@ class ViewPatientActivity : AppCompatActivity() {
                     ).show()
                 } else {
                     val selectedBtn: RadioButton = view.findViewById(radioBtnID)
-//                    Toast.makeText(this, "Selected is ${selectedBtn.text} ${etOtherProblem.text}", Toast.LENGTH_SHORT).show()
-
                     openAddEncounter(selectedBtn.text.toString(), etOtherProblem.text.toString())
                     dialog.dismiss()
                 }
@@ -429,7 +377,7 @@ class ViewPatientActivity : AppCompatActivity() {
                 GlobalScope.launch(Dispatchers.IO) {
                     val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
                     val panelService = DjangoInterface.create(context)
-                    var call = Any()
+                    var call: Any
                     if (isModify) {
                         call = panelService.modifyEncounterFlag(
                             "JWT $token",
@@ -446,12 +394,6 @@ class ViewPatientActivity : AppCompatActivity() {
                             "delete"
                         )
                     }
-//                    call = panelService.modifyEncounterFlag(
-//                        "JWT $token",
-//                        modifyDeleteEncounterId,
-//                        modifyDeleteReason,
-//                        "modify"
-//                    )
                     try {
                         val response = call.execute()
                         Log.d("FlagResponse", "${response.code()} and ${response.message()} then ${response.body()}")
@@ -471,6 +413,7 @@ class ViewPatientActivity : AppCompatActivity() {
                             }
                         }
                     } catch (ex: Exception) {
+                        FirebaseCrashlytics.getInstance().recordException(ex)
                         withContext(Dispatchers.Main) {
                             Toast.makeText(this@ViewPatientActivity, "Failed. Try again. ${ex.message}", Toast.LENGTH_SHORT).show()
                         }
@@ -501,6 +444,7 @@ class ViewPatientActivity : AppCompatActivity() {
                 patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
                 updateInfo()
             } catch (e: DbException) {
+                FirebaseCrashlytics.getInstance().recordException(e)
                 Log.d("DBException", e.printStackTrace().toString())
             }
         }
@@ -514,7 +458,7 @@ class ViewPatientActivity : AppCompatActivity() {
             Toast.makeText(context, "There is problem in Encounter date so please contact to Abhiyantrik or Saroj Dhakal.", Toast.LENGTH_LONG).show()
         }
         Log.d("CheckingDate", currentDate.toString())
-        val currentDateTime = Calendar.getInstance().getTime()
+        val currentDateTime = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
         Log.d("CheckingDate", dateFormat.format(currentDate))
         Log.d("CheckingDate", dateFormat.format(currentDate))

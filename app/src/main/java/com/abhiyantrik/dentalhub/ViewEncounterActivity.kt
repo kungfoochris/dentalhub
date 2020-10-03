@@ -35,15 +35,11 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var referralBox: Box<Referral>
     private lateinit var wardBox: Box<Ward>
     private lateinit var activityBox: Box<Activity>
-    //private lateinit var recallBox: Box<Recall>
-
-    // Geography and Activity
 
     private lateinit var tvActivity: TextView
     private lateinit var tvWardName: TextView
 
     // history
-
     // History Titles TextView
     private lateinit var tvBloodDisorderOrBleedingProblemTitle: TextView
     private lateinit var tvDiabetesTitle: TextView
@@ -72,7 +68,6 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvAllergies: TextView
 
     // screening
-
     // Screening Titles TextView
     private lateinit var tvCarriesRiskTitle: TextView
     private lateinit var tvNoOfDecayedPrimaryTeethTitle: TextView
@@ -107,7 +102,6 @@ class ViewEncounterActivity : AppCompatActivity() {
 
 
     // treatment
-
     // Treatment Title TextView
     private lateinit var tvSDFWholeMouthTitle: TextView
     private lateinit var tvFVAppliedTitle: TextView
@@ -121,7 +115,6 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvNotes: TextView
 
     // Treatment Buttons
-
     // Treatment Buttons Row 1
     private lateinit var btn11: Button
     private lateinit var btn12: Button
@@ -187,7 +180,6 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var btn38: Button
 
     // referral
-
     // Referral Title TextView
     private lateinit var tvNoReferralTitle: TextView
     private lateinit var tvHealthPostTitle: TextView
@@ -203,12 +195,6 @@ class ViewEncounterActivity : AppCompatActivity() {
     private lateinit var tvDentist: TextView
     private lateinit var tvGeneralPhysician: TextView
     private lateinit var tvOtherDetails: TextView
-
-    // recall
-//    private lateinit var tvRecallDate: TextView
-//    private lateinit var tvRecallTime: TextView
-//    private lateinit var tvRecallGeography: TextView
-//    private lateinit var tvRecallActivity: TextView
 
     private lateinit var context: Context
 
@@ -231,7 +217,6 @@ class ViewEncounterActivity : AppCompatActivity() {
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
         wardBox = ObjectBox.boxStore.boxFor(Ward::class.java)
         activityBox = ObjectBox.boxStore.boxFor(Activity::class.java)
-        //recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
         patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
@@ -245,20 +230,16 @@ class ViewEncounterActivity : AppCompatActivity() {
             treatmentBox.query().equal(Treatment_.encounterId, encounter.id).build().findFirst()!!
         referral =
             referralBox.query().equal(Referral_.encounterId, encounter.id).build().findFirst()!!
-        //recall = recallBox.query().equal(Recall_.encounterId, encounter.id).build().findFirst()!!
-
 
         initUI()
     }
 
     private fun initUI() {
 
-        // Geography and activity
-
         tvWardName = findViewById(R.id.tvWardName)
         tvActivity = findViewById(R.id.tvActivity)
 
-        var wardID: Ward
+        val wardID: Ward
         var activityID: Activity
 
         if (encounter.ward_id != 0){
@@ -268,7 +249,7 @@ class ViewEncounterActivity : AppCompatActivity() {
             tvWardName.text = DentalApp.ward_name
         }
 
-        if (!(encounter.activityarea_id).isNullOrEmpty()){
+        if ((encounter.activityarea_id).isNotEmpty()){
             activityID = activityBox.query().equal(Activity_.remote_id, encounter.activityarea_id).build().findFirst()!!
             tvActivity.text = activityID.name
         } else {
@@ -455,20 +436,6 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideBoolean(referral.general_physician, tvGeneralPhysicianTitle, tvGeneralPhysician)
         hideString(referral.other_details, tvOtherDetailsTitle, tvOtherDetails)
 
-        // schedule
-
-        // Schedule Title TextView
-//        tvRecallDate = findViewById(R.id.tvRecallDate)
-//        tvRecallTime = findViewById(R.id.tvRecallTime)
-//        tvRecallActivity = findViewById(R.id.tvRecallActivity)
-//        tvRecallGeography = findViewById(R.id.tvRecallGeography)
-
-        // Schedule Data TextView
-//        tvRecallDate.text = recall.date
-//        tvRecallTime.text = recall.time
-//        tvRecallActivity.text = recall.activity
-//        tvRecallGeography.text = recall.geography
-
     }
 
     private fun buttonInit() {
@@ -609,7 +576,7 @@ class ViewEncounterActivity : AppCompatActivity() {
 
     private fun setButtonColor(button: Button, treatmentType: String) {
         when (treatmentType) {
-            "SDF" -> {
+            SDF -> {
                 button.background =
                     ResourcesCompat.getDrawable(resources, R.drawable.treatment_sdf_applied, null)
                 button.setTextColor(
@@ -620,7 +587,7 @@ class ViewEncounterActivity : AppCompatActivity() {
                     )
                 )
             }
-            "SEAL" -> {
+            SEAL -> {
                 button.background =
                     ResourcesCompat.getDrawable(resources, R.drawable.treatment_seal_applied, null)
                 button.setTextColor(
@@ -631,7 +598,7 @@ class ViewEncounterActivity : AppCompatActivity() {
                     )
                 )
             }
-            "ART" -> {
+            ART -> {
                 button.background =
                     ResourcesCompat.getDrawable(resources, R.drawable.treatment_art_applied, null)
                 button.setTextColor(
@@ -642,7 +609,7 @@ class ViewEncounterActivity : AppCompatActivity() {
                     )
                 )
             }
-            "EXO" -> {
+            EXO -> {
                 button.background =
                     ResourcesCompat.getDrawable(resources, R.drawable.treatment_exo_applied, null)
                 button.setTextColor(
@@ -653,7 +620,7 @@ class ViewEncounterActivity : AppCompatActivity() {
                     )
                 )
             }
-            "UNTR" -> {
+            UNTR -> {
                 button.background =
                     ResourcesCompat.getDrawable(resources, R.drawable.treatment_untr_applied, null)
                 button.setTextColor(
@@ -664,7 +631,7 @@ class ViewEncounterActivity : AppCompatActivity() {
                     )
                 )
             }
-            "SMART" -> {
+            SMART -> {
                 button.background =
                     ResourcesCompat.getDrawable(resources, R.drawable.treatment_smart_applied, null)
                 button.setTextColor(
@@ -772,6 +739,15 @@ class ViewEncounterActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object{
+        const val ART = "ART"
+        const val EXO = "EXO"
+        const val SDF = "SDF"
+        const val SEAL = "SEAL"
+        const val SMART = "SMART"
+        const val UNTR = "UNTR"
     }
 
 }

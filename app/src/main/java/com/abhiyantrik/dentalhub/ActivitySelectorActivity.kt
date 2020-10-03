@@ -3,8 +3,6 @@ package com.abhiyantrik.dentalhub
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -47,8 +45,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private lateinit var activityBox: Box<Activity>
 
-    var TAG = "ActivitySelectorActivity"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selector)
@@ -85,21 +81,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
         etOtherDetails.setAdapter(arrayAdapter)
         arrayAdapter.notifyDataSetChanged()
 
-        etOtherDetails.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-        })
-
         rgActivities.setOnCheckedChangeListener { _, i ->
             if (i == R.id.radioHealthPostActivity) {
                 etOtherDetails.setText("")
@@ -109,7 +90,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
             }
             when (i) {
                 R.id.radioHealthPostActivity -> {
-                    selectedActivity = "Health Post"
+                    selectedActivity = HEALTH_POST
                     selectedActivityId = healthpost_id
                     println("Selected Activity is $selectedActivity")
                 }
@@ -137,7 +118,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
                 DentalApp.activity_name = selectedActivity
                 DentalApp.addStringToPreference(context, etOtherDetails.text.toString())
 
-                if (selectedActivity == "Health Post") {
+                if (selectedActivity == HEALTH_POST) {
                     DentalApp.activity_id = selectedActivityId
                     DentalApp.activity_name = selectedActivity
                     DentalApp.saveToPreference(
@@ -329,5 +310,9 @@ class ActivitySelectorActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         finish()
+    }
+    companion object {
+        const val HEALTH_POST: String = "Health Post"
+        const val TAG = "ActivitySelectorAct"
     }
 }

@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
@@ -13,7 +12,6 @@ import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.broadcastreceivers.NetworkStateReceiver
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
 import com.abhiyantrik.dentalhub.workers.UploadWorker
 import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
@@ -40,17 +38,10 @@ class SyncService : Service(){
     private lateinit var referralBox: Box<Referral>
     private lateinit var recallBox: Box<Recall>
 
-    private lateinit var networkStateReceiver: NetworkStateReceiver
     private lateinit var allPatients: List<Patient>
     private lateinit var allEncounters: List<Encounter>
-    private lateinit var encounterHistory: List<History>
-    private lateinit var encounterscreening: List<Screening>
-    private lateinit var encountertreatment: List<Treatment>
-    private lateinit var encounterReferral: List<Referral>
-
-
     var successTasks = 0
-    var totalRetrofitProcessed = 0
+    private var totalRetrofitProcessed = 0
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -73,7 +64,6 @@ class SyncService : Service(){
             .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
         WorkManager.getInstance(applicationContext).enqueue(uploadWorkerRequest)
 
-        //startSync()
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -85,27 +75,9 @@ class SyncService : Service(){
         super.onDestroy()
     }
 
-    private fun startSync() {
-        allPatients = patientsBox.query().build().find()
-        for (patient in allPatients) {
-            val data = Data.Builder().putLong("PATIENT_ID", patient.id)
-            val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UploadPatientWorker>()
-                .setInputData(data.build())
-                .setConstraints(DentalApp.uploadConstraints)
-                .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-            WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
-        }
-        stopSelf()
-    }
-
-
-    private fun pauseSync() {
-        // stop the sync
-        DentalApp.cancelNotification(applicationContext, 1001)
-    }
 
     private fun displayNotification() {
-//        for uploading the data
+        // for uploading the data
         allPatients = patientsBox.query().build().find()
         println("Display notification $allPatients")
         for (patient in allPatients) {
@@ -124,12 +96,8 @@ class SyncService : Service(){
                 checkAllEncounter(patient)
             }
         }
-
-//        for downloading the data
-
-
+        // for downloading the data
         stopSelf()
-
     }
 
     private fun saveHistoryToServer(remoteId: String, history: History, encounterId: Long) {
@@ -184,7 +152,7 @@ class SyncService : Service(){
 
     }
 
-    //    @AddTrace(name = "syncService_saveScreeningToServer()", enabled = true /* optional */)
+    @AddTrace(name = "saveScreeningToServerFromSyncService", enabled = true /* optional */)
     private fun saveScreeningToServer(remoteId: String, screening: Screening, encounterId: Long) {
         Log.d("SyncService", "saveScreeningToServer()")
         Log.d("saveScreeningToServer", screening.toString())
@@ -236,7 +204,7 @@ class SyncService : Service(){
         })
     }
 
-
+    @AddTrace(name = "saveReferralToServerFromSyncService", enabled = true /* optional */)
     private fun saveReferralToServer(remoteId: String, referral: Referral) {
         Log.d("SyncService", "saveReferralToServer()")
         Log.d("saveReferralToServer", referral.toString())
@@ -274,7 +242,7 @@ class SyncService : Service(){
         })
     }
 
-
+    @AddTrace(name = "saveTreatmentToServerFromSyncService", enabled = true /* optional */)
     private fun saveTreatmentToServer(remoteId: String, treatment: Treatment, encounterId: Long) {
         Log.d("SyncService", "saveTreatmentToServer()")
         Log.d("saveTreatmentToServer", treatment.toString())
@@ -368,11 +336,6 @@ class SyncService : Service(){
                                     Referral_.encounterId,
                                     encounterId
                                 ).build().findFirst()!!
-//                            val tempRecall =
-//                                recallBox.query().equal(
-//                                    Recall_.encounterId,
-//                                    encounterId
-//                                ).build().findFirst()!!
                             saveReferralToServer(remoteId, tempReferral)
                         }
                     }
@@ -381,7 +344,7 @@ class SyncService : Service(){
         })
     }
 
-    @AddTrace(name = "syncService_savePatientToServer", enabled = true /* optional */)
+    @AddTrace(name = "savePatientToServerFromSyncService", enabled = true /* optional */)
     private fun savePatientToServer(patient: Patient) {
         Log.d("SyncService", "savePatientToServer()")
         Log.d("savePatientToServer", patient.toString())
@@ -463,12 +426,6 @@ class SyncService : Service(){
         println("already uploaded patient encounter $allEncounters")
         for (eachEncounter in allEncounters) {
             if (eachEncounter.uploaded) {
-//                updateEncounterToServer(
-//                    patient.remote_id,
-//                    patient.geography_id,
-//                    patient.activityarea_id,
-//                    eachEncounter
-//                )
                 println("Encounter already uploaded ${eachEncounter.remote_id}")
             } else {
                 println("New encounter found ${eachEncounter.id}")
@@ -483,7 +440,7 @@ class SyncService : Service(){
     }
 
 
-    @AddTrace(name = "syncService_saveEncounterToServer", enabled = true /* optional */)
+    @AddTrace(name = "saveEncounterToServerFromSyncService", enabled = true /* optional */)
     private fun saveEncounterToServer(
         patientId: String,
         patientGeography: Int,
@@ -542,7 +499,7 @@ class SyncService : Service(){
     }
 
     private fun saveAllFragmentsToServer(encounter: Encounter) {
-//         read the encounter again from local db so that you can have remote Id
+        // read the encounter again from local db so that you can have remote Id
         val tempHistory =
             historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
         println("Till the History Master")

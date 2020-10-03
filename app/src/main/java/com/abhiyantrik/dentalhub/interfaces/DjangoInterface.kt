@@ -1,7 +1,6 @@
 package com.abhiyantrik.dentalhub.interfaces
 
 import android.content.Context
-import android.os.Build
 import com.abhiyantrik.dentalhub.BuildConfig
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.models.*
@@ -15,10 +14,10 @@ import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
 import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 import com.abhiyantrik.dentalhub.models.Patient as PatientModel
-import com.abhiyantrik.dentalhub.models.User as UserModel
 import com.abhiyantrik.dentalhub.models.Referral as ReferralModel
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
+import com.abhiyantrik.dentalhub.models.User as UserModel
 
 interface DjangoInterface {
 
@@ -43,13 +42,13 @@ interface DjangoInterface {
         @Field("district_id") district: Int,
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
-        @Field("activityarea_id") activity_area_id: String,
-        @Field("geography_id") geography_id: Int,
-        @Field("recall_date") recall_date: String,
-        @Field("recall_time") recall_time : String,
-        @Field("recall_geography") recall_geography: Int,
+        @Field("activityarea_id") activityAreaId: String,
+        @Field("geography_id") geographyId: Int,
+        @Field("recall_date") recallDate: String,
+        @Field("recall_time") recallTime : String,
+        @Field("recall_geography") recallGeography: Int,
         @Field("author") author: String,
-        @Field("updated_by") updated_by: String,
+        @Field("updated_by") updatedBy: String,
         @Field("created_at") createdAt: String?,
         @Field("updated_at") updatedAt: String?
     ): Call<PatientModel>
@@ -71,13 +70,13 @@ interface DjangoInterface {
         @Field("district_id") district: Int,
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
-        @Field("activityarea_id") activity_area_id: String,
-        @Field("geography_id") geography_id: Int,
-        @Field("recall_date") recall_date: String,
-        @Field("recall_time") recall_time : String,
-        @Field("recall_geography") recall_geography: Int,
+        @Field("activityarea_id") activityAreaId: String,
+        @Field("geography_id") geographyId: Int,
+        @Field("recall_date") recallDate: String,
+        @Field("recall_time") recallTime : String,
+        @Field("recall_geography") recallGeography: Int,
         @Field("author") author: String,
-        @Field("updated_by") updated_by: String,
+        @Field("updated_by") updatedBy: String,
         @Field("created_at") createdAt: String?,
         @Field("updated_at") updatedAt: String?
     ): Call<PatientModel>
@@ -105,14 +104,14 @@ interface DjangoInterface {
         @Header("Authorization") token: String,
         @Path("user") user: String,
         @Field("id") id: Int,
-        @Field("geography_id") geography_id: Int,
-        @Field("activityarea_id") activitarea_id: String,
+        @Field("geography_id") geographyId: Int,
+        @Field("activityarea_id") activitareaId: String,
         @Field("encounter_type") encounterType: String,
-        @Field("other_problem") other_problem: String,
+        @Field("other_problem") otherProblem: String,
         @Field("author") author: String,
-        @Field("created_at") created_at: String,
-        @Field("updated_at") updated_at: String,
-        @Field("updated_by") updated_by: String
+        @Field("created_at") createdAt: String,
+        @Field("updated_at") updatedAt: String,
+        @Field("updated_by") updatedBy: String
     ): Call<EncounterModel>
 
     @FormUrlEncoded
@@ -121,22 +120,22 @@ interface DjangoInterface {
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
         @Field("id") id: Long,
-        @Field("blood_disorder") blood_disorder: Boolean,
+        @Field("blood_disorder") bloodDisorder: Boolean,
         @Field("diabetes") diabetes: Boolean,
-        @Field("liver_problem") liver_problem: Boolean,
-        @Field("rheumatic_fever") rheumatic_fever: Boolean,
-        @Field("seizuers_or_epilepsy") seizuers_or_epilepsy: Boolean,
-        @Field("hepatitis_b_or_c") hepatitis_b_or_c: Boolean,
+        @Field("liver_problem") liverProblem: Boolean,
+        @Field("rheumatic_fever") rheumaticFever: Boolean,
+        @Field("seizuers_or_epilepsy") seizuersOrEpilepsy: Boolean,
+        @Field("hepatitis_b_or_c") hepatitisBOrC: Boolean,
         @Field("hiv") hiv: Boolean,
-        @Field("no_allergies") no_allergies: Boolean,
+        @Field("no_allergies") noAllergies: Boolean,
         @Field("allergies") allergies: String,
         @Field("other") other: String,
-        @Field("high_blood_pressure") high_blood_pressure: Boolean,
-        @Field("low_blood_pressure") low_blood_pressure: Boolean,
-        @Field("thyroid_disorder") thyroid_disorder: Boolean,
+        @Field("high_blood_pressure") highBloodPressure: Boolean,
+        @Field("low_blood_pressure") lowBloodPressure: Boolean,
+        @Field("thyroid_disorder") thyroidDisorder: Boolean,
         @Field("medications") medications: String,
-        @Field("no_underlying_medical_condition") no_underlying_medical_condition: Boolean,
-        @Field("not_taking_any_medications") not_taking_any_medications: Boolean
+        @Field("no_underlying_medical_condition") noUnderlyingMedicalCondition: Boolean,
+        @Field("not_taking_any_medications") notTakingAnyMedications: Boolean
     ): Call<HistoryModel>
 
     @FormUrlEncoded
@@ -145,22 +144,22 @@ interface DjangoInterface {
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
         @Field("id") id: Long,
-        @Field("blood_disorder") blood_disorder: Boolean,
+        @Field("blood_disorder") bloodDisorder: Boolean,
         @Field("diabetes") diabetes: Boolean,
-        @Field("liver_problem") liver_problem: Boolean,
-        @Field("rheumatic_fever") rheumatic_fever: Boolean,
-        @Field("seizuers_or_epilepsy") seizuers_or_epilepsy: Boolean,
-        @Field("hepatitis_b_or_c") hepatitis_b_or_c: Boolean,
+        @Field("liver_problem") liverProblem: Boolean,
+        @Field("rheumatic_fever") rheumaticFever: Boolean,
+        @Field("seizuers_or_epilepsy") seizuersOrEpilepsy: Boolean,
+        @Field("hepatitis_b_or_c") hepatitisBOrC: Boolean,
         @Field("hiv") hiv: Boolean,
-        @Field("no_allergies") no_allergies: Boolean,
+        @Field("no_allergies") noAllergies: Boolean,
         @Field("allergies") allergies: String,
         @Field("other") other: String,
-        @Field("high_blood_pressure") high_blood_pressure: Boolean,
-        @Field("low_blood_pressure") low_blood_pressure: Boolean,
-        @Field("thyroid_disorder") thyroid_disorder: Boolean,
+        @Field("high_blood_pressure") highBloodPressure: Boolean,
+        @Field("low_blood_pressure") lowBloodPressure: Boolean,
+        @Field("thyroid_disorder") thyroidDisorder: Boolean,
         @Field("medications") medications: String,
-        @Field("no_underlying_medical_condition") no_underlying_medical_condition: Boolean,
-        @Field("not_taking_any_medications") not_taking_any_medications: Boolean
+        @Field("no_underlying_medical_condition") noUnderlyingMedicalCondition: Boolean,
+        @Field("not_taking_any_medications") notTakingAnyMedications: Boolean
     ): Call<HistoryModel>
 
     @FormUrlEncoded
@@ -168,17 +167,17 @@ interface DjangoInterface {
     fun addScreening(
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
-        @Field("carries_risk") carries_risk: String,
-        @Field("decayed_primary_teeth") decayed_primary_teeth: Int,
-        @Field("decayed_permanent_teeth") decayed_permanent_teeth: Int,
-        @Field("cavity_permanent_posterior_teeth") cavity_permanent_posterior_teeth: Boolean,
-        @Field("cavity_permanent_anterior_teeth") cavity_permanent_anterior_teeth: Boolean,
-        @Field("need_sealant") need_sealant: Boolean,
-        @Field("reversible_pulpitis") reversible_pulpitis: Boolean,
-        @Field("need_art_filling") need_art_filling: Boolean,
-        @Field("need_extraction") need_extraction: Boolean,
-        @Field("need_sdf") need_sdf: Boolean,
-        @Field("active_infection") active_infection: Boolean
+        @Field("carries_risk") carriesRisk: String,
+        @Field("decayed_primary_teeth") decayedPrimaryTeeth: Int,
+        @Field("decayed_permanent_teeth") decayedPermanentTeeth: Int,
+        @Field("cavity_permanent_posterior_teeth") cavityPermanentPosteriorTeeth: Boolean,
+        @Field("cavity_permanent_anterior_teeth") cavityPermanentAnteriorTeeth: Boolean,
+        @Field("need_sealant") needSealant: Boolean,
+        @Field("reversible_pulpitis") reversiblePulpitis: Boolean,
+        @Field("need_art_filling") needArtFilling: Boolean,
+        @Field("need_extraction") needExtraction: Boolean,
+        @Field("need_sdf") needSDF: Boolean,
+        @Field("active_infection") activeInfection: Boolean
 
     ): Call<ScreeningModel>
 
@@ -187,17 +186,17 @@ interface DjangoInterface {
     fun updateScreening(
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
-        @Field("carries_risk") carries_risk: String,
-        @Field("decayed_primary_teeth") decayed_primary_teeth: Int,
-        @Field("decayed_permanent_teeth") decayed_permanent_teeth: Int,
-        @Field("cavity_permanent_anterior_teeth") cavity_permanent_anterior_teeth: Boolean,
-        @Field("cavity_permanent_posterior_teeth") cavity_permanent_posterior_teeth: Boolean,
-        @Field("reversible_pulpitis") reversible_pulpitis: Boolean,
-        @Field("need_art_filling") need_art_filling: Boolean,
-        @Field("need_sealant") need_sealant: Boolean,
-        @Field("need_sdf") need_sdf: Boolean,
-        @Field("need_extraction") need_extraction: Boolean,
-        @Field("active_infection") active_infection: Boolean
+        @Field("carries_risk") carriesRisk: String,
+        @Field("decayed_primary_teeth") decayedPrimaryTeeth: Int,
+        @Field("decayed_permanent_teeth") decayedPermanentTeeth: Int,
+        @Field("cavity_permanent_anterior_teeth") cavityPermanentAnteriorTeeth: Boolean,
+        @Field("cavity_permanent_posterior_teeth") cavityPermanentPosteriorTeeth: Boolean,
+        @Field("reversible_pulpitis") reversiblePulpitis: Boolean,
+        @Field("need_art_filling") needArtFilling: Boolean,
+        @Field("need_sealant") needSealant: Boolean,
+        @Field("need_sdf") needSDF: Boolean,
+        @Field("need_extraction") needExtraction: Boolean,
+        @Field("active_infection") activeInfection: Boolean
     ): Call<ScreeningModel>
 
     @FormUrlEncoded
@@ -267,9 +266,9 @@ interface DjangoInterface {
         @Field("tooth74") tooth74: String,
         @Field("tooth75") tooth75: String,
 
-        @Field("sdf_whole_mouth") sdf_whole_mouth: Boolean,
-        @Field("fv_applied") fv_applied: Boolean,
-        @Field("treatment_plan_complete") treatment_plan_complete: Boolean,
+        @Field("sdf_whole_mouth") sdfWholeMouth: Boolean,
+        @Field("fv_applied") fvApplied: Boolean,
+        @Field("treatment_plan_complete") treatmentPlanComplete: Boolean,
         @Field("notes") notes: String
     ): Call<TreatmentModel>
 
@@ -341,9 +340,9 @@ interface DjangoInterface {
         @Field("tooth74") tooth74: String,
         @Field("tooth75") tooth75: String,
 
-        @Field("sdf_whole_mouth") sdf_whole_mouth: Boolean,
-        @Field("fv_applied") fv_applied: Boolean,
-        @Field("treatment_plan_complete") treatment_plan_complete: Boolean,
+        @Field("sdf_whole_mouth") sdfWholeMouth: Boolean,
+        @Field("fv_applied") fvApplied: Boolean,
+        @Field("treatment_plan_complete") treatmentPlanComplete: Boolean,
         @Field("notes") notes: String
     ): Call<TreatmentModel>
 
@@ -353,12 +352,12 @@ interface DjangoInterface {
         @Header("Authorization") token: String,
         @Path("remoteId") encounterRemoteId: String,
         @Field("id") id: Long = 0,
-        @Field("no_referal") no_referral: Boolean,
-        @Field("health_post") health_post: Boolean,
+        @Field("no_referal") noReferral: Boolean,
+        @Field("health_post") healthPost: Boolean,
         @Field("hygienist") hygienist: Boolean,
         @Field("dentist") dentist: Boolean,
-        @Field("physician") general_physician: Boolean,
-        @Field("other") other_details: String
+        @Field("physician") generalPhysician: Boolean,
+        @Field("other") otherDetails: String
     ): Call<ReferralModel>
 
     @FormUrlEncoded
@@ -367,12 +366,12 @@ interface DjangoInterface {
         @Header("Authorization") token: String,
         @Path("encounterId") encounterId: String,
         @Field("id") id: Long,
-        @Field("no_referral") no_referral: Boolean,
-        @Field("health_post") health_post: Boolean,
+        @Field("no_referal") noReferral: Boolean,
+        @Field("health_post") healthPost: Boolean,
         @Field("dentist") dentist: Boolean,
-        @Field("general_physician") general_physician: Boolean,
+        @Field("general_physician") generalPhysician: Boolean,
         @Field("hygienist") hygienist: Boolean,
-        @Field("other_details") other_details: String
+        @Field("other_details") otherDetails: String
     ): Call<ReferralModel>
 
     @GET("patients")
@@ -440,7 +439,7 @@ interface DjangoInterface {
     ): Call<FlagResponse>
 
     @GET("modifydelete")
-    fun listFlagedData(
+    fun listFlaggedData(
         @Header("Authorization")
         token: String
     ): Call<List<FlagModifyDelete>>

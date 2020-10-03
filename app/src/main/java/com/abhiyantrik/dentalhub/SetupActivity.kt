@@ -13,21 +13,17 @@ import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.District
 import com.abhiyantrik.dentalhub.models.Profile
-import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.DownloadPatientWorker
 import com.abhiyantrik.dentalhub.workers.DownloadUsersWorker
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
-import com.abhiyantrik.dentalhub.models.Patient as PatientModel
 
 class SetupActivity : AppCompatActivity() {
-
-    private val TAG = "SetupActivity"
     private lateinit var tvMessage: TextView
 
     private lateinit var districtsBox: Box<com.abhiyantrik.dentalhub.entities.District>
@@ -56,6 +52,7 @@ class SetupActivity : AppCompatActivity() {
         finish()
     }
 
+    @AddTrace(name = "loadProfileFromSetupActivity", enabled = true /* optional */)
     private fun loadProfile() {
         Log.d(TAG, "startSync")
 
@@ -122,9 +119,9 @@ class SetupActivity : AppCompatActivity() {
         })
     }
 
+    @AddTrace(name = "loadDataFromSetupActivity", enabled = true /* optional */)
     private fun loadData() {
-
-        Log.d(TAG, "listAddressess()")
+        Log.d(TAG, "loadData()")
         tvMessage.append("Loading addresses...\n")
         val panelService = DjangoInterface.create(this)
         val call = panelService.listAddresses()
@@ -132,6 +129,7 @@ class SetupActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<District>>, t: Throwable) {
                 Log.d(TAG, "onFailure()")
                 tvMessage.append("Failed to load addresses \n")
+                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listAddresses() " + t.message.toString())
                 FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Failed to load addresses")
                 Log.d(TAG, t.toString())
                 logout()
@@ -170,6 +168,7 @@ class SetupActivity : AppCompatActivity() {
         })
     }
 
+    @AddTrace(name = "storeDistrictsFromSetupActivity", enabled = true /* optional */)
     private fun storeDistricts(allDistricts: List<District>) {
         if(allDistricts.isEmpty()){
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No districts loaded to add")
@@ -226,5 +225,10 @@ class SetupActivity : AppCompatActivity() {
         wardsBox = ObjectBox.boxStore.boxFor(Ward::class.java)
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
 
+    }
+
+    companion object{
+
+        const val TAG = "SetupActivity"
     }
 }

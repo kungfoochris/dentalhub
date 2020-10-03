@@ -19,7 +19,6 @@ import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
 import com.google.firebase.perf.metrics.AddTrace
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
-import java.lang.Exception
 import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit
 
@@ -46,7 +45,6 @@ class AddPatientActivity : AppCompatActivity() {
 
     private lateinit var context: Context
     private var patient: Patient? = null
-    private val TAG = "AddPatientActivity"
     private var action = "new"
     private var patientId: Long = 0
 
@@ -170,9 +168,7 @@ class AddPatientActivity : AppCompatActivity() {
                 } else {
                     setupWards(0)
                 }
-
             }
-
         }
 
         btnAddPatient.setOnClickListener {
@@ -189,8 +185,8 @@ class AddPatientActivity : AppCompatActivity() {
     private fun setupWards(selectedWard: Int) {
         if (allMunicipalities.size > 0) {
             val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
-            Log.d("Selected Municipality: ", spinnerMunicipality.selectedItem.toString())
-            Log.d("Municipality Position: ", spinnerMunicipality.selectedItemPosition.toString())
+            Log.d(TAG, "Selected Municipality: "+ spinnerMunicipality.selectedItem.toString())
+            Log.d(TAG, "Municipality Position: " + spinnerMunicipality.selectedItemPosition.toString())
             var selectedWardIndex = 0
 
             val dbWards =
@@ -411,7 +407,6 @@ class AddPatientActivity : AppCompatActivity() {
             tempPatient.updated_by =
                 DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
             return tempPatient
-
         }
     }
 
@@ -466,18 +461,18 @@ class AddPatientActivity : AppCompatActivity() {
         val phone = etPhone.text.toString()
 
         if (spinnerDistrict.selectedItem == null) {
-            tvErrorMessage.text = "District is not selected."
+            tvErrorMessage.text = getString(R.string.not_selected, "District")
             tvErrorMessage.visibility = View.VISIBLE
         }
 
         if (spinnerMunicipality.selectedItem == null) {
-            tvErrorMessage.text = "Municipality is not selected."
+            tvErrorMessage.text = getString(R.string.not_selected,"Municipality")
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
 
         if (spinnerWard.selectedItem == null) {
-            tvErrorMessage.text = "Ward is not selected."
+            tvErrorMessage.text = getString(R.string.not_selected, "Ward")
             tvErrorMessage.visibility = View.VISIBLE
             return false
         }
@@ -524,4 +519,7 @@ class AddPatientActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    companion object{
+        const val TAG = "AddPatientActivity"
+    }
 }

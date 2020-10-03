@@ -75,12 +75,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var treatmentBox: Box<Treatment>
     private lateinit var referralBox: Box<Referral>
 
-
     private lateinit var allPatientRecall: MutableList<Patient>
 
-    private val TAG = "MainActivity"
     private var fabButtonPressTime = false
-
 
     @AddTrace(name = "onCreateMainActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         tvActivity.text = DentalApp.activity_name
     }
 
+    @AddTrace(name = "listRecallPatients", enabled = true /* optional */)
     private fun listRecallPatients() {
         println("called once.")
         val c = Calendar.getInstance().time
@@ -268,10 +266,10 @@ class MainActivity : AppCompatActivity() {
                             val unuploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().find()
                             val unuploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().find()
 
-                            Log.d("Fab sync History", unuploadedHistory.toString())
-                            Log.d("Fab sync eachScreening", unuploadedScreening.toString())
-                            Log.d("Fab sync eachTreatment", unuploadedTreatment.toString())
-                            Log.d("Fab sync eachReferral", unuploadedReferral.toString())
+                            Log.d(TAG, "Fab sync History " +  unuploadedHistory.toString())
+                            Log.d(TAG, "Fab sync eachScreening "+ unuploadedScreening.toString())
+                            Log.d(TAG, "Fab sync eachTreatment " + unuploadedTreatment.toString())
+                            Log.d(TAG, "Fab sync eachReferral " + unuploadedReferral.toString())
 
                             if (unuploadedHistory.isNotEmpty()) {
                                 Log.d("Fab sync History", unuploadedHistory[0].id.toString())
@@ -326,8 +324,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        val handler = Handler()
+        val handler = Handler(Looper.getMainLooper())
         val run = object : Runnable {
             override fun run() {
                 checkAllUpdated()
@@ -343,7 +340,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(context, LoginActivity::class.java))
         finish()
     }
-
 
     private fun checkAllUpdated() {
         val patient = patientsBox.query().equal(Patient_.uploaded, false).build().find()
@@ -365,7 +361,6 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "Left to upload patient details.")
             fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.red_A200))
         }
-
     }
 
 
@@ -376,7 +371,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             listPatientsFromLocalDB()
         }
-
     }
 
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
@@ -389,6 +383,7 @@ class MainActivity : AppCompatActivity() {
             setupAdapter(allPatients)
         } catch (e: DbException) {
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Log.d("DBException", e.printStackTrace().toString())
         }
 
@@ -418,7 +413,7 @@ class MainActivity : AppCompatActivity() {
                         builder.setMessage("Are you want to remove recall?")
 
                         // Set a positive button and its click listener on alert dialog
-                        builder.setPositiveButton("YES"){dialog, which ->
+                        builder.setPositiveButton("YES"){ _, _ ->
                             // Do something when user press the positive button
                             Toast.makeText(applicationContext,"Patient recall is removed.",Toast.LENGTH_SHORT).show()
                             patient.recall_date = ""
@@ -429,8 +424,8 @@ class MainActivity : AppCompatActivity() {
 
 
                         // Display a negative button on alert dialog
-                        builder.setNegativeButton("No"){dialog,which ->
-//                            Toast.makeText(applicationContext,"You are not agree.",Toast.LENGTH_SHORT).show()
+                        builder.setNegativeButton("No"){ _, _ ->
+                                // Toast.makeText(applicationContext,"You are not agree.",Toast.LENGTH_SHORT).show()
                         }
 
                         // Finally, make the alert dialog using builder
@@ -454,7 +449,7 @@ class MainActivity : AppCompatActivity() {
                                 patientsBox.put(patient)
 //                                callBtn.setBackgroundColor(resources.getColor(R.color.colorART))
                             }else{
-                                Toast.makeText(context, getString(R.string.telephony_serivce_unavailable), Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, getString(R.string.telephony_service_unavailable), Toast.LENGTH_LONG).show()
                             }
                         } else {
                             Toast.makeText(context, "Already called the patient.", Toast.LENGTH_LONG).show()
@@ -519,6 +514,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(addPatientActivityIntent)
     }
 
+    @AddTrace(name = "displayDelayDialogFromMainActivity", enabled = true /* optional */)
     private fun displayDelayDialog(patient: Patient) {
         // delay recall of patient
         val grpName = arrayOf(
@@ -540,11 +536,12 @@ class MainActivity : AppCompatActivity() {
                 val tempPatient =
                     patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
 
-                var recallDate = ""
-                try {
-                    recallDate = tempPatient.recall_date!!
+                var recallDate: String
+                recallDate = try {
+                    tempPatient.recall_date!!
                 }catch(e: NullPointerException){
-                    recallDate = ""
+                    FirebaseCrashlytics.getInstance().recordException(e)
+                    ""
                 }
                 when (item) {
                     0 -> {
@@ -593,6 +590,9 @@ class MainActivity : AppCompatActivity() {
             })
         val alert = delayChooser.create()
         alert.show()
+    }
+    companion object{
+        const val TAG = "MainActivity"
     }
 
 }

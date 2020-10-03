@@ -14,14 +14,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.adapters.GeographyAdapter
-import com.abhiyantrik.dentalhub.entities.*
+import com.abhiyantrik.dentalhub.entities.District
+import com.abhiyantrik.dentalhub.entities.Municipality
+import com.abhiyantrik.dentalhub.entities.Ward
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.abhiyantrik.dentalhub.models.Geography as GeographyModel
 import com.abhiyantrik.dentalhub.utils.RecyclerViewItemSeparator
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Response
+import com.abhiyantrik.dentalhub.models.Geography as GeographyModel
 
 
 class LocationSelectorActivity : AppCompatActivity() {
@@ -30,7 +32,6 @@ class LocationSelectorActivity : AppCompatActivity() {
     private var permissionsToRequest: java.util.ArrayList<String>? = null
     private val permissionsRejected = java.util.ArrayList<String>()
     private val permissions = java.util.ArrayList<String>()
-
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnLogout: Button
@@ -42,8 +43,6 @@ class LocationSelectorActivity : AppCompatActivity() {
     var activeGeographies = mutableListOf<GeographyModel>()
 
     private lateinit var geographyAdapter: GeographyAdapter
-    private val TAG = "selectorActivity"
-
 
     private lateinit var districtsBox: Box<District>
     private lateinit var municipalitiesBox: Box<Municipality>
@@ -85,7 +84,6 @@ class LocationSelectorActivity : AppCompatActivity() {
         val divider = RecyclerViewItemSeparator(20)
         recyclerView.addItemDecoration(divider)
 
-        listAddressess()
         loadGeographyAPI()
 
         btnLogout.setOnClickListener {
@@ -103,7 +101,7 @@ class LocationSelectorActivity : AppCompatActivity() {
         call.enqueue(object : retrofit2.Callback<List<GeographyModel>> {
             override fun onFailure(call: Call<List<GeographyModel>>, t: Throwable) {
                 FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " loadGeographyAPI " +t.message.toString())
-                Log.d(TAG, "onFaliure()")
+                Log.d(TAG, "onFailure()")
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
                 } else {
@@ -141,11 +139,6 @@ class LocationSelectorActivity : AppCompatActivity() {
         })
     }
 
-    private fun listAddressess() {
-
-    }
-
-
     private fun setupAdapter() {
 
         geographyAdapter = GeographyAdapter(
@@ -182,7 +175,6 @@ class LocationSelectorActivity : AppCompatActivity() {
                 result.add(perm)
             }
         }
-
         return result
     }
 
@@ -190,9 +182,7 @@ class LocationSelectorActivity : AppCompatActivity() {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
         } else true
-
     }
-
 
     companion object {
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
@@ -200,5 +190,6 @@ class LocationSelectorActivity : AppCompatActivity() {
         private const val FASTEST_INTERVAL: Long = 5000 // = 5 seconds
         // integer for permissions results request
         private const val ALL_PERMISSIONS_RESULT = 1011
+        const val TAG = "LocationSelectorAct"
     }
 }
