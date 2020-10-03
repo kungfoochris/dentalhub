@@ -12,6 +12,7 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Patient
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
@@ -29,10 +30,12 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "downloadPatientsFromDownloadPatientWorker", enabled = true /* optional */)
     private fun downloadPatients() {
         DentalApp.displayNotification(
             applicationContext,
@@ -118,7 +121,6 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                                 patientEntity.updated_by = patient.updated_by
                             }
 
-
                             patientsBox.put(patientEntity)
                             DentalApp.displayNotification(
                                 applicationContext,
@@ -140,7 +142,7 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() Failed to download patients.")
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() HTTP Status code "+response.code())
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() "+response.message())
-            Log.d("downloadPatients", response.message())
+            Log.d(TAG,"downloadPatients " + response.message())
         }
 
         DentalApp.cancelNotification(applicationContext, 1001)
@@ -156,5 +158,8 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                 TimeUnit.MILLISECONDS
             ).build()
         WorkManager.getInstance(applicationContext).enqueue(downloadEncounterWorkerRequest)
+    }
+    companion object {
+        const val TAG = "DownloadPatientWorker"
     }
 }

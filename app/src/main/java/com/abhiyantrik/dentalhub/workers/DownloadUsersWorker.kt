@@ -7,15 +7,12 @@ import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
-import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.entities.User
 import com.abhiyantrik.dentalhub.entities.User_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
-import retrofit2.Call
-import retrofit2.Callback
-import java.lang.Exception
 import com.abhiyantrik.dentalhub.models.User as UserModel
 
 class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -30,10 +27,12 @@ class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(c
             return Result.success()
         }catch (e: Exception){
             Log.d("Exception", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "downloadUsersFromDownloadUsersWorker", enabled = true /* optional */)
     private fun downloadUsers() {
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")

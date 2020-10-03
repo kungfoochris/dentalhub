@@ -2,7 +2,8 @@ package com.abhiyantrik.dentalhub.workers
 
 import android.content.Context
 import android.util.Log
-import androidx.work.*
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
@@ -12,6 +13,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,10 +45,12 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             Result.success()
         } catch (e: Exception) {
             Log.d(TAG, e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "saveEncounterToServerFromUploadIndividualEncounterWorker", enabled = true /* optional */)
     private fun saveEncounterToServer(
         remoteId: String,
         dbEncounterEntity: Encounter?

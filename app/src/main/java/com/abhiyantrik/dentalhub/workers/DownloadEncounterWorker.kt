@@ -12,6 +12,7 @@ import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.Encounter
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 
 class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
@@ -45,10 +46,12 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "downloadEncountersFromDownloadEncounterWorker", enabled = true /* optional */)
     private fun downloadEncounters(patientId: String) {
         DentalApp.displayNotification(
             applicationContext,

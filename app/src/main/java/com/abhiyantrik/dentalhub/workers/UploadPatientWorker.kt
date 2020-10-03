@@ -2,19 +2,20 @@ package com.abhiyantrik.dentalhub.workers
 
 import android.content.Context
 import android.util.Log
-import androidx.work.*
+import androidx.work.Data
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Encounter
-import com.abhiyantrik.dentalhub.entities.Encounter_
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
-import java.util.concurrent.TimeUnit
 
 class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
@@ -37,10 +38,12 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
 
         } catch (e: Exception) {
             Log.d("UploadPatientWorkerEx", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "savePatientToServerFromUploadPatientWorker", enabled = true /* optional */)
     private fun savePatientToServer(patient: Patient) {
         DentalApp.displayNotification(
             applicationContext,

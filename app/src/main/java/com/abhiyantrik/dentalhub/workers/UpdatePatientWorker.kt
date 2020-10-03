@@ -13,6 +13,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import java.util.concurrent.TimeUnit
 
@@ -40,10 +41,12 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
             }
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "savePatientToServerFromUpdatePatientWorker", enabled = true /* optional */)
     private fun savePatientToServer(patient: Patient): Boolean {
         var responseStatus = false
         DentalApp.displayNotification(

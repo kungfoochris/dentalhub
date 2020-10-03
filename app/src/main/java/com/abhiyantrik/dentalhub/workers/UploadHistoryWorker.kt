@@ -11,6 +11,7 @@ import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 
@@ -35,10 +36,12 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
             Result.success()
         } catch (e: Exception) {
             Log.d("Exception", e.printStackTrace().toString())
+            FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
     }
 
+    @AddTrace(name = "saveHistoryToServerFromUploadHistoryWorker", enabled = true /* optional */)
     private fun saveHistoryToServer(encounter: Encounter?, history: History) {
         DentalApp.displayNotification(
             applicationContext,
