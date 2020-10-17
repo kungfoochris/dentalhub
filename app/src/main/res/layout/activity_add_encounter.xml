@@ -5,8 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-    <com.creageek.segmentedbutton.SegmentedButton
-            android:layout_marginTop="4dp"
+    <LinearLayout
             android:id="@+id/tabs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -14,26 +13,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:orientation="horizontal"
-            app:segmentColorChecked="@color/red_500"
-            app:rippleColorChecked="@color/red_500"
+            android:weightSum="4"
             >
-        <RadioButton
-                android:layout_width="wrap_content"
+
+        <Button
+                android:id="@+id/btnHistory"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/history"/>
-        <RadioButton
-                android:layout_width="wrap_content"
+                android:minHeight="10dp"
+                android:text="@string/history"
+                android:textAllCaps="false"
+                android:layout_weight="1"
+                />
+
+        <Button
+                android:id="@+id/btnScreening"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/screening"/>
-        <RadioButton
-                android:layout_width="wrap_content"
+                android:minHeight="10dp"
+                android:text="@string/screening"
+                android:textAllCaps="false"
+                android:layout_weight="1"
+                />
+
+        <Button
+                android:id="@+id/btnTreatment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/treatment"/>
-        <RadioButton
-                android:layout_width="wrap_content"
+                android:minHeight="10dp"
+                android:text="@string/treatment"
+                android:textAllCaps="false"
+                android:layout_weight="1"
+                />
+        <Button
+                android:id="@+id/btnReferral"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/referral"/>
-    </com.creageek.segmentedbutton.SegmentedButton>
+                android:minHeight="10dp"
+                android:text="@string/referral"
+                android:textAllCaps="false"
+                android:layout_weight="1"
+                />
+
+    </LinearLayout>
+
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
@@ -42,7 +65,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/tickerFragment"
-            android:paddingTop="64dp"
+        android:paddingTop="48dp"
+
              />
     <fragment
             android:id="@+id/tickerFragment"

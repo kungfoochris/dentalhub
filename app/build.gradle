@@ -88,8 +88,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.5.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 
-    implementation 'com.github.creageek:segmented:1.0.0'
-
     // For logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
 

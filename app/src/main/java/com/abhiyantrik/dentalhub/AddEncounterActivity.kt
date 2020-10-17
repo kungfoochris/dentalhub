@@ -5,11 +5,13 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager.widget.ViewPager
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
@@ -23,7 +25,6 @@ import com.abhiyantrik.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.*
-import com.creageek.segmentedbutton.SegmentedButton
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
@@ -39,9 +40,12 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     HistoryFormCommunicator,
     ScreeningFormCommunicator, TreatmentFormCommunicator, ReferralFormCommunicator {
 
-    private lateinit var segmented: SegmentedButton
     private lateinit var pager: ViewPager
     private lateinit var patient: Patient
+    private lateinit var btnHistory: Button
+    private lateinit var btnScreening: Button
+    private lateinit var btnTreatment: Button
+    private lateinit var btnReferral:Button
 
     private lateinit var patientBox: Box<Patient>
     private lateinit var encounterBox: Box<Encounter>
@@ -153,12 +157,36 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private fun initUI() {
 
         pager = findViewById(R.id.pager)
-        segmented = findViewById(R.id.tabs)
-        segmented.initialCheckedIndex = 0
-
+        btnHistory = findViewById(R.id.btnHistory)
+        btnScreening = findViewById(R.id.btnScreening)
+        btnTreatment = findViewById(R.id.btnTreatment)
+        btnReferral = findViewById(R.id.btnReferral)
+        pager.beginFakeDrag()
+        updateIndex(0)
         val fragmentAdapter = FormPageAdapter(supportFragmentManager)
         pager.adapter = fragmentAdapter
 
+    }
+
+    private fun updateIndex(i: Int) {
+        btnHistory.background = ResourcesCompat.getDrawable(resources, R.drawable.default_tab_color, null)
+        btnScreening.background = ResourcesCompat.getDrawable(resources, R.drawable.default_tab_color, null)
+        btnTreatment.background = ResourcesCompat.getDrawable(resources, R.drawable.default_tab_color, null)
+        btnReferral.background = ResourcesCompat.getDrawable(resources, R.drawable.default_tab_color, null)
+        when(i){
+            0 -> {
+                btnHistory.background = ResourcesCompat.getDrawable(resources, R.drawable.selected_tab_color, null)
+            }
+            1 -> {
+                btnScreening.background = ResourcesCompat.getDrawable(resources, R.drawable.selected_tab_color, null)
+            }
+            2 -> {
+                btnTreatment.background = ResourcesCompat.getDrawable(resources, R.drawable.selected_tab_color, null)
+        }
+            3-> {
+                btnReferral.background = ResourcesCompat.getDrawable(resources, R.drawable.selected_tab_color, null)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -469,7 +497,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             pager.currentItem -= 1
         }
         Log.d(TAG, "Current Index ${pager.currentItem}")
-        segmented.initialCheckedIndex = pager.currentItem
+        updateIndex(pager.currentItem)
 
     }
 
@@ -480,8 +508,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         } else {
             pager.currentItem += 1
         }
-        segmented.initialCheckedIndex = pager.currentItem
         Log.d(TAG, "Current Index ${pager.currentItem}")
+        updateIndex(pager.currentItem)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
