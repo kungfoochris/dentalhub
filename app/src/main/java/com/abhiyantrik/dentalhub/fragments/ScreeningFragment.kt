@@ -105,8 +105,8 @@ class ScreeningFragment : Fragment() {
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
             val carriesRisk = spinnerRisk.selectedItem.toString()
-            val noOfdecayedPrimaryTeeth = spinnerNoOfDecayedPrimaryTeeth.selectedItem.toString()
-            val noOfdecayedPermanentTeeth = spinnerNoOfDecayedPermanentTeeth.selectedItem.toString()
+            val noOfDecayedPrimaryTeeth = spinnerNoOfDecayedPrimaryTeeth.selectedItem.toString()
+            val noOfDecayedPermanentTeeth = spinnerNoOfDecayedPermanentTeeth.selectedItem.toString()
             val cavityPermanentTooth = checkBoxCavityPermanentTooth.isChecked
             val cavityPermanentAnterior = checkBoxCavityPermanentAnterior.isChecked
             val reversiblePulpitis = checkBoxReversiblePulpitis.isChecked
@@ -119,8 +119,8 @@ class ScreeningFragment : Fragment() {
 
             screeningFormCommunicator.updateScreening(
                 carriesRisk,
-                noOfdecayedPrimaryTeeth,
-                noOfdecayedPermanentTeeth,
+                noOfDecayedPrimaryTeeth,
+                noOfDecayedPermanentTeeth,
                 cavityPermanentTooth,
                 cavityPermanentAnterior,
                 reversiblePulpitis,
@@ -160,11 +160,11 @@ class ScreeningFragment : Fragment() {
                 encounter.id
             ).orderDesc(Screening_.id).build().findFirst()!!
 
-            if (!screening.carries_risk.isNullOrEmpty()) {
+            if (screening.carries_risk.isNotEmpty()) {
                 val riskValue = resources.getStringArray(R.array.carries_risk).toList()
-                val indexofRisk = riskValue.indexOf(screening.carries_risk)
-                println("Carrier rist index is $indexofRisk and the value is ${screening.carries_risk}")
-                spinnerRisk.setSelection(indexofRisk)
+                val indexOfRisk = riskValue.indexOf(screening.carries_risk)
+                println("Carrier risk index is $indexOfRisk and the value is ${screening.carries_risk}")
+                spinnerRisk.setSelection(indexOfRisk)
             }
 
             if (screening.decayed_primary_teeth != 0) spinnerNoOfDecayedPrimaryTeeth
@@ -182,7 +182,6 @@ class ScreeningFragment : Fragment() {
             if (screening.need_sdf) checkBoxNeedSDF.isChecked = true
             if (screening.need_extraction) checkBoxNeedExtraction.isChecked = true
             if (screening.active_infection) checkBoxActiveInfection.isChecked = true
-
         }
     }
 
