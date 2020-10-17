@@ -362,13 +362,13 @@ class AsyncActivity : AppCompatActivity() {
             screening.carries_risk,
             screening.decayed_primary_teeth,
             screening.decayed_permanent_teeth,
-            screening.cavity_permanent_anterior_teeth,
             screening.cavity_permanent_posterior_teeth,
+            screening.cavity_permanent_anterior_teeth,
+            screening.need_sealant,
             screening.reversible_pulpitis,
             screening.need_art_filling,
-            screening.need_sealant,
-            screening.need_sdf,
             screening.need_extraction,
+            screening.need_sdf,
             screening.active_infection
         )
         val response = call.execute()

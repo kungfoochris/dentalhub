@@ -101,22 +101,22 @@ class ScreeningFragment : Fragment() {
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
             val carriesRisk = spinnerRisk.selectedItem.toString()
-            val noOfdecayedPrimaryTeeth = spinnerNoOfDecayedPrimaryTeeth.selectedItem.toString()
-            val noOfdecayedPermanentTeeth = spinnerNoOfDecayedPermanentTeeth.selectedItem.toString()
+            val noOfDecayedPrimaryTeeth = spinnerNoOfDecayedPrimaryTeeth.selectedItem.toString()
+            val noOfDecayedPermanentTeeth = spinnerNoOfDecayedPermanentTeeth.selectedItem.toString()
             val cavityPermanentTooth = checkBoxCavityPermanentTooth.isChecked
             val cavityPermanentAnterior = checkBoxCavityPermanentAnterior.isChecked
             val reversiblePulpitis = checkBoxReversiblePulpitis.isChecked
             val needARTFilling = checkBoxNeedARTFilling.isChecked
             val needSealant = checkBoxNeedSealant.isChecked
             val needSDF = checkBoxNeedSDF.isChecked
-            val needExtraction = checkBoxNeedSDF.isChecked
+            val needExtraction = checkBoxNeedExtraction.isChecked
             val activeInfection = checkBoxActiveInfection.isChecked
 
 
             screeningFormCommunicator.updateScreening(
                 carriesRisk,
-                noOfdecayedPrimaryTeeth,
-                noOfdecayedPermanentTeeth,
+                noOfDecayedPrimaryTeeth,
+                noOfDecayedPermanentTeeth,
                 cavityPermanentTooth,
                 cavityPermanentAnterior,
                 reversiblePulpitis,
@@ -178,7 +178,6 @@ class ScreeningFragment : Fragment() {
             if (screening.need_sdf) checkBoxNeedSDF.isChecked = true
             if (screening.need_extraction) checkBoxNeedExtraction.isChecked = true
             if (screening.active_infection) checkBoxActiveInfection.isChecked = true
-
         }
     }
 

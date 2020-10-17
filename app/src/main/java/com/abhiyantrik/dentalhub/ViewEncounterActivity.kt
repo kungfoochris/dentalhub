@@ -435,6 +435,9 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideBoolean(referral.dentist, tvDentistTitle, tvDentist)
         hideBoolean(referral.general_physician, tvGeneralPhysicianTitle, tvGeneralPhysician)
         hideString(referral.other_details, tvOtherDetailsTitle, tvOtherDetails)
+        if(referral.other_details.isNotEmpty()){
+            tvOtherDetails.text = referral.other_details
+        }
 
     }
 
