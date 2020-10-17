@@ -23,7 +23,7 @@ import com.abhiyantrik.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.*
-import com.google.android.material.tabs.TabLayout
+import com.creageek.segmentedbutton.SegmentedButton
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
@@ -31,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 
@@ -38,9 +39,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     HistoryFormCommunicator,
     ScreeningFormCommunicator, TreatmentFormCommunicator, ReferralFormCommunicator {
 
-
+    private lateinit var segmented: SegmentedButton
     private lateinit var pager: ViewPager
-    private lateinit var tabLayout: TabLayout
     private lateinit var patient: Patient
 
     private lateinit var patientBox: Box<Patient>
@@ -88,7 +88,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
         encounterFlagId = intent.getLongExtra("MODIFY_DELETE", "0".toLong())
-        Log.d("encounterId", encounterId.toString())
+        Timber.d("Encounter ID = $encounterId")
 
         if (encounterId == "0".toLong()) {
             action = "new"
@@ -153,15 +153,12 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     private fun initUI() {
 
         pager = findViewById(R.id.pager)
-        tabLayout = findViewById(R.id.tabLayout)
-
-        pager.beginFakeDrag()
-        val touchableList = tabLayout.touchables
-        touchableList?.forEach { it.isEnabled = false }
+        segmented = findViewById(R.id.tabs)
+        segmented.initialCheckedIndex = 0
 
         val fragmentAdapter = FormPageAdapter(supportFragmentManager)
         pager.adapter = fragmentAdapter
-        tabLayout.setupWithViewPager(pager)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -172,7 +169,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                Log.d("onOptionsItemSelected", "Back button pressed.")
+                Timber.d("onOptionsItemSelected() Back button pressed.")
                 saveEncounter()
             }
             R.id.viewPatient -> {
@@ -192,9 +189,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         val tvFirstNameView = view.findViewById<TextView>(R.id.tvFirstNameView)
         val tvMiddleNameView = view.findViewById<TextView>(R.id.tvMiddleNameView)
         val tvLastNameView = view.findViewById<TextView>(R.id.tvLastNameView)
-        val tvGenderpopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
-        val tvDateofBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
-        val tvPhonepopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
+        val tvGenderPopupView = view.findViewById<TextView>(R.id.tvGenderpopupView)
+        val tvDateOfBirthView = view.findViewById<TextView>(R.id.tvDateofBirthView)
+        val tvPhonePopupView = view.findViewById<TextView>(R.id.tvPhonepopupView)
         val tvWardView = view.findViewById<TextView>(R.id.tvWardView)
         val tvMunicipalityView = view.findViewById<TextView>(R.id.tvMunicipalityView)
         val tvDistrictView = view.findViewById<TextView>(R.id.tvDistrictView)
@@ -205,9 +202,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         tvFirstNameView.text = patient.first_name
         tvMiddleNameView.text = patient.middle_name
         tvLastNameView.text = patient.last_name
-        tvGenderpopupView.text = patient.gender.capitalize()
-        tvDateofBirthView.text = DateHelper.formatNepaliDate(context, patient.dob)
-        tvPhonepopupView.text = patient.phone
+        tvGenderPopupView.text = patient.gender.capitalize()
+        tvDateOfBirthView.text = DateHelper.formatNepaliDate(context, patient.dob)
+        tvPhonePopupView.text = patient.phone
         tvWardView.text = patient.wardNumber()
         tvMunicipalityView.text = patient.municipalityName()
         tvDistrictView.text = patient.districtName()
@@ -243,11 +240,22 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     }
 
     override fun updateHistory(
-        bloodDisorders: Boolean, diabetes: Boolean, liverProblem: Boolean,
-        rheumaticFever: Boolean, seizuresOrEpilepsy: Boolean, hepatitisBOrC: Boolean,
-        hiv: Boolean, other: String,highBloodPressure: Boolean,
-        lowBloodPressure: Boolean, thyroidDisorder: Boolean, noUnderlyingMedicalCondition: Boolean,
-        medications: String, notTakingAnyMedications: Boolean, noAllergies: Boolean, allergies: String
+        bloodDisorders: Boolean,
+        diabetes: Boolean,
+        liverProblem: Boolean,
+        rheumaticFever: Boolean,
+        seizuresOrEpilepsy: Boolean,
+        hepatitisBOrC: Boolean,
+        hiv: Boolean,
+        other: String,
+        highBloodPressure: Boolean,
+        lowBloodPressure: Boolean,
+        thyroidDisorder: Boolean,
+        noUnderlyingMedicalCondition: Boolean,
+        medications: String,
+        notTakingAnyMedications: Boolean,
+        noAllergies: Boolean,
+        allergies: String
     ) {
 
         history =
@@ -460,6 +468,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         } else {
             pager.currentItem -= 1
         }
+        Log.d(TAG, "Current Index ${pager.currentItem}")
+        segmented.initialCheckedIndex = pager.currentItem
 
     }
 
@@ -470,6 +480,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         } else {
             pager.currentItem += 1
         }
+        segmented.initialCheckedIndex = pager.currentItem
+        Log.d(TAG, "Current Index ${pager.currentItem}")
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -481,7 +493,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         return super.onKeyDown(keyCode, event)
     }
 
-    fun saveEncounter() {
+    private fun saveEncounter() {
 
         val data = Data.Builder().putLong("ENCOUNTER_ID", encounter.id)
             .putLong("PATIENT_ID", patient.id)
@@ -520,8 +532,17 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                         ).build()
 
 
-                WorkManager.getInstance(applicationContext).beginWith(uploadIndividualEncounterWorkerRequest)
-                    .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
+                WorkManager.getInstance(applicationContext).beginWith(
+                    uploadIndividualEncounterWorkerRequest
+                )
+                    .then(
+                        listOf(
+                            uploadHistoryWorkerRequest,
+                            uploadScreeningWorkerRequest,
+                            uploadTreatmentWorkerRequest,
+                            uploadReferralWorkerRequest
+                        )
+                    )
                     .enqueue()
             }
             "edit" -> {
@@ -534,8 +555,17 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                             TimeUnit.MILLISECONDS
                         ).build()
 
-                WorkManager.getInstance(applicationContext).beginWith(updateIndividualEncounterWorkerRequest)
-                    .then(listOf(uploadHistoryWorkerRequest, uploadScreeningWorkerRequest, uploadTreatmentWorkerRequest, uploadReferralWorkerRequest))
+                WorkManager.getInstance(applicationContext).beginWith(
+                    updateIndividualEncounterWorkerRequest
+                )
+                    .then(
+                        listOf(
+                            uploadHistoryWorkerRequest,
+                            uploadScreeningWorkerRequest,
+                            uploadTreatmentWorkerRequest,
+                            uploadReferralWorkerRequest
+                        )
+                    )
                     .enqueue()
 
                 Log.d("FlagTest", "Edit found.")
@@ -543,7 +573,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                     Log.d("FlagTest", "Flag Id found as ${encounterFlagId}.")
                     try {
                         GlobalScope.launch(Dispatchers.IO) {
-                            val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
+                            val token = DentalApp.readFromPreference(
+                                context,
+                                Constants.PREF_AUTH_TOKEN,
+                                ""
+                            )
                             val panelService = DjangoInterface.create(context)
                             val call = panelService.changeFlagToModified(
                                 "JWT $token",
@@ -555,20 +589,35 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                                 if (response.code() == 200) {
                                     Log.d("FlagTest", "Encounter modified successfully.")
                                     withContext(Dispatchers.Main) {
-                                        Toast.makeText(this@AddEncounterActivity, "Encounter modified successfully.", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            this@AddEncounterActivity,
+                                            "Encounter modified successfully.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 } else {
                                     Log.d("FlagTest", "Encounter modify failed.")
-                                    Toast.makeText(context, "Encounter modify failed.", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Encounter modify failed.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                         }
                     } catch (e: Exception) {
                         FirebaseCrashlytics.getInstance().recordException(e)
-                        Toast.makeText(context, "IMPORTANT: Encounter modify failed.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "IMPORTANT: Encounter modify failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
+    }
+    companion object{
+         val TAG: String = AddEncounterActivity::class.java.simpleName
     }
 }

@@ -5,28 +5,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-<LinearLayout
-        android:id="@+id/ll"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-
-    <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
+    <com.creageek.segmentedbutton.SegmentedButton
+            android:layout_marginTop="4dp"
+            android:id="@+id/tabs"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:segmentColorChecked="@color/red_500"
+            app:rippleColorChecked="@color/red_500"
+            >
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/history"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/screening"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/treatment"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/referral"/>
+    </com.creageek.segmentedbutton.SegmentedButton>
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            >
-
-    </androidx.viewpager.widget.ViewPager>
-</LinearLayout>
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tickerFragment"
+            android:paddingTop="64dp"
+             />
     <fragment
             android:id="@+id/tickerFragment"
             android:name="com.abhiyantrik.dentalhub.fragments.TickerFragment"
