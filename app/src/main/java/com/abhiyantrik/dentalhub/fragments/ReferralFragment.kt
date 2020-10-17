@@ -49,9 +49,6 @@ class ReferralFragment : Fragment() {
 
     private lateinit var activitiesBox: Box<Activity>
     private lateinit var patientBox: Box<Patient>
-//    private lateinit var activitiesQuery: Query<Activity>
-//    private lateinit var geographiesQuery: Query<Geography>
-
 
     private lateinit var patient: Patient
     private lateinit var btnNext: Button
@@ -77,14 +74,6 @@ class ReferralFragment : Fragment() {
         checkboxGeneralPhysician = view.findViewById(R.id.checkBoxGeneralPhysician)
         checkboxOther = view.findViewById(R.id.checkBoxOther)
 
-//        activitiesQuery = activitiesBox.query().build()
-
-//        radioButtonNoReferral = view.findViewById(R.id.radioNoReferral)
-//        radioButtonHealthPost = view.findViewById(R.id.radioHealthPost)
-//        radioButtonHygienist = view.findViewById(R.id.radioHygienist)
-//        radioButtonDentist = view.findViewById(R.id.radioDentist)
-//        radioButtonGeneralPhysician = view.findViewById(R.id.radioGeneralPhysician)
-//        radioButtonOther = view.findViewById(R.id.radioOther)
         tvRecallDateReferral = view.findViewById(R.id.tvRecallDateReferral)
         rgRecalls = view.findViewById(R.id.rgRecalls)
         etOtherDetails = view.findViewById(R.id.etOtherDetails)
@@ -104,27 +93,6 @@ class ReferralFragment : Fragment() {
         checkboxDentist.isChecked = false
         checkboxGeneralPhysician.isChecked = false
         checkboxOther.isChecked = false
-
-//        rgReferrals.setOnCheckedChangeListener { radioGroup, i ->
-//            if (i == R.id.radioOther) {
-//                etOtherDetails.setText("")
-//                etOtherDetails.visibility = View.VISIBLE
-//            } else {
-//                etOtherDetails.visibility = View.GONE
-//            }
-//            if (i == R.id.radioHealthPost) {
-//                etRecallDate.setText("")
-//                tvRecallDateReferral.visibility = View.VISIBLE
-//                etRecallDate.visibility = View.VISIBLE
-//                rgRecalls.visibility = View.VISIBLE
-//                etRecallTime.visibility = View.VISIBLE
-//            } else {
-//                tvRecallDateReferral.visibility = View.GONE
-//                rgRecalls.visibility = View.GONE
-//                etRecallDate.visibility = View.GONE
-//                etRecallTime.visibility = View.GONE
-//            }
-//        }
 
         checkboxNoReferral.setOnCheckedChangeListener { compoundButton, b ->
             if (compoundButton.isChecked) {
