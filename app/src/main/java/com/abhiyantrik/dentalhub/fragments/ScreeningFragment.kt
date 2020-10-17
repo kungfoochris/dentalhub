@@ -113,7 +113,7 @@ class ScreeningFragment : Fragment() {
             val needARTFilling = checkBoxNeedARTFilling.isChecked
             val needSealant = checkBoxNeedSealant.isChecked
             val needSDF = checkBoxNeedSDF.isChecked
-            val needExtraction = checkBoxNeedSDF.isChecked
+            val needExtraction = checkBoxNeedExtraction.isChecked
             val activeInfection = checkBoxActiveInfection.isChecked
 
 
