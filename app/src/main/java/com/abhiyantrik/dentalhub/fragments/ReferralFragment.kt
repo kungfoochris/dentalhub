@@ -419,6 +419,16 @@ class ReferralFragment : Fragment() {
             ).show()
             status = false
         }
+
+        if (checkboxOther.isChecked && etOtherDetails.text.isNullOrEmpty()) {
+            Toast.makeText(
+                activity,
+                "Other details text is empty.",
+                Toast.LENGTH_SHORT
+            ).show()
+            status = false
+        }
+
         return status
     }
     companion object{

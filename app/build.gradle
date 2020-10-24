@@ -15,8 +15,8 @@ android {
         applicationId "com.abhiyantrik.dentalhub"
         minSdkVersion 22
         targetSdkVersion 30
-        versionCode 28
-        versionName "0.3.10"
+        versionCode 34
+        versionName "0.3.14"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -27,6 +27,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
         }
     }
     compileOptions {
