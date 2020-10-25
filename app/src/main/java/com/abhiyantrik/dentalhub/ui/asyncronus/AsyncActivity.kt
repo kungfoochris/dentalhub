@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -92,56 +93,62 @@ class AsyncActivity : AppCompatActivity() {
             Log.d(TAG, "patient upload to 50 count ${allEncounters.count()}")
             for (eachEncounter in allEncounters) {
 
-                val patientRemoteId = eachEncounter.patient!!.target.remote_id
-                Log.d(TAG, "patient remote Id $patientRemoteId")
-
-                if (patientRemoteId.isEmpty()) {
+                if (eachEncounter.patient == null) {
                     withContext(Dispatchers.Main) {
-                        tvStatus.append(eachEncounter.patient!!.target.fullName() + " should be uploaded first to upload encounters.\n")
+                        tvStatus.append("IMPORTANT encounter's patient not found.\n")
                     }
                 } else {
-                    if (!eachEncounter.uploaded && patientRemoteId.isNotEmpty()) {
-                        if (uploadEncounter(eachEncounter, patientRemoteId, encountersBox)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " encounter uploaded.\n")
+                    val patientRemoteId = eachEncounter.patient!!.target.remote_id
+                    Log.d(TAG, "patient remote Id $patientRemoteId")
+
+                    if (patientRemoteId.isEmpty()) {
+                        withContext(Dispatchers.Main) {
+                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " should be uploaded first to upload encounters.\n")
+                        }
+                    } else {
+                        if (!eachEncounter.uploaded && patientRemoteId.isNotEmpty()) {
+                            if (uploadEncounter(eachEncounter, patientRemoteId, encountersBox)) {
+                                withContext(Dispatchers.Main) {
+                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " encounter uploaded.\n")
+                                }
                             }
                         }
-                    }
 
 
-                    val unUploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().findFirst()
-                    val unUploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().findFirst()
-                    val unUploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().findFirst()
-                    val unUploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().findFirst()
+                        val unUploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().findFirst()
+                        val unUploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().findFirst()
+                        val unUploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().findFirst()
+                        val unUploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().findFirst()
 
-                    if (unUploadedHistory != null && patientRemoteId.isNotEmpty()) {
-                        if (uploadHistory(unUploadedHistory, historyBox, eachEncounter.remote_id)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " History uploaded.\n")
+                        if (unUploadedHistory != null && patientRemoteId.isNotEmpty()) {
+                            if (uploadHistory(unUploadedHistory, historyBox, eachEncounter.remote_id)) {
+                                withContext(Dispatchers.Main) {
+                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " History uploaded.\n")
+                                }
                             }
                         }
-                    }
 
-                    if (unUploadedScreening != null && patientRemoteId.isNotEmpty()) {
-                        if (uploadScreening(unUploadedScreening, screeningBox, eachEncounter.remote_id)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " Screening uploaded.\n")
+                        if (unUploadedScreening != null && patientRemoteId.isNotEmpty()) {
+                            if (uploadScreening(unUploadedScreening, screeningBox, eachEncounter.remote_id)) {
+                                withContext(Dispatchers.Main) {
+                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " Screening uploaded.\n")
+                                }
                             }
                         }
-                    }
 
-                    if (unUploadedTreatment != null && patientRemoteId.isNotEmpty()) {
-                        if (uploadTreatment(unUploadedTreatment, treatmentBox, eachEncounter.remote_id)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " Treatment uploaded.\n")
+                        if (unUploadedTreatment != null && patientRemoteId.isNotEmpty()) {
+                            if (uploadTreatment(unUploadedTreatment, treatmentBox, eachEncounter.remote_id)) {
+                                withContext(Dispatchers.Main) {
+                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " Treatment uploaded.\n")
+                                }
                             }
                         }
-                    }
 
-                    if (unUploadedReferral != null && patientRemoteId.isNotEmpty()) {
-                        if (uploadReferral(unUploadedReferral, referralBox, eachEncounter.remote_id)) {
-                            withContext(Dispatchers.Main) {
-                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " Referral uploaded.\n")
+                        if (unUploadedReferral != null && patientRemoteId.isNotEmpty()) {
+                            if (uploadReferral(unUploadedReferral, referralBox, eachEncounter.remote_id)) {
+                                withContext(Dispatchers.Main) {
+                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " Referral uploaded.\n")
+                                }
                             }
                         }
                     }
@@ -317,23 +324,28 @@ class AsyncActivity : AppCompatActivity() {
             treatment.treatment_plan_complete,
             treatment.notes
         )
-        val response = call.execute()
-        Log.d(TAG, "Treatment response ${response.code()} ${response.message()}")
-        if (response.isSuccessful) {
-            when (response.code()) {
-                200, 201 -> {
-                    val tempTreatment = response.body() as com.abhiyantrik.dentalhub.models.Treatment
-                    treatment.remote_id = tempTreatment.id
-                    treatment.uploaded = true
-                    treatment.updated = false
-                    treatmentBox.put(treatment)
-                    treatmentStatus = true
-                    Log.d(TAG, "Treatment uploaded successfully.")
+        try {
+            val response = call.execute()
+            Log.d(TAG, "Treatment response ${response.code()} ${response.message()}")
+            if (response.isSuccessful) {
+                when (response.code()) {
+                    200, 201 -> {
+                        val tempTreatment = response.body() as com.abhiyantrik.dentalhub.models.Treatment
+                        treatment.remote_id = tempTreatment.id
+                        treatment.uploaded = true
+                        treatment.updated = false
+                        treatmentBox.put(treatment)
+                        treatmentStatus = true
+                        Log.d(TAG, "Treatment uploaded successfully.")
 
+                    }
                 }
             }
+            DentalApp.cancelNotification(applicationContext, 1001)
+        } catch (ex: Exception) {
+            Log.d(TAG,"Error occured in Treatment: ${ex.message}")
         }
-        DentalApp.cancelNotification(applicationContext, 1001)
+
         return treatmentStatus
     }
 
@@ -371,23 +383,28 @@ class AsyncActivity : AppCompatActivity() {
             screening.need_sdf,
             screening.active_infection
         )
-        val response = call.execute()
-        Log.d(TAG, "Screening response ${response.code()} ${response.message()}")
-        if (response.isSuccessful) {
-            when (response.code()) {
-                200, 201 -> {
-                    val tempScreening = response.body() as com.abhiyantrik.dentalhub.models.Screening
-                    screening.remote_id = tempScreening.id
-                    screening.uploaded = true
-                    screening.updated = false
-                    screeningBox.put(screening)
-                    screeningStatus = true
-                    Log.d(TAG, "Screening uploaded successfully.")
+        try {
+            val response = call.execute()
+            Log.d(TAG, "Screening response ${response.code()} ${response.message()}")
+            if (response.isSuccessful) {
+                when (response.code()) {
+                    200, 201 -> {
+                        val tempScreening = response.body() as com.abhiyantrik.dentalhub.models.Screening
+                        screening.remote_id = tempScreening.id
+                        screening.uploaded = true
+                        screening.updated = false
+                        screeningBox.put(screening)
+                        screeningStatus = true
+                        Log.d(TAG, "Screening uploaded successfully.")
+                    }
                 }
             }
+            DentalApp.cancelNotification(applicationContext, 1001)
+        } catch (ex: Exception) {
+            Log.d(TAG, "Error occured: ${ex.message}")
         }
-        DentalApp.cancelNotification(applicationContext, 1001)
         return screeningStatus
+
     }
 
     private fun uploadHistory(
@@ -407,7 +424,7 @@ class AsyncActivity : AppCompatActivity() {
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
-        Log.d("SaveHistoryToServer", "New History Upload.")
+        Log.d(TAG, "New History Upload.")
         val call = panelService.addHistory(
             "JWT $token",
             encounterRemoteId,
@@ -429,27 +446,32 @@ class AsyncActivity : AppCompatActivity() {
             history.no_underlying_medical_condition,
             history.not_taking_any_medications
         )
-        val response = call.execute()
-        Log.d(TAG, "History response ${response.code()} ${response.message()}")
-        if (response.isSuccessful) {
-            when (response.code()) {
-                200, 201 -> {
-                    val tempHistory = response.body() as com.abhiyantrik.dentalhub.models.History
-                    history.remote_id = tempHistory.id
-                    history.uploaded = true
-                    history.updated = false
-                    historyBox.put(history)
-                    historyStatus = true
-                    Log.d(TAG, "History uploaded successfully.")
+        try {
+            val response = call.execute()
+            Log.d(TAG, "History response ${response.code()} ${response.message()}")
+            if (response.isSuccessful) {
+                when (response.code()) {
+                    200, 201 -> {
+                        val tempHistory = response.body() as com.abhiyantrik.dentalhub.models.History
+                        history.remote_id = tempHistory.id
+                        history.uploaded = true
+                        history.updated = false
+                        historyBox.put(history)
+                        historyStatus = true
+                        Log.d(TAG, "History uploaded successfully.")
+                    }
+                    else -> {
+                        Log.d(TAG, response.message() + response.code())
+                    }
                 }
-                else -> {
-                    Log.d("UploadHistoryWorker", response.message() + response.code())
-                }
+            } else {
+                Log.d(TAG, response.message() + response.code())
             }
-        } else {
-            Log.d("UploadHistoryWorker", response.message() + response.code())
+            DentalApp.cancelNotification(applicationContext, 1001)
+        } catch (ex: Exception) {
+            Log.d(TAG, "Error occurred in history: ")
         }
-        DentalApp.cancelNotification(applicationContext, 1001)
+
         return historyStatus
     }
 
@@ -484,20 +506,25 @@ class AsyncActivity : AppCompatActivity() {
             eachEncounter.updated_at,
             eachEncounter.updated_by!!
         )
-        val response = call.execute()
-        Log.d(TAG, "Encounter response ${response.code()} ${response.message()}")
-        if (response.isSuccessful) {
-            when (response.code()) {
-                200, 201 -> {
-                    val tempEncounter = response.body() as com.abhiyantrik.dentalhub.models.Encounter
-                    eachEncounter.remote_id = tempEncounter.id
-                    eachEncounter.uploaded = true
-                    encountersBox.put(eachEncounter)
-                    encounterStatus = true
-                    Log.d(TAG, "Encounter uploaded successfully.")
+        try {
+            val response = call.execute()
+            Log.d(TAG, "Encounter response ${response.code()} ${response.message()}")
+            if (response.isSuccessful) {
+                when (response.code()) {
+                    200, 201 -> {
+                        val tempEncounter = response.body() as com.abhiyantrik.dentalhub.models.Encounter
+                        eachEncounter.remote_id = tempEncounter.id
+                        eachEncounter.uploaded = true
+                        encountersBox.put(eachEncounter)
+                        encounterStatus = true
+                        Log.d(TAG, "Encounter uploaded successfully.")
+                    }
                 }
             }
+        } catch (ex: Exception) {
+            Log.d(TAG, "Error occurred in Encounter: ${ex.message}")
         }
+
         return encounterStatus
     }
 
@@ -547,36 +574,41 @@ class AsyncActivity : AppCompatActivity() {
             patient.updated_at
         )
         if(!patient.uploaded) {
-            val response = call.execute()
-            Log.d(TAG, "Patient response ${response.code()} ${response.message()}")
-            if (response.isSuccessful) {
-                when (response.code()) {
-                    200, 201 -> {
-                        val tempPatient = response.body()
+            try {
+                val response = call.execute()
+                Log.d(TAG, "Patient response ${response.code()} ${response.message()}")
+                if (response.isSuccessful) {
+                    when (response.code()) {
+                        200, 201 -> {
+                            val tempPatient = response.body()
 
-                        if ( tempPatient?.id != null ) {
-                            patient.remote_id = tempPatient.id
-                            patient.uploaded = true
-                            patient.updated = false
+                            if ( tempPatient?.id != null ) {
+                                patient.remote_id = tempPatient.id
+                                patient.uploaded = true
+                                patient.updated = false
 
-                            patientBox.put(patient)
-                            responseStatus = true
-                            Log.d(TAG, "Patients uploaded successfully.")
-                            FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Message From OnCreate")
-                        } else {
-                            FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
-                            FirebaseCrashlytics.getInstance().setCustomKey("patient_uploaded", false)
+                                patientBox.put(patient)
+                                responseStatus = true
+                                Log.d(TAG, "Patients uploaded successfully.")
+                                FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Message From OnCreate")
+                            } else {
+                                FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
+                                FirebaseCrashlytics.getInstance().setCustomKey("patient_uploaded", false)
+                            }
+
+                            DentalApp.cancelNotification(applicationContext, 1001)
                         }
-
-                        DentalApp.cancelNotification(applicationContext, 1001)
                     }
+                    Log.d(TAG, "other than 200, 201 " + response.message().toString())
+                } else {
+                    Log.d(TAG, response.message())
+                    Log.d(TAG, response.code().toString())
+                    Log.d(TAG, "Error body " + response.errorBody().toString())
                 }
-                Log.d("UploadPatientWorkAsync", "other than 200, 201 " + response.message().toString())
-            } else {
-                Log.d("UploadPatientWorkAsync", response.message())
-                Log.d("UploadPatientWorkAsync", response.code().toString())
-                Log.d("UploadPatientWorkAsync", "Error body " + response.errorBody().toString())
+            } catch (ex: Exception) {
+                Log.d(TAG, "Error uploading Patient: ${ex.message}")
             }
+
         }
         return responseStatus
     }

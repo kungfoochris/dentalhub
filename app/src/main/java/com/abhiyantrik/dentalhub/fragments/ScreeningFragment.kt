@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.TreatmentFragmentCommunicator
@@ -29,7 +28,7 @@ class ScreeningFragment : Fragment() {
     private lateinit var encounterBox: Box<Encounter>
     private var encounter = Encounter()
     private lateinit var screeningBox: Box<Screening>
-    private var screening = Screening()
+//    private var screening = Screening()
 
     private lateinit var spinnerRisk: Spinner
     private lateinit var spinnerNoOfDecayedPrimaryTeeth: Spinner
@@ -92,7 +91,7 @@ class ScreeningFragment : Fragment() {
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         screeningFormCommunicator = activity as ScreeningFormCommunicator
 
-        setupUI(activity as Context)
+        setupUI()
 
         btnNext.setOnClickListener {
             val view = this.view!!.rootView
@@ -141,17 +140,15 @@ class ScreeningFragment : Fragment() {
 
     }
 
-    private fun setupUI(applicationContext: Context) {
+    private fun setupUI() {
 
-        val encounterId =
-            DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
-        println("Encounter Id is in screening $encounterId")
+        val encounterId = fragmentCommunicator.getEncounterIdForUpdate()
 
         if (encounterId != 0.toLong()) {
 
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
-            screening = screeningBox.query().equal(
+            val screening = screeningBox.query().equal(
                 Screening_.encounterId,
                 encounter.id
             ).orderDesc(Screening_.id).build().findFirst()!!

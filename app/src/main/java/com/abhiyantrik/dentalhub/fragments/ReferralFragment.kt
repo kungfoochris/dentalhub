@@ -28,7 +28,7 @@ class ReferralFragment : Fragment() {
     private lateinit var encounterBox: Box<Encounter>
     private var encounter = Encounter()
     private lateinit var referralBox: Box<Referral>
-    private var referral = Referral()
+//    private var referral = Referral()
 
     private lateinit var checkboxNoReferral : CheckBox
     private lateinit var checkboxHealthPost : CheckBox
@@ -358,8 +358,7 @@ class ReferralFragment : Fragment() {
 
     private fun setupUI(applicationContext: Context) {
 
-        val encounterId =
-            DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+        val encounterId = fragmentCommunicator.getEncounterIdForUpdate()
 
         if (encounterId != 0.toLong()) {
 
@@ -372,7 +371,8 @@ class ReferralFragment : Fragment() {
                     Constants.PREF_SELECTED_PATIENT
                 ).toLong()
             ).build().findFirst()!!
-            referral = referralBox.query()
+
+            val referral = referralBox.query()
                 .equal(Referral_.encounterId, encounter.id)
                 .orderDesc(Referral_.id).build().findFirst()!!
 

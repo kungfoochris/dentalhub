@@ -12,7 +12,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.TreatmentFragmentCommunicator
@@ -31,7 +30,7 @@ class HistoryFragment : Fragment() {
     private lateinit var encounterBox: Box<Encounter>
     private var encounter = Encounter()
     private lateinit var historyBox: Box<History>
-    private var history = History()
+//    private var history = History()
 
     private lateinit var checkBoxBloodDisorderOrBleedingProblem: CheckBox
     private lateinit var checkBoxDiabetes: CheckBox
@@ -98,7 +97,7 @@ class HistoryFragment : Fragment() {
         fragmentCommunicator = activity as TreatmentFragmentCommunicator
         historyFormCommunicator = activity as HistoryFormCommunicator
 
-        setupUI(activity as Context)
+        setupUI()
 
         uncheckNoUnderlyingMedicalCon(checkBoxBloodDisorderOrBleedingProblem)
         uncheckNoUnderlyingMedicalCon(checkBoxDiabetes)
@@ -301,14 +300,13 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun setupUI(applicationContext: Context) {
-        val encounterId =
-            DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+    private fun setupUI() {
+        val encounterId = fragmentCommunicator.getEncounterIdForUpdate()
 
         if (encounterId != 0.toLong()) {
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
-            history =
+            val history =
                 historyBox.query().equal(
                     History_.encounterId,
                     encounter.id
@@ -351,9 +349,8 @@ class HistoryFragment : Fragment() {
             } else {
                 etAllergies.setText(history.allergies)
             }
-        } else {
-            history = historyBox.query().orderDesc(History_.id).build().findFirst()!!
-        }
+        } // end of if condition
+
     }
     companion object {
         const val TAG: String= "HistoryFragment"

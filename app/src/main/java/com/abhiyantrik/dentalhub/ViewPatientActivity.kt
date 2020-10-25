@@ -451,37 +451,12 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun openAddEncounter(encounterType: String, otherProblem: String) {
-        val date = DateHelper.getCurrentNepaliDate()
-
-        val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(date)
-        if (currentDate == null) {
-            Toast.makeText(context, "There is problem in Encounter date so please contact to Abhiyantrik or Saroj Dhakal.", Toast.LENGTH_LONG).show()
-        }
-        Log.d("CheckingDate", currentDate.toString())
-        val currentDateTime = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        Log.d("CheckingDate", dateFormat.format(currentDate))
-        Log.d("CheckingDate", dateFormat.format(currentDate))
-        val modifiedNewDate = dateFormat.format(currentDate).substring(0, 10) + dateFormat.format(currentDateTime).substring(10)
-
-        val encounter = Encounter()
-        encounter.id = 0
-        encounter.encounter_type = encounterType
-        encounter.other_problem = otherProblem
-        encounter.activityarea_id = DentalApp.activity_id
-        encounter.ward_id = DentalApp.geography_id
-        encounter.created_at = modifiedNewDate
-        encounter.updated_at = date
-        encounter.author =
-            DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
-        encounter.updated_by =
-            DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
-        encounter.patient?.target = patient
-        encounterBox.put(encounter)
 
         val addEncounterIntent = Intent(context, AddEncounterActivity::class.java)
         addEncounterIntent.putExtra("PATIENT_ID", patientId)
         addEncounterIntent.putExtra("ENCOUNTER_ID", "0".toLong())
+        addEncounterIntent.putExtra("ENCOUNTER_TYPE", encounterType)
+        addEncounterIntent.putExtra("OTHER_PROBLEM", otherProblem)
         addEncounterIntent.putExtra("MODIFY_DELETE", "0".toLong())
         startActivity(addEncounterIntent)
     }

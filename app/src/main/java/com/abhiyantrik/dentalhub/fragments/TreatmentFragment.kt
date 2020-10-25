@@ -34,7 +34,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
     private lateinit var encounterBox: Box<Encounter>
     private var encounter = Encounter()
     private lateinit var treatmentBox: Box<Treatment>
-    private var treatment = Treatment()
+//    private var treatment = Treatment()
 
     // Treatment Type buttons initialization
     private lateinit var btnSDF: Button
@@ -345,14 +345,13 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
 
         treatmentTypeBackgroundColor()
 
-        val encounterId =
-            DentalApp.readFromPreference(applicationContext, "Encounter_ID", "0").toLong()
+        val encounterId =  fragmentCommunicator.getEncounterIdForUpdate()
 
         if (encounterId != 0.toLong()) {
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
 
             // query to retrieve the data of the encounter by id
-            treatment = treatmentBox.query()
+            val treatment = treatmentBox.query()
                 .equal(Treatment_.encounterId, encounter.id)
                 .orderDesc(Treatment_.id).build().findFirst()!!
 
@@ -422,6 +421,7 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             if (treatment.treatment_plan_complete) checkBoxTreatmentPlanComplete.isChecked = true
             if (treatment.notes.isNotEmpty()) etNotes.setText(treatment.notes)
         }
+
     }
 
     private fun setColorForButton(button: Button, buttonValue: String, buttonNumber: Int) {

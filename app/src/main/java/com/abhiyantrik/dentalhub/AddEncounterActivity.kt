@@ -33,6 +33,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -75,6 +77,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_encounter)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         patientBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         historyBox = ObjectBox.boxStore.boxFor(History::class.java)
@@ -84,7 +88,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         context = this
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         patientId = intent.getLongExtra("PATIENT_ID", 0.toLong())
         patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
 
@@ -92,27 +95,65 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         encounterId = intent.getLongExtra("ENCOUNTER_ID", "0".toLong())
         encounterFlagId = intent.getLongExtra("MODIFY_DELETE", "0".toLong())
+        val encounterType = intent.getStringExtra("ENCOUNTER_TYPE")
+        val otherProblem = intent.getStringExtra("OTHER_PROBLEM")
         Timber.d("Encounter ID = $encounterId")
 
         if (encounterId == "0".toLong()) {
             action = "new"
-            encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()!!
+
+            val date = DateHelper.getCurrentNepaliDate()
+
+            val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(date)
+            if (currentDate == null) {
+                Toast.makeText(context, "There is problem in Encounter date so please contact to Abhiyantrik or Saroj Dhakal.", Toast.LENGTH_LONG).show()
+            }
+            Log.d("CheckingDate", currentDate.toString())
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            Log.d("CheckingDate", dateFormat.format(currentDate))
+            Log.d("CheckingDate", dateFormat.format(currentDate))
+            val modifiedNewDate = dateFormat.format(currentDate).substring(0, 10) + dateFormat.format(currentDateTime).substring(10)
+
+//            val encounter = Encounter()
+//            encounter.id = 0
+            if (!encounterType.isNullOrEmpty()) {
+                encounter.encounter_type = encounterType
+            } else {
+                Toast.makeText(this, "Encounter Type unrecognized.", Toast.LENGTH_LONG).show()
+                finish()
+            }
+            if (!otherProblem.isNullOrEmpty()) {
+                encounter.other_problem = otherProblem
+            }
+            encounter.activityarea_id = DentalApp.activity_id
+            encounter.ward_id = DentalApp.geography_id
+            encounter.created_at = modifiedNewDate
+            encounter.updated_at = date
+            encounter.author =
+                DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
+            encounter.updated_by =
+                DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
+            encounter.patient?.target = patient
+//            encounterBox.put(encounter)
+
+//            encounter = encounterBox.query().orderDesc(Encounter_.id).build().findFirst()!!
 
             history.encounter?.target = encounter
-            historyBox.put(history)
+//            historyBox.put(history)
 
             screening.encounter?.target = encounter
-            screeningBox.put(screening)
+//            screeningBox.put(screening)
 
             treatment.encounter?.target = encounter
-            treatmentBox.put(treatment)
+//            treatmentBox.put(treatment)
 
             referral.encounter?.target = encounter
-            referralBox.put(referral)
+//            referralBox.put(referral)
 
             recall.patient?.target = patient
             recall.encounter?.target = encounter
-            recallBox.put(recall)
+//            recallBox.put(recall)
 
             DentalApp.saveToPreference(this, "Encounter_ID", "0")
 
@@ -122,7 +163,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
             encounter.updated = true
-            encounterBox.put(encounter)
+//            encounterBox.put(encounter)
 
             history =
                 historyBox.query().equal(
@@ -198,7 +239,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         when (item.itemId) {
             android.R.id.home -> {
                 Timber.d("onOptionsItemSelected() Back button pressed.")
-                saveEncounter()
+//                saveEncounter()
             }
             R.id.viewPatient -> {
                 addEncounterDialog()
@@ -249,24 +290,6 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     }
     // Dialog ended
 
-    override fun updateRecallDate(recallDate: String, recallTime: String) {
-        patient.recall_date = recallDate
-        patient.recall_time = recallTime
-        patient.recall_geography = DentalApp.geography_id
-        patient.updated = true
-        patient.updated_at = DateHelper.getCurrentNepaliDate()
-        patient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
-        patientBox.put(patient)
-
-        val data = Data.Builder().putLong("PATIENT_ID", patient.id)
-        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
-            .setInputData(data.build())
-            .setConstraints(DentalApp.uploadConstraints)
-            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-
-        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
-    }
-
     override fun updateHistory(
         bloodDisorders: Boolean,
         diabetes: Boolean,
@@ -286,11 +309,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         allergies: String
     ) {
 
-        history =
-            historyBox.query().equal(
-                History_.encounterId,
-                encounter.id
-            ).orderDesc(History_.id).build().findFirst()!!
+//        history =
+//            historyBox.query().equal(
+//                History_.encounterId,
+//                encounter.id
+//            ).orderDesc(History_.id).build().findFirst()!!
 
         history.blood_disorder = bloodDisorders
         history.diabetes = diabetes
@@ -309,7 +332,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         history.no_allergies = noAllergies
         history.allergies = allergies
         history.updated = true
-        historyBox.put(history)
+//        historyBox.put(history)
     }
 
     override fun updateScreening(
@@ -326,10 +349,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         activeInfection: Boolean
     ) {
 
-        screening = screeningBox.query().equal(
-            Screening_.encounterId,
-            encounter.id
-        ).orderDesc(Screening_.id).build().findFirst()!!
+//        screening = screeningBox.query().equal(
+//            Screening_.encounterId,
+//            encounter.id
+//        ).orderDesc(Screening_.id).build().findFirst()!!
 
         screening.carries_risk = carriesRisk
         try {
@@ -354,7 +377,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         screening.need_extraction = needExtraction
         screening.updated = true
 
-        screeningBox.put(screening)
+//        screeningBox.put(screening)
     }
 
     override fun updateTreatment(
@@ -364,10 +387,10 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         treatmentPlanComplete: Boolean,
         teeth: Array<String>
     ) {
-        treatment = treatmentBox.query().equal(
-            Treatment_.encounterId,
-            encounter.id
-        ).orderDesc(Treatment_.id).build().findFirst()!!
+//        treatment = treatmentBox.query().equal(
+//            Treatment_.encounterId,
+//            encounter.id
+//        ).orderDesc(Treatment_.id).build().findFirst()!!
 
         treatment.sdf_whole_mouth = sdfWholeMouth
         treatment.fv_applied = fvApplied
@@ -438,7 +461,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
         treatment.updated = true
 
-        treatmentBox.put(treatment)
+//        treatmentBox.put(treatment)
     }
 
     override fun updateReferral(
@@ -450,11 +473,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         other: Boolean,
         otherDetails: String
     ) {
-        referral =
-            referralBox.query().equal(
-                Referral_.encounterId,
-                encounter.id
-            ).orderDesc(Referral_.id).build().findFirst()!!
+//        referral =
+//            referralBox.query().equal(
+//                Referral_.encounterId,
+//                encounter.id
+//            ).orderDesc(Referral_.id).build().findFirst()!!
 
         referral.no_referral = noReferral
         referral.health_post = healthPost
@@ -465,7 +488,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         referral.other_details = otherDetails
         referral.updated = true
 
-        referralBox.put(referral)
+        saveEncounterToLocalDB()
+//        referralBox.put(referral)
     }
 
     override fun updateRecall(
@@ -476,6 +500,40 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
     ) {
     }
 
+    override fun updateRecallDate(recallDate: String, recallTime: String) {
+        patient.recall_date = recallDate
+        patient.recall_time = recallTime
+        patient.recall_geography = DentalApp.geography_id
+        patient.updated = true
+        patient.updated_at = DateHelper.getCurrentNepaliDate()
+        patient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
+//        patientBox.put(patient)
+
+//        val data = Data.Builder().putLong("PATIENT_ID", patient.id)
+//        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
+//            .setInputData(data.build())
+//            .setConstraints(DentalApp.uploadConstraints)
+//            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+//
+//        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+    }
+
+    private fun saveEncounterToLocalDB() {
+        try {
+            encounterBox.put(encounter)
+            historyBox.put(history)
+            screeningBox.put(screening)
+            treatmentBox.put(treatment)
+            referralBox.put(referral)
+            patientBox.put(patient)
+
+            saveEncounterToServer()
+        } catch (ex: java.lang.Exception) {
+            Toast.makeText(this, "Encounter creating error. Please contact to Abhiyantrik.", Toast.LENGTH_LONG).show()
+            finish()
+        }
+
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -484,7 +542,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
     override fun onBackPressed() {
 
-        saveEncounter()
+//        saveEncounter()
 
         finish()
         super.onBackPressed()
@@ -512,16 +570,24 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         updateIndex(pager.currentItem)
     }
 
+    override fun getEncounterIdForUpdate(): Long {
+        return if (action == "new") {
+            0.toLong()
+        } else {
+            encounter.id
+        }
+    }
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Toast.makeText(context, "Please complete encounter to exit.", Toast.LENGTH_SHORT).show()
-            saveEncounter()
+//            saveEncounter()
             return false
         }
         return super.onKeyDown(keyCode, event)
     }
 
-    private fun saveEncounter() {
+    private fun saveEncounterToServer() {
 
         val data = Data.Builder().putLong("ENCOUNTER_ID", encounter.id)
             .putLong("PATIENT_ID", patient.id)
