@@ -11,11 +11,16 @@ import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Activity_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.ActivitySuggestion
+import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
+import kotlinx.android.synthetic.main.activity_selector.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
+import java.util.*
 import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
 
 
@@ -42,6 +47,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
     var communityoutreach_id = ""
     var training_id = ""
     var allAPIActivities = listOf<ActivityModel>()
+    private var backDateSelected = DateHelper.getTodaysNepaliDate()
 
     private lateinit var activityBox: Box<Activity>
 
@@ -50,6 +56,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_selector)
         context = this
         initUI()
+        Log.d(TAG, "Backdate of today is $backDateSelected")
     }
 
     private fun initUI() {
@@ -112,6 +119,45 @@ class ActivitySelectorActivity : AppCompatActivity() {
             }
         }
 
+        etBackdate.setOnClickListener {
+            val someDate: Calendar = GregorianCalendar.getInstance()
+            someDate.add(Calendar.DAY_OF_YEAR, -7)
+            val nepaliDateConverter = DateConverter()
+            val dpd =
+                com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
+                    val month = DecimalFormat("00").format(monthOfYear + 1).toString()
+                    val day = DecimalFormat("00").format(dayOfMonth).toString()
+                    val backDate = "$year-$month-$day"
+                    if(backDate.isNotEmpty()){
+                        etBackdate.setText(DateHelper.getReadableNepaliDate(backDate))
+                        Log.d(TAG, "Date $year-$month-$day")
+                        backDateSelected = backDate
+                    }
+                }
+            val beforeSevenDays = nepaliDateConverter.getNepaliDate(someDate)
+            dpd.setMinDate(beforeSevenDays)
+            dpd.setMaxDate(nepaliDateConverter.todayNepaliDate)
+            dpd.show(supportFragmentManager, "Backdate")
+        }
+
+//        etBackdate.setOnFocusChangeListener { _, b ->
+//            if (b) {
+//                val nepaliDateConverter = DateConverter()
+//                val dpd =
+//                    com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
+//                        val month = DecimalFormat("00").format(monthOfYear + 1).toString()
+//                        val day = DecimalFormat("00").format(dayOfMonth).toString()
+//                        val recallDate = "$year-$month-$day"
+//                        if(recallDate.isNotEmpty()){
+//                            etBackdate.setText(DateHelper.getReadableNepaliDate(recallDate))
+//                        }
+//                    }
+//                dpd.setMinDate(nepaliDateConverter.todayNepaliDate)
+//                dpd.show(supportFragmentManager, "Backdate")
+//
+//            }
+//        }
+
         btnGo.setOnClickListener {
             if (isFormValid()) {
 
@@ -131,6 +177,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
                         Constants.PREF_ACTIVITY_NAME,
                         selectedActivity
                     )
+                    saveBackDateToSharedPreference()
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -153,6 +200,14 @@ class ActivitySelectorActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    private fun saveBackDateToSharedPreference() {
+        DentalApp.saveToPreference(
+            context,
+            Constants.PERF_SELECTED_BACKDATE,
+            backDateSelected
+        )
     }
 
     private fun loadActivitySuggestions() {
@@ -284,6 +339,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
                             Constants.PREF_ACTIVITY_NAME,
                             selectedActivity
                         )
+                        saveBackDateToSharedPreference()
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)
                     }

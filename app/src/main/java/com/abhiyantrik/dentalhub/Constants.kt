@@ -37,6 +37,8 @@ class Constants {
         val PREF_ACTIVITY_REMARKS = "ACTIVITY_REMARKS"
         @JvmStatic
         val PREF_ACTIVITY_SUGGESTIONS = "ACTIVITY_SUGGESTIONS"
+        @JvmStatic
+        val PERF_SELECTED_BACKDATE = "SELECTED_BACKDATE"
 
         @JvmStatic
         val PREF_PROFILE_FULL_NAME = "USER_FULL_NAME"

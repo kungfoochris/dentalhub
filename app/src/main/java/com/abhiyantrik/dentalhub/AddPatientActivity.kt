@@ -354,7 +354,8 @@ class AddPatientActivity : AppCompatActivity() {
         val activity = DentalApp.activity_id
         val latitude = DentalApp.location.latitude
         val longitude = DentalApp.location.longitude
-        val date = DateHelper.getCurrentNepaliDate()
+//        val date = DateHelper.getCurrentNepaliDate()
+        val date = DentalApp.readFromPreference(context, Constants.PERF_SELECTED_BACKDATE, DateHelper.getTodaysNepaliDate())
         if (action == "edit") {
             patient!!.id = patientId
             patient = patientsBox.get(patientId)

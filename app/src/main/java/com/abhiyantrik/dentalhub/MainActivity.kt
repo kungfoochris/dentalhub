@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         val df = SimpleDateFormat("yyyy-MM-dd")
         df.format(c)
         allPatientRecall = mutableListOf()
-        val today = DateHelper.getCurrentNepaliDate()
+        val today = DateHelper.getTodaysNepaliDate()
         val todayPatient = patientsBox.query().equal(Patient_.recall_date, today)
             .equal(Patient_.recall_geography, DentalApp.geography_id.toLong()).order(Patient_.recall_date)
             .build().find()

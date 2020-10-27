@@ -38,7 +38,7 @@ class DateHelper {
             return "$year-$monthName-$day"
         }
 
-        fun getCurrentNepaliDate(): String {
+        fun getTodaysNepaliDate(): String {
             val todayNepali = DateConverter().todayNepaliDate
 
             val yearToday = todayNepali.year

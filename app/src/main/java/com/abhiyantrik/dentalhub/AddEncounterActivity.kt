@@ -102,7 +102,8 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         if (encounterId == "0".toLong()) {
             action = "new"
 
-            val date = DateHelper.getCurrentNepaliDate()
+//            val date = DateHelper.getTodaysNepaliDate()
+            val date = DentalApp.readFromPreference(context, Constants.PERF_SELECTED_BACKDATE, DateHelper.getTodaysNepaliDate())
 
             val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(date)
             if (currentDate == null) {
@@ -163,6 +164,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
             encounter = encounterBox.query().equal(Encounter_.id, encounterId).build().findFirst()!!
             encounter.updated = true
+            encounter.updated_at = DateHelper.getTodaysNepaliDate()
 //            encounterBox.put(encounter)
 
             history =
@@ -505,7 +507,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         patient.recall_time = recallTime
         patient.recall_geography = DentalApp.geography_id
         patient.updated = true
-        patient.updated_at = DateHelper.getCurrentNepaliDate()
+        patient.updated_at = DateHelper.getTodaysNepaliDate()
         patient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
 //        patientBox.put(patient)
 
