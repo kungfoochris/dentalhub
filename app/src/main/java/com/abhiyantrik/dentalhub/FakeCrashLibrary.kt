@@ -5,6 +5,7 @@ class FakeCrashLibrary private constructor() {
     companion object {
         fun log(priority: Int, tag: String?, message: String?) {
             // TODO add log entry to circular buffer.
+            println("Circular: $message")
         }
 
         fun logWarning(t: Throwable?) {

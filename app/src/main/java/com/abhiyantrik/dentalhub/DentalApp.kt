@@ -42,9 +42,9 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         }
 
         if (BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
+            Timber.plant(DebugTree(), CrashlyticsTree(), FileTree(applicationContext))
         } else {
-            Timber.plant(CrashReportingTree())
+            Timber.plant(CrashReportingTree(), CrashlyticsTree(), FileTree(applicationContext))
         }
 
         NotificationHelper.createNotificationChannel(

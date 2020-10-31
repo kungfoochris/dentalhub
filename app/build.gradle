@@ -94,6 +94,8 @@ dependencies {
 
     // For logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'com.github.tony19:logback-android:2.0.0'
 
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.annotation:annotation:1.1.0'
