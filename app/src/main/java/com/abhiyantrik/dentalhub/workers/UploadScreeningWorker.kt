@@ -13,6 +13,7 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import timber.log.Timber
 import com.abhiyantrik.dentalhub.models.Screening as ScreeningModel
 
 class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -35,7 +36,7 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
             saveScreeningToServer(dbEncounterEntity, tempScreening)
             Result.success()
         } catch (e: Exception) {
-            Log.d(TAG, e.printStackTrace().toString())
+            Timber.d(e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }

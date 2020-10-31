@@ -17,6 +17,7 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_referral.*
+import timber.log.Timber
 import java.text.DecimalFormat
 import java.util.*
 
@@ -334,7 +335,7 @@ class ReferralFragment : Fragment() {
                         patient.called = false
                         patientBox.put(patient)
                     } catch (e: Exception) {
-                        Log.d(TAG, "patient not found i.e. not initialized.")
+                        Timber.d("patient not found i.e. not initialized.")
                     }
                 }
                 //referralFormCommunicator.updateRecall(recallDate, recallTime, selectedGeography, selectedActivity)

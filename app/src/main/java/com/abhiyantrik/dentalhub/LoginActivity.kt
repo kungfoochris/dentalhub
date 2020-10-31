@@ -21,6 +21,7 @@ import com.google.firebase.perf.metrics.AddTrace
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 
 class LoginActivity : Activity() {
@@ -80,10 +81,10 @@ class LoginActivity : Activity() {
 
     @AddTrace(name = "processLogin", enabled = true /* optional */)
     private fun processLogin() {
-        Log.d(TAG, "processLogin()")
+        Timber.d("processLogin()")
         val view = this.currentFocus
         if (view != null) {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
@@ -95,8 +96,8 @@ class LoginActivity : Activity() {
         val call = panelService.login(email, password)
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                Log.d(TAG, "onResponse()")
-                Log.d(TAG, "response $response")
+                Timber.d("onResponse()")
+                Timber.d("response $response")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
@@ -143,16 +144,22 @@ class LoginActivity : Activity() {
                         loading.visibility = View.GONE
                     }
 
-                    if(BuildConfig.DEBUG){
-                        Log.d(TAG, "response code" + response.code().toString())
-                        Log.d(TAG, "response body " + response.errorBody().toString())
+                    if (BuildConfig.DEBUG) {
+                        Timber.d("response code" + response.code().toString())
+                        Timber.d("response body " + response.errorBody().toString())
                     }
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Log.d(TAG, "onFailure()")
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " login() " + t.message.toString())
+                Timber.d("onFailure()")
+                FirebaseCrashlytics.getInstance().log(
+                    DentalApp.readFromPreference(
+                        context,
+                        Constants.PREF_AUTH_EMAIL,
+                        ""
+                    ) + " login() " + t.message.toString()
+                )
                 if (BuildConfig.DEBUG) {
                     tvErrorMessage.text = t.message.toString()
                 } else {

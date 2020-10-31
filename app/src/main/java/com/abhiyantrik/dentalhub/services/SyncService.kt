@@ -3,7 +3,6 @@ package com.abhiyantrik.dentalhub.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
@@ -19,6 +18,7 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import com.abhiyantrik.dentalhub.models.Encounter as EncounterModel
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
@@ -89,10 +89,10 @@ class SyncService : Service(){
                 "Uploading patient detail"
             )
             if (!patient.uploaded /*|| patient.updated*/) {
-                println("Processing patient : ${patient.fullName()}")
+                Timber.d("Processing patient : ${patient.fullName()}")
                 savePatientToServer(patient)
             } else {
-                println("Patient already uploaded. ${patient.fullName()}")
+                Timber.d("Patient already uploaded. ${patient.fullName()}")
                 checkAllEncounter(patient)
             }
         }
@@ -101,8 +101,8 @@ class SyncService : Service(){
     }
 
     private fun saveHistoryToServer(remoteId: String, history: History, encounterId: Long) {
-        Log.d("SyncService", "saveHistoryToServer()")
-        Log.d("saveHistoryToServer", history.toString())
+        Timber.d("SyncService %s", "saveHistoryToServer()")
+        Timber.d("saveHistoryToServer %s", history.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addHistory(
@@ -128,7 +128,7 @@ class SyncService : Service(){
         )
         call.enqueue(object : Callback<HistoryModel> {
             override fun onFailure(call: Call<HistoryModel>, t: Throwable) {
-                Log.d("History onFailure", t.toString())
+                Timber.d("History onFailure %s", t.toString())
 
             }
 
@@ -136,7 +136,7 @@ class SyncService : Service(){
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
-                            println("Successfully added the history.")
+                            Timber.d("Successfully added the history.")
                             val tempScreening =
                                 screeningBox.query().equal(
                                     Screening_.encounterId,
@@ -154,9 +154,9 @@ class SyncService : Service(){
 
     @AddTrace(name = "saveScreeningToServerFromSyncService", enabled = true /* optional */)
     private fun saveScreeningToServer(remoteId: String, screening: Screening, encounterId: Long) {
-        Log.d("SyncService", "saveScreeningToServer()")
-        Log.d("saveScreeningToServer", screening.toString())
-        Log.d("saveScreeningToServer", screening.toString())
+        Timber.d("SyncService %s", "saveScreeningToServer()")
+        Timber.d("saveScreeningToServer %s", screening.toString())
+        Timber.d("saveScreeningToServer %s", screening.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addScreening(
@@ -177,7 +177,7 @@ class SyncService : Service(){
 
         call.enqueue(object : Callback<ScreeningModel> {
             override fun onFailure(call: Call<ScreeningModel>, t: Throwable) {
-                Log.d("Screening onFailure", t.toString())
+                Timber.d("Screening onFailure %s", t.toString())
             }
 
             override fun onResponse(
@@ -187,8 +187,8 @@ class SyncService : Service(){
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
-                            println("Successfully added the Screening.")
-                            Log.d("saveScreeningToServer", "Screening uploaded $remoteId")
+                            Timber.d("Successfully added the Screening.")
+                            Timber.d("saveScreeningToServer %s", "Screening uploaded $remoteId")
                             val tempTreatment =
                                 treatmentBox.query().equal(
                                     Treatment_.encounterId,
@@ -206,8 +206,8 @@ class SyncService : Service(){
 
     @AddTrace(name = "saveReferralToServerFromSyncService", enabled = true /* optional */)
     private fun saveReferralToServer(remoteId: String, referral: Referral) {
-        Log.d("SyncService", "saveReferralToServer()")
-        Log.d("saveReferralToServer", referral.toString())
+        Timber.d("SyncService %s", "saveReferralToServer()")
+        Timber.d("saveReferralToServer %s", referral.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addReferral(
@@ -225,15 +225,15 @@ class SyncService : Service(){
         totalRetrofitProcessed += 1
         call.enqueue(object : Callback<ReferralModel> {
             override fun onFailure(call: Call<ReferralModel>, t: Throwable) {
-                Log.d("Referral onFailure", t.toString())
+                Timber.d("Referral onFailure %s", t.toString())
             }
 
             override fun onResponse(call: Call<ReferralModel>, response: Response<ReferralModel>) {
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
-                            println("Successfully added the Referral.")
-                            Log.d("saveReferralToServer", "Referral Uploaded. $remoteId")
+                            Timber.d("Successfully added the Referral.")
+                            Timber.d("saveReferralToServer %s", "Referral Uploaded. $remoteId")
                             successTasks += 1
                         }
                     }
@@ -244,8 +244,8 @@ class SyncService : Service(){
 
     @AddTrace(name = "saveTreatmentToServerFromSyncService", enabled = true /* optional */)
     private fun saveTreatmentToServer(remoteId: String, treatment: Treatment, encounterId: Long) {
-        Log.d("SyncService", "saveTreatmentToServer()")
-        Log.d("saveTreatmentToServer", treatment.toString())
+        Timber.d("SyncService %s", "saveTreatmentToServer()")
+        Timber.d("saveTreatmentToServer %s", treatment.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addTreatment(
@@ -319,7 +319,7 @@ class SyncService : Service(){
         )
         call.enqueue(object : Callback<TreatmentModel> {
             override fun onFailure(call: Call<TreatmentModel>, t: Throwable) {
-                Log.d("Treatment onFailure", t.toString())
+                Timber.d("Treatment onFailure %s", t.toString())
             }
 
             override fun onResponse(
@@ -329,7 +329,7 @@ class SyncService : Service(){
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
-                            Log.d("saveTreatmentToServer()", response.message())
+                            Timber.d("saveTreatmentToServer() %s", response.message())
                             println("Successfully added the Treatment.")
                             val tempReferral =
                                 referralBox.query().equal(
@@ -346,8 +346,8 @@ class SyncService : Service(){
 
     @AddTrace(name = "savePatientToServerFromSyncService", enabled = true /* optional */)
     private fun savePatientToServer(patient: Patient) {
-        Log.d("SyncService", "savePatientToServer()")
-        Log.d("savePatientToServer", patient.toString())
+        Timber.d("SyncService %s", "savePatientToServer()")
+        Timber.d("savePatientToServer %s", patient.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addPatient(
@@ -379,7 +379,7 @@ class SyncService : Service(){
         call.enqueue(object : Callback<PatientModel> {
             override fun onFailure(call: Call<PatientModel>, t: Throwable) {
                 print("Response in patient is fail®")
-                Log.d("onFailure", t.toString())
+                Timber.d("onFailure %s", t.toString())
             }
 
             override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
@@ -396,24 +396,24 @@ class SyncService : Service(){
                             dbPatient.updated = false
                             println("Patient uid is ${tempPatient.id}")
                             patientsBox.put(dbPatient)
-                            Log.d("savePatientToServer", tempPatient.fullName() + " saved.")
+                            Timber.d("savePatientToServer %s", tempPatient.fullName() + " saved.")
                             checkAllEncounter(dbPatient)
                         }
                         400 -> {
-                            Log.d("savePatientToServer", "400 bad request")
+                            Timber.d("savePatientToServer %s", "400 bad request")
                         }
                         404 -> {
-                            Log.d("savePatientToServer", "404 Page not found")
+                            Timber.d("savePatientToServer %s", "404 Page not found")
                         }
                         else -> {
-                            Log.d("savePatientToServer", "unhandled request")
+                            Timber.d("savePatientToServer %s", "unhandled request")
                         }
                     }
                 } else {
-                    Log.d("savePatientToServer", response.code().toString())
-                    Log.d("savePatientToServer", Gson().toJson(response.body()).toString())
+                    Timber.d("savePatientToServer %s", response.code().toString())
+                    Timber.d("savePatientToServer %s", Gson().toJson(response.body()).toString())
                     //tvErrorMessage.text = response.message()
-                    Log.d("savePatientToServer", response.message())
+                    Timber.d("savePatientToServer %s", response.message())
                 }
 
             }
@@ -447,8 +447,8 @@ class SyncService : Service(){
         patientActivityId: String,
         tempEncounter: Encounter
     ) {
-        Log.d("SyncService", "saveEncounterToServer()")
-        Log.d("saveEncounterToServer", tempEncounter.toString())
+        Timber.d("SyncService %s", "saveEncounterToServer()")
+        Timber.d("saveEncounterToServer %s", tempEncounter.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addEncounter(
@@ -466,7 +466,7 @@ class SyncService : Service(){
         )
         call.enqueue(object : Callback<EncounterModel> {
             override fun onFailure(call: Call<EncounterModel>, t: Throwable) {
-                Log.d("onFailure", t.toString())
+                Timber.d("onFailure %s", t.toString())
             }
 
             override fun onResponse(
@@ -488,10 +488,10 @@ class SyncService : Service(){
                         }
                     }
                 } else {
-                    Log.d("saveEncounterToServer", response.code().toString())
-                    Log.d("saveEncounterToServer", Gson().toJson(response.body()).toString())
+                    Timber.d("saveEncounterToServer %s", response.code().toString())
+                    Timber.d("saveEncounterToServer %s", Gson().toJson(response.body()).toString())
                     //tvErrorMessage.text = response.message()
-                    Log.d("saveEncounterToServer", response.message())
+                    Timber.d("saveEncounterToServer %s", response.message())
                 }
             }
 

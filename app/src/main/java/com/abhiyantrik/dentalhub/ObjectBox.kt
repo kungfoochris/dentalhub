@@ -5,6 +5,7 @@ import android.util.Log
 import com.abhiyantrik.dentalhub.entities.MyObjectBox
 import io.objectbox.BoxStore
 import io.objectbox.android.AndroidObjectBrowser
+import timber.log.Timber
 
 object ObjectBox {
 
@@ -16,8 +17,7 @@ object ObjectBox {
 
         if (BuildConfig.DEBUG) {
             AndroidObjectBrowser(boxStore).start(context.applicationContext)
-            Log.d(
-                "ObjectBox",
+            Timber.d(
                 "Using ObjectBox ${BoxStore.getVersion()} (${BoxStore.getVersionNative()})"
             )
         }

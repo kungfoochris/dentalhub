@@ -22,6 +22,7 @@ import com.abhiyantrik.dentalhub.entities.History_
 import com.abhiyantrik.dentalhub.fragments.interfaces.HistoryFormCommunicator
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_history.*
+import timber.log.Timber
 
 class HistoryFragment : Fragment() {
     private lateinit var fragmentCommunicator: TreatmentFragmentCommunicator
@@ -196,7 +197,7 @@ class HistoryFragment : Fragment() {
             }
             // to check the validation conditions
             if (!historyValidate()) {
-                Log.d("HistoryFragment", "History fragment is invalid.")
+                Timber.d("HistoryFragment %s", "History fragment is invalid.")
             } else {
                 saveHistoryData()
                 fragmentCommunicator.goForward()
@@ -210,9 +211,9 @@ class HistoryFragment : Fragment() {
             }
             // to check the validation conditions
             if (!historyValidate()) {
-                Log.d("HistoryFragment", "History fragment is invalid.")
+                Timber.d("HistoryFragment %s", "History fragment is invalid.")
             } else {
-                Log.d("HistoryFragment", "History fragment is valid.")
+                Timber.d("HistoryFragment %s", "History fragment is valid.")
                 saveHistoryData()
                 fragmentCommunicator.goBack()
             }
@@ -268,19 +269,19 @@ class HistoryFragment : Fragment() {
                     !checkBoxLowBP.isChecked && !checkBoxThyroidDisorder.isChecked) &&
             etOther.text.toString().trim().isEmpty()
         ) {
-            Log.d(TAG, "Checkbox of not underlying medical condition is not checked.")
+            Timber.d("Checkbox of not underlying medical condition is not checked.")
             Toast.makeText(context, "Fill underlying medical condition details.", Toast.LENGTH_SHORT).show()
             return false
         }
         // for not taking any medications
         if (!checkBoxNotTakingAnyMedications.isChecked && etMedications.text.toString().trim().isEmpty()) {
-            Log.d(TAG, "Checkbox of medicine is not checked.")
+            Timber.d("Checkbox of medicine is not checked.")
             Toast.makeText(context, "Fill medication details.", Toast.LENGTH_SHORT).show()
             return false
         }
         // for no allergies
         if (!checkBoxNoAllergies.isChecked && etAllergies.text.toString().trim().isEmpty()) {
-            Log.d(TAG, "Checkbox of allergies is not checked.")
+            Timber.d("Checkbox of allergies is not checked.")
             Toast.makeText(context, "Fill allergies details.", Toast.LENGTH_SHORT).show()
             return false
         }

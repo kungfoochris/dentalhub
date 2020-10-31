@@ -14,6 +14,7 @@ import com.abhiyantrik.dentalhub.models.Encounter
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import timber.log.Timber
 
 class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
     Worker(context, params) {
@@ -45,7 +46,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
             downloadEncounters(patientId)
             Result.success()
         } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            Timber.d(e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
@@ -77,11 +78,11 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                 encounter.id
                             ).build().find().size > 0
                         ) {
-                            Log.d("Encounter", alreadyDownloadedMessage)
+                            Timber.d("Encounter %s", alreadyDownloadedMessage)
                         } else {
 
-                            Log.d("Encounter Download", "Encounter downloading of ${encounter.id}.")
-                            Log.d("Encounter list", encounter.toString())
+                            Timber.d("Encounter Download %s", "Encounter downloading of ${encounter.id}.")
+                            Timber.d("Encounter list %s", encounter.toString())
 
                             val encounterEntity = com.abhiyantrik.dentalhub.entities.Encounter()
                             encounterEntity.encounter_type = encounter.encounter_type
@@ -124,7 +125,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.history!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("History", alreadyDownloadedMessage)
+                                    Timber.d("History %s", alreadyDownloadedMessage)
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -188,7 +189,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.screening!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("Screening", alreadyDownloadedMessage)
+                                    Timber.d("Screening: %s", alreadyDownloadedMessage)
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -241,7 +242,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.treatment!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("Treatment", alreadyDownloadedMessage)
+                                    Timber.d("Treatment %s", alreadyDownloadedMessage)
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,
@@ -347,7 +348,7 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                                         encounter.referral!!.id
                                     ).build().find().size > 0
                                 ) {
-                                    Log.d("Referral", alreadyDownloadedMessage)
+                                    Timber.d("Referral: %s", alreadyDownloadedMessage)
                                 } else {
                                     DentalApp.displayNotification(
                                         applicationContext,

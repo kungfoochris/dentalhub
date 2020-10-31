@@ -13,6 +13,7 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import timber.log.Timber
 import com.abhiyantrik.dentalhub.models.Treatment as TreatmentModel
 
 class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -36,7 +37,7 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
             saveTreatmentToServer(dbEncounterEntity, tempTreatment)
             Result.success()
         } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            Timber.d(e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }

@@ -11,6 +11,7 @@ import io.objectbox.annotation.Id
 import io.objectbox.relation.ToMany
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
+import timber.log.Timber
 import java.util.*
 
 
@@ -82,7 +83,7 @@ class Patient : Parcelable {
             val ward = wardBox.query().equal(Ward_.remote_id, ward.toLong()).build().findFirst()
             wardNumberString = "${ward?.ward}"
         } catch (e: KotlinNullPointerException) {
-            Log.d("Patient", e.printStackTrace().toString())
+            Timber.d(e.printStackTrace().toString())
         }
         return wardNumberString
 
@@ -99,7 +100,7 @@ class Patient : Parcelable {
 
             municipalityNameString = municipalityName.name
         } catch (e: KotlinNullPointerException) {
-            Log.d("Patient", e.printStackTrace().toString())
+            Timber.d(e.printStackTrace().toString())
         }
         return municipalityNameString
 
@@ -115,13 +116,13 @@ class Patient : Parcelable {
             ).build().findFirst()!!
             districtNameString = districtName.name
         } catch (e: KotlinNullPointerException) {
-            Log.d("Patient", e.printStackTrace().toString())
+            Timber.d(e.printStackTrace().toString())
         }
         return districtNameString
     }
 
     fun age(): String {
-        Log.d("dob", dob)
+        Timber.d("dob %s", dob)
         try {
             val year: Int = dob.substring(0, 4).toInt()
             val month: Int = dob.substring(5, 7).toInt()
@@ -145,9 +146,9 @@ class Patient : Parcelable {
             if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
                 age--
             }
-            Log.d("AGE ", age.toString())
-            Log.d(
-                "Month",
+            Timber.d("AGE %s", age.toString())
+            Timber.d(
+                "Month %s",
                 ((today.get(Calendar.DAY_OF_YEAR) - dob.get(Calendar.DAY_OF_YEAR)) / 30).toString()
             )
             return if (age <= 0) {
@@ -157,7 +158,7 @@ class Patient : Parcelable {
                 "$age years"
             }
         } catch (e: StringIndexOutOfBoundsException) {
-            Log.d("Patient", "Could not calculate date")
+            Timber.d("Patient %s", "Could not calculate date")
             return "-"
         }
     }

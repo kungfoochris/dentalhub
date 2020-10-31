@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class FlagEncounterViewActivity : AppCompatActivity() {
 
@@ -48,7 +49,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                     val queryResult = encounterBox.query().equal(Encounter_.remote_id, flagEncounter.encounter_remote_id).build().findFirst()
                     if (queryResult != null) {
                         Toast.makeText(this@FlagEncounterViewActivity, "Encounter remote_id found with patient ID: ${queryResult.patient?.targetId}", Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "EncounterAdapter" +"do the edit operation")
+                        Timber.d("EncounterAdapter" +"do the edit operation")
                         val patientId = queryResult.patient?.targetId.toString()
                         DentalApp.saveIntToPreference(this@FlagEncounterViewActivity, Constants.PREF_SELECTED_PATIENT, patientId.toInt())
                         val addEncounterActivityIntent = Intent(this@FlagEncounterViewActivity, AddEncounterActivity::class.java)
@@ -77,9 +78,9 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     if (response.code() == 200) {
                         val data = response.body() as List<FlagModifyDelete>
-                        Log.d(TAG, "Received data are $data")
+                        Timber.d("Received data are $data")
                         data.forEach { eachFlagData ->
-                            Log.d("FlagData", eachFlagData.toString())
+                            Timber.d("FlagData %s", eachFlagData.toString())
                             if (eachFlagData.flag.isNotEmpty()) {
                                 if (eachFlagData.flag == "delete") {
                                     flagEncounterList.add(
@@ -148,12 +149,12 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                 }
             }
         } catch (ex : Exception) {
-            Log.d(TAG, "Error Please try again.")
+            Timber.d("Error Please try again.")
             Toast.makeText(this, "Error occurred please try again.", Toast.LENGTH_SHORT).show()
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() Exception"+ ex.printStackTrace().toString())
         }
 
-        Log.d(TAG, "FlagData $flagEncounterList")
+        Timber.d("FlagData $flagEncounterList")
     }
 
     override fun onSupportNavigateUp(): Boolean {

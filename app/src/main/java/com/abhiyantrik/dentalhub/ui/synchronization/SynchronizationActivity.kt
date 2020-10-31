@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class SynchronizationActivity : AppCompatActivity() {
 
@@ -118,7 +119,7 @@ class SynchronizationActivity : AppCompatActivity() {
                 } // encounter
 
                 allNotUploadedData.forEach {
-                    Log.d("NotUploaded", "${it.patient_name}, ${it.encounter_type}")
+                    Timber.d("NotUploaded %s", "${it.patient_name}, ${it.encounter_type}")
                 }
 
                 syncList.addAll(allUploadedData)

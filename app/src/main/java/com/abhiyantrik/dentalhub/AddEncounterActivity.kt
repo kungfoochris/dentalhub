@@ -109,11 +109,11 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
             if (currentDate == null) {
                 Toast.makeText(context, "There is problem in Encounter date so please contact to Abhiyantrik or Saroj Dhakal.", Toast.LENGTH_LONG).show()
             }
-            Log.d("CheckingDate", currentDate.toString())
+            Timber.d("CheckingDate %s", currentDate.toString())
             val currentDateTime = Calendar.getInstance().time
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            Log.d("CheckingDate", dateFormat.format(currentDate))
-            Log.d("CheckingDate", dateFormat.format(currentDate))
+            Timber.d("CheckingDate %s", dateFormat.format(currentDate))
+            Timber.d("CheckingDate %s", dateFormat.format(currentDate))
             val modifiedNewDate = dateFormat.format(currentDate).substring(0, 10) + dateFormat.format(currentDateTime).substring(10)
 
 //            val encounter = Encounter()
@@ -556,7 +556,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         } else {
             pager.currentItem -= 1
         }
-        Log.d(TAG, "Current Index ${pager.currentItem}")
+        Timber.d("Current Index ${pager.currentItem}")
         updateIndex(pager.currentItem)
 
     }
@@ -568,7 +568,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         } else {
             pager.currentItem += 1
         }
-        Log.d(TAG, "Current Index ${pager.currentItem}")
+        Timber.d("Current Index ${pager.currentItem}")
         updateIndex(pager.currentItem)
     }
 
@@ -664,9 +664,9 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                     )
                     .enqueue()
 
-                Log.d("FlagTest", "Edit found.")
+                Timber.d("FlagTest %s", "Edit found.")
                 if (encounterFlagId != 0.toLong()) {
-                    Log.d("FlagTest", "Flag Id found as ${encounterFlagId}.")
+                    Timber.d("FlagTest %s", "Flag Id found as ${encounterFlagId}.")
                     try {
                         GlobalScope.launch(Dispatchers.IO) {
                             val token = DentalApp.readFromPreference(
@@ -683,7 +683,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                             val response = call.execute()
                             if (response.isSuccessful) {
                                 if (response.code() == 200) {
-                                    Log.d("FlagTest", "Encounter modified successfully.")
+                                    Timber.d("FlagTest %s", "Encounter modified successfully.")
                                     withContext(Dispatchers.Main) {
                                         Toast.makeText(
                                             this@AddEncounterActivity,
@@ -692,7 +692,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                                         ).show()
                                     }
                                 } else {
-                                    Log.d("FlagTest", "Encounter modify failed.")
+                                    Timber.d("FlagTest %s", "Encounter modify failed.")
                                     Toast.makeText(
                                         context,
                                         "Encounter modify failed.",

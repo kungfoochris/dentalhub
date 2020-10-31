@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_selector.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.text.DecimalFormat
 import java.util.*
 import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
@@ -56,7 +57,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_selector)
         context = this
         initUI()
-        Log.d(TAG, "Backdate of today is $backDateSelected")
+        Timber.d("Backdate of today is $backDateSelected")
     }
 
     private fun initUI() {
@@ -78,7 +79,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         loadActivityId()
         loadActivitySuggestions()
 
-        Log.d(TAG, DentalApp.activitySuggestions.toString())
+        Timber.d(DentalApp.activitySuggestions.toString())
 
         arrayAdapter = ArrayAdapter<String>(
             this,
@@ -130,7 +131,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
                     val backDate = "$year-$month-$day"
                     if(backDate.isNotEmpty()){
                         etBackdate.setText(DateHelper.getReadableNepaliDate(backDate))
-                        Log.d(TAG, "Date $year-$month-$day")
+                        Timber.d("Date $year-$month-$day")
                         backDateSelected = backDate
                     }
                 }
@@ -216,7 +217,8 @@ class ActivitySelectorActivity : AppCompatActivity() {
         call.enqueue(object : Callback<List<ActivitySuggestion>> {
             override fun onFailure(call: Call<List<ActivitySuggestion>>, t: Throwable) {
                 FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ "loadActivitySuggestions " +t.message.toString())
-                Log.d("loadActivityId()", "onFailure")
+                Timber.d("loadActivityId() %s", "onFailure")
+                Timber.d(t.message)
             }
 
             override fun onResponse(
@@ -237,13 +239,13 @@ class ActivitySelectorActivity : AppCompatActivity() {
     }
 
     private fun loadActivityId() {
-        Log.d(TAG, "loadActivityId()")
+        Timber.d("loadActivityId()")
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(context)
         val call = panelService.listActivityEvents("JWT $token")
         call.enqueue(object : Callback<List<ActivityModel>> {
             override fun onFailure(call: Call<List<ActivityModel>>, t: Throwable) {
-                Log.d(TAG, "onFailure loadActivityId(): ${t}")
+                Timber.d("onFailure loadActivityId(): ${t}")
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
                 } else {
@@ -261,7 +263,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
             ) {
                 when (response.code()) {
                     200 -> {
-                        Log.d(TAG, "response  ${response.body()}")
+                        Timber.d("response  ${response.body()}")
                         allAPIActivities = response.body() as List<ActivityModel>
                         for (eachActivity in allAPIActivities) {
                             when (eachActivity.name) {
@@ -283,12 +285,12 @@ class ActivitySelectorActivity : AppCompatActivity() {
                         progressBar.visibility = View.GONE
                     }
                     400 -> {
-                        Log.d(TAG, "400 error found.")
+                        Timber.d("400 error found.")
                         progressBar.visibility = View.GONE
                         Toast.makeText(context, "Failed to fetch.", Toast.LENGTH_SHORT).show()
                     }
                     else -> {
-                        Log.d(TAG, "Unhandled exception")
+                        Timber.d("Unhandled exception")
                         progressBar.visibility = View.GONE
                         Toast.makeText(context, "Failed to connect.", Toast.LENGTH_SHORT).show()
                     }
@@ -299,7 +301,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
     }
 
     private fun saveToServerNewActivity() {
-        Log.d(TAG, "saveToServerNewActivity()")
+        Timber.d("saveToServerNewActivity()")
         println("Selected seminar in save to server $selectedActivity")
         val token = DentalApp.readFromPreference(this, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
@@ -311,14 +313,14 @@ class ActivitySelectorActivity : AppCompatActivity() {
             )
         call.enqueue(object : Callback<ActivityModel> {
             override fun onFailure(call: Call<ActivityModel>, t: Throwable) {
-                Log.d(TAG, "on Failure() : ${t.toString()}")
+                Timber.d("on Failure() : ${t.toString()}")
             }
 
             override fun onResponse(
                 call: Call<ActivityModel>,
                 response: Response<ActivityModel>
             ) {
-                Log.d(TAG, "Response code is ${response.code()} and body is ${response.body()}")
+                Timber.d("Response code is ${response.code()} and body is ${response.body()}")
                 when (response.code()) {
                     200 -> {
                         val serverActivity = response.body() as ActivityModel
@@ -344,12 +346,12 @@ class ActivitySelectorActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     400 -> {
-                        Log.d(TAG, "On 400 error")
+                        Timber.d("On 400 error")
                         Toast.makeText(context, "Fail to create the activity.", Toast.LENGTH_SHORT)
                             .show()
                     }
                     else -> {
-                        Log.d(TAG, "On other status code.")
+                        Timber.d("On other status code.")
                         Toast.makeText(context, "Unknown problem faced.", Toast.LENGTH_SHORT).show()
                     }
                 }

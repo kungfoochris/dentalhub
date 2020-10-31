@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.models.Geography
+import timber.log.Timber
 
 class GeographyAdapter(
     var context: Context,
@@ -36,7 +37,7 @@ class GeographyAdapter(
         holder.itemView.isFocusable = true
 
         holder.itemView.setOnClickListener {
-            Log.d("EncounterAdapter", "itemView clicked")
+            Timber.d("EncounterAdapter %s", "itemView clicked")
             DentalApp.geography_id = selectedGeography.id
             geographyClickListener.onGeographyClick(selectedGeography)
         }

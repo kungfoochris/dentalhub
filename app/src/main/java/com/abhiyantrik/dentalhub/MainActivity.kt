@@ -40,6 +40,7 @@ import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
 import io.objectbox.query.Query
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     @AddTrace(name = "onCreateMainActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate()")
+        Timber.d("onCreate()")
         setContentView(R.layout.activity_main)
 
         context = this
@@ -95,16 +96,16 @@ class MainActivity : AppCompatActivity() {
 
         setupUI()
 
-        Log.d("Location", DentalApp.ward_name)
-        Log.d(
-            "Proxy: ",
+        Timber.d("Location %s", DentalApp.ward_name)
+        Timber.d(
+            "Proxy: "+
             DentalApp.readFromPreference(
                 context,
                 Constants.PREF_PROFILE_FULL_NAME,
                 "Some thing is fishy."
             )
         )
-        Log.d("Activity", DentalApp.activity_name)
+        Timber.d("Activity %s", DentalApp.activity_name)
         tvName.text = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_FULL_NAME, "")
         tvLocation.text = DentalApp.ward_name
         tvActivity.text = DentalApp.activity_name
@@ -135,7 +136,7 @@ class MainActivity : AppCompatActivity() {
         allPatientRecall.add(rowThisWeek)
 
         var nextDay = DateHelper.getNextDay(today)
-        Log.d("NEXT WEEK", "NEXT WEEK")
+        Timber.d("NEXT WEEK")
         for (i in 1..8) {
             val thisWeekPatients =
                 patientsBox.query().equal(Patient_.recall_date, nextDay)
@@ -149,7 +150,7 @@ class MainActivity : AppCompatActivity() {
         rowRecallNextMonth.first_name = "Recall Next Month"
         rowRecallNextMonth.content = "header"
         allPatientRecall.add(rowRecallNextMonth)
-        Log.d("NEXT MONTH", "NEXT MONTH")
+        Timber.d("NEXT MONTH")
         for (i in 1..24) {
             val thisMonthPatients =
                 patientsBox.query().equal(Patient_.recall_date, nextDay)
@@ -178,7 +179,7 @@ class MainActivity : AppCompatActivity() {
         title = getString(R.string.dashboard)
 
         if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
-            Log.d(TAG,"Activity is not been selected.")
+            Timber.d("Activity is not been selected.")
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
             logout()
         }
@@ -207,15 +208,15 @@ class MainActivity : AppCompatActivity() {
             addNewPatient()
         }
         fabBtnSync.setOnClickListener {
-            Log.d(TAG, "startSync")
+            Timber.d("startSync")
             if (!fabButtonPressTime) {
 
-                Log.d("TAG", "5 minuted countdown starts now.")
+                Timber.d("5 minuted countdown starts now.")
 
                 //after 5 minute this method will be pressed. 300000
                 Handler(Looper.getMainLooper()).postDelayed({
                     fabButtonPressTime = false
-                    Log.d("TAG","5 min completed.")
+                    Timber.d("5 min completed.")
                 }, 300000)
 
                 fabButtonPressTime = true
@@ -266,13 +267,13 @@ class MainActivity : AppCompatActivity() {
                             val unuploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().find()
                             val unuploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().find()
 
-                            Log.d(TAG, "Fab sync History " +  unuploadedHistory.toString())
-                            Log.d(TAG, "Fab sync eachScreening "+ unuploadedScreening.toString())
-                            Log.d(TAG, "Fab sync eachTreatment " + unuploadedTreatment.toString())
-                            Log.d(TAG, "Fab sync eachReferral " + unuploadedReferral.toString())
+                            Timber.d("Fab sync History " +  unuploadedHistory.toString())
+                            Timber.d("Fab sync eachScreening "+ unuploadedScreening.toString())
+                            Timber.d("Fab sync eachTreatment " + unuploadedTreatment.toString())
+                            Timber.d("Fab sync eachReferral " + unuploadedReferral.toString())
 
                             if (unuploadedHistory.isNotEmpty()) {
-                                Log.d("Fab sync History", unuploadedHistory[0].id.toString())
+                                Timber.d("Fab sync History: "+ unuploadedHistory[0].id.toString())
 
                                 val uploadHistoryWorkerRequest =
                                     OneTimeWorkRequestBuilder<UploadHistoryWorker>()
@@ -284,7 +285,7 @@ class MainActivity : AppCompatActivity() {
                                     .enqueue(uploadHistoryWorkerRequest)
                             }
                             if (unuploadedScreening.isNotEmpty()) {
-                                Log.d("Fab sync History", unuploadedScreening[0].id.toString())
+                                Timber.d("Fab sync History: "+ unuploadedScreening[0].id.toString())
 
                                 val uploadScreeningWorkerRequest =
                                     OneTimeWorkRequestBuilder<UploadScreeningWorker>()
@@ -296,7 +297,7 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             if (unuploadedTreatment.isNotEmpty()) {
-                                Log.d("Fab sync History", unuploadedTreatment[0].id.toString())
+                                Timber.d("Fab sync History"+ unuploadedTreatment[0].id.toString())
 
                                 val uploadTreatmentWorkerRequest =
                                     OneTimeWorkRequestBuilder<UploadTreatmentWorker>()
@@ -308,7 +309,7 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             if (unuploadedReferral.isNotEmpty()) {
-                                Log.d("Fab sync History", unuploadedReferral[0].id.toString())
+                                Timber.d("Fab sync History"+ unuploadedReferral[0].id.toString())
 
                                 val uploadReferralWorkerRequest =
                                     OneTimeWorkRequestBuilder<UploadReferralWorker>()
@@ -355,10 +356,10 @@ class MainActivity : AppCompatActivity() {
 
         if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
                 treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
-            Log.d(TAG, "all patient uploaded.")
+            Timber.d("all patient uploaded.")
             fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.colorART))
         } else {
-            Log.d(TAG, "Left to upload patient details.")
+            Timber.d("Left to upload patient details.")
             fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.red_A200))
         }
     }
@@ -375,7 +376,7 @@ class MainActivity : AppCompatActivity() {
 
     @AddTrace(name = "listPatientsFromLocalDBMainActivity", enabled = true /* optional */)
     private fun listPatientsFromLocalDB() {
-        Log.d(TAG, "listPatientsFromLocalDB()")
+        Timber.d("listPatientsFromLocalDB()")
         try {
             allPatients =
                 patientsBox.query().equal(Patient_.geography_id, DentalApp.geography_id.toLong())
@@ -384,7 +385,7 @@ class MainActivity : AppCompatActivity() {
         } catch (e: DbException) {
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
-            Log.d("DBException", e.printStackTrace().toString())
+            Timber.d("DBException:"+ e.printStackTrace().toString())
         }
 
     }
@@ -532,7 +533,7 @@ class MainActivity : AppCompatActivity() {
             -1,
             DialogInterface.OnClickListener { dialog, item ->
                 loading.visibility = View.VISIBLE
-                Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
+                Timber.d("DELAYED: "+ patient.fullName() + " by " + grpName[item])
                 val tempPatient =
                     patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()!!
 

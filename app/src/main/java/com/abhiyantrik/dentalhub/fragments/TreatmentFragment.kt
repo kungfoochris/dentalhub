@@ -24,6 +24,7 @@ import com.abhiyantrik.dentalhub.entities.Treatment
 import com.abhiyantrik.dentalhub.entities.Treatment_
 import com.abhiyantrik.dentalhub.fragments.interfaces.TreatmentFormCommunicator
 import io.objectbox.Box
+import timber.log.Timber
 
 class TreatmentFragment : Fragment(), View.OnClickListener {
 
@@ -300,10 +301,10 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             val fvApplied = checkBoxFVApplied.isChecked
             val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
 
-            Log.d("TPC", treatmentPlanComplete.toString())
-            Log.d("notes", notes)
-            Log.d("fvApplied", fvApplied.toString())
-            Log.d("teeth", teeth.toString())
+            Timber.d("TPC %s", treatmentPlanComplete.toString())
+            Timber.d("notes %s", notes)
+            Timber.d("fvApplied %s", fvApplied.toString())
+            Timber.d("teeth %s", teeth.toString())
 
             treatmentFormCommunicator.updateTreatment(
                 notes,
@@ -325,10 +326,10 @@ class TreatmentFragment : Fragment(), View.OnClickListener {
             val fvApplied = checkBoxFVApplied.isChecked
             val treatmentPlanComplete = checkBoxTreatmentPlanComplete.isChecked
 
-            Log.d("TPC", treatmentPlanComplete.toString())
-            Log.d("notes", notes)
-            Log.d("fvApplied", fvApplied.toString())
-            Log.d("teeth", teeth.toString())
+            Timber.d("TPC %s", treatmentPlanComplete.toString())
+            Timber.d("notes %s", notes)
+            Timber.d("fvApplied %s", fvApplied.toString())
+            Timber.d("teeth %s", teeth.toString())
 
             treatmentFormCommunicator.updateTreatment(
                 notes,

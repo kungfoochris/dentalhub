@@ -144,7 +144,7 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
 
         fun addStringToPreference(context: Context, preferenceValue: String) {
             activitySuggestions.add(preferenceValue)
-            Log.d("Suggestions", activitySuggestions.toString())
+            Timber.d("Suggestions %s", activitySuggestions)
             val sharedPreferences =
                 context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()

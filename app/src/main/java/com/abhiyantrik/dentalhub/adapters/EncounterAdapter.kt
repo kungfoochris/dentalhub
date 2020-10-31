@@ -25,6 +25,7 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.workers.DownloadUsersWorker
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.single_encounter.view.*
+import timber.log.Timber
 
 
 class EncounterAdapter(
@@ -54,7 +55,7 @@ class EncounterAdapter(
         holder.itemView.isClickable = true
         holder.itemView.isFocusable = true
         holder.itemView.ibEdit.setOnClickListener {
-            Log.d(TAG, "do the edit operation")
+            Timber.d("do the edit operation")
             val addEncounterActivityIntent = Intent(context, AddEncounterActivity::class.java)
             addEncounterActivityIntent.putExtra("ENCOUNTER_ID", encounterItem.id)
             addEncounterActivityIntent.putExtra("PATIENT_ID", patient.id)
@@ -62,7 +63,7 @@ class EncounterAdapter(
             context.startActivity(addEncounterActivityIntent)
         }
         holder.itemView.setOnClickListener {
-            Log.d(TAG, "itemView clicked")
+            Timber.d("itemView clicked")
             encounterClickListener.onEncounterClick(encounterItem)
         }
         holder.itemView.ibModificationFlag.setOnClickListener {
@@ -87,7 +88,7 @@ class EncounterAdapter(
                 val author = userBox.query().equal(User_.remote_id, encounter.author).build().findFirst()!!
                 tvAuthorName.text = author.fullName()
             } catch (e: NullPointerException) {
-                Log.d(TAG, "Author not found.")
+                Timber.d("Author not found.")
                 val downloadUsersWorkRequest = OneTimeWorkRequestBuilder<DownloadUsersWorker>()
                     .setConstraints(DentalApp.downloadConstraints)
                     .build()

@@ -21,6 +21,7 @@ import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class SetupActivity : AppCompatActivity() {
@@ -48,13 +49,14 @@ class SetupActivity : AppCompatActivity() {
     private fun logout() {
         DentalApp.clearAuthDetails(context)
         Toast.makeText(context, "Failed to load data. Please try again.", Toast.LENGTH_SHORT).show()
+        Timber.d("Failed to load data. Please try again.")
         startActivity(Intent(context, LoginActivity::class.java))
         finish()
     }
 
     @AddTrace(name = "loadProfileFromSetupActivity", enabled = true /* optional */)
     private fun loadProfile() {
-        Log.d(TAG, "startSync")
+        Timber.d("startSync")
 
         val downloadUsersWorkRequest = OneTimeWorkRequestBuilder<DownloadUsersWorker>()
             .setConstraints(DentalApp.downloadConstraints)
@@ -73,7 +75,7 @@ class SetupActivity : AppCompatActivity() {
         val call = panelService.fetchProfile("JWT $token")
         call.enqueue(object : Callback<Profile> {
             override fun onFailure(call: Call<Profile>, t: Throwable) {
-                Log.d(TAG, "onFailure()")
+                Timber.d("onFailure()")
                 if (BuildConfig.DEBUG) {
                     tvMessage.append(t.message.toString())
                 } else {
@@ -84,7 +86,7 @@ class SetupActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                Log.d("SetupActivity", response.code().toString())
+                Timber.d(response.code().toString())
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
@@ -111,7 +113,7 @@ class SetupActivity : AppCompatActivity() {
                     }
                 } else {
                     FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No response while loading profile")
-                    Log.d("SetupActivity", "response failed")
+                    Timber.d("response failed")
                     logout()
                 }
             }
@@ -121,17 +123,17 @@ class SetupActivity : AppCompatActivity() {
 
     @AddTrace(name = "loadDataFromSetupActivity", enabled = true /* optional */)
     private fun loadData() {
-        Log.d(TAG, "loadData()")
+        Timber.d("loadData()")
         tvMessage.append("Loading addresses...\n")
         val panelService = DjangoInterface.create(this)
         val call = panelService.listAddresses()
         call.enqueue(object : Callback<List<District>> {
             override fun onFailure(call: Call<List<District>>, t: Throwable) {
-                Log.d(TAG, "onFailure()")
+                Timber.d("onFailure()")
                 tvMessage.append("Failed to load addresses \n")
                 FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listAddresses() " + t.message.toString())
                 FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Failed to load addresses")
-                Log.d(TAG, t.toString())
+                Timber.d(t.toString())
                 logout()
             }
 
@@ -139,7 +141,7 @@ class SetupActivity : AppCompatActivity() {
                 call: Call<List<District>>,
                 response: Response<List<District>>
             ) {
-                Log.d(TAG, "onResponse()")
+                Timber.d("onResponse()")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
@@ -161,7 +163,7 @@ class SetupActivity : AppCompatActivity() {
                     }
                 } else {
                     FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No response while loading profile")
-                    Log.d(TAG, response.code().toString())
+                    Timber.d(response.code().toString())
                     logout()
                 }
             }
