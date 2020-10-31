@@ -10,6 +10,7 @@ import com.abhiyantrik.dentalhub.DentalApp
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
+import timber.log.Timber
 
 
 class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks,
@@ -57,14 +58,14 @@ class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks,
 //        })
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
-                Log.d("LocationTrackerService", "onLocationResult")
+                Timber.d("onLocationResult")
                 if (locationResult != null) {
                     for (location in locationResult.locations) {
-                        Log.d("onLocationResult", location.toString())
+                        Timber.d("onLocationResult %s", location.toString())
                         if (location != null) {
                             DentalApp.location.latitude = location.latitude.toString()
                             DentalApp.location.longitude = location.longitude.toString()
-                            Log.d("Location", DentalApp.location.toString())
+                            Timber.d("Location %s", DentalApp.location.toString())
                         }
                     }
                 }
@@ -72,8 +73,8 @@ class LocationTrackerService : Service(), GoogleApiClient.ConnectionCallbacks,
         }
 
         mFusedLocationClient.lastLocation.addOnSuccessListener {
-            Log.d("LocationTrackerService", "onSuccessListener")
-            Log.d("locationRequest", locationRequest.toString())
+            Timber.d("LocationTrackerService %s", "onSuccessListener")
+            Timber.d("locationRequest %s", locationRequest.toString())
             mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
         }
 

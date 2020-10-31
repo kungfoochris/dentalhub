@@ -13,6 +13,7 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import timber.log.Timber
 import com.abhiyantrik.dentalhub.models.User as UserModel
 
 class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -26,7 +27,7 @@ class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(c
             downloadUsers()
             return Result.success()
         }catch (e: Exception){
-            Log.d("Exception", e.printStackTrace().toString())
+            Timber.d("Exception %s", e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
@@ -44,35 +45,35 @@ class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(c
             when (response.code()) {
                 200 -> {
                     val allUsers = response.body() as List<UserModel>
-                    Log.d("DownloadUserWorkers", response.body().toString())
+                    Timber.d("DownloadUserWorkers: %s", response.body().toString())
                     for(user in allUsers){
-                        Log.d("DownloadUserWorkers", user.first_name + " " + user.middle_name + " " + user.last_name)
+                        Timber.d("DownloadUserWorkers: %s %s %s", user.first_name ,user.middle_name, user.last_name)
                         val existingUserCount = usersBox.query().equal(
                             User_.remote_id,
                             user.id
                         ).build().count()
                         if(existingUserCount<1){
                             val userEntity = User()
-                            Log.d("DownloadUserWorkers", user.first_name + " " + user.middle_name + " " + user.last_name)
+                            Timber.d("DownloadUserWorkers: %s %s %s", user.first_name, user.middle_name, user.last_name)
                             userEntity.remote_id = user.id
                             userEntity.first_name = user.first_name
                             userEntity.middle_name = user.middle_name
                             userEntity.last_name = user.last_name
                             usersBox.put(userEntity)
                         }else{
-                            Log.d("DUser","User already download")
+                            Timber.d("DUser: %s","User already download")
                         }
                     }
                 }
                 else -> {
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() HTTP Status code "+response.code())
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() HTTP Status code "+response.code())
                 }
             }
         } else {
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() Failed to download users.")
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() HTTP Status code "+response.code())
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() "+response.message())
-            Log.d("DownloadUsersWorker", response.message())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() Failed to download users.")
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() HTTP Status code "+response.code())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() "+response.message())
+            Timber.d("DownloadUsersWorker: %s", response.message())
         }
     }
 }

@@ -30,6 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,8 +61,6 @@ class ViewPatientActivity : AppCompatActivity() {
     private var modifyDeleteReason: String = ""
     private var modifyDeleteOtherReason: String = ""
     private var modifyDeleteEncounterId: String = ""
-
-    val TAG = "ViewPatientActivity"
 
     @AddTrace(name = "onCreateViewPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,7 +119,7 @@ class ViewPatientActivity : AppCompatActivity() {
 
     private fun listEncounters() {
         if (patientId == 0.toLong()) {
-            Log.d("PT ID ", patientId.toString())
+            Timber.d("PT ID "+ patientId.toString())
             Toast.makeText(context, "Invalid patient id", Toast.LENGTH_LONG).show()
             finish()
         }
@@ -145,7 +144,7 @@ class ViewPatientActivity : AppCompatActivity() {
 
                     override fun onEncounterClick(encounter: Encounter) {
                         // start the encounter view
-                        Log.d("View PatientActivity", "show encounter detail")
+                        Timber.d("View PatientActivity show encounter detail")
                         val encounterDetailIntent =
                             Intent(context, ViewEncounterActivity::class.java)
                         encounterDetailIntent.putExtra("ENCOUNTER_ID", encounter.id)
@@ -245,13 +244,13 @@ class ViewPatientActivity : AppCompatActivity() {
         }
 
         tvModifyEncounter.setOnClickListener {
-            Log.d(TAG, "Modify iv clicked.")
+            Timber.d("Modify iv clicked.")
             displayModifyPopup()
             dialog.dismiss()
         }
 
         tvDeleteEncounter.setOnClickListener {
-            Log.d(TAG, "Delete iv clicked.")
+            Timber.d("Delete iv clicked.")
             displayDeletePopup()
             dialog.dismiss()
         }
@@ -280,7 +279,7 @@ class ViewPatientActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter reason to modify.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            Log.d(TAG, "Request Modify button clicked.")
+            Timber.d("Request Modify button clicked.")
             modifyDeleteReason = etModifyMessage.text.toString()
             displayPasswordVerifyPopup(isModify = true)
             dialog.dismiss()
@@ -328,7 +327,7 @@ class ViewPatientActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter the reason.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            Log.d(TAG, "Request Delete button clicked.")
+            Timber.d("Request Delete button clicked.")
             if (rbDeleteAccidentalEntry.isChecked) modifyDeleteReason = "accidental_entry"
             if (rbDeleteDuplicateEncounter.isChecked) modifyDeleteReason = "duplicate_encounter"
             if (rbDeleteIncorrectPatient.isChecked) modifyDeleteReason = "incorrect_patient"
@@ -373,7 +372,7 @@ class ViewPatientActivity : AppCompatActivity() {
                     ""
                 )
             ) {
-                Log.d(TAG, "Password verified.")
+                Timber.d("Password verified.")
                 GlobalScope.launch(Dispatchers.IO) {
                     val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
                     val panelService = DjangoInterface.create(context)
@@ -396,7 +395,7 @@ class ViewPatientActivity : AppCompatActivity() {
                     }
                     try {
                         val response = call.execute()
-                        Log.d("FlagResponse", "${response.code()} and ${response.message()} then ${response.body()}")
+                        Timber.d("FlagResponse: "+ "${response.code()} and ${response.message()} then ${response.body()}")
                         if (response.isSuccessful) {
                             if (response.code() == 200) {
                                 withContext(Dispatchers.Main) {
@@ -438,14 +437,14 @@ class ViewPatientActivity : AppCompatActivity() {
     }
 
     private fun getUpdatedPatient() {
-        Log.d("Patient ID", patientId.toString())
+        Timber.d("Patient ID: %s", patientId.toString())
         if (patientId != 0.toLong()) {
             try {
                 patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
                 updateInfo()
             } catch (e: DbException) {
                 FirebaseCrashlytics.getInstance().recordException(e)
-                Log.d("DBException", e.printStackTrace().toString())
+                Timber.d("DBException: %s", e.printStackTrace().toString())
             }
         }
     }

@@ -12,6 +12,7 @@ import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.entities.Patient_
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -30,7 +31,7 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
 
             val allEncounters =
             encountersBox.query().equal(Encounter_.patientId, patientId).build().find()
-            Log.d(dbPatientEntity!!.fullName(), allEncounters.size.toString())
+            Timber.d(dbPatientEntity!!.fullName()+" %s Encounters" , allEncounters.size.toString())
 
             for (eachEncounter in allEncounters) {
                 Thread.sleep(500L)
@@ -91,7 +92,7 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
 
             Result.success()
         }catch (e: Exception){
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " uploadEncounterWorker failure")
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " uploadEncounterWorker failure")
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }

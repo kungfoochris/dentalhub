@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +20,7 @@ import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
 import io.objectbox.exception.DbException
 import io.objectbox.query.Query
+import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,7 +42,7 @@ class SearchPatientActivity : AppCompatActivity() {
     @AddTrace(name = "onCreateSearchPatientActivity", enabled = true /* optional */)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate()")
+        Timber.d("onCreate()")
         setContentView(R.layout.activity_search_patient)
 
         context = this
@@ -85,7 +85,7 @@ class SearchPatientActivity : AppCompatActivity() {
                     .find()
             setupAdapter()
         } catch (e: DbException) {
-            Log.d("DBException", e.printStackTrace().toString())
+            Timber.d("DBException "+ e.printStackTrace().toString())
         }
 
     }
@@ -145,7 +145,7 @@ class SearchPatientActivity : AppCompatActivity() {
             grpName,
             -1,
             DialogInterface.OnClickListener { dialog, item ->
-                Log.d("DELAYED: ", patient.fullName() + " by " + grpName[item])
+                Timber.d("DELAYED: "+ patient.fullName() + " by " + grpName[item])
                 Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show()
 
                 val tempPatient =
@@ -154,7 +154,7 @@ class SearchPatientActivity : AppCompatActivity() {
                 try {
                     calendar.time = SimpleDateFormat("yyyy/MM/dd").parse(tempPatient.recall_date)
                 } catch (e: ParseException) {
-                    Log.e("ParseException", e.printStackTrace().toString())
+                    Timber.e("ParseException " + e.printStackTrace().toString())
                 }
                 when (item) {
                     0 -> {
@@ -218,8 +218,8 @@ class SearchPatientActivity : AppCompatActivity() {
                         .equal(Patient_.geography_id, DentalApp.geography_id.toLong())
                         .build().find()
                 } catch (e: DbException) {
-                    Log.d("DBException", e.printStackTrace().toString())
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " search patient db exception " + e.printStackTrace().toString())
+                    Timber.d("DBException "+ e.printStackTrace().toString())
+                    Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " search patient db exception " + e.printStackTrace().toString())
                     FirebaseCrashlytics.getInstance().recordException(e)
                 }
                 println("Query result is $patientsearchlist")

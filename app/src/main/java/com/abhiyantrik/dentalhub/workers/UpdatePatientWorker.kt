@@ -15,6 +15,7 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -40,7 +41,7 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
                 Result.failure()
             }
         } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            Timber.d("Exception: %s", e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
@@ -83,7 +84,6 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
             patient.created_at,
             patient.updated_at
         )
-        print("Response before")
         val response = call.execute()
         if (response.isSuccessful) {
             when (response.code()) {
@@ -115,14 +115,14 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
                     responseStatus = true
                 }
                 else -> {
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() HTTP Status code "+response.code())
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() HTTP Status code "+response.code())
                 }
             }
         } else {
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() Failed to update patient.")
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() HTTP Status code " + response.code())
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() " + response.message())
-            Log.d("UpdatePatientWorker", response.message())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() Failed to update patient.")
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() HTTP Status code " + response.code())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() " + response.message())
+            Timber.d("UpdatePatientWorker: %s", response.message())
             responseStatus = false
         }
 

@@ -23,6 +23,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Response
+import timber.log.Timber
 import com.abhiyantrik.dentalhub.models.Geography as GeographyModel
 
 
@@ -94,14 +95,14 @@ class LocationSelectorActivity : AppCompatActivity() {
     }
 
     private fun loadGeographyAPI() {
-        Log.d(TAG, "loadGeographyAPI()")
+        Timber.d("loadGeographyAPI()")
         val token = DentalApp.readFromPreference(context, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(context)
         val call = panelService.listGeographies("JWT $token")
         call.enqueue(object : retrofit2.Callback<List<GeographyModel>> {
             override fun onFailure(call: Call<List<GeographyModel>>, t: Throwable) {
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " loadGeographyAPI " +t.message.toString())
-                Log.d(TAG, "onFailure()")
+                Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " loadGeographyAPI " +t.message.toString())
+                Timber.d("onFailure()")
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
                 } else {
@@ -129,8 +130,8 @@ class LocationSelectorActivity : AppCompatActivity() {
                             setupAdapter()
                         }
                         else -> {
-                            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
-                            Log.d(TAG, "handle exception.")
+                            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
+                            Timber.d("handle exception.")
                         }
                     }
                 }

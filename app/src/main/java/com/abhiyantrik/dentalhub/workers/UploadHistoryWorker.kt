@@ -1,7 +1,6 @@
 package com.abhiyantrik.dentalhub.workers
 
 import android.content.Context
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.abhiyantrik.dentalhub.Constants
@@ -13,6 +12,7 @@ import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import timber.log.Timber
 import com.abhiyantrik.dentalhub.models.History as HistoryModel
 
 class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -35,7 +35,7 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
 
             Result.success()
         } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            Timber.d("Exception: %s", e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
@@ -54,7 +54,7 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         if(!history.uploaded){
-            Log.d("SaveHistoryToServer", "New History Upload.")
+            Timber.d("SaveHistoryToServer: %s", "New History Upload.")
             val call = panelService.addHistory(
                 "JWT $token",
                 encounter!!.remote_id,
@@ -91,18 +91,18 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                         historyBox.put(dbHistoryEntity)
                     }
                     else -> {
-                        Log.d("UploadHistoryWorker", response.message() + response.code())
-                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() HTTP Status code "+response.code())
+                        Timber.d("UploadHistoryWorker: %s", response.message() + response.code())
+                        Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() HTTP Status code "+response.code())
                     }
                 }
             } else {
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() Failed to download patients.")
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.code())
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.message())
-                Log.d("UploadHistoryWorker", response.message() + response.code())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() Failed to download patients.")
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.code())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.message())
+                Timber.d("UploadHistoryWorker: %s", response.message() + response.code())
             }
         }else if(history.updated){
-            Log.d("SaveHistoryToServer", "Update History.")
+            Timber.d("SaveHistoryToServer: %s", "Update History.")
             val call = panelService.updateHistory(
                 "JWT $token",
                 encounter!!.remote_id,
@@ -137,14 +137,14 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                         historyBox.put(dbHistoryEntity)
                     }
                     else -> {
-                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() HTTP Status code "+response.code())
+                        Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() HTTP Status code "+response.code())
                     }
                 }
             } else {
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() Failed to update history.")
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.code())
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.message())
-                Log.d("UpdateHistoryWorker", response.message() + response.code())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() Failed to update history.")
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.code())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.message())
+                Timber.d("UpdateHistoryWorker: %s", response.message() + response.code())
             }
         }
         DentalApp.cancelNotification(applicationContext, 1001)

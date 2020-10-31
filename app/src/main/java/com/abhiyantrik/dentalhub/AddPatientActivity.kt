@@ -19,6 +19,7 @@ import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
 import com.google.firebase.perf.metrics.AddTrace
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
+import timber.log.Timber
 import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit
 
@@ -154,7 +155,7 @@ class AddPatientActivity : AppCompatActivity() {
         spinnerMunicipality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // no thing to do yet
-                Log.d("TAG", "nothing selected")
+                Timber.d("nothing selected")
             }
 
             override fun onItemSelected(
@@ -185,8 +186,8 @@ class AddPatientActivity : AppCompatActivity() {
     private fun setupWards(selectedWard: Int) {
         if (allMunicipalities.size > 0) {
             val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
-            Log.d(TAG, "Selected Municipality: "+ spinnerMunicipality.selectedItem.toString())
-            Log.d(TAG, "Municipality Position: " + spinnerMunicipality.selectedItemPosition.toString())
+            Timber.d("Selected Municipality: "+ spinnerMunicipality.selectedItem.toString())
+            Timber.d("Municipality Position: " + spinnerMunicipality.selectedItemPosition.toString())
             var selectedWardIndex = 0
 
             val dbWards =
@@ -221,8 +222,9 @@ class AddPatientActivity : AppCompatActivity() {
     }
 
     private fun setupMunicipalities(selectedMunicipality: Int) {
-        Log.d("Selected District", spinnerDistrict.selectedItem.toString())
-        Log.d("District Position", spinnerDistrict.selectedItemPosition.toString())
+        Timber.d("setupMunicipalities(%d)", selectedMunicipality);
+        Timber.d("Selected District", spinnerDistrict.selectedItem.toString())
+        Timber.d("District Position", spinnerDistrict.selectedItemPosition.toString())
 
         var selectedMunicipalityIndex = 0
 
@@ -323,7 +325,7 @@ class AddPatientActivity : AppCompatActivity() {
 
     @AddTrace(name = "savePatientAddPatientActivity", enabled = true /* optional */)
     private fun savePatient() {
-        Log.d(TAG, "savePatient()")
+        Timber.d("savePatient()")
         loading.visibility = View.VISIBLE
         tvErrorMessage.visibility = View.GONE
         val patient = createPatient()
@@ -333,7 +335,7 @@ class AddPatientActivity : AppCompatActivity() {
 
     @AddTrace(name = "createPatientAddPatientActivity", enabled = true /* optional */)
     private fun createPatient(): Patient {
-        Log.d(TAG, "createPatient()")
+        Timber.d("createPatient()")
 
         val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
         val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
@@ -424,7 +426,7 @@ class AddPatientActivity : AppCompatActivity() {
 
     @AddTrace(name = "saveToLocalDBAddPatientActivity", enabled = true /* optional */)
     private fun saveToLocalDB(patient: Patient) {
-        Log.d(TAG, "saveToLocalDB")
+        Timber.d("saveToLocalDB")
         patientsBox.put(patient)
         val viewPatientIntent = Intent(context, ViewPatientActivity::class.java)
         if (action == "new") {

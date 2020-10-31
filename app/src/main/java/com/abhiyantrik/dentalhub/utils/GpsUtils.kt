@@ -11,6 +11,7 @@ import com.abhiyantrik.dentalhub.Constants
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import timber.log.Timber
 
 
 class GpsUtils(private val context: Context) {
@@ -57,13 +58,13 @@ class GpsUtils(private val context: Context) {
                                 val rae = e as ResolvableApiException
                                 rae.startResolutionForResult(context, Constants.GPS_REQUEST)
                             } catch (sie: IntentSender.SendIntentException) {
-                                Log.i(TAG, "PendingIntent unable to execute request.")
+                                Timber.i("PendingIntent unable to execute request.")
                             }
 
                         LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
                             val errorMessage =
                                 "Location settings are inadequate, and cannot be " + "fixed here. Fix in Settings."
-                            Log.e(TAG, errorMessage)
+                            Timber.e( errorMessage)
 
                             Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
                         }

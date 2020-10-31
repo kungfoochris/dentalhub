@@ -14,6 +14,7 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import io.objectbox.Box
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
@@ -29,7 +30,7 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
             downloadPatients()
             Result.success()
         } catch (e: Exception) {
-            Log.d("Exception", e.printStackTrace().toString())
+            Timber.d("Exception: %s", e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }
@@ -61,7 +62,7 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                             patient.id
                         ).build().count()
                         if (existingPatient > 0) {
-                            Log.d("DownloadPatientWorker",  "Patient already exists.")
+                            Timber.d("DownloadPatientWorker: %s",  "Patient already exists.")
                             val existingPatientEncounter = patientsBox.query().equal(
                                 Patient_.remote_id,
                                 patient.id
@@ -134,15 +135,14 @@ class DownloadPatientWorker(context: Context, params: WorkerParameters) : Worker
                     }
                 }
                 else -> {
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() HTTP Status code "+response.code())
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() HTTP Status code "+response.code())
                 }
             }
 
         } else {
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() Failed to download patients.")
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() HTTP Status code "+response.code())
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() "+response.message())
-            Log.d(TAG,"downloadPatients " + response.message())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() Failed to download patients.")
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() HTTP Status code "+response.code())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " getPatients() "+response.message())
         }
 
         DentalApp.cancelNotification(applicationContext, 1001)

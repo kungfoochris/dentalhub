@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.abhiyantrik.dentalhub.R
 import com.hornet.dateconverter.DateConverter
+import timber.log.Timber
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,7 +51,7 @@ class DateHelper {
         }
 
         fun getNextDay(date: String): String {
-            Log.d("Add one day to : ", date)
+            Timber.d("Add one day to : %s", date)
             var day = date.substring(8, 10).toInt()
             var month = date.substring(5, 7).toInt()
             var year = date.substring(0, 4).toInt()
@@ -71,7 +72,7 @@ class DateHelper {
         }
 
         fun getPreviousDay(date: String): String {
-            Log.d("Subtract one day to : ", date)
+            Timber.d("Subtract one day to : %s", date)
             var day = date.substring(8, 10).toInt()
             var month = date.substring(5, 7).toInt()
             var year = date.substring(0, 4).toInt()
@@ -89,7 +90,7 @@ class DateHelper {
         }
 
         fun formatNepaliDate(context: Context, date: String): String {
-            Log.d("FORMAT: ", date)
+            Timber.d("FORMAT: %s", date)
             var nepaliFormattedDate: String
             if(date.isNotEmpty()){
                 try {
@@ -100,10 +101,10 @@ class DateHelper {
                     ) + " " + date.substring(8, 10)
                 } catch (e: IllegalArgumentException) {
                     nepaliFormattedDate = "-"
-                    Log.d("DateHelper", e.printStackTrace().toString())
+                    Timber.d("DateHelper %s", e.printStackTrace().toString())
                 } catch (e: StringIndexOutOfBoundsException) {
                     nepaliFormattedDate = "-"
-                    Log.d("DateHelper", e.printStackTrace().toString())
+                    Timber.d("DateHelper %s", e.printStackTrace().toString())
                 }
             }else{
                 nepaliFormattedDate = "-"

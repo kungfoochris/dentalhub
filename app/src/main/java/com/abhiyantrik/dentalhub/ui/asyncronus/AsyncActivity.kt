@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -90,7 +91,7 @@ class AsyncActivity : AppCompatActivity() {
             val limit = 50.toLong()
             val offset = 0.toLong()
             val allEncounters = encountersBox.query().equal(Encounter_.uploaded, false).orderDesc(Encounter_.id).build().find(offset, limit)
-            Log.d(TAG, "patient upload to 50 count ${allEncounters.count()}")
+            Timber.d("patient upload to 50 count ${allEncounters.count()}")
             for (eachEncounter in allEncounters) {
 
                 if (eachEncounter.patient == null) {
@@ -99,7 +100,7 @@ class AsyncActivity : AppCompatActivity() {
                     }
                 } else {
                     val patientRemoteId = eachEncounter.patient!!.target.remote_id
-                    Log.d(TAG, "patient remote Id $patientRemoteId")
+                    Timber.d("patient remote Id $patientRemoteId")
 
                     if (patientRemoteId.isEmpty()) {
                         withContext(Dispatchers.Main) {
@@ -175,7 +176,7 @@ class AsyncActivity : AppCompatActivity() {
                 tvStatus.append("Found Total ${allPatient.count()} patient to upload.\n")
             }
 
-            Log.d(TAG, "patient upload to 50 count ${allPatient.count()}")
+            Timber.d("patient upload to 50 count %s", allPatient.count())
 
             for (patient in dbAllPatient) {
 
@@ -195,7 +196,7 @@ class AsyncActivity : AppCompatActivity() {
         referral: Referral,
         referralBox: Box<Referral>,
         encounterRemoteId: String): Boolean {
-        Log.d(TAG, "Referral uploaded started.")
+        Timber.d("Referral uploaded started.")
         var referralStatus = false
         DentalApp.displayNotification(
             applicationContext,
@@ -220,7 +221,7 @@ class AsyncActivity : AppCompatActivity() {
             referral.other_details
         )
         val response = call.execute()
-        Log.d(TAG, "Referral response ${response.code()} ${response.message()}")
+        Timber.d("Referral response ${response.code()} ${response.message()}")
         if (response.isSuccessful) {
             when (response.code()) {
                 200, 201 -> {
@@ -230,7 +231,7 @@ class AsyncActivity : AppCompatActivity() {
                     referral.updated = false
                     referralBox.put(referral)
                     referralStatus = true
-                    Log.d(TAG, "Referral uploaded successfully.")
+                    Timber.d("Referral uploaded successfully.")
                 }
             }
         }
@@ -243,7 +244,7 @@ class AsyncActivity : AppCompatActivity() {
         treatmentBox: Box<Treatment>,
         encounterRemoteId: String
     ): Boolean {
-        Log.d(TAG, "Treatment uploaded started.")
+        Timber.d("Treatment uploaded started.")
         var treatmentStatus = false
         DentalApp.displayNotification(
             applicationContext,
@@ -326,7 +327,7 @@ class AsyncActivity : AppCompatActivity() {
         )
         try {
             val response = call.execute()
-            Log.d(TAG, "Treatment response ${response.code()} ${response.message()}")
+            Timber.d("Treatment response ${response.code()} ${response.message()}")
             if (response.isSuccessful) {
                 when (response.code()) {
                     200, 201 -> {
@@ -336,14 +337,14 @@ class AsyncActivity : AppCompatActivity() {
                         treatment.updated = false
                         treatmentBox.put(treatment)
                         treatmentStatus = true
-                        Log.d(TAG, "Treatment uploaded successfully.")
+                        Timber.d("Treatment uploaded successfully.")
 
                     }
                 }
             }
             DentalApp.cancelNotification(applicationContext, 1001)
         } catch (ex: Exception) {
-            Log.d(TAG,"Error occured in Treatment: ${ex.message}")
+            Timber.d("Error occurred in Treatment: ${ex.message}")
         }
 
         return treatmentStatus
@@ -354,7 +355,7 @@ class AsyncActivity : AppCompatActivity() {
         screeningBox: Box<Screening>,
         encounterRemoteId: String
     ): Boolean {
-        Log.d(TAG, "Screening uploaded started.")
+        Timber.d("Screening uploaded started.")
 
         var screeningStatus = false
         DentalApp.displayNotification(
@@ -385,7 +386,7 @@ class AsyncActivity : AppCompatActivity() {
         )
         try {
             val response = call.execute()
-            Log.d(TAG, "Screening response ${response.code()} ${response.message()}")
+            Timber.d("Screening response ${response.code()} ${response.message()}")
             if (response.isSuccessful) {
                 when (response.code()) {
                     200, 201 -> {
@@ -395,13 +396,13 @@ class AsyncActivity : AppCompatActivity() {
                         screening.updated = false
                         screeningBox.put(screening)
                         screeningStatus = true
-                        Log.d(TAG, "Screening uploaded successfully.")
+                        Timber.d("Screening uploaded successfully.")
                     }
                 }
             }
             DentalApp.cancelNotification(applicationContext, 1001)
         } catch (ex: Exception) {
-            Log.d(TAG, "Error occured: ${ex.message}")
+            Timber.d("Error occurred: ${ex.message}")
         }
         return screeningStatus
 
@@ -412,7 +413,7 @@ class AsyncActivity : AppCompatActivity() {
         historyBox: Box<History>,
         encounterRemoteId: String
     ) : Boolean {
-        Log.d(TAG, "History uploaded started.")
+        Timber.d("History uploaded started.")
         var historyStatus = false
         DentalApp.displayNotification(
             applicationContext,
@@ -424,7 +425,7 @@ class AsyncActivity : AppCompatActivity() {
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
-        Log.d(TAG, "New History Upload.")
+        Timber.d("New History Upload.")
         val call = panelService.addHistory(
             "JWT $token",
             encounterRemoteId,
@@ -448,7 +449,7 @@ class AsyncActivity : AppCompatActivity() {
         )
         try {
             val response = call.execute()
-            Log.d(TAG, "History response ${response.code()} ${response.message()}")
+            Timber.d("History response ${response.code()} ${response.message()}")
             if (response.isSuccessful) {
                 when (response.code()) {
                     200, 201 -> {
@@ -458,18 +459,18 @@ class AsyncActivity : AppCompatActivity() {
                         history.updated = false
                         historyBox.put(history)
                         historyStatus = true
-                        Log.d(TAG, "History uploaded successfully.")
+                        Timber.d("History uploaded successfully.")
                     }
                     else -> {
-                        Log.d(TAG, response.message() + response.code())
+                        Timber.d(response.message() + response.code())
                     }
                 }
             } else {
-                Log.d(TAG, response.message() + response.code())
+                Timber.d(response.message() + response.code())
             }
             DentalApp.cancelNotification(applicationContext, 1001)
         } catch (ex: Exception) {
-            Log.d(TAG, "Error occurred in history: ")
+            Timber.d("Error occurred in history: ")
         }
 
         return historyStatus
@@ -480,11 +481,11 @@ class AsyncActivity : AppCompatActivity() {
         patientRemoteId: String,
         encountersBox: Box<Encounter>
     ) : Boolean {
-        Log.d(TAG, "Encounter uploaded started.")
+        Timber.d("Encounter uploaded started.")
         var encounterStatus = false
-        Log.d("EncounterDateCreated", eachEncounter.id.toString() + " " + eachEncounter.created_at.length)
+        Timber.d("EncounterDateCreated %s", eachEncounter.id.toString() + " " + eachEncounter.created_at.length)
         val correctDate = if (eachEncounter.created_at.length == 10) {
-            Log.d(TAG, "EncounterDateCreated" + eachEncounter.id.toString())
+            Timber.d("EncounterDateCreated" + eachEncounter.id.toString())
             val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(eachEncounter.created_at)
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
             dateFormat.format(currentDate as Date)
@@ -508,7 +509,7 @@ class AsyncActivity : AppCompatActivity() {
         )
         try {
             val response = call.execute()
-            Log.d(TAG, "Encounter response ${response.code()} ${response.message()}")
+            Timber.d("Encounter response ${response.code()} ${response.message()}")
             if (response.isSuccessful) {
                 when (response.code()) {
                     200, 201 -> {
@@ -517,12 +518,12 @@ class AsyncActivity : AppCompatActivity() {
                         eachEncounter.uploaded = true
                         encountersBox.put(eachEncounter)
                         encounterStatus = true
-                        Log.d(TAG, "Encounter uploaded successfully.")
+                        Timber.d("Encounter uploaded successfully.")
                     }
                 }
             }
         } catch (ex: Exception) {
-            Log.d(TAG, "Error occurred in Encounter: ${ex.message}")
+            Timber.d("Error occurred in Encounter: ${ex.message}")
         }
 
         return encounterStatus
@@ -531,7 +532,7 @@ class AsyncActivity : AppCompatActivity() {
     private fun uploadPatient(
         patient: Patient,
         patientBox: Box<Patient>) : Boolean {
-        Log.d(TAG, "Patient uploaded started.")
+        Timber.d("Patient uploaded started.")
 
         var responseStatus = false
         DentalApp.displayNotification(
@@ -576,7 +577,7 @@ class AsyncActivity : AppCompatActivity() {
         if(!patient.uploaded) {
             try {
                 val response = call.execute()
-                Log.d(TAG, "Patient response ${response.code()} ${response.message()}")
+                Timber.d("Patient response ${response.code()} ${response.message()}")
                 if (response.isSuccessful) {
                     when (response.code()) {
                         200, 201 -> {
@@ -589,24 +590,24 @@ class AsyncActivity : AppCompatActivity() {
 
                                 patientBox.put(patient)
                                 responseStatus = true
-                                Log.d(TAG, "Patients uploaded successfully.")
-                                FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Message From OnCreate")
+                                Timber.d("Patients uploaded successfully.")
+                                Timber.d("UploadPatientWorkAsync: Message From OnCreate")
                             } else {
-                                FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
+                                Timber.d("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
                                 FirebaseCrashlytics.getInstance().setCustomKey("patient_uploaded", false)
                             }
 
                             DentalApp.cancelNotification(applicationContext, 1001)
                         }
                     }
-                    Log.d(TAG, "other than 200, 201 " + response.message().toString())
+                    Timber.d("other than 200, 201 %s", response.message().toString())
                 } else {
-                    Log.d(TAG, response.message())
-                    Log.d(TAG, response.code().toString())
-                    Log.d(TAG, "Error body " + response.errorBody().toString())
+                    Timber.d(response.message())
+                    Timber.d(response.code().toString())
+                    Timber.d("Error body %s", response.errorBody().toString())
                 }
             } catch (ex: Exception) {
-                Log.d(TAG, "Error uploading Patient: ${ex.message}")
+                Timber.d("Error uploading Patient: ${ex.message}")
             }
 
         }

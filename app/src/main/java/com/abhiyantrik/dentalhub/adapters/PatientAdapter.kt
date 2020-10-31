@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.utils.DateHelper
+import timber.log.Timber
 
 class PatientAdapter(
     ctx: Context,
@@ -41,7 +42,7 @@ class PatientAdapter(
             val patientItem: Patient = data[position]
             holder.bindPatient(context, position, patientItem, displayDelayStatus)
         } catch (e: NumberFormatException) {
-            Log.d("PatientAdapter", "invalid position")
+            Timber.d("PatientAdapter %s", "invalid position")
         }
     }
 

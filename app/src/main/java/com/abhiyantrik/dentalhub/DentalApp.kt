@@ -10,6 +10,9 @@ import androidx.multidex.MultiDexApplication
 import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.NetworkType
+import com.abhiyantrik.dentalhub.logging.CrashlyticsTree
+import com.abhiyantrik.dentalhub.logging.FakeCrashLibrary
+import com.abhiyantrik.dentalhub.logging.FileTree
 import com.abhiyantrik.dentalhub.models.Location
 import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper
@@ -42,9 +45,9 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         }
 
         if (BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
+            Timber.plant(DebugTree(), CrashlyticsTree(), FileTree(applicationContext))
         } else {
-            Timber.plant(CrashReportingTree())
+            Timber.plant(CrashReportingTree(), CrashlyticsTree(), FileTree(applicationContext))
         }
 
         NotificationHelper.createNotificationChannel(
@@ -144,7 +147,7 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
 
         fun addStringToPreference(context: Context, preferenceValue: String) {
             activitySuggestions.add(preferenceValue)
-            Log.d("Suggestions", activitySuggestions.toString())
+            Timber.d("Suggestions %s", activitySuggestions)
             val sharedPreferences =
                 context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
