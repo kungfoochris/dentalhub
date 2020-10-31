@@ -14,8 +14,6 @@
         android:padding="16dp"
 >
 
-
-
     <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:background="@color/cardBg"
@@ -77,13 +75,14 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
-<!--                <Spinner-->
-<!--                        android:id="@+id/spinnerSchoolSeminar"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_marginTop="8dp"-->
-<!--                        android:layout_marginBottom="8dp"-->
-<!--                        />-->
+                <Spinner
+                        android:id="@+id/spinnerSchoolSeminar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/spinner"
+                        />
                 <RadioButton android:id="@+id/radioCommunityOutreach"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
@@ -91,13 +90,14 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
-<!--                <Spinner-->
-<!--                        android:id="@+id/spinnerCommunityOutreach"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_marginTop="8dp"-->
-<!--                        android:layout_marginBottom="8dp"-->
-<!--                        />-->
+                <Spinner
+                        android:id="@+id/spinnerCommunityOutreach"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/spinner"
+                        />
                 <RadioButton android:id="@+id/radioTraining"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
@@ -105,13 +105,14 @@
                              android:layout_marginTop="8dp"
                              android:layout_marginBottom="8dp"
                 />
-<!--                <Spinner-->
-<!--                        android:id="@+id/spinnerTranning"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_marginTop="8dp"-->
-<!--                        android:layout_marginBottom="8dp"-->
-<!--                        />-->
+                <Spinner
+                        android:id="@+id/spinnerTraining"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/spinner"
+                        />
             </RadioGroup>
             <AutoCompleteTextView
                     android:id="@+id/etOtherDetailsActivity"

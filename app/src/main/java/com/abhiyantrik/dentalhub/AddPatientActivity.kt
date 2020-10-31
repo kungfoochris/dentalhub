@@ -195,12 +195,12 @@ class AddPatientActivity : AppCompatActivity() {
             val wards = mutableListOf<String>()
             allWards = dbWards
 
-            if(selectedWard == 0){
+            if (selectedWard == 0){
                 for ((_, ward) in dbWards.withIndex()) {
                     wards.add(ward.ward.toString())
                 }
                 selectedWardIndex = DentalApp.lastWardIndex
-            }else{
+            } else {
                 for ((count, ward) in dbWards.withIndex()) {
                     if (selectedWard == ward.remote_id) {
                         selectedWardIndex = count
@@ -211,7 +211,7 @@ class AddPatientActivity : AppCompatActivity() {
             spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
             try {
                 spinnerWard.setSelection(selectedWardIndex)
-            }catch (e: IndexOutOfBoundsException){
+            } catch (e: IndexOutOfBoundsException){
                 spinnerWard.setSelection(0)
             }
 
@@ -233,12 +233,12 @@ class AddPatientActivity : AppCompatActivity() {
             municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
         val municipalitiesList = mutableListOf<String>()
 
-        if(selectedMunicipality==0){
+        if (selectedMunicipality==0){
             for ((_, municipality) in allMunicipalities.withIndex()) {
                 municipalitiesList.add(municipality.name.capitalize())
             }
             selectedMunicipalityIndex = DentalApp.lastMunicipalityIndex
-        }else{
+        } else {
             for ((count, municipality) in allMunicipalities.withIndex()) {
                 if (selectedMunicipality == municipality.remote_id) {
                     selectedMunicipalityIndex = count

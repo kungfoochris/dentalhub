@@ -11,6 +11,7 @@ import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Activity_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
 import com.abhiyantrik.dentalhub.models.ActivitySuggestion
+import com.abhiyantrik.dentalhub.utils.AdapterHelper
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.hornet.dateconverter.DateConverter
@@ -120,6 +121,8 @@ class ActivitySelectorActivity : AppCompatActivity() {
             }
         }
 
+
+
         etBackdate.setOnClickListener {
             val someDate: Calendar = GregorianCalendar.getInstance()
             someDate.add(Calendar.DAY_OF_YEAR, -7)
@@ -140,24 +143,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
             dpd.setMaxDate(nepaliDateConverter.todayNepaliDate)
             dpd.show(supportFragmentManager, "Backdate")
         }
-
-//        etBackdate.setOnFocusChangeListener { _, b ->
-//            if (b) {
-//                val nepaliDateConverter = DateConverter()
-//                val dpd =
-//                    com.hornet.dateconverter.DatePicker.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth ->
-//                        val month = DecimalFormat("00").format(monthOfYear + 1).toString()
-//                        val day = DecimalFormat("00").format(dayOfMonth).toString()
-//                        val recallDate = "$year-$month-$day"
-//                        if(recallDate.isNotEmpty()){
-//                            etBackdate.setText(DateHelper.getReadableNepaliDate(recallDate))
-//                        }
-//                    }
-//                dpd.setMinDate(nepaliDateConverter.todayNepaliDate)
-//                dpd.show(supportFragmentManager, "Backdate")
-//
-//            }
-//        }
 
         btnGo.setOnClickListener {
             if (isFormValid()) {
@@ -231,12 +216,58 @@ class ActivitySelectorActivity : AppCompatActivity() {
                     DentalApp.activitySuggestions.add(act.area)
                 }
                 arrayAdapter.notifyDataSetChanged()
+
+                loadAllActivitySpinner(allActivitySuggestions)
+
             }
 
         })
 
 
     }
+
+    private fun loadAllActivitySpinner(allActivitySuggestions: List<ActivitySuggestion>) {
+        val schoolSeminarAreaList = mutableListOf<ActivitySuggestion>()
+        val communityOutreachAreaList = mutableListOf<ActivitySuggestion>()
+        val trainingAreaList = mutableListOf<ActivitySuggestion>()
+
+        val schoolSeminarList = mutableListOf<String>()
+        val communityOutreachList = mutableListOf<String>()
+        val trainingList = mutableListOf<String>()
+
+        for (act in allActivitySuggestions) {
+            DentalApp.activitySuggestions.add(act.area)
+            if (act.activity == "School Seminar") {
+                schoolSeminarAreaList.add(act)
+            }
+            if (act.activity == "Community Outreach") {
+                communityOutreachAreaList.add(act)
+            }
+            if (act.activity == "Training") {
+                trainingAreaList.add(act)
+            }
+
+        }
+
+        for ( (_, schoolSeminar) in schoolSeminarAreaList.withIndex()) {
+            schoolSeminarList.add(schoolSeminar.area)
+        }
+        for ( (_, communityOutreach) in communityOutreachAreaList.withIndex()) {
+            communityOutreachList.add(communityOutreach.area)
+        }
+        for ( (_, training) in trainingAreaList.withIndex()) {
+            trainingList.add(training.area)
+        }
+
+        spinnerSchoolSeminar.adapter = AdapterHelper.createAdapter(context, schoolSeminarList.toList())
+
+        spinnerCommunityOutreach.adapter = AdapterHelper.createAdapter(context, communityOutreachList.toList())
+
+        spinnerTraining.adapter = AdapterHelper.createAdapter(context, trainingList.toList())
+
+
+    }
+
 
     private fun loadActivityId() {
         Timber.d("loadActivityId()")
@@ -373,4 +404,5 @@ class ActivitySelectorActivity : AppCompatActivity() {
         const val HEALTH_POST: String = "Health Post"
         const val TAG = "ActivitySelectorAct"
     }
+
 }

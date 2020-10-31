@@ -32,6 +32,8 @@ class Constants {
         @JvmStatic
         val PREF_ACTIVITY_ID = "ACTIVITY_ID"
         @JvmStatic
+        val PREF_ACTIVITY_AREA_ID = "ACTIVITY_AREA_ID"
+        @JvmStatic
         val PREF_ACTIVITY_NAME = "ACTIVITY_NAME"
         @JvmStatic
         val PREF_ACTIVITY_REMARKS = "ACTIVITY_REMARKS"
