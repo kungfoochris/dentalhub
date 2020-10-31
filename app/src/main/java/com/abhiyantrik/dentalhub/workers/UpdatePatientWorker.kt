@@ -115,13 +115,13 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
                     responseStatus = true
                 }
                 else -> {
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() HTTP Status code "+response.code())
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() HTTP Status code "+response.code())
                 }
             }
         } else {
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() Failed to update patient.")
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() HTTP Status code " + response.code())
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() " + response.message())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() Failed to update patient.")
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() HTTP Status code " + response.code())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updatePatient() " + response.message())
             Timber.d("UpdatePatientWorker: %s", response.message())
             responseStatus = false
         }

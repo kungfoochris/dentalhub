@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        FirebaseCrashlytics.getInstance().log("$TAG: Message From OnCreate")
+        Timber.d("$TAG: Message From OnCreate")
 
         setupUI()
 
@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
         if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
             Timber.d("Activity is not been selected.")
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
+            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
             logout()
         }
 
@@ -383,7 +383,7 @@ class MainActivity : AppCompatActivity() {
                     .orderDesc(Patient_.created_at).orderDesc(Patient_.id).build().find()
             setupAdapter(allPatients)
         } catch (e: DbException) {
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ e.printStackTrace().toString())
+            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ e.printStackTrace().toString())
             FirebaseCrashlytics.getInstance().recordException(e)
             Timber.d("DBException:"+ e.printStackTrace().toString())
         }

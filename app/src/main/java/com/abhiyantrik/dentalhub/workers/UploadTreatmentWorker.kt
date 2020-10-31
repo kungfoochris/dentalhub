@@ -227,13 +227,13 @@ class UploadTreatmentWorker(context: Context, params: WorkerParameters) : Worker
                         treatmentBox.put(dbTreatmentEntity)
                     }
                     else -> {
-                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateTreatment() HTTP Status code "+response.code())
+                        Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateTreatment() HTTP Status code "+response.code())
                     }
                 }
             }else{
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateTreatment() Failed to update treatment.")
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateTreatment() HTTP Status code " + response.code())
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateTreatment() " + response.message())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateTreatment() Failed to update treatment.")
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateTreatment() HTTP Status code " + response.code())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateTreatment() " + response.message())
             }
         }
         DentalApp.cancelNotification(applicationContext, 1001)

@@ -140,18 +140,18 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                             adapter.notifyDataSetChanged()
                         }
                     }else{
-                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() HTTP Status code "+response.code())
+                        Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() HTTP Status code "+response.code())
                     }
                 }else{
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() Failed to list flagged data.")
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() HTTP Status code "+response.code())
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() "+response.message())
+                    Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() Failed to list flagged data.")
+                    Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() HTTP Status code "+response.code())
+                    Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() "+response.message())
                 }
             }
         } catch (ex : Exception) {
             Timber.d("Error Please try again.")
             Toast.makeText(this, "Error occurred please try again.", Toast.LENGTH_SHORT).show()
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() Exception"+ ex.printStackTrace().toString())
+            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listFlaggedData() Exception"+ ex.printStackTrace().toString())
         }
 
         Timber.d("FlagData $flagEncounterList")

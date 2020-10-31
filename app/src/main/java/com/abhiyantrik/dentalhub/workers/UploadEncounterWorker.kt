@@ -92,7 +92,7 @@ class UploadEncounterWorker(context: Context, params: WorkerParameters) : Worker
 
             Result.success()
         }catch (e: Exception){
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " uploadEncounterWorker failure")
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " uploadEncounterWorker failure")
             FirebaseCrashlytics.getInstance().recordException(e)
             Result.failure()
         }

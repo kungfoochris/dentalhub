@@ -216,7 +216,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
         val call = panelService.listActivities()
         call.enqueue(object : Callback<List<ActivitySuggestion>> {
             override fun onFailure(call: Call<List<ActivitySuggestion>>, t: Throwable) {
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ "loadActivitySuggestions " +t.message.toString())
+                Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ "loadActivitySuggestions " +t.message.toString())
                 Timber.d("loadActivityId() %s", "onFailure")
                 Timber.d(t.message)
             }

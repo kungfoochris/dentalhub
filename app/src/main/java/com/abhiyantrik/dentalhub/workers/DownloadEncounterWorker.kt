@@ -391,13 +391,13 @@ class DownloadEncounterWorker(context: Context, params: WorkerParameters) :
                     }
                 }
                 else -> {
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() HTTP Status code "+response.code())
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() HTTP Status code "+response.code())
                 }
             }
         }else{
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() Failed to download encounters.")
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() HTTP Status code "+response.code())
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() "+response.message())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() Failed to download encounters.")
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() HTTP Status code "+response.code())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " downloadEncounter() "+response.message())
         }
 
         DentalApp.cancelNotification(applicationContext, 1001)

@@ -1,9 +1,6 @@
-package com.abhiyantrik.dentalhub
+package com.abhiyantrik.dentalhub.logging
 
-import android.R.attr
-import android.R.id
 import android.content.Context
-import android.util.Log
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.html.HTMLLayout
@@ -17,8 +14,6 @@ import ch.qos.logback.core.util.StatusPrinter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class FileTree(ctx:Context): Timber.Tree(){

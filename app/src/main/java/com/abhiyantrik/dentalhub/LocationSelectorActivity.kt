@@ -101,7 +101,7 @@ class LocationSelectorActivity : AppCompatActivity() {
         val call = panelService.listGeographies("JWT $token")
         call.enqueue(object : retrofit2.Callback<List<GeographyModel>> {
             override fun onFailure(call: Call<List<GeographyModel>>, t: Throwable) {
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " loadGeographyAPI " +t.message.toString())
+                Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " loadGeographyAPI " +t.message.toString())
                 Timber.d("onFailure()")
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
@@ -130,7 +130,7 @@ class LocationSelectorActivity : AppCompatActivity() {
                             setupAdapter()
                         }
                         else -> {
-                            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
+                            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
                             Timber.d("handle exception.")
                         }
                     }

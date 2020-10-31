@@ -153,7 +153,7 @@ class LoginActivity : Activity() {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Timber.d("onFailure()")
-                FirebaseCrashlytics.getInstance().log(
+                Timber.d(
                     DentalApp.readFromPreference(
                         context,
                         Constants.PREF_AUTH_EMAIL,

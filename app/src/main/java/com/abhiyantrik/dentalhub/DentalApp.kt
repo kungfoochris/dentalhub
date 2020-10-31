@@ -10,6 +10,9 @@ import androidx.multidex.MultiDexApplication
 import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.NetworkType
+import com.abhiyantrik.dentalhub.logging.CrashlyticsTree
+import com.abhiyantrik.dentalhub.logging.FakeCrashLibrary
+import com.abhiyantrik.dentalhub.logging.FileTree
 import com.abhiyantrik.dentalhub.models.Location
 import com.abhiyantrik.dentalhub.utils.FirebaseConfig
 import com.abhiyantrik.dentalhub.utils.NotificationHelper

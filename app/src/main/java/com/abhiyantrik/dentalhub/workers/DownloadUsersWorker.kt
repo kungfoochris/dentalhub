@@ -47,14 +47,14 @@ class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(c
                     val allUsers = response.body() as List<UserModel>
                     Timber.d("DownloadUserWorkers: %s", response.body().toString())
                     for(user in allUsers){
-                        Timber.d("DownloadUserWorkers: %s", user.first_name + " " + user.middle_name + " " + user.last_name)
+                        Timber.d("DownloadUserWorkers: %s %s %s", user.first_name ,user.middle_name, user.last_name)
                         val existingUserCount = usersBox.query().equal(
                             User_.remote_id,
                             user.id
                         ).build().count()
                         if(existingUserCount<1){
                             val userEntity = User()
-                            Timber.d("DownloadUserWorkers: %s", user.first_name + " " + user.middle_name + " " + user.last_name)
+                            Timber.d("DownloadUserWorkers: %s %s %s", user.first_name, user.middle_name, user.last_name)
                             userEntity.remote_id = user.id
                             userEntity.first_name = user.first_name
                             userEntity.middle_name = user.middle_name
@@ -66,13 +66,13 @@ class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(c
                     }
                 }
                 else -> {
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() HTTP Status code "+response.code())
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() HTTP Status code "+response.code())
                 }
             }
         } else {
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() Failed to download users.")
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() HTTP Status code "+response.code())
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() "+response.message())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() Failed to download users.")
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() HTTP Status code "+response.code())
+            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " listUsers() "+response.message())
             Timber.d("DownloadUsersWorker: %s", response.message())
         }
     }

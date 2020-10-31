@@ -591,9 +591,9 @@ class AsyncActivity : AppCompatActivity() {
                                 patientBox.put(patient)
                                 responseStatus = true
                                 Timber.d("Patients uploaded successfully.")
-                                FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Message From OnCreate")
+                                Timber.d("UploadPatientWorkAsync: Message From OnCreate")
                             } else {
-                                FirebaseCrashlytics.getInstance().log("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
+                                Timber.d("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
                                 FirebaseCrashlytics.getInstance().setCustomKey("patient_uploaded", false)
                             }
 

@@ -92,13 +92,13 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                     }
                     else -> {
                         Timber.d("UploadHistoryWorker: %s", response.message() + response.code())
-                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() HTTP Status code "+response.code())
+                        Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() HTTP Status code "+response.code())
                     }
                 }
             } else {
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() Failed to download patients.")
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.code())
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.message())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() Failed to download patients.")
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.code())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addHistory() "+response.message())
                 Timber.d("UploadHistoryWorker: %s", response.message() + response.code())
             }
         }else if(history.updated){
@@ -137,13 +137,13 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
                         historyBox.put(dbHistoryEntity)
                     }
                     else -> {
-                        FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() HTTP Status code "+response.code())
+                        Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() HTTP Status code "+response.code())
                     }
                 }
             } else {
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() Failed to update history.")
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.code())
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.message())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() Failed to update history.")
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.code())
+                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " updateHistory() "+response.message())
                 Timber.d("UpdateHistoryWorker: %s", response.message() + response.code())
             }
         }

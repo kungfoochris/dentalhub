@@ -1,4 +1,4 @@
-package com.abhiyantrik.dentalhub
+package com.abhiyantrik.dentalhub.logging
 
 /** Not a real crash reporting library!  */
 class FakeCrashLibrary private constructor() {

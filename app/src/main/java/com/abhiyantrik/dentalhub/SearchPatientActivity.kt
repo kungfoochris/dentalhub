@@ -219,7 +219,7 @@ class SearchPatientActivity : AppCompatActivity() {
                         .build().find()
                 } catch (e: DbException) {
                     Timber.d("DBException "+ e.printStackTrace().toString())
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " search patient db exception " + e.printStackTrace().toString())
+                    Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " search patient db exception " + e.printStackTrace().toString())
                     FirebaseCrashlytics.getInstance().recordException(e)
                 }
                 println("Query result is $patientsearchlist")

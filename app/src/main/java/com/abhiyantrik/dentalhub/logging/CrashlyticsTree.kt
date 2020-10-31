@@ -1,4 +1,4 @@
-package com.abhiyantrik.dentalhub
+package com.abhiyantrik.dentalhub.logging
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber

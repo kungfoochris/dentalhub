@@ -81,7 +81,7 @@ class SetupActivity : AppCompatActivity() {
                 } else {
                     tvMessage.append("Failed to load profile\n")
                 }
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Failed to load profile")
+                Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Failed to load profile")
                 logout()
             }
 
@@ -107,12 +107,12 @@ class SetupActivity : AppCompatActivity() {
                             tvMessage.append("Loading profile complete\n")
                             loadData()
                         } else -> {
-                            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
+                            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
                             logout()
                         }
                     }
                 } else {
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No response while loading profile")
+                    Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No response while loading profile")
                     Timber.d("response failed")
                     logout()
                 }
@@ -131,8 +131,8 @@ class SetupActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<District>>, t: Throwable) {
                 Timber.d("onFailure()")
                 tvMessage.append("Failed to load addresses \n")
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listAddresses() " + t.message.toString())
-                FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Failed to load addresses")
+                Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " listAddresses() " + t.message.toString())
+                Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Failed to load addresses")
                 Timber.d(t.toString())
                 logout()
             }
@@ -157,12 +157,12 @@ class SetupActivity : AppCompatActivity() {
                             startActivity(Intent(context, LocationSelectorActivity::class.java))
                             finish()
                         } else -> {
-                            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
+                            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " HTTP Status Code "+response.code())
                             logout()
                         }
                     }
                 } else {
-                    FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No response while loading profile")
+                    Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No response while loading profile")
                     Timber.d(response.code().toString())
                     logout()
                 }
@@ -173,7 +173,7 @@ class SetupActivity : AppCompatActivity() {
     @AddTrace(name = "storeDistrictsFromSetupActivity", enabled = true /* optional */)
     private fun storeDistricts(allDistricts: List<District>) {
         if(allDistricts.isEmpty()){
-            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No districts loaded to add")
+            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " No districts loaded to add")
         }else{
             for (district in allDistricts) {
                 if (districtsBox.query().equal(
