@@ -74,6 +74,7 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             dbEncounterEntity.id.toInt(),
             dbEncounterEntity.ward_id,
             dbEncounterEntity.activityarea_id,
+            dbEncounterEntity.area_id,
             dbEncounterEntity.encounter_type,
             dbEncounterEntity.other_problem,
             dbEncounterEntity.author,

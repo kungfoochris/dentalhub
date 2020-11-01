@@ -366,6 +366,7 @@ class SyncService : Service(){
             patient.latitude,
             patient.longitude,
             patient.activityarea_id,
+            patient.area_id,
             patient.geography_id,
             patient.recall_date!!,
             patient.recall_time!!,
@@ -426,9 +427,8 @@ class SyncService : Service(){
         println("already uploaded patient encounter $allEncounters")
         for (eachEncounter in allEncounters) {
             if (eachEncounter.uploaded) {
-                println("Encounter already uploaded ${eachEncounter.remote_id}")
+                Log.d("SyncService", "Encounter already uploaded ${eachEncounter.remote_id}")
             } else {
-                println("New encounter found ${eachEncounter.id}")
                 saveEncounterToServer(
                     patient.remote_id,
                     patient.geography_id,
@@ -457,6 +457,7 @@ class SyncService : Service(){
             tempEncounter.id.toInt(),
             patientGeography,
             patientActivityId,
+            tempEncounter.area_id,
             tempEncounter.encounter_type,
             tempEncounter.other_problem,
             tempEncounter.author,

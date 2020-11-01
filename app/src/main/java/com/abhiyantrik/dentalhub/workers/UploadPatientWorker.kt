@@ -76,6 +76,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             patient.latitude,
             patient.longitude,
             patient.activityarea_id,
+            patient.area_id,
             patient.geography_id,
             patient.recall_date!!,
             patient.recall_time!!,

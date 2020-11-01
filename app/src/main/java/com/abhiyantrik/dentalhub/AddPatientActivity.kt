@@ -16,6 +16,7 @@ import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.abhiyantrik.dentalhub.utils.DateValidator
 import com.abhiyantrik.dentalhub.workers.UpdatePatientWorker
 import com.abhiyantrik.dentalhub.workers.UploadPatientWorker
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.metrics.AddTrace
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
@@ -72,7 +73,24 @@ class AddPatientActivity : AppCompatActivity() {
         context = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
+            Log.d(MainActivity.TAG,"Activity is not been selected.")
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
+            logout()
+        }
+
+        if (DentalApp.activity_id != "" && DentalApp.activity_id != "1" && DentalApp.activity_area_id < 1) {
+            logout()
+        }
+
         initUI()
+    }
+
+    private fun logout() {
+        DentalApp.clearAuthDetails(context)
+        Toast.makeText(context, "Failed to load data. Please try again.", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(context, LoginActivity::class.java))
+        finish()
     }
 
     @AddTrace(name = "initUIAddPatientActivity", enabled = true /* optional */)

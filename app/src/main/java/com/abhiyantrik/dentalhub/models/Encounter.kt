@@ -10,6 +10,7 @@ class Encounter{
 
     var ward_id: Int = 0
     var activity_area: String = ""
+    var area: Int? = 0
 
     var author: String = ""
     var updated_by: String = ""

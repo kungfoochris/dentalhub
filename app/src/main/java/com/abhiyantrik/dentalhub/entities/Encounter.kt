@@ -27,6 +27,7 @@ class Encounter : Parcelable {
     var author: String = ""
     var ward_id: Int = 0
     var activityarea_id: String = ""
+    var area_id: Int = 0
     var updated_by: String? = ""
     var patient: ToOne<Patient>? = null
 

@@ -199,7 +199,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
                     }
 
                     "Community Outreach"-> {
-                        val selectedItemActivity = schoolSeminarAreaList[spinnerSchoolSeminar.selectedItemPosition]
+                        val selectedItemActivity = communityOutreachAreaList[spinnerCommunityOutreach.selectedItemPosition]
 
                         DentalApp.activity_area_name = selectedItemActivity.area
                         DentalApp.activity_area_id = selectedItemActivity.id
@@ -210,13 +210,13 @@ class ActivitySelectorActivity : AppCompatActivity() {
                             selectedItemActivity.id.toInt()
                         )
                         saveBackDateToSharedPreference()
-//                        val intent = Intent(context, MainActivity::class.java)
-//                        startActivity(intent)
-//                        finish()
+                        val intent = Intent(context, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
 
                     "Training"-> {
-                        val selectedItemActivity = schoolSeminarAreaList[spinnerSchoolSeminar.selectedItemPosition]
+                        val selectedItemActivity = trainingAreaList[spinnerTraining.selectedItemPosition]
 
                         DentalApp.activity_area_name = selectedItemActivity.area
                         DentalApp.activity_area_id = selectedItemActivity.id
@@ -227,9 +227,9 @@ class ActivitySelectorActivity : AppCompatActivity() {
                             selectedItemActivity.id.toInt()
                         )
                         saveBackDateToSharedPreference()
-//                        val intent = Intent(context, MainActivity::class.java)
-//                        startActivity(intent)
-//                        finish()
+                        val intent = Intent(context, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 }
 
@@ -473,7 +473,8 @@ class ActivitySelectorActivity : AppCompatActivity() {
                 when (response.code()) {
                     200 -> {
                         val serverActivity = response.body() as ActivityModel
-                        Toast.makeText(context, "Area created successfully.", Toast.LENGTH_SHORT)
+                        Toast.makeText(this@ActivitySelectorActivity, "Area created successfully.", Toast.LENGTH_SHORT)
+                        startActivity(Intent(context, LocationSelectorActivity::class.java))
                         finish()
 //                        DentalApp.saveToPreference(
 //                            context,

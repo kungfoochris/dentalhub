@@ -2,6 +2,7 @@ package com.abhiyantrik.dentalhub
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -87,6 +88,16 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         referralBox = ObjectBox.boxStore.boxFor(Referral::class.java)
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
+        if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
+            Log.d(MainActivity.TAG,"Activity is not been selected.")
+            FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
+            logout()
+        }
+
+        if (DentalApp.activity_id != "" && DentalApp.activity_id != "1" && DentalApp.activity_area_id < 1) {
+            logout()
+        }
+
         context = this
         patientId = intent.getLongExtra("PATIENT_ID", 0.toLong())
         patient = patientBox.query().equal(Patient_.id, patientId).build().findFirst()!!
@@ -128,6 +139,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
                 encounter.other_problem = otherProblem
             }
             encounter.activityarea_id = DentalApp.activity_id
+            encounter.area_id = DentalApp.activity_area_id.toInt()
             encounter.ward_id = DentalApp.geography_id
             encounter.created_at = modifiedNewDate
             encounter.updated_at = date
@@ -195,6 +207,12 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
 
     }
 
+    private fun logout() {
+        DentalApp.clearAuthDetails(context)
+        Toast.makeText(context, "Failed to load data. Please try again.", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(context, LoginActivity::class.java))
+        finish()
+    }
 
     @AddTrace(name = "initUITrace", enabled = true /* optional */)
     private fun initUI() {
