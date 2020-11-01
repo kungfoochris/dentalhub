@@ -400,6 +400,7 @@ class AddPatientActivity : AppCompatActivity() {
             tempPatient.longitude = longitude
             tempPatient.geography_id = geography
             tempPatient.activityarea_id = activity
+            tempPatient.area_id = DentalApp.activity_area_id.toInt()
             tempPatient.created_at = date
             tempPatient.updated_at = date
             tempPatient.uploaded = false

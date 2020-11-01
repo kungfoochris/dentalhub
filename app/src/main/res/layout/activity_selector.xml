@@ -88,6 +88,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
+                        android:visibility="gone"
                         android:background="@drawable/spinner"
                         />
                 <RadioButton android:id="@+id/radioCommunityOutreach"
@@ -103,6 +104,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
+                        android:visibility="gone"
                         android:background="@drawable/spinner"
                         />
                 <RadioButton android:id="@+id/radioTraining"
@@ -119,6 +121,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/spinner"
+                        android:visibility="gone"
                         />
             </RadioGroup>
             <AutoCompleteTextView
@@ -175,5 +178,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
     />
+
+    <TextView
+            android:id="@+id/tvAddNewActivityArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="32dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/add_new_activity_area"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -184,6 +184,10 @@ class MainActivity : AppCompatActivity() {
             logout()
         }
 
+        if (DentalApp.activity_id != "" && DentalApp.activity_id != "1" && DentalApp.activity_area_id < 1) {
+            logout()
+        }
+
         patientsBox = ObjectBox.boxStore.boxFor(Patient::class.java)
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
         historyBox = ObjectBox.boxStore.boxFor(History::class.java)

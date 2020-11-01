@@ -1,11 +1,14 @@
 package com.abhiyantrik.dentalhub
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Activity_
@@ -24,7 +27,6 @@ import timber.log.Timber
 import java.text.DecimalFormat
 import java.util.*
 import com.abhiyantrik.dentalhub.models.Activity as ActivityModel
-
 
 class ActivitySelectorActivity : AppCompatActivity() {
 
@@ -50,6 +52,10 @@ class ActivitySelectorActivity : AppCompatActivity() {
     var training_id = ""
     var allAPIActivities = listOf<ActivityModel>()
     private var backDateSelected = DateHelper.getTodaysNepaliDate()
+
+    val schoolSeminarAreaList = mutableListOf<ActivitySuggestion>()
+    val communityOutreachAreaList = mutableListOf<ActivitySuggestion>()
+    val trainingAreaList = mutableListOf<ActivitySuggestion>()
 
     private lateinit var activityBox: Box<Activity>
 
@@ -91,37 +97,35 @@ class ActivitySelectorActivity : AppCompatActivity() {
         arrayAdapter.notifyDataSetChanged()
 
         rgActivities.setOnCheckedChangeListener { _, i ->
-            if (i == R.id.radioHealthPostActivity) {
-                etOtherDetails.setText("")
-                etOtherDetails.visibility = View.GONE
-            } else {
-                etOtherDetails.visibility = View.VISIBLE
-            }
+//            if (i == R.id.radioHealthPostActivity) {
+//                etOtherDetails.setText("")
+//                etOtherDetails.visibility = View.GONE
+//            } else {
+//                etOtherDetails.visibility = View.VISIBLE
+//            }
             when (i) {
                 R.id.radioHealthPostActivity -> {
                     selectedActivity = HEALTH_POST
                     selectedActivityId = healthpost_id
-                    println("Selected Activity is $selectedActivity")
+                    hideOtherThan(null)
                 }
                 R.id.radioSchoolSeminar -> {
                     selectedActivity = "School Seminar"
                     selectedActivityId = school_seminar_id
-                    println("Selected Activity is $selectedActivity")
+                    hideOtherThan(spinnerSchoolSeminar)
                 }
                 R.id.radioCommunityOutreach -> {
                     selectedActivity = "Community Outreach"
                     selectedActivityId = communityoutreach_id
-                    println("Selected Activity is $selectedActivity")
+                    hideOtherThan(spinnerCommunityOutreach)
                 }
                 R.id.radioTraining -> {
                     selectedActivity = "Training"
                     selectedActivityId = training_id
-                    println("Selected Activity is $selectedActivity")
+                    hideOtherThan(spinnerTraining)
                 }
             }
         }
-
-
 
         etBackdate.setOnClickListener {
             val someDate: Calendar = GregorianCalendar.getInstance()
@@ -146,37 +150,96 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
         btnGo.setOnClickListener {
             if (isFormValid()) {
-
+                DentalApp.activity_id = selectedActivityId
                 DentalApp.activity_name = selectedActivity
-                DentalApp.addStringToPreference(context, etOtherDetails.text.toString())
+//                DentalApp.addStringToPreference(context, etOtherDetails.text.toString())
 
-                if (selectedActivity == HEALTH_POST) {
-                    DentalApp.activity_id = selectedActivityId
-                    DentalApp.activity_name = selectedActivity
-                    DentalApp.saveToPreference(
-                        context,
-                        Constants.PREF_ACTIVITY_ID,
-                        selectedActivityId
-                    )
-                    DentalApp.saveToPreference(
-                        context,
-                        Constants.PREF_ACTIVITY_NAME,
-                        selectedActivity
-                    )
-                    saveBackDateToSharedPreference()
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    if (!etOtherDetails.text.isNullOrEmpty()) saveToServerNewActivity()
-                    else {
-                        Toast.makeText(
+                DentalApp.saveToPreference(
+                    context,
+                    Constants.PREF_ACTIVITY_ID,
+                    selectedActivityId
+                )
+                DentalApp.saveToPreference(
+                    context,
+                    Constants.PREF_ACTIVITY_NAME,
+                    selectedActivity
+                )
+
+                when (selectedActivity) {
+                    HEALTH_POST -> {
+                        DentalApp.activity_area_name = ""
+                        DentalApp.activity_area_id = 0
+                        DentalApp.saveIntToPreference(
                             context,
-                            "Please fill other details.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            Constants.PREF_ACTIVITY_AREA_ID,
+                            0
+                        )
+                        saveBackDateToSharedPreference()
+                        val intent = Intent(context, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+
+                    "School Seminar" -> {
+
+                        val selectedItemActivity = schoolSeminarAreaList[spinnerSchoolSeminar.selectedItemPosition]
+
+                        DentalApp.activity_area_name = selectedItemActivity.area
+                        DentalApp.activity_area_id = selectedItemActivity.id
+
+                        DentalApp.saveIntToPreference(
+                            context,
+                            Constants.PREF_ACTIVITY_AREA_ID,
+                            selectedItemActivity.id.toInt()
+                        )
+                        saveBackDateToSharedPreference()
+                        val intent = Intent(context, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+
+                    "Community Outreach"-> {
+                        val selectedItemActivity = schoolSeminarAreaList[spinnerSchoolSeminar.selectedItemPosition]
+
+                        DentalApp.activity_area_name = selectedItemActivity.area
+                        DentalApp.activity_area_id = selectedItemActivity.id
+
+                        DentalApp.saveIntToPreference(
+                            context,
+                            Constants.PREF_ACTIVITY_AREA_ID,
+                            selectedItemActivity.id.toInt()
+                        )
+                        saveBackDateToSharedPreference()
+//                        val intent = Intent(context, MainActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
+                    }
+
+                    "Training"-> {
+                        val selectedItemActivity = schoolSeminarAreaList[spinnerSchoolSeminar.selectedItemPosition]
+
+                        DentalApp.activity_area_name = selectedItemActivity.area
+                        DentalApp.activity_area_id = selectedItemActivity.id
+
+                        DentalApp.saveIntToPreference(
+                            context,
+                            Constants.PREF_ACTIVITY_AREA_ID,
+                            selectedItemActivity.id.toInt()
+                        )
+                        saveBackDateToSharedPreference()
+//                        val intent = Intent(context, MainActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
                     }
                 }
+
+//                if (etOtherDetails.text.isNullOrEmpty()) {
+//                    Toast.makeText(
+//                        context,
+//                        "Please fill other details.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
             } else {
                 Toast.makeText(context, "Please select a activity.", Toast.LENGTH_SHORT).show()
             }
@@ -185,6 +248,19 @@ class ActivitySelectorActivity : AppCompatActivity() {
             DentalApp.clearAuthDetails(context)
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
+        }
+        tvAddNewActivityArea.setOnClickListener {
+            displayAddActivityAreaPopUp()
+        }
+    }
+
+    private fun hideOtherThan(selectedItem: View?) {
+        spinnerSchoolSeminar.visibility = View.GONE
+        spinnerCommunityOutreach.visibility = View.GONE
+        spinnerTraining.visibility = View.GONE
+
+        selectedItem?.let {
+            selectedItem.visibility = View.VISIBLE
         }
     }
 
@@ -227,9 +303,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
     }
 
     private fun loadAllActivitySpinner(allActivitySuggestions: List<ActivitySuggestion>) {
-        val schoolSeminarAreaList = mutableListOf<ActivitySuggestion>()
-        val communityOutreachAreaList = mutableListOf<ActivitySuggestion>()
-        val trainingAreaList = mutableListOf<ActivitySuggestion>()
 
         val schoolSeminarList = mutableListOf<String>()
         val communityOutreachList = mutableListOf<String>()
@@ -268,6 +341,52 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     }
 
+    private fun displayAddActivityAreaPopUp() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflate: LayoutInflater = layoutInflater
+        val view: View = inflate.inflate(R.layout.popup_add_activity_area, null)
+
+        // to get all id of the Button
+        val rgAddActivityArea = view.findViewById<RadioGroup>(R.id.rgAddActivityArea)
+//        val rbOtherProblem = view.findViewById<RadioButton>(R.id.rbOtherProblem)
+        val etActivityAreaName = view.findViewById<EditText>(R.id.etActivityAreaName)
+        val btnCloseDialog = view.findViewById<ImageButton>(R.id.btnCloseDialog)
+        val btnAddActivityArea = view.findViewById<Button>(R.id.btnAddActivityArea)
+
+        builder.setView(view)
+        val dialog: Dialog = builder.create()
+        dialog.show()
+
+        btnCloseDialog.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnAddActivityArea.setOnClickListener {
+            val radioBtnID = rgAddActivityArea.checkedRadioButtonId
+            if (radioBtnID != -1) {
+                if (etActivityAreaName.text.isNullOrEmpty()) {
+                    Toast.makeText(
+                        this,
+                        "Activity Area name is empty.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val selectedBtn: RadioButton = view.findViewById(radioBtnID)
+//                    openAddEncounter(selectedBtn.text.toString(), etOtherProblem.text.toString())
+                    var chooseActivityId = ""
+                    when (selectedBtn.text.toString()) {
+                        "School Seminar" -> chooseActivityId = school_seminar_id
+                        "Community Outreach" -> chooseActivityId = communityoutreach_id
+                        "Training" -> chooseActivityId = training_id
+                    }
+                    createNewActivityAreaToServerFor(chooseActivityId, etActivityAreaName.text.toString())
+                    dialog.dismiss()
+                }
+            } else {
+                Toast.makeText(this, "Activity is not selected", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     private fun loadActivityId() {
         Timber.d("loadActivityId()")
@@ -331,16 +450,15 @@ class ActivitySelectorActivity : AppCompatActivity() {
         })
     }
 
-    private fun saveToServerNewActivity() {
-        Timber.d("saveToServerNewActivity()")
-        println("Selected seminar in save to server $selectedActivity")
+    private fun createNewActivityAreaToServerFor(activityId: String, areaName: String) {
+        Log.d(TAG, "createNewActivityAreaToServerFor()")
         val token = DentalApp.readFromPreference(this, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call =
             panelService.addActivity(
                 "JWT $token",
-                selectedActivityId,
-                etOtherDetails.text.toString()
+                activityId,
+                areaName
             )
         call.enqueue(object : Callback<ActivityModel> {
             override fun onFailure(call: Call<ActivityModel>, t: Throwable) {
@@ -355,26 +473,25 @@ class ActivitySelectorActivity : AppCompatActivity() {
                 when (response.code()) {
                     200 -> {
                         val serverActivity = response.body() as ActivityModel
-                        DentalApp.saveToPreference(
-                            context,
-                            Constants.PREF_ACTIVITY_NAME,
-                            serverActivity.id
-                        )
-                        DentalApp.activity_id = selectedActivityId
-                        DentalApp.activity_name = selectedActivity
-                        DentalApp.saveToPreference(
-                            context,
-                            Constants.PREF_ACTIVITY_ID,
-                            selectedActivityId
-                        )
-                        DentalApp.saveToPreference(
-                            context,
-                            Constants.PREF_ACTIVITY_NAME,
-                            selectedActivity
-                        )
-                        saveBackDateToSharedPreference()
-                        val intent = Intent(context, MainActivity::class.java)
-                        startActivity(intent)
+                        Toast.makeText(context, "Area created successfully.", Toast.LENGTH_SHORT)
+                        finish()
+//                        DentalApp.saveToPreference(
+//                            context,
+//                            Constants.PREF_ACTIVITY_NAME,
+//                            serverActivity.id
+//                        )
+//                        DentalApp.activity_id = selectedActivityId
+//                        DentalApp.activity_name = selectedActivity
+//                        DentalApp.saveToPreference(
+//                            context,
+//                            Constants.PREF_ACTIVITY_ID,
+//                            selectedActivityId
+//                        )
+//                        DentalApp.saveToPreference(
+//                            context,
+//                            Constants.PREF_ACTIVITY_NAME,
+//                            selectedActivity
+//                        )
                     }
                     400 -> {
                         Timber.d("On 400 error")
@@ -392,7 +509,8 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     private fun isFormValid(): Boolean {
         var status = false
-        if (rgActivities.checkedRadioButtonId != -1) status = true
+        val radioBtnID = rgActivities.checkedRadioButtonId
+        if (radioBtnID != -1) status = true
         return status
     }
 

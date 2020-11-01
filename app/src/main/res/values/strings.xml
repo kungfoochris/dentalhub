@@ -169,4 +169,7 @@
     <string name="upload_patient">Upload Patient</string>
     <string name="upload_encounter">Upload Encounter</string>
     <string name="not_selected">%1$s is not selected.</string>
+    <string name="add_new_activity_area">Add new activity area</string>
+    <string name="activity_area_name">activity area name</string>
+    <string name="add_activity_area">Add Activity Area</string>
 </resources>

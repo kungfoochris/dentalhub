@@ -23,6 +23,7 @@ class Patient(
     var recall_date: String? = "",
     var recall_geography: Int = 0,
     var activity_area: String,
+    var area: Int? = null,
     var created_at: String? = "",
     var updated_at: String? = ""
 )  {

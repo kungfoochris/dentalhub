@@ -89,6 +89,8 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
         var ward_name: String = ""
         var activity_id: String = ""
         var activity_name: String = ""
+        var activity_area_name: String = ""
+        var activity_area_id: Long = 0
         var activityRemarks: String = ""
 
         var defaultChannelId: String = ""
