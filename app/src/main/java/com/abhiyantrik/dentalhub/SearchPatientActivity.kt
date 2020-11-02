@@ -222,7 +222,6 @@ class SearchPatientActivity : AppCompatActivity() {
                     Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " search patient db exception " + e.printStackTrace().toString())
                     FirebaseCrashlytics.getInstance().recordException(e)
                 }
-                println("Query result is $patientsearchlist")
 
                 setupAdapter()
                 return true

@@ -156,7 +156,6 @@ class ScreeningFragment : Fragment() {
             if (screening.carries_risk.isNotEmpty()) {
                 val riskValue = resources.getStringArray(R.array.carries_risk).toList()
                 val indexOfRisk = riskValue.indexOf(screening.carries_risk)
-                println("Carrier risk index is $indexOfRisk and the value is ${screening.carries_risk}")
                 spinnerRisk.setSelection(indexOfRisk)
             }
 

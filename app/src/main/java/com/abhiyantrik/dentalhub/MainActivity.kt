@@ -113,7 +113,6 @@ class MainActivity : AppCompatActivity() {
 
     @AddTrace(name = "listRecallPatients", enabled = true /* optional */)
     private fun listRecallPatients() {
-        println("called once.")
         val c = Calendar.getInstance().time
         val df = SimpleDateFormat("yyyy-MM-dd")
         df.format(c)

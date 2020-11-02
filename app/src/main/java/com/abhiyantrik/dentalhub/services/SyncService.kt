@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
@@ -79,7 +80,6 @@ class SyncService : Service(){
     private fun displayNotification() {
         // for uploading the data
         allPatients = patientsBox.query().build().find()
-        println("Display notification $allPatients")
         for (patient in allPatients) {
             DentalApp.displayNotification(
                 applicationContext,
@@ -198,7 +198,7 @@ class SyncService : Service(){
                         }
                     }
                 } else {
-                    println("Screening error body is ${response.code()} body ${response.body()}.")
+                    Timber.d("Screening error body is ${response.code()} body ${response.body()}.")
                 }
             }
         })
@@ -330,7 +330,6 @@ class SyncService : Service(){
                     when (response.code()) {
                         200 -> {
                             Timber.d("saveTreatmentToServer() %s", response.message())
-                            println("Successfully added the Treatment.")
                             val tempReferral =
                                 referralBox.query().equal(
                                     Referral_.encounterId,
@@ -379,12 +378,10 @@ class SyncService : Service(){
         print("Response before")
         call.enqueue(object : Callback<PatientModel> {
             override fun onFailure(call: Call<PatientModel>, t: Throwable) {
-                print("Response in patient is fail®")
                 Timber.d("onFailure %s", t.toString())
             }
 
             override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
-                print("Response in patient is ${response.body()} and ${response.code()}")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
@@ -395,7 +392,6 @@ class SyncService : Service(){
                             dbPatient!!.remote_id = tempPatient.id
                             dbPatient.uploaded = true
                             dbPatient.updated = false
-                            println("Patient uid is ${tempPatient.id}")
                             patientsBox.put(dbPatient)
                             Timber.d("savePatientToServer %s", tempPatient.fullName() + " saved.")
                             checkAllEncounter(dbPatient)
@@ -424,7 +420,6 @@ class SyncService : Service(){
 
     private fun checkAllEncounter(patient: Patient) {
         allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
-        println("already uploaded patient encounter $allEncounters")
         for (eachEncounter in allEncounters) {
             if (eachEncounter.uploaded) {
                 Log.d("SyncService", "Encounter already uploaded ${eachEncounter.remote_id}")
@@ -482,7 +477,6 @@ class SyncService : Service(){
                                 encountersBox.query().equal(Encounter_.id, tempEncounter.id).build()
                                     .findFirst()
                             dbEncounter!!.remote_id = serverEncounter.id
-                            println("Encounter uid is : ${serverEncounter.id}")
                             dbEncounter.uploaded = true
                             encountersBox.put(dbEncounter)
                             saveAllFragmentsToServer(dbEncounter)
@@ -503,7 +497,6 @@ class SyncService : Service(){
         // read the encounter again from local db so that you can have remote Id
         val tempHistory =
             historyBox.query().equal(History_.encounterId, encounter.id).build().findFirst()!!
-        println("Till the History Master")
         saveHistoryToServer(encounter.remote_id, tempHistory, encounter.id)
     }
 

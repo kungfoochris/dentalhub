@@ -82,6 +82,8 @@ class ActivitySelectorActivity : AppCompatActivity() {
         radioCommunityOutreach = findViewById(R.id.radioCommunityOutreach)
         radioTraining = findViewById(R.id.radioTraining)
 
+        etBackdate.setText(DateHelper.getReadableNepaliDate(backDateSelected))
+
         // load the id and name of the activity
         loadActivityId()
         loadActivitySuggestions()
