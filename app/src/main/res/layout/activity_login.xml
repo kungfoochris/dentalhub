@@ -18,12 +18,12 @@
                 tools:context=".LoginActivity">
 
             <ImageView
-                    android:src="@drawable/banner"
+                    android:src="@drawable/blcp_banner"
                     android:contentDescription="@string/app_name"
                     android:layout_gravity="center"
                     android:layout_width="420dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="38dp"
                     android:layout_marginStart="-3dp"
                     />
 
@@ -84,6 +84,14 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     />
+
+            <TextView
+                    android:layout_gravity="end"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="86dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/powered_by_abhiyantrik_technology"/>
 
             <ProgressBar
                     android:id="@+id/loading"
