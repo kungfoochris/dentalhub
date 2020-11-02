@@ -3,7 +3,6 @@ package com.abhiyantrik.dentalhub.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.abhiyantrik.dentalhub.Constants
@@ -380,10 +379,12 @@ class SyncService : Service(){
         print("Response before")
         call.enqueue(object : Callback<PatientModel> {
             override fun onFailure(call: Call<PatientModel>, t: Throwable) {
+                print("Response in patient is fail®")
                 Timber.d("onFailure %s", t.toString())
             }
 
             override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
+                print("Response in patient is ${response.body()} and ${response.code()}")
                 if (null != response.body()) {
                     when (response.code()) {
                         200 -> {
