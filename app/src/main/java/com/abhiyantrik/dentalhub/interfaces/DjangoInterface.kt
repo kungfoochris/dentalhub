@@ -449,11 +449,12 @@ interface DjangoInterface {
     companion object Factory {
         fun create(context: Context): DjangoInterface {
             val gson: Gson = GsonBuilder().create()
-            val baseURL = if(BuildConfig.DEBUG){
-                context.getString(R.string.test_api_url);
-            }else{
-                context.getString(R.string.prod_api_url);
-            }
+            val baseURL = context.getString(R.string.test_api_url)
+//            val baseURL = if(BuildConfig.DEBUG){
+//                context.getString(R.string.test_api_url);
+//            }else{
+//                context.getString(R.string.prod_api_url);
+//            }
             val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create(gson)).build()
