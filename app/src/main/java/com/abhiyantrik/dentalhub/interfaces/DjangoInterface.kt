@@ -392,7 +392,7 @@ interface DjangoInterface {
     fun listGeographies(@Header("Authorization") token: String): Call<List<Geography>>
 
     @GET("activities")
-    fun listActivities(): Call<List<ActivitySuggestion>>
+    fun listActivities(): Call<List<ActivityAreaModel>>
 
     @GET("profile")
     fun fetchProfile(@Header("Authorization") token: String): Call<Profile>
@@ -449,7 +449,7 @@ interface DjangoInterface {
     companion object Factory {
         fun create(context: Context): DjangoInterface {
             val gson: Gson = GsonBuilder().create()
-            val baseURL = context.getString(R.string.test_api_url)
+            val baseURL = context.getString(R.string.prod_api_url)
 //            val baseURL = if(BuildConfig.DEBUG){
 //                context.getString(R.string.test_api_url);
 //            }else{

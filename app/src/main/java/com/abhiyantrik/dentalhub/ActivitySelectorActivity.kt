@@ -13,10 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.abhiyantrik.dentalhub.entities.Activity
 import com.abhiyantrik.dentalhub.entities.Activity_
 import com.abhiyantrik.dentalhub.interfaces.DjangoInterface
-import com.abhiyantrik.dentalhub.models.ActivitySuggestion
+import com.abhiyantrik.dentalhub.models.ActivityAreaModel
 import com.abhiyantrik.dentalhub.utils.AdapterHelper
 import com.abhiyantrik.dentalhub.utils.DateHelper
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import kotlinx.android.synthetic.main.activity_selector.*
@@ -53,9 +52,9 @@ class ActivitySelectorActivity : AppCompatActivity() {
     var allAPIActivities = listOf<ActivityModel>()
     private var backDateSelected = DateHelper.getTodaysNepaliDate()
 
-    val schoolSeminarAreaList = mutableListOf<ActivitySuggestion>()
-    val communityOutreachAreaList = mutableListOf<ActivitySuggestion>()
-    val trainingAreaList = mutableListOf<ActivitySuggestion>()
+    val schoolSeminarAreaList = mutableListOf<ActivityAreaModel>()
+    val communityOutreachAreaList = mutableListOf<ActivityAreaModel>()
+    val trainingAreaList = mutableListOf<ActivityAreaModel>()
 
     private lateinit var activityBox: Box<Activity>
 
@@ -277,19 +276,19 @@ class ActivitySelectorActivity : AppCompatActivity() {
     private fun loadActivitySuggestions() {
         val panelService = DjangoInterface.create(context)
         val call = panelService.listActivities()
-        call.enqueue(object : Callback<List<ActivitySuggestion>> {
-            override fun onFailure(call: Call<List<ActivitySuggestion>>, t: Throwable) {
+        call.enqueue(object : Callback<List<ActivityAreaModel>> {
+            override fun onFailure(call: Call<List<ActivityAreaModel>>, t: Throwable) {
                 Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ "loadActivitySuggestions " +t.message.toString())
                 Timber.d("loadActivityId() %s", "onFailure")
                 Timber.d(t.message)
             }
 
             override fun onResponse(
-                call: Call<List<ActivitySuggestion>>,
-                response: Response<List<ActivitySuggestion>>
+                call: Call<List<ActivityAreaModel>>,
+                response: Response<List<ActivityAreaModel>>
             ) {
 
-                val allActivitySuggestions = response.body() as List<ActivitySuggestion>
+                val allActivitySuggestions = response.body() as List<ActivityAreaModel>
                 for (act in allActivitySuggestions) {
                     DentalApp.activitySuggestions.add(act.area)
                 }
@@ -304,7 +303,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
 
     }
 
-    private fun loadAllActivitySpinner(allActivitySuggestions: List<ActivitySuggestion>) {
+    private fun loadAllActivitySpinner(allActivitySuggestions: List<ActivityAreaModel>) {
 
         val schoolSeminarList = mutableListOf<String>()
         val communityOutreachList = mutableListOf<String>()

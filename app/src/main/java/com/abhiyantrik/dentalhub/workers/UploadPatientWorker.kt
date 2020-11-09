@@ -90,37 +90,43 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             patientsBox.query().equal(Patient_.id, patient.id).build().findFirst()
         if(!patient.uploaded){
             val response = call.execute()
-            if (response.isSuccessful) {
-                when (response.code()) {
-                    200, 201 -> {
-                        val tempPatient = response.body()
-
-                        if ( tempPatient?.id != null ) {
-                            dbPatient!!.remote_id = tempPatient.id
-                            dbPatient.uploaded = true
-                            dbPatient.updated = false
-
-                            patientsBox.put(dbPatient)
-                            Timber.d("UploadPatientWorker Patient uploaded.")
-                        } else {
-                            Timber.d("UploadPatientWorker: Patient uploaded but id not received ${patient.fullName()}.")
-                            FirebaseCrashlytics.getInstance().setCustomKey("patient_upload_status", false)
-                        }
-
-                        DentalApp.cancelNotification(applicationContext, 1001)
-                    }
-                    else -> {
-                        Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() HTTP Status code "+response.code())
-                    }
-                }
-                Timber.d("UploadPatientWorker: %s", "other than 200, 201 " + response.message().toString())
+            Timber.d("UploadPatientWorker response ${response.code()}, ${response.body()}, ${response.message()}")
+            if (response.code() == 409) {
+                Timber.d("UploadPatientWorker found duplicate data while uploading of ${dbPatient?.fullName()}")
+                patientsBox.remove(dbPatient)
             } else {
-                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() Failed to add patient.")
-                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() "+response.code())
-                Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() "+response.message())
-                Timber.d("UploadPatientWorker: %s", response.message())
-                Timber.d("UploadPatientWorker: %s", response.code().toString())
-                Timber.d("UploadPatientWorker: %s", "Error body " + response.errorBody().toString())
+                if (response.isSuccessful) {
+                    when (response.code()) {
+                        200, 201 -> {
+                            val tempPatient = response.body()
+
+                            if ( tempPatient?.id != null ) {
+                                dbPatient!!.remote_id = tempPatient.id
+                                dbPatient.uploaded = true
+                                dbPatient.updated = false
+
+                                patientsBox.put(dbPatient)
+                                Timber.d("UploadPatientWorker Patient uploaded.")
+                            } else {
+                                Timber.d("UploadPatientWorker: Patient uploaded but id not received ${patient.fullName()}.")
+                                FirebaseCrashlytics.getInstance().setCustomKey("patient_upload_status", false)
+                            }
+
+                            DentalApp.cancelNotification(applicationContext, 1001)
+                        }
+                        else -> {
+                            Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() HTTP Status code "+response.code())
+                        }
+                    }
+                    Timber.d("UploadPatientWorker: %s", "other than 200, 201 " + response.message().toString())
+                } else {
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() Failed to add patient.")
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() "+response.code())
+                    Timber.d(DentalApp.readFromPreference(ctx, Constants.PREF_AUTH_EMAIL,"")+ " addPatient() "+response.message())
+                    Timber.d("UploadPatientWorker: %s", response.message())
+                    Timber.d("UploadPatientWorker: %s", response.code().toString())
+                    Timber.d("UploadPatientWorker: %s", "Error body " + response.errorBody().toString())
+                }
             }
         }
         createOutputData(dbPatient!!.id)
