@@ -590,33 +590,38 @@ class AsyncActivity : AppCompatActivity() {
             try {
                 val response = call.execute()
                 Timber.d("Patient response ${response.code()} ${response.message()}")
-                if (response.isSuccessful) {
-                    when (response.code()) {
-                        200, 201 -> {
-                            val tempPatient = response.body()
-
-                            if ( tempPatient?.id != null ) {
-                                patient.remote_id = tempPatient.id
-                                patient.uploaded = true
-                                patient.updated = false
-
-                                patientBox.put(patient)
-                                responseStatus = true
-                                Timber.d("Patients uploaded successfully.")
-                                Timber.d("UploadPatientWorkAsync: Message From OnCreate")
-                            } else {
-                                Timber.d("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
-                                FirebaseCrashlytics.getInstance().setCustomKey("patient_uploaded", false)
-                            }
-
-                            DentalApp.cancelNotification(applicationContext, 1001)
-                        }
-                    }
-                    Timber.d("other than 200, 201 %s", response.message().toString())
+                if (response.code() == 409) {
+                    Timber.d("UploadPatientWorker found duplicate data while uploading of ${patient.fullName()}")
+                    patientBox.remove(patient)
                 } else {
-                    Timber.d(response.message())
-                    Timber.d(response.code().toString())
-                    Timber.d("Error body %s", response.errorBody().toString())
+                    if (response.isSuccessful) {
+                        when (response.code()) {
+                            200, 201 -> {
+                                val tempPatient = response.body()
+
+                                if ( tempPatient?.id != null ) {
+                                    patient.remote_id = tempPatient.id
+                                    patient.uploaded = true
+                                    patient.updated = false
+
+                                    patientBox.put(patient)
+                                    responseStatus = true
+                                    Timber.d("Patients uploaded successfully.")
+                                    Timber.d("UploadPatientWorkAsync: Message From OnCreate")
+                                } else {
+                                    Timber.d("UploadPatientWorkAsync: Patient uploaded but id not received ${patient.fullName()}.")
+                                    FirebaseCrashlytics.getInstance().setCustomKey("patient_uploaded", false)
+                                }
+
+                                DentalApp.cancelNotification(applicationContext, 1001)
+                            }
+                        }
+                        Timber.d("other than 200, 201 %s", response.message().toString())
+                    } else {
+                        Timber.d(response.message())
+                        Timber.d(response.code().toString())
+                        Timber.d("Error body %s", response.errorBody().toString())
+                    }
                 }
             } catch (ex: Exception) {
                 Timber.d("Error uploading Patient: ${ex.message}")

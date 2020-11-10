@@ -98,7 +98,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             Timber.d("UploadPatientWorker response ${response.code()}, ${response.body()}, ${response.message()}")
             if (response.code() == 409) {
                 Timber.d("UploadPatientWorker found duplicate data while uploading of ${dbPatient?.fullName()}")
-                patientsBox.remove(dbPatient)
+                patientsBox.remove(dbPatient!!)
             } else {
                 if (response.isSuccessful) {
                     when (response.code()) {

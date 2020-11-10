@@ -387,36 +387,42 @@ class SyncService : Service(){
             }
 
             override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
-                if (null != response.body()) {
-                    when (response.code()) {
-                        200 -> {
-                            val tempPatient = response.body() as PatientModel
-                            val dbPatient =
-                                patientsBox.query().equal(Patient_.id, patient.id).build()
-                                    .findFirst()
-                            dbPatient!!.remote_id = tempPatient.id
-                            dbPatient.uploaded = true
-                            dbPatient.updated = false
-                            patientsBox.put(dbPatient)
-                            Timber.d("savePatientToServer %s", tempPatient.fullName() + " saved.")
-                            checkAllEncounter(dbPatient)
-                        }
-                        400 -> {
-                            Timber.d("savePatientToServer %s", "400 bad request")
-                        }
-                        404 -> {
-                            Timber.d("savePatientToServer %s", "404 Page not found")
-                        }
-                        else -> {
-                            Timber.d("savePatientToServer %s", "unhandled request")
-                        }
-                    }
+                if (response.code() == 409) {
+                    Timber.d("UploadPatientWorker found duplicate data while uploading of ${patient.fullName()}")
+                    patientsBox.remove(patient)
                 } else {
-                    Timber.d("savePatientToServer %s", response.code().toString())
-                    Timber.d("savePatientToServer %s", Gson().toJson(response.body()).toString())
-                    //tvErrorMessage.text = response.message()
-                    Timber.d("savePatientToServer %s", response.message())
+                    if (null != response.body()) {
+                        when (response.code()) {
+                            200 -> {
+                                val tempPatient = response.body() as PatientModel
+                                val dbPatient =
+                                    patientsBox.query().equal(Patient_.id, patient.id).build()
+                                        .findFirst()
+                                dbPatient!!.remote_id = tempPatient.id
+                                dbPatient.uploaded = true
+                                dbPatient.updated = false
+                                patientsBox.put(dbPatient)
+                                Timber.d("savePatientToServer %s", tempPatient.fullName() + " saved.")
+                                checkAllEncounter(dbPatient)
+                            }
+                            400 -> {
+                                Timber.d("savePatientToServer %s", "400 bad request")
+                            }
+                            404 -> {
+                                Timber.d("savePatientToServer %s", "404 Page not found")
+                            }
+                            else -> {
+                                Timber.d("savePatientToServer %s", "unhandled request")
+                            }
+                        }
+                    } else {
+                        Timber.d("savePatientToServer %s", response.code().toString())
+                        Timber.d("savePatientToServer %s", Gson().toJson(response.body()).toString())
+                        //tvErrorMessage.text = response.message()
+                        Timber.d("savePatientToServer %s", response.message())
+                    }
                 }
+
 
             }
 
