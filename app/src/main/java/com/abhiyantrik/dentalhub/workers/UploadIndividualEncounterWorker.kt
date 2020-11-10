@@ -66,6 +66,11 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
         } else {
             dbEncounterEntity.created_at
         }
+        val activityAreaId = if (dbEncounterEntity.area_id == 0) {
+            ""
+        } else {
+            dbEncounterEntity.area_id.toString()
+        }
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addEncounter(
@@ -74,7 +79,7 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             dbEncounterEntity.id.toInt(),
             dbEncounterEntity.ward_id,
             dbEncounterEntity.activityarea_id,
-            dbEncounterEntity.area_id,
+            activityAreaId,
             dbEncounterEntity.encounter_type,
             dbEncounterEntity.other_problem,
             dbEncounterEntity.author,

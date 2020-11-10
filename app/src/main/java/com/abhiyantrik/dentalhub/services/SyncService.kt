@@ -447,6 +447,11 @@ class SyncService : Service(){
         patientActivityId: String,
         tempEncounter: Encounter
     ) {
+        val activityAreaId = if (tempEncounter.area_id == 0) {
+            ""
+        } else {
+            tempEncounter.area_id.toString()
+        }
         Timber.d("SyncService %s", "saveEncounterToServer()")
         Timber.d("saveEncounterToServer %s", tempEncounter.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
@@ -457,7 +462,7 @@ class SyncService : Service(){
             tempEncounter.id.toInt(),
             patientGeography,
             patientActivityId,
-            tempEncounter.area_id,
+            activityAreaId,
             tempEncounter.encounter_type,
             tempEncounter.other_problem,
             tempEncounter.author,

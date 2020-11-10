@@ -492,6 +492,11 @@ class AsyncActivity : AppCompatActivity() {
         } else {
             eachEncounter.created_at
         }
+        val activityAreaId = if (eachEncounter.area_id == 0) {
+            ""
+        } else {
+            eachEncounter.area_id.toString()
+        }
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addEncounter(
@@ -500,7 +505,7 @@ class AsyncActivity : AppCompatActivity() {
             eachEncounter.id.toInt(),
             eachEncounter.ward_id,
             eachEncounter.activityarea_id,
-            eachEncounter.area_id,
+            activityAreaId,
             eachEncounter.encounter_type,
             eachEncounter.other_problem,
             eachEncounter.author,

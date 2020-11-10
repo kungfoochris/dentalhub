@@ -107,7 +107,7 @@ interface DjangoInterface {
         @Field("id") id: Int,
         @Field("geography_id") geographyId: Int,
         @Field("activityarea_id") activitareaId: String,
-        @Field("area") area: Int,
+        @Field("area") area: String,
         @Field("encounter_type") encounterType: String,
         @Field("other_problem") otherProblem: String,
         @Field("author") author: String,
