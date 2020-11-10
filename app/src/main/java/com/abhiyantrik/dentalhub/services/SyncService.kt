@@ -347,6 +347,11 @@ class SyncService : Service(){
     private fun savePatientToServer(patient: Patient) {
         Timber.d("SyncService %s", "savePatientToServer()")
         Timber.d("savePatientToServer %s", patient.toString())
+        val activityAreaId = if (patient.area_id == 0) {
+            ""
+        } else {
+            patient.area_id.toString()
+        }
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call = panelService.addPatient(
@@ -365,7 +370,7 @@ class SyncService : Service(){
             patient.latitude,
             patient.longitude,
             patient.activityarea_id,
-            patient.area_id,
+            activityAreaId,
             patient.geography_id,
             patient.recall_date!!,
             patient.recall_time!!,

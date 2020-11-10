@@ -43,7 +43,7 @@ interface DjangoInterface {
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
         @Field("activityarea_id") activityAreaId: String,
-        @Field("area") area: Int,
+        @Field("area") area: String,
         @Field("geography_id") geographyId: Int,
         @Field("recall_date") recallDate: String,
         @Field("recall_time") recallTime : String,

@@ -55,6 +55,11 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
         )
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(applicationContext)
+        val activityAreaId = if (patient.area_id == 0) {
+            ""
+        } else {
+            patient.area_id.toString()
+        }
         var updater = patient.updated_by
         if (patient.updated_by == null) {
             updater =
@@ -76,7 +81,7 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             patient.latitude,
             patient.longitude,
             patient.activityarea_id,
-            patient.area_id,
+            activityAreaId,
             patient.geography_id,
             patient.recall_date!!,
             patient.recall_time!!,
