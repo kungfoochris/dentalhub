@@ -21,6 +21,7 @@ import com.google.firebase.perf.metrics.AddTrace
 import com.hornet.dateconverter.DateConverter
 import io.objectbox.Box
 import timber.log.Timber
+import java.lang.Exception
 import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit
 
@@ -203,36 +204,39 @@ class AddPatientActivity : AppCompatActivity() {
 
     private fun setupWards(selectedWard: Int) {
         if (allMunicipalities.size > 0) {
-            val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
-            Timber.d("Selected Municipality: "+ spinnerMunicipality.selectedItem.toString())
-            Timber.d("Municipality Position: " + spinnerMunicipality.selectedItemPosition.toString())
-            var selectedWardIndex = 0
-
-            val dbWards =
-                wardsBox.query().equal(Ward_.municipalityId, dbMunicipality.id).build().find()
-            val wards = mutableListOf<String>()
-            allWards = dbWards
-
-            if (selectedWard == 0){
-                for ((_, ward) in dbWards.withIndex()) {
-                    wards.add(ward.ward.toString())
-                }
-                selectedWardIndex = DentalApp.lastWardIndex
-            } else {
-                for ((count, ward) in dbWards.withIndex()) {
-                    if (selectedWard == ward.remote_id) {
-                        selectedWardIndex = count
-                    }
-                    wards.add(ward.ward.toString())
-                }
-            }
-            spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
             try {
-                spinnerWard.setSelection(selectedWardIndex)
-            } catch (e: IndexOutOfBoundsException){
-                spinnerWard.setSelection(0)
-            }
+                val dbMunicipality = allMunicipalities[spinnerMunicipality.selectedItemPosition]
+                Timber.d("Selected Municipality: "+ spinnerMunicipality.selectedItem.toString())
+                Timber.d("Municipality Position: " + spinnerMunicipality.selectedItemPosition.toString())
+                var selectedWardIndex = 0
 
+                val dbWards =
+                    wardsBox.query().equal(Ward_.municipalityId, dbMunicipality.id).build().find()
+                val wards = mutableListOf<String>()
+                allWards = dbWards
+
+                if (selectedWard == 0){
+                    for ((_, ward) in dbWards.withIndex()) {
+                        wards.add(ward.ward.toString())
+                    }
+                    selectedWardIndex = DentalApp.lastWardIndex
+                } else {
+                    for ((count, ward) in dbWards.withIndex()) {
+                        if (selectedWard == ward.remote_id) {
+                            selectedWardIndex = count
+                        }
+                        wards.add(ward.ward.toString())
+                    }
+                }
+                spinnerWard.adapter = AdapterHelper.createAdapter(context, wards.toList())
+                try {
+                    spinnerWard.setSelection(selectedWardIndex)
+                } catch (e: IndexOutOfBoundsException){
+                    spinnerWard.setSelection(0)
+                }
+            } catch (ex: java.lang.Exception) {
+                Toast.makeText(context, "Ward setup failed please contact Abhiyantrik.", Toast.LENGTH_SHORT).show()
+            }
 
         } else {
             Toast.makeText(context, "Municipality not found.", Toast.LENGTH_LONG).show()
@@ -240,68 +244,75 @@ class AddPatientActivity : AppCompatActivity() {
     }
 
     private fun setupMunicipalities(selectedMunicipality: Int) {
-        Timber.d("setupMunicipalities(%d)", selectedMunicipality);
-        Timber.d("Selected District", spinnerDistrict.selectedItem.toString())
-        Timber.d("District Position", spinnerDistrict.selectedItemPosition.toString())
-
-        var selectedMunicipalityIndex = 0
-
-        val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
-        allMunicipalities =
-            municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
-        val municipalitiesList = mutableListOf<String>()
-
-        if (selectedMunicipality==0){
-            for ((_, municipality) in allMunicipalities.withIndex()) {
-                municipalitiesList.add(municipality.name.capitalize())
-            }
-            selectedMunicipalityIndex = DentalApp.lastMunicipalityIndex
-        } else {
-            for ((count, municipality) in allMunicipalities.withIndex()) {
-                if (selectedMunicipality == municipality.remote_id) {
-                    selectedMunicipalityIndex = count
-                }
-                municipalitiesList.add(municipality.name.capitalize())
-            }
-        }
-        spinnerMunicipality.adapter =
-            AdapterHelper.createAdapter(context, municipalitiesList.toList())
         try {
-            spinnerMunicipality.setSelection(selectedMunicipalityIndex)
-        }catch (e: IndexOutOfBoundsException){
-            spinnerMunicipality.setSelection(0)
-        }
+            Timber.d("setupMunicipalities(%d)", selectedMunicipality);
+            Timber.d("Selected District", spinnerDistrict.selectedItem.toString())
+            Timber.d("District Position", spinnerDistrict.selectedItemPosition.toString())
 
-        if (patient != null) {
-            setupWards(patient!!.ward)
-        } else {
-            setupWards(0)
-        }
+            var selectedMunicipalityIndex = 0
 
+            val dbDistrict = allDistricts[spinnerDistrict.selectedItemPosition]
+            allMunicipalities =
+                municipalitiesBox.query().equal(Municipality_.districtId, dbDistrict.id).build().find()
+            val municipalitiesList = mutableListOf<String>()
+
+            if (selectedMunicipality==0){
+                for ((_, municipality) in allMunicipalities.withIndex()) {
+                    municipalitiesList.add(municipality.name.capitalize())
+                }
+                selectedMunicipalityIndex = DentalApp.lastMunicipalityIndex
+            } else {
+                for ((count, municipality) in allMunicipalities.withIndex()) {
+                    if (selectedMunicipality == municipality.remote_id) {
+                        selectedMunicipalityIndex = count
+                    }
+                    municipalitiesList.add(municipality.name.capitalize())
+                }
+            }
+            spinnerMunicipality.adapter =
+                AdapterHelper.createAdapter(context, municipalitiesList.toList())
+            try {
+                spinnerMunicipality.setSelection(selectedMunicipalityIndex)
+            }catch (e: IndexOutOfBoundsException){
+                spinnerMunicipality.setSelection(0)
+            }
+
+            if (patient != null) {
+                setupWards(patient!!.ward)
+            } else {
+                setupWards(0)
+            }
+        } catch (ex: java.lang.Exception) {
+            Toast.makeText(context, "Municipalities setup failed please contact Abhiyantrik.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupDistricts(selectedDistrict: Int) {
 
-        allDistricts = districtsBox.query().build().find()
-        val districtsList = mutableListOf<String>()
-        var selectedDistrictIndex = 0
-        for ((count, district) in allDistricts.withIndex()) {
-            if (selectedDistrict == district.remote_id) {
-                selectedDistrictIndex = count
-            }
-            districtsList.add(district.name.capitalize())
-        }
-        spinnerDistrict.adapter = AdapterHelper.createAdapter(context, districtsList.toList())
         try {
-            spinnerDistrict.setSelection(selectedDistrictIndex)
-        }catch (e: IndexOutOfBoundsException){
-            spinnerDistrict.setSelection(0)
-        }
+            allDistricts = districtsBox.query().build().find()
+            val districtsList = mutableListOf<String>()
+            var selectedDistrictIndex = 0
+            for ((count, district) in allDistricts.withIndex()) {
+                if (selectedDistrict == district.remote_id) {
+                    selectedDistrictIndex = count
+                }
+                districtsList.add(district.name.capitalize())
+            }
+            spinnerDistrict.adapter = AdapterHelper.createAdapter(context, districtsList.toList())
+            try {
+                spinnerDistrict.setSelection(selectedDistrictIndex)
+            }catch (e: IndexOutOfBoundsException){
+                spinnerDistrict.setSelection(0)
+            }
 
-        if (patient != null) {
-            setupMunicipalities(patient!!.municipality)
-        } else {
-            setupMunicipalities(0)
+            if (patient != null) {
+                setupMunicipalities(patient!!.municipality)
+            } else {
+                setupMunicipalities(0)
+            }
+        } catch (ex: Exception) {
+            Toast.makeText(context, "Districts setup failed please contact Abhiyantrik.", Toast.LENGTH_SHORT).show()
         }
 
     }
