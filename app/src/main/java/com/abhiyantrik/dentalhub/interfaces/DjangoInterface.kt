@@ -358,7 +358,7 @@ interface DjangoInterface {
         @Field("health_post") healthPost: Boolean,
         @Field("hygienist") hygienist: Boolean,
         @Field("dentist") dentist: Boolean,
-        @Field("physician") generalPhysician: Boolean,
+        @Field("general_physician") generalPhysician: Boolean,
         @Field("other") otherDetails: String
     ): Call<ReferralModel>
 
