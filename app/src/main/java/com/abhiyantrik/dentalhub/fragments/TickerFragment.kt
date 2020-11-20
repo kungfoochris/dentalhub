@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.abhiyantrik.dentalhub.Constants
 import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.R
+import com.abhiyantrik.dentalhub.utils.DateHelper
 
 class TickerFragment : Fragment() {
     private lateinit var textView: TextView
@@ -49,7 +50,9 @@ class TickerFragment : Fragment() {
                 activity as Context,
         Constants.PREF_PROFILE_FULL_NAME,
         ""
-        ) + " | " + DentalApp.ward_name + " | " + DentalApp.activity_name + " | " + DentalApp.activity_area_name
+        ) + " | " + DentalApp.ward_name + " | " + DentalApp.activity_name + " | " +
+                DentalApp.activity_area_name + " | " +
+                DentalApp.readFromPreference(context as Context, Constants.PERF_SELECTED_BACKDATE, DateHelper.getTodaysNepaliDate())
         textView.text = tickerText
 
     }
