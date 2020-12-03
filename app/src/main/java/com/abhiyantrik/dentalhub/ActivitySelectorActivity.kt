@@ -241,8 +241,6 @@ class ActivitySelectorActivity : AppCompatActivity() {
 //                        Toast.LENGTH_SHORT
 //                    ).show()
 //                }
-            } else {
-                Toast.makeText(context, "Please select a activity.", Toast.LENGTH_SHORT).show()
             }
         }
         btnLogout.setOnClickListener {
@@ -452,7 +450,7 @@ class ActivitySelectorActivity : AppCompatActivity() {
     }
 
     private fun createNewActivityAreaToServerFor(activityId: String, areaName: String) {
-        Log.d(TAG, "createNewActivityAreaToServerFor()")
+        Timber.d("$TAG createNewActivityAreaToServerFor()")
         val token = DentalApp.readFromPreference(this, Constants.PREF_AUTH_TOKEN, "")
         val panelService = DjangoInterface.create(this)
         val call =
@@ -510,9 +508,36 @@ class ActivitySelectorActivity : AppCompatActivity() {
     }
 
     private fun isFormValid(): Boolean {
-        var status = false
+        var status = true
         val radioBtnID = rgActivities.checkedRadioButtonId
-        if (radioBtnID != -1) status = true
+        if (radioBtnID == -1) {
+            Toast.makeText(context, "Please select a activity.", Toast.LENGTH_SHORT).show()
+            status = false
+        }
+        if (radioSchoolSeminar.isChecked && spinnerSchoolSeminar.selectedItemPosition < 0) {
+            Toast.makeText(
+                this@ActivitySelectorActivity,
+                "School Seminar activity area not selected.",
+                Toast.LENGTH_SHORT
+            ).show()
+            status = false
+        }
+        if (radioCommunityOutreach.isChecked && spinnerCommunityOutreach.selectedItemPosition < 0) {
+            Toast.makeText(
+                this@ActivitySelectorActivity,
+                "Community Outreach activity area not selected.",
+                Toast.LENGTH_SHORT
+            ).show()
+            status = false
+        }
+        if (radioTraining.isChecked && spinnerTraining.selectedItemPosition < 0) {
+            Toast.makeText(
+                this@ActivitySelectorActivity,
+                "Training activity area not selected.",
+                Toast.LENGTH_SHORT
+            ).show()
+            status = false
+        }
         return status
     }
 
