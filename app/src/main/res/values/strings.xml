@@ -173,4 +173,10 @@
     <string name="activity_area_name">activity area name</string>
     <string name="add_activity_area">Add Activity Area</string>
     <string name="powered_by_abhiyantrik_technology">Powered by Abhiyantrik Technology</string>
+    <string name="sdf">SDF</string>
+    <string name="seal">SEAL</string>
+    <string name="art">ART</string>
+    <string name="exo">EXO</string>
+    <string name="smart">SMART</string>
+    <string name="untr">UNTR</string>
 </resources>
