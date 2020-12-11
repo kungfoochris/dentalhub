@@ -56,11 +56,11 @@ class Patient : Parcelable {
     var encounters: ToMany<Encounter>? = null
 
 
-    fun referall(): String {
+    fun referallDate(): String {
         return if (recall_date!!.isEmpty()) {
             DateHelper.getCurrentDate()
         } else {
-            "$recall_date $recall_time"
+            "$recall_date"
         }
 
     }
