@@ -434,7 +434,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         hideBooleanWithoutYesVisible(referral.no_referral, tvNoReferralTitle, tvNoReferral)
         hideBooleanWithoutYesVisible(referral.health_post, tvHealthPostTitle, tvHealthPost)
         if (referral.health_post) {
-            tvHealthPost.text = "${patient.recall_date} + ${patient.recall_time}"
+            tvHealthPost.text = "${patient.recall_date}  ${patient.recall_time}"
         } else {
             tvHealthPostTitle.visibility = View.GONE
             tvHealthPost.visibility = View.GONE

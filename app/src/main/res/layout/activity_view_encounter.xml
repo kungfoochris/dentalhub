@@ -538,6 +538,67 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:gravity="center"
+                        android:layout_gravity="left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/fieldTopMargin"
+                        android:layout_marginBottom="@dimen/fieldBottomMargin">
+                    <Button
+                            android:id="@+id/btnSDF"
+                            android:text="@string/sdf"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/treatment_sdf"
+                            android:textColor="@color/white_color"
+                            android:layout_width="96dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnSEAL"
+                            android:text="@string/seal"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/treatment_seal"
+                            android:textColor="@color/white_color"
+                            android:layout_width="96dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnART"
+                            android:text="@string/art"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/treatment_art"
+                            android:textColor="@color/white_color"
+                            android:layout_width="96dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnEXO"
+                            android:text="@string/exo"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/treatment_exo"
+                            android:textColor="@color/white_color"
+                            android:layout_width="96dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnSMART"
+                            android:text="@string/smart"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/treatment_smart_without_border"
+                            android:src="@drawable/treatment_smart_applied"
+                            android:textColor="@color/treatment_button_default_text"
+                            android:layout_width="96dp"
+                            android:layout_height="48dp"/>
+                    <Button
+                            android:id="@+id/btnUNTR"
+                            android:text="@string/untr"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/treatment_untr"
+                            android:textColor="@color/white_color"
+                            android:layout_width="96dp"
+                            android:layout_height="48dp"/>
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <HorizontalScrollView
                     android:layout_width="match_parent"
