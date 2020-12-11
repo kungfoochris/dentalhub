@@ -527,15 +527,15 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         patient.updated = true
         patient.updated_at = DateHelper.getTodaysNepaliDate()
         patient.updated_by = DentalApp.readFromPreference(context, Constants.PREF_PROFILE_ID, "")
-//        patientBox.put(patient)
+        patientBox.put(patient)
 
-//        val data = Data.Builder().putLong("PATIENT_ID", patient.id)
-//        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
-//            .setInputData(data.build())
-//            .setConstraints(DentalApp.uploadConstraints)
-//            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
-//
-//        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
+        val data = Data.Builder().putLong("PATIENT_ID", patient.id)
+        val uploadPatientWorkRequest = OneTimeWorkRequestBuilder<UpdatePatientWorker>()
+            .setInputData(data.build())
+            .setConstraints(DentalApp.uploadConstraints)
+            .setInitialDelay(100, TimeUnit.MILLISECONDS).build()
+
+        WorkManager.getInstance(applicationContext).enqueue(uploadPatientWorkRequest)
     }
 
     private fun saveEncounterToLocalDB() {
