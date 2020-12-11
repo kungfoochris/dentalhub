@@ -2,6 +2,7 @@ package com.abhiyantrik.dentalhub
 
 import android.app.Dialog
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,6 +17,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.abhiyantrik.dentalhub.entities.*
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import io.objectbox.Box
+import kotlinx.android.synthetic.main.single_syncronization.view.*
 
 class ViewEncounterActivity : AppCompatActivity() {
 
@@ -291,22 +293,22 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvNotTakingAnyMedications = findViewById(R.id.tvNotTakingAnyMedications)
         tvAllergies = findViewById(R.id.tvAllergies)
 
-        hideBoolean(
+        hideBooleanWithoutYesVisible(
             history.blood_disorder,
             tvBloodDisorderOrBleedingProblemTitle,
             tvBloodDisorderOrBleedingProblem
         )
-        hideBoolean(history.diabetes, tvDiabetesTitle, tvDiabetes)
-        hideBoolean(history.liver_problem, tvLiverProblemTitle, tvLiverProblem)
-        hideBoolean(history.rheumatic_fever, tvRheumaticFeverTitle, tvRheumaticFever)
-        hideBoolean(history.seizuers_or_epilepsy, tvSeizuresOrEpilepsyTitle, tvSeizuresOrEpilepsy)
-        hideBoolean(history.hepatitis_b_or_c, tvHepatitisBOrCTitle, tvHepatitisBOrC)
-        hideBoolean(history.hiv, tvHIVTitle, tvHIV)
+        hideBooleanWithoutYesVisible(history.diabetes, tvDiabetesTitle, tvDiabetes)
+        hideBooleanWithoutYesVisible(history.liver_problem, tvLiverProblemTitle, tvLiverProblem)
+        hideBooleanWithoutYesVisible(history.rheumatic_fever, tvRheumaticFeverTitle, tvRheumaticFever)
+        hideBooleanWithoutYesVisible(history.seizuers_or_epilepsy, tvSeizuresOrEpilepsyTitle, tvSeizuresOrEpilepsy)
+        hideBooleanWithoutYesVisible(history.hepatitis_b_or_c, tvHepatitisBOrCTitle, tvHepatitisBOrC)
+        hideBooleanWithoutYesVisible(history.hiv, tvHIVTitle, tvHIV)
         hideString(history.other, tvOtherTitle, tvOther)
-        hideBoolean(history.high_blood_pressure, tvHighBPTitle, tvHighBP)
-        hideBoolean(history.low_blood_pressure, tvLowBPTitle, tvLowBP)
-        hideBoolean(history.thyroid_disorder, tvThyroidDisorderTitle, tvThyroidDisorder)
-        hideBoolean(
+        hideBooleanWithoutYesVisible(history.high_blood_pressure, tvHighBPTitle, tvHighBP)
+        hideBooleanWithoutYesVisible(history.low_blood_pressure, tvLowBPTitle, tvLowBP)
+        hideBooleanWithoutYesVisible(history.thyroid_disorder, tvThyroidDisorderTitle, tvThyroidDisorder)
+        hideBooleanWithoutYesVisible(
             history.no_underlying_medical_condition,
             tvNoUnderlyingMedicalConditionTitle,
             tvNoUnderlyingMedicalCondition
@@ -316,7 +318,7 @@ class ViewEncounterActivity : AppCompatActivity() {
 
         if (history.not_taking_any_medications) {
             tvNotTakingAnyMedicationsTitle.text = "Not Taking Any Medications"
-            tvNotTakingAnyMedications.text = "Yes"
+//            tvNotTakingAnyMedications.text = "Yes"
         } else {
             tvNotTakingAnyMedications.text = history.medications
         }
@@ -324,7 +326,7 @@ class ViewEncounterActivity : AppCompatActivity() {
         // since allergies is little different i.e. if no_allergies is True show allergies(String) else don't show both no_allergies(Int) and allergies(String)
         if (history.no_allergies) {
             tvAllergiesTitle.text = "No Allergies"
-            tvAllergies.text = "Yes"
+//            tvAllergies.text = "Yes"
         } else {
             tvAllergies.text = history.allergies
         }
@@ -429,11 +431,17 @@ class ViewEncounterActivity : AppCompatActivity() {
         tvGeneralPhysician = findViewById(R.id.tvGeneralPhysician)
         tvOtherDetails = findViewById(R.id.tvOtherDetails)
 
-        hideBoolean(referral.no_referral, tvNoReferralTitle, tvNoReferral)
-        hideBoolean(referral.health_post, tvHealthPostTitle, tvHealthPost)
-        hideBoolean(referral.hygienist, tvHygienistTitle, tvHygienist)
-        hideBoolean(referral.dentist, tvDentistTitle, tvDentist)
-        hideBoolean(referral.general_physician, tvGeneralPhysicianTitle, tvGeneralPhysician)
+        hideBooleanWithoutYesVisible(referral.no_referral, tvNoReferralTitle, tvNoReferral)
+        hideBooleanWithoutYesVisible(referral.health_post, tvHealthPostTitle, tvHealthPost)
+        if (referral.health_post) {
+            tvHealthPost.text = "${patient.recall_date} + ${patient.recall_time}"
+        } else {
+            tvHealthPostTitle.visibility = View.GONE
+            tvHealthPost.visibility = View.GONE
+        }
+        hideBooleanWithoutYesVisible(referral.hygienist, tvHygienistTitle, tvHygienist)
+        hideBooleanWithoutYesVisible(referral.dentist, tvDentistTitle, tvDentist)
+        hideBooleanWithoutYesVisible(referral.general_physician, tvGeneralPhysicianTitle, tvGeneralPhysician)
         hideString(referral.other_details, tvOtherDetailsTitle, tvOtherDetails)
         if(referral.other_details.isNotEmpty()){
             tvOtherDetails.text = referral.other_details
@@ -654,6 +662,15 @@ class ViewEncounterActivity : AppCompatActivity() {
         if (disease) {
             view.text = "Yes"
         } else {
+            viewTitle.visibility = View.GONE
+            view.visibility = View.GONE
+        }
+    }
+
+    /* To show or hide the fields with Boolean data in the
+    Fragements -> History, Screening, Treatment, Referral and Recall */
+    private fun hideBooleanWithoutYesVisible(disease: Boolean, viewTitle: View, view: TextView) {
+        if (!disease) {
             viewTitle.visibility = View.GONE
             view.visibility = View.GONE
         }
