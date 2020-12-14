@@ -3,7 +3,6 @@ package com.abhiyantrik.dentalhub.fragments
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -178,20 +177,19 @@ class ReferralFragment : Fragment() {
 
             when (i) {
                 R.id.radioOneWeek -> {
-                    recallDate = if (dayToday + 7 > 30 && monthToday+1 > 12) {
-                        "${yearToday+1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
+                    recallDate = if (dayToday + 7 > 30 && monthToday + 1 > 12) {
+                        "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
                             "00"
                         ).format((dayToday + 7) % 30)
-                    } else if(dayToday+7 > 30){
-                            "$yearToday-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
-                                "00"
-                            ).format((dayToday + 7) % 30)
+                    } else if (dayToday + 7 > 30) {
+                        "$yearToday-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
+                            "00"
+                        ).format((dayToday + 7) % 30)
 
-                    }
-                    else{
-                          "$yearToday-" + DecimalFormat("00").format(monthToday) + "-" + DecimalFormat(
-                                "00"
-                            ).format((dayToday + 7) % 30)
+                    } else {
+                        "$yearToday-" + DecimalFormat("00").format(monthToday) + "-" + DecimalFormat(
+                            "00"
+                        ).format((dayToday + 7) % 30)
 
                     }
 
@@ -244,7 +242,24 @@ class ReferralFragment : Fragment() {
                             etRecallDate.setText(DateHelper.getReadableNepaliDate(recallDate))
                         }
                     }
-                dpd.setMinDate(nepaliDateConverter.todayNepaliDate)
+                val backDate =
+                    DentalApp.readFromPreference(
+                        activity as AddEncounterActivity,
+                        Constants.PERF_SELECTED_BACKDATE,
+                        DateHelper.getTodaysNepaliDate()
+                    )
+                val nepaliday = backDate.substring(8, 10).toInt()
+                val nepalimonth = backDate.substring(5, 7).toInt()
+                val nepaliyear = backDate.substring(0, 4).toInt()
+                // first convert nepali date to english
+                val englishBackDate = nepaliDateConverter.getEnglishDate(nepaliyear, nepalimonth, nepaliday)
+                val convertedDate = DateHelper.getDaysLaterDate(englishBackDate.year, englishBackDate.month, englishBackDate.day, 0)
+                val day = convertedDate.substring(8, 10).toInt()
+                val month = convertedDate.substring(5, 7).toInt()
+                val year = convertedDate.substring(0, 4).toInt()
+                // then convert to nepali date
+                val nepaliBackDate = nepaliDateConverter.getNepaliDate(year, month, day)
+                dpd.setMinDate(nepaliBackDate)
                 fragmentManager?.let { dpd.show(it, "RecallDate") }
 
             }
@@ -278,7 +293,7 @@ class ReferralFragment : Fragment() {
         return view
     }
 
-    private fun uncheckNoReferral(checkbox : CheckBox) {
+    private fun uncheckNoReferral(checkbox: CheckBox) {
         checkbox.setOnCheckedChangeListener { compoundButton, _ ->
             if (checkboxNoReferral.isChecked) {
                 compoundButton.isChecked = false

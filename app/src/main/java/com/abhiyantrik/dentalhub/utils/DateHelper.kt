@@ -18,9 +18,9 @@ class DateHelper {
         }
 
         fun getReadableNepaliDate(date: String): String{
-            var day = date.substring(8, 10).toInt()
-            var month = date.substring(5, 7).toInt()
-            var year = date.substring(0, 4).toInt()
+            val day = date.substring(8, 10).toInt()
+            val month = date.substring(5, 7).toInt()
+            val year = date.substring(0, 4).toInt()
             var monthName = "Baisakh"
             when(month){
                 1 -> monthName = "Baisakh"
@@ -74,7 +74,7 @@ class DateHelper {
         fun getPreviousDay(date: String): String {
             Timber.d("Subtract one day to : %s", date)
             var day = date.substring(8, 10).toInt()
-            var month = date.substring(5, 7).toInt()
+            val month = date.substring(5, 7).toInt()
             var year = date.substring(0, 4).toInt()
             if (day == 1) {
                 if (month == 1) {
@@ -123,10 +123,26 @@ class DateHelper {
         }
 
 
-        fun formatDate(date: String): String {
+        fun getSimpleDateFormat(date: String): String {
             val dateObj = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(date)
             val sdf = SimpleDateFormat("yyyy-MMM dd", Locale.US)
             return sdf.format(dateObj)
+        }
+
+        fun getDaysLaterDate(year: Int, month: Int, day: Int, numberOfDaysLater: Int) : String {
+            val cal = Calendar.getInstance()
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, month)
+            cal.set(Calendar.DAY_OF_MONTH, day)
+            Timber.d("Backdate test $cal")
+            if (numberOfDaysLater != 0) {
+                cal.add(Calendar.DATE, numberOfDaysLater)
+            }
+            Timber.d("Backdate test $cal")
+
+            val dateObj = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(cal.time)
+            Timber.d("Backdate test $dateObj")
+            return dateObj
         }
     }
 }
