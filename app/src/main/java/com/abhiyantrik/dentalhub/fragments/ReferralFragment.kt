@@ -167,13 +167,17 @@ class ReferralFragment : Fragment() {
 
         rgRecalls.setOnCheckedChangeListener { _, i ->
             var recallDate = ""
-            val nepaliCalender = DateConverter()
 
-            val todayNepali = nepaliCalender.todayNepaliDate
+            val backDate =
+                DentalApp.readFromPreference(
+                    activity as AddEncounterActivity,
+                    Constants.PERF_SELECTED_BACKDATE,
+                    DateHelper.getTodaysNepaliDate()
+                )
 
-            val yearToday = todayNepali.year
-            val monthToday = todayNepali.month + 1
-            val dayToday = todayNepali.day
+            val yearToday = backDate.substring(0, 4).toInt()
+            val monthToday = backDate.substring(5, 7).toInt()
+            val dayToday = backDate.substring(8, 10).toInt()
 
             when (i) {
                 R.id.radioOneWeek -> {
