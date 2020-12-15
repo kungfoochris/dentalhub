@@ -89,7 +89,7 @@ class AddEncounterActivity : AppCompatActivity(), TreatmentFragmentCommunicator,
         recallBox = ObjectBox.boxStore.boxFor(Recall::class.java)
 
         if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
-            Log.d(MainActivity.TAG,"Activity is not been selected.")
+            Timber.d("${MainActivity.TAG} Activity is not been selected.")
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
             logout()
         }

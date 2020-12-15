@@ -433,7 +433,7 @@ class SyncService : Service(){
         allEncounters = encountersBox.query().equal(Encounter_.patientId, patient.id).build().find()
         for (eachEncounter in allEncounters) {
             if (eachEncounter.uploaded) {
-                Log.d("SyncService", "Encounter already uploaded ${eachEncounter.remote_id}")
+                Timber.d("SyncService Encounter already uploaded ${eachEncounter.remote_id}")
             } else {
                 saveEncounterToServer(
                     patient.remote_id,

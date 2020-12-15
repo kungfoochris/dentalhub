@@ -75,7 +75,7 @@ class AddPatientActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
-            Log.d(MainActivity.TAG,"Activity is not been selected.")
+            Timber.d("${MainActivity.TAG} Activity is not been selected.")
             FirebaseCrashlytics.getInstance().log(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
             logout()
         }
