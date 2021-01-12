@@ -346,25 +346,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAllUpdated() {
-        val patient = patientsBox.query().equal(Patient_.uploaded, false).build().find()
-        val encounter = encounterBox.query().equal(Encounter_.uploaded, false).build().find()
+        try {
+            val patient = patientsBox.query().equal(Patient_.uploaded, false).build().find()
+            val encounter = encounterBox.query().equal(Encounter_.uploaded, false).build().find()
 
-        val history = historyBox.query().equal(History_.uploaded, false).build().find()
-        val screening =
-            screeningBox.query().equal(Screening_.uploaded, false).build().find()
-        val treatment =
-            treatmentBox.query().equal(Treatment_.uploaded, false).build().find()
-        val referral =
-            referralBox.query().equal(Referral_.uploaded, false).build().find()
+            val history = historyBox.query().equal(History_.uploaded, false).build().find()
+            val screening =
+                screeningBox.query().equal(Screening_.uploaded, false).build().find()
+            val treatment =
+                treatmentBox.query().equal(Treatment_.uploaded, false).build().find()
+            val referral =
+                referralBox.query().equal(Referral_.uploaded, false).build().find()
 
-        if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
+            if (patient.isNullOrEmpty() && encounter.isNullOrEmpty() && history.isNullOrEmpty() && screening.isNullOrEmpty() &&
                 treatment.isNullOrEmpty() && referral.isNullOrEmpty()) {
-            Timber.d("all patient uploaded.")
-            fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.colorART))
-        } else {
-            Timber.d("Left to upload patient details.")
-            fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.red_A200))
+                Timber.d("all patient uploaded.")
+                fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.colorART))
+            } else {
+                Timber.d("Left to upload patient details.")
+                fabBtnSync.background.setTint(ContextCompat.getColor(context, R.color.red_A200))
+            }
+        } catch (ex: Exception) {
+            Timber.e("Error occurred in checkAllUpdated: ${ex.message}")
+            Toast.makeText(
+                context,
+                "Failed to check all updates.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
+
     }
 
 
