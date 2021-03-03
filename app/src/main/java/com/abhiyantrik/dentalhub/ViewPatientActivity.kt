@@ -31,7 +31,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -107,7 +106,9 @@ class ViewPatientActivity : AppCompatActivity() {
         getUpdatedPatient()
 
         fabAddNewEncounter.setOnClickListener {
-            displayEncounterTypeSelectorPopUp()
+            if (validateEncounter()) {
+                displayEncounterTypeSelectorPopUp()
+            }
         }
         fabEditPatient.setOnClickListener {
             val addPatientIntent = Intent(this, AddPatientActivity::class.java)
@@ -115,6 +116,34 @@ class ViewPatientActivity : AppCompatActivity() {
             addPatientIntent.putExtra("ACTION", "edit")
             startActivity(addPatientIntent)
         }
+    }
+
+    /**
+     * Check if the previously created Encounter date
+     * If created today then sends false
+     * */
+    private fun validateEncounter(): Boolean {
+        var status = false
+        val allEncounters =
+            encounterBox.query().equal(Encounter_.patientId, patientId)
+                .orderDesc(Encounter_.created_at)
+                .orderDesc(Encounter_.id)
+                .build().find()
+
+        if (allEncounters.count() > 0) {
+//            2077-10-28T15:00:29.184000+05:45
+            val croppedDate = allEncounters[0].created_at.substring(0, 10)
+            val date = DentalApp.readFromPreference(context, Constants.PERF_SELECTED_BACKDATE, DateHelper.getTodaysNepaliDate())
+            if (croppedDate != date) {
+                status = true
+            } else {
+                status = false
+                Toast.makeText(context, "Encounter already exists in today's date.", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            status = true
+        }
+        return status
     }
 
     private fun listEncounters() {
