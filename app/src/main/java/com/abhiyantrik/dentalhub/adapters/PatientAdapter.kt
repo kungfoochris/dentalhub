@@ -89,10 +89,21 @@ class PatientAdapter(
                 }
                 if (displayDelayStatus) {
                     // since this is for the recall patient only
-                    if (patient.called == Call.CALLED.status) {
-                        btnCall.isClickable = false
-                        btnCall.setBackgroundResource(R.drawable.called_patient)
+                    when (patient.called) {
+                        Call.CALLED.status -> {
+                            btnCall.setBackgroundResource(R.drawable.called_patient)
+                        }
+                        Call.NO_ANSWER.status -> {
+                            btnCall.setBackgroundResource(R.drawable.call_not_answer)
+                        }
+                        Call.NOT_CALLED.status -> {
+                            // not thing to do
+                        }
                     }
+//                    if (patient.called == Call.CALLED.status) {
+//                        btnCall.isClickable = false
+//                        btnCall.setBackgroundResource(R.drawable.called_patient)
+//                    }
 
                     recallInfo.visibility = View.VISIBLE
                     btnDelay.visibility = View.VISIBLE
