@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.abhiyantrik.dentalhub.R
+import com.abhiyantrik.dentalhub.entities.Call
 import com.abhiyantrik.dentalhub.entities.Patient
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import timber.log.Timber
@@ -88,7 +89,7 @@ class PatientAdapter(
                 }
                 if (displayDelayStatus) {
                     // since this is for the recall patient only
-                    if (patient.called) {
+                    if (patient.called == Call.CALLED.status) {
                         btnCall.isClickable = false
                         btnCall.setBackgroundResource(R.drawable.called_patient)
                     }

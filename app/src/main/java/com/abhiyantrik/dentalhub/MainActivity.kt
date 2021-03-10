@@ -431,7 +431,7 @@ class MainActivity : AppCompatActivity() {
                             // Do something when user press the positive button
                             Toast.makeText(applicationContext,"Patient recall is removed.",Toast.LENGTH_SHORT).show()
                             patient.recall_date = ""
-                            patient.called = false
+                            patient.called = Call.NOT_CALLED.status
                             patientsBox.put(patient)
                             listPatients()
                         }
@@ -454,12 +454,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onCallPatientClick(patient: Patient) {
-                        if (!patient.called) {
+                        if (patient.called == Call.NOT_CALLED.status) {
                             if(DentalApp.canMakeCall(context)){
                                 val call = Intent(Intent.ACTION_DIAL)
                                 call.data = Uri.parse("tel:" + patient.phone)
                                 startActivity(call)
-                                patient.called = true
+                                patient.called = Call.CALLED.status
                                 patientsBox.put(patient)
 //                                callBtn.setBackgroundColor(resources.getColor(R.color.colorART))
                             }else{

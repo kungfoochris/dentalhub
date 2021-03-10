@@ -351,7 +351,7 @@ class ReferralFragment : Fragment() {
                     DentalApp.lastRecallTime = recallTime
                 } else {
                     try {
-                        patient.called = false
+                        patient.called = Call.NOT_CALLED.status
                         patientBox.put(patient)
                     } catch (e: Exception) {
                         Timber.d("patient not found i.e. not initialized.")

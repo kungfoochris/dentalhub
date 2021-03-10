@@ -1,7 +1,6 @@
 package com.abhiyantrik.dentalhub.entities
 
 import android.os.Parcelable
-import android.util.Log
 import com.abhiyantrik.dentalhub.ObjectBox
 import com.abhiyantrik.dentalhub.utils.DateHelper
 import com.hornet.dateconverter.DateConverter
@@ -39,7 +38,7 @@ class Patient : Parcelable {
     var recall_date: String? = ""
     var recall_time: String? = "00:01:00"
     var recall_geography: Int = 0
-    var called: Boolean = false
+    var called: String = Call.CALLED.status
     var created_at: String? = ""
     var updated_at: String? = ""
     var author: String = ""
@@ -163,4 +162,10 @@ class Patient : Parcelable {
             return "-"
         }
     }
+}
+
+enum class Call(val status: String) {
+    CALLED("called"),
+    NO_ANSWER("no_answer"),
+    NOT_CALLED("not_called")
 }
