@@ -327,14 +327,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        val handler = Handler(Looper.getMainLooper())
-        val run = object : Runnable {
-            override fun run() {
-                checkAllUpdated()
-                handler.postDelayed(this, 10000)
+        try {
+            val handler = Handler(Looper.getMainLooper())
+            val run = object : Runnable {
+                override fun run() {
+                    checkAllUpdated()
+                    handler.postDelayed(this, 10000)
+                }
             }
+            handler.postDelayed(run, 10000)
+        } catch (ex: Exception) {
+            Timber.e("10 sec delay run error: ${ex.message}")
         }
-        handler.postDelayed(run, 10000)
     }
 
     private fun logout() {
