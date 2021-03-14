@@ -38,7 +38,7 @@ class Patient : Parcelable {
     var recall_date: String? = ""
     var recall_time: String? = "00:01:00"
     var recall_geography: Int = 0
-    var called: String = Call.CALLED.status
+    var called: String = Call.NOT_CALLED.status
     var created_at: String? = ""
     var updated_at: String? = ""
     var author: String = ""
@@ -55,7 +55,7 @@ class Patient : Parcelable {
     var encounters: ToMany<Encounter>? = null
 
 
-    fun referallDate(): String {
+    fun referralDate(): String {
         return if (recall_date!!.isEmpty()) {
             DateHelper.getCurrentDate()
         } else {

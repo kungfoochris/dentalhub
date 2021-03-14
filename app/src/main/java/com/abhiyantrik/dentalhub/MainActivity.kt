@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -454,21 +453,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onCallPatientClick(patient: Patient) {
-                        if (patient.called == Call.NOT_CALLED.status) {
-                            if(DentalApp.canMakeCall(context)){
-                                val call = Intent(Intent.ACTION_DIAL)
-                                call.data = Uri.parse("tel:" + patient.phone)
-                                startActivity(call)
-                                patient.called = Call.CALLED.status
-                                patientsBox.put(patient)
-//                                callBtn.setBackgroundColor(resources.getColor(R.color.colorART))
-                            }else{
-                                Toast.makeText(context, getString(R.string.telephony_service_unavailable), Toast.LENGTH_LONG).show()
-                            }
-                        } else {
-                            Toast.makeText(context, "Already called the patient.", Toast.LENGTH_LONG).show()
-                        }
-
+                        showCallPopup(patient)
                     }
 
                     override fun onViewPatientDetailClick(position: Int,patient: Patient) {
@@ -481,6 +466,50 @@ class MainActivity : AppCompatActivity() {
                 })
         recyclerView.adapter = patientAdapter
         patientAdapter.notifyDataSetChanged()
+    }
+
+    private fun showCallPopup(patient: Patient) {
+
+        // setup the alert builder
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Choose an animal")
+
+        // add a list
+        val animals = arrayOf("Call", "Didn't answer", "Not called")
+        builder.setItems(animals) { dialog, which ->
+            when (which) {
+                0 -> {
+                    if (patient.called == Call.NOT_CALLED.status) {
+                        if(DentalApp.canMakeCall(context)){
+                            val call = Intent(Intent.ACTION_DIAL)
+                            call.data = Uri.parse("tel:" + patient.phone)
+                            startActivity(call)
+                            patient.called = Call.CALLED.status
+                            patientsBox.put(patient)
+                            patientAdapter.notifyDataSetChanged()
+                        } else {
+                            Toast.makeText(context, getString(R.string.telephony_service_unavailable), Toast.LENGTH_LONG).show()
+                        }
+                    } else {
+                        Toast.makeText(context, "Already called the patient.", Toast.LENGTH_LONG).show()
+                    }
+                }
+                1 -> {
+                    patient.called = Call.NO_ANSWER.status
+                    patientsBox.put(patient)
+                    patientAdapter.notifyDataSetChanged()
+                }
+                2 -> {
+                    patient.called = Call.NOT_CALLED.status
+                    patientsBox.put(patient)
+                    patientAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+
+        // create and show the alert dialog
+        val dialog = builder.create()
+        dialog.show()
     }
 
 

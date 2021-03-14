@@ -71,7 +71,7 @@ class PatientAdapter(
                 tvAddress.text = ""
                 tvRecallDate.text = DateHelper.formatNepaliDate(
                     context,
-                    patient.referallDate()
+                    patient.referralDate()
                 ) + " " + patient.recall_time
                 tvPhone.text = patient.phone
                 btnCall.setOnClickListener {
@@ -97,7 +97,7 @@ class PatientAdapter(
                             btnCall.setBackgroundResource(R.drawable.call_not_answer)
                         }
                         Call.NOT_CALLED.status -> {
-                            // not thing to do
+                            btnCall.setBackgroundResource(R.drawable.round_buttons)
                         }
                     }
 //                    if (patient.called == Call.CALLED.status) {
