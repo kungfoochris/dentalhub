@@ -179,58 +179,64 @@ class ReferralFragment : Fragment() {
             val monthToday = backDate.substring(5, 7).toInt()
             val dayToday = backDate.substring(8, 10).toInt()
 
-            when (i) {
-                R.id.radioOneWeek -> {
-                    recallDate = if (dayToday + 7 > 30 && monthToday + 1 > 12) {
-                        "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
-                            "00"
-                        ).format((dayToday + 7) % 30)
-                    } else if (dayToday + 7 > 30) {
-                        "$yearToday-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
-                            "00"
-                        ).format((dayToday + 7) % 30)
+            try {
 
-                    } else {
-                        "$yearToday-" + DecimalFormat("00").format(monthToday) + "-" + DecimalFormat(
-                            "00"
-                        ).format((dayToday + 7) % 30)
+                when (i) {
+                    R.id.radioOneWeek -> {
+                        recallDate = if (dayToday + 7 > 30 && monthToday + 1 > 12) {
+                            "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
+                                "00"
+                            ).format((dayToday + 7) % 30)
+                        } else if (dayToday + 7 > 30) {
+                            "$yearToday-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
+                                "00"
+                            ).format((dayToday + 7) % 30)
+
+                        } else {
+                            "$yearToday-" + DecimalFormat("00").format(monthToday) + "-" + DecimalFormat(
+                                "00"
+                            ).format((dayToday + 7) % 30)
+
+                        }
 
                     }
-
-                }
-                R.id.radioOneMonth -> {
-                    recallDate = if (monthToday == 12) {
-                        "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
-                            "00"
-                        ).format(dayToday)
-                    } else {
-                        "${yearToday}-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
-                            "00"
-                        ).format(dayToday)
+                    R.id.radioOneMonth -> {
+                        recallDate = if (monthToday == 12) {
+                            "${yearToday + 1}-" + DecimalFormat("00").format("01") + "-" + DecimalFormat(
+                                "00"
+                            ).format(dayToday)
+                        } else {
+                            "${yearToday}-" + DecimalFormat("00").format(monthToday + 1) + "-" + DecimalFormat(
+                                "00"
+                            ).format(dayToday)
+                        }
+                    }
+                    R.id.radioSixMonths -> {
+                        recallDate = if (monthToday + 6 > 12) {
+                            "${yearToday + 1}-" + DecimalFormat("00").format(((monthToday + 6) % 12)) + "-" + DecimalFormat(
+                                "00"
+                            ).format(dayToday)
+                        } else {
+                            "$yearToday-" + DecimalFormat("00").format(monthToday + 6) + "-" + DecimalFormat(
+                                "00"
+                            ).format(dayToday)
+                        }
+                    }
+                    R.id.radioOneYear -> {
+                        recallDate =
+                            "${yearToday + 1}-" + DecimalFormat("00").format(monthToday) + "-" + DecimalFormat(
+                                "00"
+                            ).format(dayToday)
                     }
                 }
-                R.id.radioSixMonths -> {
-                    recallDate = if (monthToday + 6 > 12) {
-                        "${yearToday + 1}-" + DecimalFormat("00").format(((monthToday + 6) % 12)) + "-" + DecimalFormat(
-                            "00"
-                        ).format(dayToday)
-                    } else {
-                        "$yearToday-" + DecimalFormat("00").format(monthToday + 6) + "-" + DecimalFormat(
-                            "00"
-                        ).format(dayToday)
-                    }
+                recallDateOriginal = recallDate
+                if(recallDate.isNotEmpty()){
+                    etRecallDate.setText(DateHelper.getReadableNepaliDate(recallDate))
                 }
-                R.id.radioOneYear -> {
-                    recallDate =
-                        "${yearToday + 1}-" + DecimalFormat("00").format(monthToday) + "-" + DecimalFormat(
-                            "00"
-                        ).format(dayToday)
-                }
+            } catch (ex: Exception) {
+                Toast.makeText(activity as AddEncounterActivity, "Cannot perform task.", Toast.LENGTH_SHORT).show()
             }
-            recallDateOriginal = recallDate
-            if(recallDate.isNotEmpty()){
-                etRecallDate.setText(DateHelper.getReadableNepaliDate(recallDate))
-            }
+
         }
 
         etRecallDate.setOnFocusChangeListener { _, b ->

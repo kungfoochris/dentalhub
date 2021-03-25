@@ -95,10 +95,10 @@ class DateHelper {
             if(date.isNotEmpty()){
                 try {
                     // write the formatting logic
-                    nepaliFormattedDate = date.substring(0, 4) + " " + getNepaliMonthName(
+                    nepaliFormattedDate = date.substring(8, 10) + " " + getNepaliMonthName(
                         context,
                         date.substring(5, 7).toInt()
-                    ) + " " + date.substring(8, 10)
+                    ) + " " + date.substring(0, 4)
                 } catch (e: IllegalArgumentException) {
                     nepaliFormattedDate = "-"
                     Timber.d("DateHelper %s", e.printStackTrace().toString())

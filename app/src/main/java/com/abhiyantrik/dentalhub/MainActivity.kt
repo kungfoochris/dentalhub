@@ -476,7 +476,6 @@ class MainActivity : AppCompatActivity() {
 
         // setup the alert builder
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Choose an animal")
 
         // add a list
         val animals = arrayOf("Call", "Didn't answer", "Not called")
