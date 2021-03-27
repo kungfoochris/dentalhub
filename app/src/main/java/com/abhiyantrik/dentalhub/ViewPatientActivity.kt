@@ -132,9 +132,11 @@ class ViewPatientActivity : AppCompatActivity() {
 
         if (allEncounters.count() > 0) {
 //            2077-10-28T15:00:29.184000+05:45
-            val croppedDate = allEncounters[0].created_at.substring(0, 10)
+            val latestEncounter = allEncounters[0]
+            val croppedDate = latestEncounter.created_at.substring(0, 10)
             val date = DentalApp.readFromPreference(context, Constants.PERF_SELECTED_BACKDATE, DateHelper.getTodaysNepaliDate())
-            if (croppedDate != date) {
+            val author = DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
+            if ((croppedDate != date) && (latestEncounter.author != author)) {
                 status = true
             } else {
                 status = false
