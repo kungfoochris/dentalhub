@@ -2,8 +2,12 @@ package com.abhiyantrik.dentalhub.utils
 
 import android.content.Context
 import android.util.Log
+import com.abhiyantrik.dentalhub.AddEncounterActivity
+import com.abhiyantrik.dentalhub.Constants
+import com.abhiyantrik.dentalhub.DentalApp
 import com.abhiyantrik.dentalhub.R
 import com.hornet.dateconverter.DateConverter
+import com.hornet.dateconverter.Model
 import timber.log.Timber
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -143,6 +147,33 @@ class DateHelper {
             val dateObj = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(cal.time)
             Timber.d("Backdate test $dateObj")
             return dateObj
+        }
+
+        fun getNepaliDaysLaterDate(mContext: Context, numberOfDaysLater: Int): String {
+            val backDate =
+                DentalApp.readFromPreference(
+                    mContext,
+                    Constants.PERF_SELECTED_BACKDATE,
+                    getTodaysNepaliDate()
+                )
+            val nepaliDateConverter = DateConverter()
+            val nepaliday = backDate.substring(8, 10).toInt()
+            val nepalimonth = backDate.substring(5, 7).toInt()
+            val nepaliyear = backDate.substring(0, 4).toInt()
+            // first convert nepali date to english
+            val englishBackDate = nepaliDateConverter.getEnglishDate(nepaliyear, nepalimonth, nepaliday)
+            val convertedDate = getDaysLaterDate(englishBackDate.year, englishBackDate.month, englishBackDate.day, numberOfDaysLater)
+            val day = convertedDate.substring(8, 10).toInt()
+            val month = convertedDate.substring(5, 7).toInt()
+            val year = convertedDate.substring(0, 4).toInt()
+            // then convert to nepali date
+            val nepaliBackDate = nepaliDateConverter.getNepaliDate(year, month, day)
+
+            val yearToday = nepaliBackDate.year
+            val monthToday = DecimalFormat("00").format(nepaliBackDate.month + 1).toString()
+            val dayToday = DecimalFormat("00").format(nepaliBackDate.day).toString()
+
+            return "$yearToday-$monthToday-$dayToday"
         }
     }
 }

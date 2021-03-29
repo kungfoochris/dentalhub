@@ -117,15 +117,29 @@ class MainActivity : AppCompatActivity() {
         df.format(c)
         allPatientRecall = mutableListOf()
         val today = DateHelper.getTodaysNepaliDate()
-        val todayPatient = patientsBox.query().equal(Patient_.recall_date, today)
-            .equal(Patient_.recall_geography, DentalApp.geography_id.toLong()).order(Patient_.recall_date)
-            .build().find()
-
 
         val rowToday = Patient()
         rowToday.first_name = "Recall Today"
         rowToday.content = "header"
         allPatientRecall.add(rowToday)
+
+        /* Previous days started */
+        var past30DaysDate = DateHelper.getNepaliDaysLaterDate(context, -30)
+        Timber.d("PREVIOUS MONTHS")
+        for (i in 1..30) {
+            val past90DaysPatient =
+                patientsBox.query().equal(Patient_.recall_date, past30DaysDate)
+                    .equal(Patient_.recall_geography, DentalApp.geography_id.toLong())
+                    .order(Patient_.recall_date).build().find()
+            allPatientRecall.addAll(past90DaysPatient)
+            past30DaysDate = DateHelper.getNextDay(past30DaysDate)
+        }
+        /* Previous days ended */
+
+        val todayPatient = patientsBox.query().equal(Patient_.recall_date, today)
+            .equal(Patient_.recall_geography, DentalApp.geography_id.toLong()).order(Patient_.recall_date)
+            .build().find()
+
         allPatientRecall.addAll(todayPatient)
 
         val rowThisWeek = Patient()
