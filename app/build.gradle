@@ -106,7 +106,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // for the Nepali date time picker
-    implementation 'com.github.keyrunHORNET:date_picker_converter:3.0-beta'
+    implementation 'com.github.keyrunHORNET:date_picker_converter:2.2.2'
 
 }
 
