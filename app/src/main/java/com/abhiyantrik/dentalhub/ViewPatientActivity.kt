@@ -359,11 +359,11 @@ class ViewPatientActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             Timber.d("Request Delete button clicked.")
-            if (rbDeleteAccidentalEntry.isChecked) modifyDeleteReason = "accidental_entry"
-            if (rbDeleteDuplicateEncounter.isChecked) modifyDeleteReason = "duplicate_encounter"
-            if (rbDeleteIncorrectPatient.isChecked) modifyDeleteReason = "incorrect_patient"
-            if (rbDeleteIncorrectUser.isChecked) modifyDeleteReason = "incorrect_user"
-            if (rbDeleteOtherReason.isChecked) modifyDeleteReason = "other"
+            if (rbDeleteAccidentalEntry.isChecked) modifyDeleteReason = "Accidental Entry"
+            if (rbDeleteDuplicateEncounter.isChecked) modifyDeleteReason = "Duplicate Encounter"
+            if (rbDeleteIncorrectPatient.isChecked) modifyDeleteReason = "Incorrect Patient"
+            if (rbDeleteIncorrectUser.isChecked) modifyDeleteReason = "Incorrect User"
+            if (rbDeleteOtherReason.isChecked) modifyDeleteReason = "Other"
             displayPasswordVerifyPopup(isModify = false)
             dialog.dismiss()
         }
