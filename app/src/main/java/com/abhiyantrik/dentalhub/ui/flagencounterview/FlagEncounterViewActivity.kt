@@ -107,34 +107,7 @@ class FlagEncounterViewActivity : AppCompatActivity() {
                                         )
                                     )
                                 }
-                            } else {
-                                if (eachFlagData.modify_status != "") {
-                                    flagEncounterList.add(
-                                        FlagEncounter(
-                                            eachFlagData.id.toString(),
-                                            eachFlagData.encounter.id,
-                                            eachFlagData.encounter.patient.full_name,
-                                            eachFlagData.encounter.encounter_type,
-                                            "modify",
-                                            eachFlagData.modify_status,
-                                            eachFlagData.reason_for_modification
-                                        )
-                                    )
-                                } else {
-                                    flagEncounterList.add(
-                                        FlagEncounter(
-                                            eachFlagData.id.toString(),
-                                            eachFlagData.encounter.id,
-                                            eachFlagData.encounter.patient.full_name,
-                                            eachFlagData.encounter.encounter_type,
-                                            "delete",
-                                            eachFlagData.delete_status,
-                                            eachFlagData.reason_for_modification
-                                        )
-                                    )
-                                }
-
-                            } // eachFlagData.flag == ""
+                            }
                         } // end of Foreach
                         withContext(Dispatchers.Main) {
                             adapter.notifyDataSetChanged()
