@@ -136,11 +136,15 @@ class ViewPatientActivity : AppCompatActivity() {
             val croppedDate = latestEncounter.created_at.substring(0, 10)
             val date = DentalApp.readFromPreference(context, Constants.PERF_SELECTED_BACKDATE, DateHelper.getTodaysNepaliDate())
             val author = DentalApp.readFromPreference(applicationContext, Constants.PREF_PROFILE_ID, "")
-            if ((croppedDate != date) && (latestEncounter.author != author)) {
+            if ((croppedDate != date)) {
                 status = true
             } else {
-                status = false
-                Toast.makeText(context, "Encounter already exists in today's date.", Toast.LENGTH_SHORT).show()
+                if ((latestEncounter.author != author))
+                    status = true
+                else {
+                    status = false
+                    Toast.makeText(context, "Encounter already exists in today's date.", Toast.LENGTH_SHORT).show()
+                }
             }
         } else {
             status = true
