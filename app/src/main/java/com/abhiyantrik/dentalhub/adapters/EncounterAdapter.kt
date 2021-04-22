@@ -54,7 +54,7 @@ class EncounterAdapter(
         val encounterItem: Encounter = data[position]
         holder.itemView.isClickable = true
         holder.itemView.isFocusable = true
-        holder.itemView.ibEdit.setOnClickListener {
+        holder.itemView.ibEncounterEdit.setOnClickListener {
             Timber.d("do the edit operation")
             val addEncounterActivityIntent = Intent(context, AddEncounterActivity::class.java)
             addEncounterActivityIntent.putExtra("ENCOUNTER_ID", encounterItem.id)
@@ -80,7 +80,7 @@ class EncounterAdapter(
         private var tvEncounterDate: TextView = itemView.findViewById(R.id.tvEncounterDate)
         private var tvAuthorName: TextView = itemView.findViewById(R.id.tvAuthorName)
         private var ivEncounterSyncStatus: ImageView = itemView.findViewById(R.id.ivEncounterSyncStatus)
-        private var ibEdit: ImageButton = itemView.findViewById(R.id.ibEdit)
+        private var ibEdit: ImageButton = itemView.findViewById(R.id.ibEncounterEdit)
 
         fun bindEncounter(encounter: Encounter) {
             userBox = ObjectBox.boxStore.boxFor(User::class.java)
@@ -110,10 +110,11 @@ class EncounterAdapter(
                 ivEncounterSyncStatus.setColorFilter(ContextCompat.getColor(context, R.color.green_700))
             }
 
-            if (encounter.isEditable()) {
-                ibEdit.visibility = View.VISIBLE
-            } else {
+            if (!encounter.isEditable()) {
                 ibEdit.visibility = View.INVISIBLE
+                Log.d("inVisible", "This is invisible")
+            } else {
+                Log.d("Visible", "This is visible")
             }
         }
     }

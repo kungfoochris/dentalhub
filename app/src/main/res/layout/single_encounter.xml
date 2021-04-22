@@ -62,11 +62,11 @@
             android:src="@drawable/ic_flag"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ibEdit"
+            app:layout_constraintEnd_toStartOf="@+id/ibEncounterEdit"
             app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-            android:id="@+id/ibEdit"
+            android:id="@+id/ibEncounterEdit"
             android:layout_width="68dp"
             android:layout_height="48dp"
             android:paddingStart="10dp"
