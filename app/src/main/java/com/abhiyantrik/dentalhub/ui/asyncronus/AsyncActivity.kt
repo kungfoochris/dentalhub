@@ -1,4 +1,4 @@
-package com.abhiyantrik.dentalhub.ui.asyncronus
+ package com.abhiyantrik.dentalhub.ui.asyncronus
 
 import android.os.Bundle
 import android.util.Log
@@ -18,9 +18,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.Exception
 
 class AsyncActivity : AppCompatActivity() {
 
@@ -99,60 +99,83 @@ class AsyncActivity : AppCompatActivity() {
                         tvStatus.append("IMPORTANT encounter's patient not found.\n")
                     }
                 } else {
-                    val patientRemoteId = eachEncounter.patient!!.target.remote_id
-                    Timber.d("patient remote Id $patientRemoteId")
+                    try {
+                        val patientRemoteId = eachEncounter.patient!!.target.remote_id
+                        Timber.d("patient remote Id $patientRemoteId")
 
-                    if (patientRemoteId.isEmpty()) {
-                        withContext(Dispatchers.Main) {
-                            tvStatus.append(eachEncounter.patient!!.target.fullName() + " should be uploaded first to upload encounters.\n")
-                        }
-                    } else {
-                        if (!eachEncounter.uploaded && patientRemoteId.isNotEmpty()) {
-                            if (uploadEncounter(eachEncounter, patientRemoteId, encountersBox)) {
-                                withContext(Dispatchers.Main) {
-                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " encounter uploaded.\n")
+                        if (patientRemoteId.isEmpty()) {
+                            withContext(Dispatchers.Main) {
+                                tvStatus.append(eachEncounter.patient!!.target.fullName() + " should be uploaded first to upload encounters.\n")
+                            }
+                        } else {
+                            if (!eachEncounter.uploaded && patientRemoteId.isNotEmpty()) {
+                                if (uploadEncounter(eachEncounter, patientRemoteId, encountersBox)) {
+                                    withContext(Dispatchers.Main) {
+                                        tvStatus.append(eachEncounter.patient!!.target.fullName() + " encounter uploaded.\n")
+                                    }
+                                }
+                            }
+
+
+                            val unUploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().findFirst()
+                            val unUploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().findFirst()
+                            val unUploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().findFirst()
+                            val unUploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().findFirst()
+
+                            if (unUploadedHistory != null && patientRemoteId.isNotEmpty()) {
+                                if (uploadHistory(unUploadedHistory, historyBox, eachEncounter.remote_id)) {
+                                    withContext(Dispatchers.Main) {
+                                        tvStatus.append(eachEncounter.patient!!.target.fullName() + " History uploaded.\n")
+                                    }
+                                }
+                            }
+
+                            if (unUploadedScreening != null && patientRemoteId.isNotEmpty()) {
+                                if (uploadScreening(unUploadedScreening, screeningBox, eachEncounter.remote_id)) {
+                                    withContext(Dispatchers.Main) {
+                                        tvStatus.append(eachEncounter.patient!!.target.fullName() + " Screening uploaded.\n")
+                                    }
+                                }
+                            }
+
+                            if (unUploadedTreatment != null && patientRemoteId.isNotEmpty()) {
+                                if (uploadTreatment(unUploadedTreatment, treatmentBox, eachEncounter.remote_id)) {
+                                    withContext(Dispatchers.Main) {
+                                        tvStatus.append(eachEncounter.patient!!.target.fullName() + " Treatment uploaded.\n")
+                                    }
+                                }
+                            }
+
+                            if (unUploadedReferral != null && patientRemoteId.isNotEmpty()) {
+                                if (uploadReferral(unUploadedReferral, referralBox, eachEncounter.remote_id)) {
+                                    withContext(Dispatchers.Main) {
+                                        tvStatus.append(eachEncounter.patient!!.target.fullName() + " Referral uploaded.\n")
+                                    }
                                 }
                             }
                         }
-
-
-                        val unUploadedHistory = historyBox.query().equal(History_.uploaded, false).and().equal(History_.encounterId, eachEncounter.id).build().findFirst()
-                        val unUploadedScreening = screeningBox.query().equal(Screening_.uploaded, false).and().equal(Screening_.encounterId, eachEncounter.id).build().findFirst()
-                        val unUploadedTreatment = treatmentBox.query().equal(Treatment_.uploaded, false).and().equal(Treatment_.encounterId, eachEncounter.id).build().findFirst()
-                        val unUploadedReferral = referralBox.query().equal(Referral_.uploaded, false).and().equal(Referral_.encounterId, eachEncounter.id).build().findFirst()
-
-                        if (unUploadedHistory != null && patientRemoteId.isNotEmpty()) {
-                            if (uploadHistory(unUploadedHistory, historyBox, eachEncounter.remote_id)) {
+                    } catch (ex: Exception) {
+                        when (ex) {
+                            is NullPointerException -> {
                                 withContext(Dispatchers.Main) {
-                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " History uploaded.\n")
+                                    tvStatus.append("IMPORTANT encounter's not found.\n")
                                 }
-                            }
-                        }
-
-                        if (unUploadedScreening != null && patientRemoteId.isNotEmpty()) {
-                            if (uploadScreening(unUploadedScreening, screeningBox, eachEncounter.remote_id)) {
-                                withContext(Dispatchers.Main) {
-                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " Screening uploaded.\n")
-                                }
-                            }
-                        }
-
-                        if (unUploadedTreatment != null && patientRemoteId.isNotEmpty()) {
-                            if (uploadTreatment(unUploadedTreatment, treatmentBox, eachEncounter.remote_id)) {
-                                withContext(Dispatchers.Main) {
-                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " Treatment uploaded.\n")
-                                }
-                            }
-                        }
-
-                        if (unUploadedReferral != null && patientRemoteId.isNotEmpty()) {
-                            if (uploadReferral(unUploadedReferral, referralBox, eachEncounter.remote_id)) {
-                                withContext(Dispatchers.Main) {
-                                    tvStatus.append(eachEncounter.patient!!.target.fullName() + " Referral uploaded.\n")
+                                eachEncounter.patient?.target?.let {
+                                    if (it.remote_id == "") {
+                                        withContext(Dispatchers.Main) {
+                                            tvStatus.append("Patient: ${it.fullName()} encounter failed to upload because of remote id not found..\n")
+                                            tvStatus.append("Remote ID: ${it.remote_id} uploaded: ${it.uploaded}\n")
+                                        }
+                                    }
+                                } ?: run {
+                                    withContext(Dispatchers.Main) {
+                                        tvStatus.append("Patient object not found.\n")
+                                    }
                                 }
                             }
                         }
                     }
+
                 }
 
             }
