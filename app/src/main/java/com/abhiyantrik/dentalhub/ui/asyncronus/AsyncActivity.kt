@@ -1,4 +1,4 @@
- package com.abhiyantrik.dentalhub.ui.asyncronus
+package com.abhiyantrik.dentalhub.ui.asyncronus
 
 import android.os.Bundle
 import android.util.Log
@@ -615,7 +615,19 @@ class AsyncActivity : AppCompatActivity() {
                 Timber.d("Patient response ${response.code()} ${response.message()}")
                 if (response.code() == 409) {
                     Timber.d("UploadPatientWorker found duplicate data while uploading of ${patient.fullName()}")
-                    patientBox.remove(patient)
+                    try {
+                        val tempPatient = response.body()
+                        if ( tempPatient?.id != null ) {
+                            patient.remote_id = tempPatient.id
+                            patient.uploaded = true
+                            patient.updated = false
+
+                            patientBox.put(patient)
+                            Timber.d("UploadPatientWorker Patient uploaded.")
+                        }
+                    } catch (ex: Exception) {
+                        Log.e("Crashed", "Error occurred: ${ex.message}")
+                    }
                 } else {
                     if (response.isSuccessful) {
                         when (response.code()) {

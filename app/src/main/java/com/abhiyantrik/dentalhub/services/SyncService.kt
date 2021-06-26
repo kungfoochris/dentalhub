@@ -389,7 +389,22 @@ class SyncService : Service(){
             override fun onResponse(call: Call<PatientModel>, response: Response<PatientModel>) {
                 if (response.code() == 409) {
                     Timber.d("UploadPatientWorker found duplicate data while uploading of ${patient.fullName()}")
-                    patientsBox.remove(patient)
+                    try {
+                        val dbPatient =
+                            patientsBox.query().equal(Patient_.id, patient.id).build()
+                                .findFirst()
+                        val tempPatient = response.body()
+                        if ( tempPatient?.id != null ) {
+                            dbPatient!!.remote_id = tempPatient.id
+                            dbPatient.uploaded = true
+                            dbPatient.updated = false
+
+                            patientsBox.put(dbPatient)
+                            Timber.d("UploadPatientWorker Patient uploaded.")
+                        }
+                    } catch (ex: Exception) {
+                        Log.e("Crashed", "Error occurred: ${ex.message}")
+                    }
                 } else {
                     if (null != response.body()) {
                         when (response.code()) {

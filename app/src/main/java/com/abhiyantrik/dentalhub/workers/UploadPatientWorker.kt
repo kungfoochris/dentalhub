@@ -98,7 +98,21 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             Timber.d("UploadPatientWorker response ${response.code()}, ${response.body()}, ${response.message()}")
             if (response.code() == 409) {
                 Timber.d("UploadPatientWorker found duplicate data while uploading of ${dbPatient?.fullName()}")
-                patientsBox.remove(dbPatient!!)
+                try {
+                    val tempPatient = response.body()
+                    if ( tempPatient?.id != null ) {
+                        dbPatient!!.remote_id = tempPatient.id
+                        dbPatient.uploaded = true
+                        dbPatient.updated = false
+
+                        patientsBox.put(dbPatient)
+                        Timber.d("UploadPatientWorker Patient uploaded.")
+                    }
+                } catch (ex: Exception) {
+                    Log.e("Crashed", "Error occurred: ${ex.message}")
+                }
+
+//                patientsBox.remove(dbPatient!!)
             } else {
                 if (response.isSuccessful) {
                     when (response.code()) {
