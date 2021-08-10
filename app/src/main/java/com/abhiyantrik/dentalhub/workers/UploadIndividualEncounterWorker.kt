@@ -72,6 +72,8 @@ class UploadIndividualEncounterWorker(context: Context, params: WorkerParameters
             dbEncounterEntity.area_id.toString()
         }
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        if (token.isBlank()) return
+
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.addEncounter(
             "JWT $token",

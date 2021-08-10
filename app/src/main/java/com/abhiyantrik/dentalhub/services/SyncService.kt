@@ -158,6 +158,8 @@ class SyncService : Service(){
         Timber.d("saveScreeningToServer %s", screening.toString())
         Timber.d("saveScreeningToServer %s", screening.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        if (token.isBlank()) return
+
         val panelService = DjangoInterface.create(this)
         val call = panelService.addScreening(
             "JWT $token",
@@ -247,6 +249,8 @@ class SyncService : Service(){
         Timber.d("SyncService %s", "saveTreatmentToServer()")
         Timber.d("saveTreatmentToServer %s", treatment.toString())
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        if (token.isBlank()) return
+
         val panelService = DjangoInterface.create(this)
         val call = panelService.addTreatment(
             "JWT $token",

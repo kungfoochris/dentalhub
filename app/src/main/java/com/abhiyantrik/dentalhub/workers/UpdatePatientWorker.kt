@@ -58,6 +58,8 @@ class UpdatePatientWorker(context: Context, params: WorkerParameters) : Worker(c
             applicationContext.resources.getString(R.string.uploading_patient)
         )
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        if (token.isBlank()) return false
+
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.updatePatient(
             "JWT $token",

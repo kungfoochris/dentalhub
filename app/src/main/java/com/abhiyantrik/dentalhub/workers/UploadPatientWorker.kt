@@ -54,6 +54,8 @@ class UploadPatientWorker(context: Context, params: WorkerParameters) : Worker(c
             applicationContext.resources.getString(R.string.uploading_patient)
         )
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        if (token.isBlank()) return
+
         val panelService = DjangoInterface.create(applicationContext)
         val activityAreaId = if (patient.area_id == 0) {
             ""

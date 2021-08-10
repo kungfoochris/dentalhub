@@ -37,6 +37,8 @@ class DownloadUsersWorker(context: Context, params: WorkerParameters) : Worker(c
     private fun downloadUsers() {
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        if (token.isBlank()) return
+
         val panelService = DjangoInterface.create(applicationContext)
         val call = panelService.listUsers("JWT $token")
 

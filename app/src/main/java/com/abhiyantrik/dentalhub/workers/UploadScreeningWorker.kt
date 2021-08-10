@@ -53,6 +53,8 @@ class UploadScreeningWorker(context: Context, params: WorkerParameters) : Worker
         )
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        if (token.isBlank()) return
+
         val panelService = DjangoInterface.create(applicationContext)
 
         if(!screening.uploaded){

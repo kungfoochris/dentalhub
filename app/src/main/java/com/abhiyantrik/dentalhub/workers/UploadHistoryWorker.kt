@@ -52,6 +52,8 @@ class UploadHistoryWorker(context: Context, params: WorkerParameters) : Worker(c
         )
 
         val token = DentalApp.readFromPreference(applicationContext, Constants.PREF_AUTH_TOKEN, "")
+        if (token.isBlank()) return
+
         val panelService = DjangoInterface.create(applicationContext)
         if(!history.uploaded){
             Timber.d("SaveHistoryToServer: %s", "New History Upload.")
