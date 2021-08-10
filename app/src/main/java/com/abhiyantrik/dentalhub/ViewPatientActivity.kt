@@ -81,6 +81,12 @@ class ViewPatientActivity : AppCompatActivity() {
         listEncounters()
     }
 
+    private fun exit() {
+        DentalApp.clearAuthDetails(context)
+        Toast.makeText(context, "Failed to load data. Please try again.", Toast.LENGTH_SHORT).show()
+        finish()
+    }
+
     @AddTrace(name = "initUIPatientActivity", enabled = true /* optional */)
     private fun initUI() {
         encounterBox = ObjectBox.boxStore.boxFor(Encounter::class.java)
@@ -96,6 +102,16 @@ class ViewPatientActivity : AppCompatActivity() {
 
         fabAddNewEncounter = findViewById(R.id.fabAddNewEncounter)
         fabEditPatient = findViewById(R.id.fabEditPatient)
+
+        if (DentalApp.activity_id == "" || DentalApp.geography_id < 1) {
+            Timber.d("Activity is not been selected.")
+            Timber.d(DentalApp.readFromPreference(context, Constants.PREF_AUTH_EMAIL,"")+ " Activity has not been selected")
+            exit()
+        }
+
+        if (DentalApp.activity_id != "" && DentalApp.activity_id != "1" && DentalApp.activity_area_id < 1) {
+            exit()
+        }
 
         mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
