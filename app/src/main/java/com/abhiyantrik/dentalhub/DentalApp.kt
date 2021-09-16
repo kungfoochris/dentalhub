@@ -3,6 +3,7 @@ package com.abhiyantrik.dentalhub
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -118,10 +119,19 @@ class DentalApp : MultiDexApplication(), Configuration.Provider {
             .setRequiresBatteryNotLow(true)
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-        var downloadConstraints: Constraints = Constraints.Builder()
-            .setRequiresBatteryNotLow(true)
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
+
+        var downloadConstraints: Constraints = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .setRequiresDeviceIdle(true)
+                .build()
+        } else {
+            Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+        }
 
         var activitySuggestions = mutableSetOf<String>()
 
